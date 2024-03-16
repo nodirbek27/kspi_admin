@@ -2,6 +2,7 @@ import React from "react";
 import Root from "../root/index";
 
 import Main from "../pages/Main";
+import NewsPage from "../pages/NewsPage";
 
 export const routes = [
     {
@@ -11,6 +12,10 @@ export const routes = [
         {
           element: <Main />,
           path: "/",
+        },
+        {
+          element: <NewsPage />,
+          path: "/yangiliklar",
         },
       ],
     },

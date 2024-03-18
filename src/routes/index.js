@@ -5,6 +5,9 @@ import Main from "../pages/Main";
 import NewsPage from "../pages/NewsPage";
 import Elonlar from "../pages/ElonlarPage";
 
+// LOGIN
+import Login from "../components/Login"
+
 // HOME
 import HEMIS from '../pages/Home/HEMIS'
 import IlmiyXabarlar from '../pages/Home/InstitutJurnali/IlmiyXabarlar'
@@ -64,8 +67,12 @@ export const routes = [
       path: "/",
       children: [
         {
-          element: <Main />,
+          element: <Login />,
           path: "/",
+        },
+        {
+          element: <Main />,
+          path: "/main",
         },
         {
           element: <NewsPage />,

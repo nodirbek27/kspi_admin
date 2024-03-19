@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { CiEdit } from "react-icons/ci";
 import { RiDeleteBin5Line } from "react-icons/ri";
-import { Formik } from "formik";
+import { useFormik } from "formik";
 import APIYangilik from "../../services/yangilik";
 import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
@@ -10,6 +10,17 @@ const News = () => {
   const [news, setNews] = useState(null);
   const [newsOne, setNewsOne] = useState(null);
   const [pageNumber, setPageNumber] = useState(0);
+
+  const formik = useFormik({
+    initialValues: {
+      sarlavha: "",
+      rasm: "",
+      body: "",
+    },
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
+    },
+  });
 
   const itemsPerPage = 12;
   const pagesVisited = pageNumber * itemsPerPage;
@@ -45,17 +56,51 @@ const News = () => {
 
       {/* POST */}
       <div>
-        <form>
-          
+        <form onSubmit={formik.handleSubmit} className="flex flex-col gap-2">
+          <div className="grid px-3 md:grid-cols-3 gap-3">
+            {/* SARLAVHA-Uz */}
+            <input
+              id="sarlavha"
+              name="sarlavha"
+              type="text"
+              placeholder="Type here"
+              className="input input-bordered w-full max-w-xl col-span-2"
+              onChange={formik.handleChange}
+              value={formik.values.sarlavha}
+            />
+            {/* Image */}
+            <input
+              id="rasm"
+              name="rasm"
+              type="file"
+              className="file-input file-input-bordered w-full max-w-xl col-span-1"
+              onChange={formik.handleChange}
+              value={formik.values.rasm}
+            />
+            {/* Body */}
+          </div>
+          <div className="px-3">
+            <textarea
+              id="body"
+              name="body"
+              className="textarea textarea-bordered w-full"
+              placeholder="Bio"
+              onChange={formik.handleChange}
+              value={formik.values.body}
+            ></textarea>
+          </div>
+          <button className="btn bg-gray-800 text-white" type="submit">
+            Qo'shish
+          </button>
         </form>
       </div>
 
-      <div className="flex flex-col">
+      <div className="flex flex-col mt-20">
         {/* GET */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-7xl mx-auto">
           {newsOne &&
             newsOne.map((item, idx) => (
-              <Link to={`/yangiliklar/${item.id}`} key={idx}>
+              <div key={idx}>
                 {item && (
                   <div className="p-4 max-w-sm lg:max-w-xs xl:max-w-md mx-auto group/item hover:cursor-pointer h-full">
                     <div className="flex rounded-lg h-full dark:bg-gray-800 shadow-md hover:shadow-lg flex-col group/edit">
@@ -83,15 +128,17 @@ const News = () => {
                         <h2 className="leading-relaxed font-bold line-clamp-3 xl:line-clamp-2 text-base text-[#004269] text-center dark:text-gray-300 line">
                           {item.title}
                         </h2>
-                        <div className="card-actions justify-end">
-                          <CiEdit className="text-green-600 cursor-pointer h-5 w-5 mr-2" />
+                        <div className="card-actions justify-end p-2">
+                          <Link to={`/yangiliklar/${item.id}`}>
+                            <CiEdit className="text-green-600 cursor-pointer h-5 w-5 mr-2" />
+                          </Link>
                           <RiDeleteBin5Line className="text-red-600 cursor-pointer h-5 w-5" />
                         </div>
                       </div>
                     </div>
                   </div>
                 )}
-              </Link>
+              </div>
             ))}
         </div>
 

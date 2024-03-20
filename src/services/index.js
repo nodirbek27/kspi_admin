@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-    baseURL: 'https://api.kspi.uz/v1/',
+    baseURL: 'http://api.kspi.uz/v1/',
     headers: {
         "Content-Type": "application/json"
     }

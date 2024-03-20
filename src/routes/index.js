@@ -3,6 +3,7 @@ import Root from "../root/index";
 
 import Main from "../pages/Main";
 import NewsPage from "../pages/NewsPage";
+import New from "../pages/NewsEditPage";
 import Elonlar from "../pages/ElonlarPage";
 
 // LOGIN
@@ -77,6 +78,10 @@ export const routes = [
         {
           element: <NewsPage />,
           path: "/yangiliklar",
+        },
+        {
+          element: <New />,
+          path: "/yangiliklar/:id",
         },
         {
           element: <Elonlar />,

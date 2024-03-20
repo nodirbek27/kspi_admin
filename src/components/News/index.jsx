@@ -11,26 +11,34 @@ const News = () => {
   const [newsOne, setNewsOne] = useState(null);
   const [pageNumber, setPageNumber] = useState(0);
 
+  // POST
   const formik = useFormik({
     initialValues: {
-      sarlavha: "",
-      rasm: "",
+      title: "",
       body: "",
+      rasm: "",
+      sana: "",
     },
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async (values) => {
+      const rasm = document.getElementById('rasm').files[0];
+      const data = new FormData();
+      data.append("rasm", rasm);
+      data.append("title", values.title);
+      data.append("body", values.body);
+      data.append("sana", values.sana);
+      await APIYangilik.post(data);
     },
   });
 
+  // GET and PAGINATION
   const itemsPerPage = 12;
   const pagesVisited = pageNumber * itemsPerPage;
-
   useEffect(() => {
     const loadPost = async () => {
       try {
         await APIYangilik.get()
           .then((res) => {
-            setNews(res.data);
+            setNews(res.data.reverse());
             setNewsOne(
               res.data.slice(pagesVisited, pagesVisited + itemsPerPage)
             );
@@ -45,9 +53,19 @@ const News = () => {
     loadPost();
   }, [pagesVisited]);
   const pageCount = Math.ceil((news && news.length) / itemsPerPage);
-
   const changePage = ({ selected }) => {
     setPageNumber(selected);
+  };
+
+  // DELETE
+  const handleDelete = async (id) => {
+    try {
+      await APIYangilik.del(id);
+      const res = await APIYangilik.get();
+      setNews(res.data);
+    } catch (error) {
+      console.error("Error deleting news:", error);
+    }
   };
 
   return (
@@ -58,15 +76,15 @@ const News = () => {
       <div>
         <form onSubmit={formik.handleSubmit} className="flex flex-col gap-2">
           <div className="grid px-3 md:grid-cols-3 gap-3">
-            {/* SARLAVHA-Uz */}
+            {/* title-Uz */}
             <input
-              id="sarlavha"
-              name="sarlavha"
+              id="title"
+              name="title"
               type="text"
               placeholder="Type here"
               className="input input-bordered w-full max-w-xl col-span-2"
               onChange={formik.handleChange}
-              value={formik.values.sarlavha}
+              value={formik.values.title}
             />
             {/* Image */}
             <input
@@ -76,6 +94,15 @@ const News = () => {
               className="file-input file-input-bordered w-full max-w-xl col-span-1"
               onChange={formik.handleChange}
               value={formik.values.rasm}
+            />
+            {/* Date */}
+            <input
+              id="sana"
+              name="sana"
+              type="datetime-local"
+              className="input input-bordered w-full max-w-xl col-span-2"
+              onChange={formik.handleChange}
+              value={formik.values.sana}
             />
             {/* Body */}
           </div>
@@ -132,7 +159,10 @@ const News = () => {
                           <Link to={`/yangiliklar/${item.id}`}>
                             <CiEdit className="text-green-600 cursor-pointer h-5 w-5 mr-2" />
                           </Link>
-                          <RiDeleteBin5Line className="text-red-600 cursor-pointer h-5 w-5" />
+                          <RiDeleteBin5Line
+                            className="text-red-600 cursor-pointer h-5 w-5"
+                            onClick={() => handleDelete(item.id)}
+                          />
                         </div>
                       </div>
                     </div>
@@ -156,9 +186,6 @@ const News = () => {
             "pagination__link--active bg-[#004269] border rounded text-white py-1 px-2"
           }
         />
-
-        {/* EDIT */}
-        <div>EDIT</div>
       </div>
     </div>
   );

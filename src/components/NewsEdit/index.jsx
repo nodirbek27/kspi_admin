@@ -22,13 +22,18 @@ const NewsEdit = () => {
 
   const formik = useFormik({
     initialValues: {
-      title: newsData.title,
-      rasm: newsData.rasm,
-      body: newsData.body,
+      title: newsData.title || "",
+      rasm: "",
+      body: newsData.body || "",
     },
     onSubmit: async (values) => {
       try {
-        await APIYangilik.put(id, values);
+        const rasm = document.getElementById("rasm").files[0];
+        const data = new FormData();
+        data.append("rasm", rasm);
+        data.append("title", values.title);
+        data.append("body", values.body);
+        await APIYangilik.put(id, data);
         console.log("Yangilik muvaffaqiyatli tahrirlandi");
         navigate("/yangiliklar");
       } catch (error) {
@@ -62,7 +67,6 @@ const NewsEdit = () => {
             type="file"
             className="file-input file-input-bordered w-full max-w-xl col-span-1"
             onChange={formik.handleChange}
-            value={formik.values.rasm}
           />
           {/* Body */}
         </div>

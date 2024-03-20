@@ -20,7 +20,7 @@ const News = () => {
       sana: "",
     },
     onSubmit: async (values) => {
-      const rasm = document.getElementById('rasm').files[0];
+      const rasm = document.getElementById("rasm").files[0];
       const data = new FormData();
       data.append("rasm", rasm);
       data.append("title", values.title);
@@ -75,17 +75,19 @@ const News = () => {
       {/* POST */}
       <div>
         <form onSubmit={formik.handleSubmit} className="flex flex-col gap-2">
-          <div className="grid px-3 md:grid-cols-3 gap-3">
             {/* title-Uz */}
+          <div className="px-3">
             <input
               id="title"
               name="title"
               type="text"
               placeholder="Type here"
-              className="input input-bordered w-full max-w-xl col-span-2"
+              className="input input-bordered w-full"
               onChange={formik.handleChange}
               value={formik.values.title}
             />
+          </div>
+          <div className="grid px-3 md:grid-cols-3 gap-3">
             {/* Image */}
             <input
               id="rasm"

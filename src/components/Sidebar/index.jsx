@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 const Sidebar = () => {
   const [open, setOpen] = useState(false);
   return (
-    <div className="relative md:p-3 lg:p-4 xl:p-5 2xl:p-6">
+    <div className="relative md:p-3 lg:p-4 xl:p-5 2xl:p-6 z-50">
       {/* NAVBAR */}
       <div className="border-b-2">
         <div className="flex items-center justify-between p-3">
@@ -98,8 +98,8 @@ const Sidebar = () => {
 
       {/* SIDEBAR */}
       <div
-        className={`h-[100vh] bg-[#0e0e0e] absolute overflow-auto ... left-0 top-0 ${
-          open ? "w-72 pl-4" : "w-0 px-0"
+        className={`h-[100vh] bg-[#0e0e0e] overflow-auto ... left-0 top-0 ${
+          open ? "w-72 pl-4 fixed left-0 top-0" : "w-0 px-0 absolute"
         } duration-500 text-gray-100 scrollbar-thumb-gray-400 scrollbar-track-gray-200`}
       >
         <div className="scrollbar-thin overflow-y-scroll h-full">

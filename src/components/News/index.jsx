@@ -70,12 +70,15 @@ const News = () => {
 
   return (
     <div className="max-w-7xl mx-auto">
-      <h1 className="text-3xl font-bold text-center mb-5 p-3">Yangiliklar</h1>
+      <h1 className="text-3xl font-bold text-center mb-5 pt-3">Yangiliklar</h1>
 
       {/* POST */}
-      <div>
+      <div className="mb-10">
+        <h2 className="text-2xl font-bold text-center mb-5 p-3">
+          Yangilik qo'shish
+        </h2>
         <form onSubmit={formik.handleSubmit} className="flex flex-col gap-2">
-            {/* title-Uz */}
+          {/* title-Uz */}
           <div className="px-3">
             <input
               id="title"
@@ -87,13 +90,13 @@ const News = () => {
               value={formik.values.title}
             />
           </div>
-          <div className="grid px-3 md:grid-cols-3 gap-3">
+          <div className="grid px-3 md:grid-cols-3 xl:grid-cols-2 gap-3">
             {/* Image */}
             <input
               id="rasm"
               name="rasm"
               type="file"
-              className="file-input file-input-bordered w-full max-w-xl col-span-1"
+              className="file-input file-input-bordered w-full md:col-span-1"
               onChange={formik.handleChange}
               value={formik.values.rasm}
             />
@@ -102,7 +105,7 @@ const News = () => {
               id="sana"
               name="sana"
               type="datetime-local"
-              className="input input-bordered w-full max-w-xl col-span-2"
+              className="input input-bordered w-full md:col-span-2 xl:col-span-1"
               onChange={formik.handleChange}
               value={formik.values.sana}
             />
@@ -118,13 +121,19 @@ const News = () => {
               value={formik.values.body}
             ></textarea>
           </div>
-          <button className="btn bg-gray-800 text-white" type="submit">
+          <button
+            className="btn bg-gray-800 hover:bg-gray-700 text-white"
+            type="submit"
+          >
             Qo'shish
           </button>
         </form>
       </div>
 
-      <div className="flex flex-col mt-20">
+      <div className="flex flex-col">
+        <h2 className="text-2xl font-bold text-center mb-5 p-3">
+          Tahrirlash va o'chirish
+        </h2>
         {/* GET */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-7xl mx-auto">
           {newsOne &&
@@ -158,13 +167,15 @@ const News = () => {
                           {item.title}
                         </h2>
                         <div className="card-actions justify-end p-2">
-                          <Link to={`/yangiliklar/${item.id}`}>
-                            <CiEdit className="text-green-600 cursor-pointer h-5 w-5 mr-2" />
+                          <Link className="btn" to={`/yangiliklar/${item.id}`}>
+                            <CiEdit className="text-green-600 cursor-pointer h-5 w-5" />
                           </Link>
-                          <RiDeleteBin5Line
-                            className="text-red-600 cursor-pointer h-5 w-5"
+                          <button
+                            className="btn"
                             onClick={() => handleDelete(item.id)}
-                          />
+                          >
+                            <RiDeleteBin5Line className="text-red-600 cursor-pointer h-5 w-5" />
+                          </button>
                         </div>
                       </div>
                     </div>

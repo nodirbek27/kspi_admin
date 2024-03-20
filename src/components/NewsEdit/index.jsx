@@ -49,24 +49,36 @@ const NewsEdit = () => {
       </h1>
 
       <form onSubmit={formik.handleSubmit} className="flex flex-col gap-2">
-        <div className="grid px-3 md:grid-cols-3 gap-3">
-          {/* TITLE-Uz */}
+        {/* title-Uz */}
+        <div className="px-3">
           <input
             id="title"
             name="title"
             type="text"
             placeholder="Type here"
-            className="input input-bordered w-full max-w-xl col-span-2"
+            className="input input-bordered w-full"
             onChange={formik.handleChange}
             value={formik.values.title}
           />
+        </div>
+        <div className="grid px-3 md:grid-cols-3 xl:grid-cols-2 gap-3">
           {/* Image */}
           <input
             id="rasm"
             name="rasm"
             type="file"
-            className="file-input file-input-bordered w-full max-w-xl col-span-1"
+            className="file-input file-input-bordered w-full md:col-span-1"
             onChange={formik.handleChange}
+            value={formik.values.rasm}
+          />
+          {/* Date */}
+          <input
+            id="sana"
+            name="sana"
+            type="datetime-local"
+            className="input input-bordered w-full md:col-span-2 xl:col-span-1"
+            onChange={formik.handleChange}
+            value={formik.values.sana}
           />
           {/* Body */}
         </div>
@@ -80,7 +92,7 @@ const NewsEdit = () => {
             value={formik.values.body}
           ></textarea>
         </div>
-        <button className="btn bg-gray-800 text-white" type="submit">
+        <button className="btn bg-gray-800 hover:bg-gray-700 text-white" type="submit">
           Saqlash
         </button>
       </form>

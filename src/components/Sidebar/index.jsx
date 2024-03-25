@@ -17,6 +17,10 @@ import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   const [open, setOpen] = useState(false);
+
+  const handleClick = () => {
+    localStorage.removeItem("token")
+  }
   return (
     <div className="relative md:p-3 lg:p-4 xl:p-5 2xl:p-6 z-50">
       {/* NAVBAR */}
@@ -88,7 +92,7 @@ const Sidebar = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/">Chiqish</Link>
+                  <Link to="/" onClick={() => handleClick()}>Chiqish</Link>
                 </li>
               </ul>
             </div>

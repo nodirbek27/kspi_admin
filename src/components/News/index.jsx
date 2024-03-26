@@ -14,19 +14,102 @@ const News = () => {
   // POST
   const formik = useFormik({
     initialValues: {
-      title: "",
-      body: "",
-      rasm: "",
+      rasm_0: "",
+      rasm_1: "",
+      rasm_2: "",
+      rasm_3: "",
+      rasm_4: "",
+      title_uz: "",
+      title_ru: "",
+      title_en: "",
+      subtitle_uz: "",
+      subtitle_ru: "",
+      subtitle_en: "",
+      body_0_uz: "",
+      body_0_ru: "",
+      body_0_en: "",
+      body_1_uz: "",
+      body_1_ru: "",
+      body_1_en: "",
+      body_2_uz: "",
+      body_2_ru: "",
+      body_2_en: "",
+      body_3_uz: "",
+      body_3_ru: "",
+      body_3_en: "",
+      body_4_uz: "",
+      body_4_ru: "",
+      body_4_en: "",
+      body_5_uz: "",
+      body_5_ru: "",
+      body_5_en: "",
+      body_6_uz: "",
+      body_6_ru: "",
+      body_6_en: "",
+      body_7_uz: "",
+      body_7_ru: "",
+      body_7_en: "",
+      body_8_uz: "",
+      body_8_ru: "",
+      body_8_en: "",
+      body_9_uz: "",
+      body_9_ru: "",
+      body_9_en: "",
       sana: "",
     },
     onSubmit: async (values) => {
-      const rasm = document.getElementById("rasm").files[0];
+      const rasm = document.getElementById("rasm_0").files[0];
+      const rasm1 = document.getElementById("rasm_1").files[0];
+      const rasm2 = document.getElementById("rasm_2").files[0];
+      const rasm3 = document.getElementById("rasm_3").files[0];
+      const rasm4 = document.getElementById("rasm_4").files[0];
       const data = new FormData();
-      data.append("rasm", rasm);
-      data.append("title", values.title);
-      data.append("body", values.body);
-      data.append("sana", values.sana);
+      data.append("rasm_0", rasm ? rasm : "");
+      data.append("rasm_1", rasm1 ? rasm1 : "");
+      data.append("rasm_2", rasm2 ? rasm2 : "");
+      data.append("rasm_3", rasm3 ? rasm3 : "");
+      data.append("rasm_4", rasm4 ? rasm4 : "");
+      data.append("title_uz", values.title_uz || "");
+      data.append("title_ru", values.title_ru || "");
+      data.append("title_en", values.title_en || "");
+      data.append("subtitle_uz", values.subtitle_uz || "");
+      data.append("subtitle_ru", values.subtitle_ru || "");
+      data.append("subtitle_en", values.subtitle_en || "");
+      data.append("body_0_uz", values.body_0_uz || "");
+      data.append("body_0_ru", values.body_0_ru || "");
+      data.append("body_0_en", values.body_0_en || "");
+      data.append("body_1_uz", values.body_1_uz || "");
+      data.append("body_1_ru", values.body_1_ru || "");
+      data.append("body_1_en", values.body_1_en || "");
+      data.append("body_2_uz", values.body_2_uz || "");
+      data.append("body_2_ru", values.body_2_ru || "");
+      data.append("body_2_en", values.body_2_en || "");
+      data.append("body_3_uz", values.body_3_uz || "");
+      data.append("body_3_ru", values.body_3_ru || "");
+      data.append("body_3_en", values.body_3_en || "");
+      data.append("body_4_uz", values.body_4_uz || "");
+      data.append("body_4_ru", values.body_4_ru || "");
+      data.append("body_4_en", values.body_4_en || "");
+      data.append("body_5_uz", values.body_5_uz || "");
+      data.append("body_5_ru", values.body_5_ru || "");
+      data.append("body_5_en", values.body_5_en || "");
+      data.append("body_6_uz", values.body_6_uz || "");
+      data.append("body_6_ru", values.body_6_ru || "");
+      data.append("body_6_en", values.body_6_en || "");
+      data.append("body_7_uz", values.body_7_uz || "");
+      data.append("body_7_ru", values.body_7_ru || "");
+      data.append("body_7_en", values.body_7_en || "");
+      data.append("body_8_uz", values.body_8_uz || "");
+      data.append("body_8_ru", values.body_8_ru || "");
+      data.append("body_8_en", values.body_8_en || "");
+      data.append("body_9_uz", values.body_9_uz || "");
+      data.append("body_9_ru", values.body_9_ru || "");
+      data.append("body_9_en", values.body_9_en || "");
+      data.append("sana", values.sana || "");
       await APIYangilik.post(data);
+      for (let entry of data.entries()) {
+        console.log(entry[0], entry[1]);
+      }
     },
   });
 
@@ -69,7 +152,7 @@ const News = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="mx-2 lg:mx-5 xl:mx-10">
       <h1 className="text-3xl font-bold text-center mb-5 pt-3">Yangiliklar</h1>
 
       {/* POST */}
@@ -78,49 +161,336 @@ const News = () => {
           Yangilik qo'shish
         </h2>
         <form onSubmit={formik.handleSubmit} className="flex flex-col gap-2">
-          {/* title-Uz */}
-          <div className="px-3">
-            <input
-              id="title"
-              name="title"
-              type="text"
-              placeholder="Type here"
-              className="input input-bordered w-full"
-              onChange={formik.handleChange}
-              value={formik.values.title}
-            />
+          {/* SARLAVHA */}
+          <h3 className="mt-3 text-2xl">Sarlavha</h3>
+          <div className="grid lg:grid-cols-3 gap-3">
+            <div>
+              <label
+                htmlFor="title_uz"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Sarlavha Uz
+              </label>
+              <textarea
+                id="title_uz"
+                name="title_uz"
+                rows="4"
+                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Sarlavha..."
+                onChange={formik.handleChange}
+                value={formik.values.title_uz}
+              ></textarea>
+            </div>
+            <div>
+              <label
+                htmlFor="title_ru"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Sarlavha Ru
+              </label>
+              <textarea
+                id="title_ru"
+                name="title_ru"
+                rows="4"
+                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Sarlavha..."
+                onChange={formik.handleChange}
+                value={formik.values.title_ru}
+              ></textarea>
+            </div>
+            <div>
+              <label
+                htmlFor="title_en"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Sarlavha En
+              </label>
+              <textarea
+                id="title_en"
+                name="title_en"
+                rows="4"
+                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Sarlavha..."
+                onChange={formik.handleChange}
+                value={formik.values.title_en}
+              ></textarea>
+            </div>
           </div>
-          <div className="grid px-3 md:grid-cols-3 xl:grid-cols-2 gap-3">
+
+          <h3 className="mt-3 text-2xl">Rasm va sana</h3>
+          <div className="grid grid-cols-3 gap-3">
             {/* Image */}
-            <input
-              id="rasm"
-              name="rasm"
-              type="file"
-              className="file-input file-input-bordered w-full md:col-span-1"
-              onChange={formik.handleChange}
-              value={formik.values.rasm}
-            />
+            <div>
+              <label
+                htmlFor="rasm_0"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Asosiy rasm
+              </label>
+              <input
+                id="rasm_0"
+                name="rasm_0"
+                type="file"
+                className="file-input file-input-bordered w-full md:col-span-1"
+                onChange={formik.handleChange}
+                value={formik.values.rasm_0}
+              />
+            </div>
+            <div>
+              {/* Image */}
+              <label
+                htmlFor="rasm_1"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Qo'shimcha rasm (ixtiyoriy)
+              </label>
+              <input
+                id="rasm_1"
+                name="rasm_1"
+                type="file"
+                className="file-input file-input-bordered w-full md:col-span-1"
+                onChange={formik.handleChange}
+                value={formik.values.rasm_1}
+              />
+            </div>
+            <div>
+              {/* Image */}
+              <label
+                htmlFor="rasm_2"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Qo'shimcha rasm (ixtiyoriy)
+              </label>
+              <input
+                id="rasm_2"
+                name="rasm_2"
+                type="file"
+                className="file-input file-input-bordered w-full md:col-span-1"
+                onChange={formik.handleChange}
+                value={formik.values.rasm_2}
+              />
+            </div>
+            <div>
+              {/* Image */}
+              <label
+                htmlFor="rasm_3"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Qo'shimcha rasm (ixtiyoriy)
+              </label>
+              <input
+                id="rasm_3"
+                name="rasm_3"
+                type="file"
+                className="file-input file-input-bordered w-full md:col-span-1"
+                onChange={formik.handleChange}
+                value={formik.values.rasm_3}
+              />
+            </div>
+            <div>
+              {/* Image */}
+              <label
+                htmlFor="rasm_4"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Qo'shimcha rasm (ixtiyoriy)
+              </label>
+              <input
+                id="rasm_4"
+                name="rasm_4"
+                type="file"
+                className="file-input file-input-bordered w-full md:col-span-1"
+                onChange={formik.handleChange}
+                value={formik.values.rasm_4}
+              />
+            </div>
+
             {/* Date */}
-            <input
-              id="sana"
-              name="sana"
-              type="datetime-local"
-              className="input input-bordered w-full md:col-span-2 xl:col-span-1"
-              onChange={formik.handleChange}
-              value={formik.values.sana}
-            />
-            {/* Body */}
+            <div>
+              <label
+                htmlFor="sana"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Sana
+              </label>
+              <input
+                id="sana"
+                name="sana"
+                type="datetime-local"
+                className="input input-bordered w-full md:col-span-2 xl:col-span-1"
+                onChange={formik.handleChange}
+                value={formik.values.sana}
+              />
+            </div>
           </div>
-          <div className="px-3">
-            <textarea
-              id="body"
-              name="body"
-              className="textarea textarea-bordered w-full"
-              placeholder="Bio"
-              onChange={formik.handleChange}
-              value={formik.values.body}
-            ></textarea>
+
+          {/* MALUMOT */}
+          <h3 className="mt-3 text-2xl">Ma'lumotlar</h3>
+          <div className="grid lg:grid-cols-3 gap-3">
+            <div>
+              <label
+                htmlFor="body_0_uz"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Ma'lumot Uz
+              </label>
+              <textarea
+                id="body_0_uz"
+                name="body_0_uz"
+                rows="4"
+                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Ma'lumot..."
+                onChange={formik.handleChange}
+                value={formik.values.body_0_uz}
+              ></textarea>
+            </div>
+            <div>
+              <label
+                htmlFor="body_0_ru"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Ma'lumot Ru
+              </label>
+              <textarea
+                id="body_0_ru"
+                name="body_0_ru"
+                rows="4"
+                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Ma'lumot..."
+                onChange={formik.handleChange}
+                value={formik.values.body_0_ru}
+              ></textarea>
+            </div>
+            <div>
+              <label
+                htmlFor="body_0_en"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Ma'lumot En
+              </label>
+              <textarea
+                id="body_0_en"
+                name="body_0_en"
+                rows="4"
+                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Ma'lumot..."
+                onChange={formik.handleChange}
+                value={formik.values.body_0_en}
+              ></textarea>
+            </div>
           </div>
+
+          {/* MALUMOT-2 */}
+          <div className="grid lg:grid-cols-3 gap-3">
+            <div>
+              <label
+                htmlFor="body_1_uz"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Ma'lumot-2 Uz
+              </label>
+              <textarea
+                id="body_1_uz"
+                name="body_1_uz"
+                rows="4"
+                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Ma'lumot-2..."
+                onChange={formik.handleChange}
+                value={formik.values.body_1_uz}
+              ></textarea>
+            </div>
+            <div>
+              <label
+                htmlFor="body_1_ru"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Ma'lumot-2 Ru
+              </label>
+              <textarea
+                id="body_1_ru"
+                name="body_1_ru"
+                rows="4"
+                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Ma'lumot-2..."
+                onChange={formik.handleChange}
+                value={formik.values.body_1_ru}
+              ></textarea>
+            </div>
+            <div>
+              <label
+                htmlFor="body_1_en"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Ma'lumot-2 En
+              </label>
+              <textarea
+                id="body_1_en"
+                name="body_1_en"
+                rows="4"
+                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Ma'lumot-2..."
+                onChange={formik.handleChange}
+                value={formik.values.body_1_en}
+              ></textarea>
+            </div>
+          </div>
+
+          {/* MALUMOT-3 */}
+          <div className="grid lg:grid-cols-3 gap-3">
+            <div>
+              <label
+                htmlFor="body_2_uz"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Ma'lumot-3 Uz
+              </label>
+              <textarea
+                id="body_2_uz"
+                name="body_2_uz"
+                rows="4"
+                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Ma'lumot-3..."
+                onChange={formik.handleChange}
+                value={formik.values.body_2_uz}
+              ></textarea>
+            </div>
+            <div>
+              <label
+                htmlFor="body_2_ru"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Ma'lumot-3 Ru
+              </label>
+              <textarea
+                id="body_2_ru"
+                name="body_2_ru"
+                rows="4"
+                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Ma'lumot-3..."
+                onChange={formik.handleChange}
+                value={formik.values.body_2_ru}
+              ></textarea>
+            </div>
+            <div>
+              <label
+                htmlFor="body_2_en"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Ma'lumot-3 En
+              </label>
+              <textarea
+                id="body_2_en"
+                name="body_2_en"
+                rows="4"
+                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Ma'lumot-3..."
+                onChange={formik.handleChange}
+                value={formik.values.body_2_en}
+              ></textarea>
+            </div>
+          </div>
+
+          {/* BUTTON QOSHISH */}
           <button
             className="btn bg-gray-800 hover:bg-gray-700 text-white"
             type="submit"

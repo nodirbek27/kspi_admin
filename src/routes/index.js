@@ -6,6 +6,8 @@ import NewsPage from "../pages/NewsPage";
 import New from "../pages/NewsEditPage";
 import Elonlar from "../pages/ElonlarPage";
 
+import Test from "../pages/TestPage";
+
 // LOGIN
 import Login from "../components/Login"
 
@@ -71,6 +73,12 @@ export const routes = [
           element: <Login />,
           path: "/",
         },
+        ////////  TEST
+        {
+          element: <Test />,
+          path: "/test",
+        },
+        /////
         {
           element: <Main />,
           path: "/main",

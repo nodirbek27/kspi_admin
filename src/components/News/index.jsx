@@ -11,14 +11,20 @@ const News = () => {
   const [newsOne, setNewsOne] = useState(null);
   const [pageNumber, setPageNumber] = useState(0);
 
+  const [image, setImage] = useState("");
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    setImage(file);
+  };
   // POST
   const formik = useFormik({
     initialValues: {
-      rasm_0: "",
-      rasm_1: "",
-      rasm_2: "",
-      rasm_3: "",
-      rasm_4: "",
+      // rasm: null,
+      // rasm_1: "",
+      // rasm_2: "",
+      // rasm_3: "",
+      // rasm_4: "",
       title_uz: "",
       title_ru: "",
       title_en: "",
@@ -58,58 +64,61 @@ const News = () => {
       sana: "",
     },
     onSubmit: async (values) => {
-      const rasm = document.getElementById("rasm_0").files[0];
-      const rasm1 = document.getElementById("rasm_1").files[0];
-      const rasm2 = document.getElementById("rasm_2").files[0];
-      const rasm3 = document.getElementById("rasm_3").files[0];
-      const rasm4 = document.getElementById("rasm_4").files[0];
+      // const rasm = document.getElementById("rasm").files[0];
+      // console.log(values);
+      // const rasm1 = document.getElementById("rasm_1").files[0];
+      // const rasm2 = document.getElementById("rasm_2").files[0];
+      // const rasm3 = document.getElementById("rasm_3").files[0];
+      // const rasm4 = document.getElementById("rasm_4").files[0];
+      // if (!image) return;
       const data = new FormData();
-      data.append("rasm_0", rasm ? rasm : "");
-      data.append("rasm_1", rasm1 ? rasm1 : "");
-      data.append("rasm_2", rasm2 ? rasm2 : "");
-      data.append("rasm_3", rasm3 ? rasm3 : "");
-      data.append("rasm_4", rasm4 ? rasm4 : "");
-      data.append("title_uz", values.title_uz || "");
-      data.append("title_ru", values.title_ru || "");
-      data.append("title_en", values.title_en || "");
-      data.append("subtitle_uz", values.subtitle_uz || "");
-      data.append("subtitle_ru", values.subtitle_ru || "");
-      data.append("subtitle_en", values.subtitle_en || "");
-      data.append("body_0_uz", values.body_0_uz || "");
-      data.append("body_0_ru", values.body_0_ru || "");
-      data.append("body_0_en", values.body_0_en || "");
-      data.append("body_1_uz", values.body_1_uz || "");
-      data.append("body_1_ru", values.body_1_ru || "");
-      data.append("body_1_en", values.body_1_en || "");
-      data.append("body_2_uz", values.body_2_uz || "");
-      data.append("body_2_ru", values.body_2_ru || "");
-      data.append("body_2_en", values.body_2_en || "");
-      data.append("body_3_uz", values.body_3_uz || "");
-      data.append("body_3_ru", values.body_3_ru || "");
-      data.append("body_3_en", values.body_3_en || "");
-      data.append("body_4_uz", values.body_4_uz || "");
-      data.append("body_4_ru", values.body_4_ru || "");
-      data.append("body_4_en", values.body_4_en || "");
-      data.append("body_5_uz", values.body_5_uz || "");
-      data.append("body_5_ru", values.body_5_ru || "");
-      data.append("body_5_en", values.body_5_en || "");
-      data.append("body_6_uz", values.body_6_uz || "");
-      data.append("body_6_ru", values.body_6_ru || "");
-      data.append("body_6_en", values.body_6_en || "");
-      data.append("body_7_uz", values.body_7_uz || "");
-      data.append("body_7_ru", values.body_7_ru || "");
-      data.append("body_7_en", values.body_7_en || "");
-      data.append("body_8_uz", values.body_8_uz || "");
-      data.append("body_8_ru", values.body_8_ru || "");
-      data.append("body_8_en", values.body_8_en || "");
-      data.append("body_9_uz", values.body_9_uz || "");
-      data.append("body_9_ru", values.body_9_ru || "");
-      data.append("body_9_en", values.body_9_en || "");
-      data.append("sana", values.sana || "");
+      console.log(image);
+      data.append("rasm_0", image);
+      // data.append("rasm_1", rasm1);
+      // data.append("rasm_2", rasm2);
+      // data.append("rasm_3", rasm3);
+      // data.append("rasm_4", rasm4);
+      data.append("title_uz", values.title_uz);
+      data.append("title_ru", values.title_ru);
+      data.append("title_en", values.title_en);
+      data.append("subtitle_uz", values.subtitle_uz);
+      data.append("subtitle_ru", values.subtitle_ru);
+      data.append("subtitle_en", values.subtitle_en);
+      data.append("body_0_uz", values.body_0_uz);
+      data.append("body_0_ru", values.body_0_ru);
+      data.append("body_0_en", values.body_0_en);
+      data.append("body_1_uz", values.body_1_uz);
+      data.append("body_1_ru", values.body_1_ru);
+      data.append("body_1_en", values.body_1_en);
+      data.append("body_2_uz", values.body_2_uz);
+      data.append("body_2_ru", values.body_2_ru);
+      data.append("body_2_en", values.body_2_en);
+      data.append("body_3_uz", values.body_3_uz);
+      data.append("body_3_ru", values.body_3_ru);
+      data.append("body_3_en", values.body_3_en);
+      data.append("body_4_uz", values.body_4_uz);
+      data.append("body_4_ru", values.body_4_ru);
+      data.append("body_4_en", values.body_4_en);
+      data.append("body_5_uz", values.body_5_uz);
+      data.append("body_5_ru", values.body_5_ru);
+      data.append("body_5_en", values.body_5_en);
+      data.append("body_6_uz", values.body_6_uz);
+      data.append("body_6_ru", values.body_6_ru);
+      data.append("body_6_en", values.body_6_en);
+      data.append("body_7_uz", values.body_7_uz);
+      data.append("body_7_ru", values.body_7_ru);
+      data.append("body_7_en", values.body_7_en);
+      data.append("body_8_uz", values.body_8_uz);
+      data.append("body_8_ru", values.body_8_ru);
+      data.append("body_8_en", values.body_8_en);
+      data.append("body_9_uz", values.body_9_uz);
+      data.append("body_9_ru", values.body_9_ru);
+      data.append("body_9_en", values.body_9_en);
+      data.append("sana", values.sana);
       await APIYangilik.post(data);
-      for (let entry of data.entries()) {
-        console.log(entry[0], entry[1]);
-      }
+      // for (let entry of data.entries()) {
+      //   console.log(entry[0], entry[1]);
+      // }
     },
   });
 
@@ -222,18 +231,19 @@ const News = () => {
             {/* Image */}
             <div>
               <label
-                htmlFor="rasm_0"
+                htmlFor="rasm"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
                 Asosiy rasm
               </label>
               <input
-                id="rasm_0"
-                name="rasm_0"
+                id="rasm"
+                name="rasm"
                 type="file"
+                accept="image/*"
                 className="file-input file-input-bordered w-full md:col-span-1"
-                onChange={formik.handleChange}
-                value={formik.values.rasm_0}
+                onChange={handleImageChange}
+                // value={formik.values.rasm}
               />
             </div>
             <div>
@@ -534,7 +544,7 @@ const News = () => {
                       {/* News title */}
                       <div className="flex flex-col justify-between flex-grow px-2">
                         <h2 className="leading-relaxed font-bold line-clamp-3 xl:line-clamp-2 text-base text-[#004269] text-center dark:text-gray-300 line">
-                          {item.title}
+                          {item.title_uz}
                         </h2>
                         <div className="card-actions justify-end p-2">
                           <Link className="btn" to={`/yangiliklar/${item.id}`}>

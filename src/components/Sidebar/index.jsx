@@ -19,8 +19,8 @@ const Sidebar = () => {
   const [open, setOpen] = useState(false);
 
   const handleClick = () => {
-    localStorage.removeItem("token")
-  }
+    localStorage.removeItem("token");
+  };
   return (
     <div className="relative md:p-3 lg:p-4 xl:p-5 2xl:p-6 z-50">
       {/* NAVBAR */}
@@ -92,7 +92,9 @@ const Sidebar = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/" onClick={() => handleClick()}>Chiqish</Link>
+                  <Link to="/" onClick={() => handleClick()}>
+                    Chiqish
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -765,6 +767,20 @@ const Sidebar = () => {
                 }`}
               >
                 Bo'sh ish o'rinlari
+              </h2>
+            </Link>
+            {/* TEST */}
+            <Link
+              to={"/test"}
+              className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
+            >
+              <CgWorkAlt size={20} />
+              <h2
+                className={`whitespace-pre duration-500 ${
+                  !open && "opacity-0 translate-x-28 overflow-hidden"
+                }`}
+              >
+                Test
               </h2>
             </Link>
           </div>

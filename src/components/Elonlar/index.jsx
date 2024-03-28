@@ -24,7 +24,7 @@ const News = () => {
       sana: "",
     },
     onSubmit: async (values) => {
-      const rasm = document.getElementById("rasm_0").files[0];
+      const rasm = document.getElementById("rasm").files[0];
       const data = new FormData();
       data.append("rasm", rasm);
       data.append("title", values.title);
@@ -42,7 +42,7 @@ const News = () => {
   });
 
   // GET and PAGINATION
-  const itemsPerPage = 12;
+  const itemsPerPage = 4;
   const pagesVisited = pageNumber * itemsPerPage;
   useEffect(() => {
     const loadPost = async () => {

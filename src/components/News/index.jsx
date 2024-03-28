@@ -11,20 +11,14 @@ const News = () => {
   const [newsOne, setNewsOne] = useState(null);
   const [pageNumber, setPageNumber] = useState(0);
 
-  const [image, setImage] = useState("");
-
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    setImage(file);
-  };
   // POST
   const formik = useFormik({
     initialValues: {
-      // rasm: null,
-      // rasm_1: "",
-      // rasm_2: "",
-      // rasm_3: "",
-      // rasm_4: "",
+      rasm: "",
+      rasm_1: "",
+      rasm_2: "",
+      rasm_3: "",
+      rasm_4: "",
       title_uz: "",
       title_ru: "",
       title_en: "",
@@ -64,20 +58,18 @@ const News = () => {
       sana: "",
     },
     onSubmit: async (values) => {
-      // const rasm = document.getElementById("rasm").files[0];
-      // console.log(values);
-      // const rasm1 = document.getElementById("rasm_1").files[0];
-      // const rasm2 = document.getElementById("rasm_2").files[0];
-      // const rasm3 = document.getElementById("rasm_3").files[0];
-      // const rasm4 = document.getElementById("rasm_4").files[0];
-      // if (!image) return;
+      const rasm = document.getElementById("rasm").files[0];
+      console.log(values);
+      const rasm1 = document.getElementById("rasm_1").files[0];
+      const rasm2 = document.getElementById("rasm_2").files[0];
+      const rasm3 = document.getElementById("rasm_3").files[0];
+      const rasm4 = document.getElementById("rasm_4").files[0];
       const data = new FormData();
-      console.log(image);
-      data.append("rasm_0", image);
-      // data.append("rasm_1", rasm1);
-      // data.append("rasm_2", rasm2);
-      // data.append("rasm_3", rasm3);
-      // data.append("rasm_4", rasm4);
+      data.append("rasm", rasm);
+      data.append("rasm_1", rasm1);
+      data.append("rasm_2", rasm2);
+      data.append("rasm_3", rasm3);
+      data.append("rasm_4", rasm4);
       data.append("title_uz", values.title_uz);
       data.append("title_ru", values.title_ru);
       data.append("title_en", values.title_en);
@@ -116,14 +108,11 @@ const News = () => {
       data.append("body_9_en", values.body_9_en);
       data.append("sana", values.sana);
       await APIYangilik.post(data);
-      // for (let entry of data.entries()) {
-      //   console.log(entry[0], entry[1]);
-      // }
     },
   });
 
   // GET and PAGINATION
-  const itemsPerPage = 12;
+  const itemsPerPage = 4;
   const pagesVisited = pageNumber * itemsPerPage;
   useEffect(() => {
     const loadPost = async () => {
@@ -240,10 +229,10 @@ const News = () => {
                 id="rasm"
                 name="rasm"
                 type="file"
-                accept="image/*"
+                // accept="image/*"
                 className="file-input file-input-bordered w-full md:col-span-1"
-                onChange={handleImageChange}
-                // value={formik.values.rasm}
+                onChange={formik.handleChange}
+                value={formik.values.rasm}
               />
             </div>
             <div>

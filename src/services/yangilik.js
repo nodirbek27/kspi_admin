@@ -21,3 +21,5 @@ const del = (id) => {
 const APIYangilik = { get, getbyId, post, put, del };
 
 export default APIYangilik;
+
+

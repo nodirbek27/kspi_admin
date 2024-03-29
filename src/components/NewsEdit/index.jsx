@@ -13,7 +13,6 @@ const NewsEdit = () => {
       try {
         const response = await APIYangilik.getbyId(id);
         setNewsData(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error("Error fetching news data:", error);
       }
@@ -21,53 +20,54 @@ const NewsEdit = () => {
     fetchNewsData();
   }, [id]);
 
+  console.log(newsData);
+
   const formik = useFormik({
     initialValues: {
-      rasm_1: "",
-      rasm_2: "",
-      rasm_3: "",
-      rasm_4: "",
-      rasm_5: "",
-      title_uz: newsData.title_uz,
-      title_ru: newsData.title_ru,
-      title_en: newsData.title_en,
-      subtitle_uz: "",
-      subtitle_ru: "",
-      subtitle_en: "",
-      body_0_uz: newsData.body_0_uz,
-      body_0_ru: newsData.body_0_ru,
-      body_0_en: newsData.body_0_en,
-      body_1_uz: "",
-      body_1_ru: "",
-      body_1_en: "",
-      body_2_uz: "",
-      body_2_ru: "",
-      body_2_en: "",
-      body_3_uz: "",
-      body_3_ru: "",
-      body_3_en: "",
-      body_4_uz: "",
-      body_4_ru: "",
-      body_4_en: "",
-      body_5_uz: "",
-      body_5_ru: "",
-      body_5_en: "",
-      body_6_uz: "",
-      body_6_ru: "",
-      body_6_en: "",
-      body_7_uz: "",
-      body_7_ru: "",
-      body_7_en: "",
-      body_8_uz: "",
-      body_8_ru: "",
-      body_8_en: "",
-      body_9_uz: "",
-      body_9_ru: "",
-      body_9_en: "",
-      sana: "",
+      rasm_1: newsData?.rasm_1,
+      rasm_2: newsData?.rasm_2,
+      rasm_3: newsData?.rasm_3,
+      rasm_4: newsData?.rasm_4,
+      rasm_5: newsData?.rasm_5,
+      title_uz: newsData?.title_uz,
+      title_ru: newsData?.title_ru,
+      title_en: newsData?.title_en,
+      subtitle_uz: newsData?.subtitle_uz,
+      subtitle_ru: newsData?.subtitle_ru,
+      subtitle_en: newsData?.subtitle_en,
+      body_0_uz: newsData?.body_0_uz,
+      body_0_ru: newsData?.body_0_ru,
+      body_0_en: newsData?.body_0_en,
+      body_1_uz: newsData?.body_1_uz,
+      body_1_ru: newsData?.body_1_ru,
+      body_1_en: newsData?.body_1_en,
+      body_2_uz: newsData?.body_2_uz,
+      body_2_ru: newsData?.body_2_ru,
+      body_2_en: newsData?.body_2_en,
+      body_3_uz: newsData?.body_3_uz,
+      body_3_ru: newsData?.body_3_ru,
+      body_3_en: newsData?.body_3_en,
+      body_4_uz: newsData?.body_4_uz,
+      body_4_ru: newsData?.body_4_ru,
+      body_4_en: newsData?.body_4_en,
+      body_5_uz: newsData?.body_5_uz,
+      body_5_ru: newsData?.body_5_ru,
+      body_5_en: newsData?.body_5_en,
+      body_6_uz: newsData?.body_6_uz,
+      body_6_ru: newsData?.body_6_ru,
+      body_6_en: newsData?.body_6_en,
+      body_7_uz: newsData?.body_7_uz,
+      body_7_ru: newsData?.body_7_ru,
+      body_7_en: newsData?.body_7_en,
+      body_8_uz: newsData?.body_8_uz,
+      body_8_ru: newsData?.body_8_ru,
+      body_8_en: newsData?.body_8_en,
+      body_9_uz: newsData?.body_9_uz,
+      body_9_ru: newsData?.body_9_ru,
+      body_9_en: newsData?.body_9_en,
+      sana: newsData?.sana,
     },
     onSubmit: async (values) => {
-      console.log(values);
       const rasm1 = document.getElementById("rasm_1").files[0];
       const rasm2 = document.getElementById("rasm_2").files[0];
       const rasm3 = document.getElementById("rasm_3").files[0];
@@ -118,13 +118,17 @@ const NewsEdit = () => {
       data.append("body_9_ru", values.body_9_ru);
       data.append("body_9_en", values.body_9_en);
       data.append("sana", values.sana);
-      await APIYangilik.post(data);
-      navigate("/yangiliklar");
+      try {
+        await APIYangilik.patch(id, data);
+        navigate("/yangiliklar");
+      } catch (error) {
+        console.error("Error updating news:", error);
+      }
     },
   });
 
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="mx-2 lg:mx-5 xl:mx-10 mb-10">
       <h1 className="text-3xl font-bold text-center mb-5 p-3">
         Yangilikni tahrirlash
       </h1>
@@ -910,7 +914,7 @@ const NewsEdit = () => {
 
         {/* BUTTON QOSHISH */}
         <button
-          className="btn bg-gray-800 hover:bg-gray-700 text-white"
+          className="btn bg-gray-800 hover:bg-gray-700 text-white mt-5"
           type="submit"
         >
           Saqlash

@@ -110,6 +110,7 @@ const News = () => {
       data.append("body_9_en", values.body_9_en);
       data.append("sana", values.sana);
       await APIYangilik.post(data);
+      window.location.reload();
     },
   });
 
@@ -134,7 +135,7 @@ const News = () => {
       }
     };
     loadPost();
-  }, [pagesVisited]);
+  }, [pagesVisited, news]);
   const pageCount = Math.ceil((news && news.length) / itemsPerPage);
   const changePage = ({ selected }) => {
     setPageNumber(selected);
@@ -146,6 +147,7 @@ const News = () => {
       await APIYangilik.del(id);
       const res = await APIYangilik.get();
       setNews(res?.data);
+      window.location.reload();
     } catch (error) {
       console.error("Error deleting news:", error);
     }

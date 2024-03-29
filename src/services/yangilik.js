@@ -1,26 +1,24 @@
 import axiosInstance from "./index";
 
-const epGet = "home/yangilik/get/"
+const ep = "home/yangilik/"
 const epPost = "home/yangilik/post/"
-const epDel = "home/yangilik/delete/"
-const epPut = "home/yangilik/update/"
 
-const get = () => axiosInstance.get(epGet);
+const get = () => axiosInstance.get(ep);
 
 const getbyId = (id) => {
-  return axiosInstance.get(`${epGet}${id}/`);
+  return axiosInstance.get(`${ep}${id}/`);
 };
 const post = (item) => {
   console.log(item);
   return axiosInstance.post(`${epPost}`, item);
 };
-const put = (id, item) => {
-  return axiosInstance.put(`${epPut}${id}/`, item);
+const patch = (id, item) => {
+  return axiosInstance.patch(`${ep}${id}/`, item);
 };
 const del = (id) => {
-  return axiosInstance.delete(`${epDel}${id}/`);
+  return axiosInstance.delete(`${ep}${id}/`);
 };
 
-const APIYangilik = { get, getbyId, post, put, del };
+const APIYangilik = { get, getbyId, post, patch, del };
 
 export default APIYangilik;

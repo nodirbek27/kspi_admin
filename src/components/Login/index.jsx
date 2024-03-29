@@ -8,6 +8,23 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  const refreshToken = async () => {
+    try {
+      const res = await APILogin.refreshPost({
+        refresh: "refresh",
+      });
+      const token = res.data.access;
+      if (token) {
+        localStorage.setItem("token", token);
+        return true;
+      }
+      return false;
+    } catch (err) {
+      console.error(err);
+      return false;
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -15,8 +32,6 @@ const Login = () => {
         username: name,
         password: password,
       });
-      console.log(res.data.access);
-      console.log(res.data.refresh);
       const token = res.data.access;
       if (token) {
         localStorage.setItem("token", token);
@@ -25,6 +40,13 @@ const Login = () => {
         setError("Incorrect credentials");
       }
     } catch (err) {
+      if (err.response && err.response.status === 401) {
+        const refreshed = await refreshToken();
+        if (refreshed) {
+          handleSubmit(e);
+          return;
+        }
+      }
       console.error(err);
       setError("Authentication failed");
     }

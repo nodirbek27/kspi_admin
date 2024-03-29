@@ -14,11 +14,11 @@ const News = () => {
   // POST
   const formik = useFormik({
     initialValues: {
-      rasm: "",
       rasm_1: "",
       rasm_2: "",
       rasm_3: "",
       rasm_4: "",
+      rasm_5: "",
       title_uz: "",
       title_ru: "",
       title_en: "",
@@ -58,18 +58,18 @@ const News = () => {
       sana: "",
     },
     onSubmit: async (values) => {
-      const rasm = document.getElementById("rasm").files[0];
       console.log(values);
       const rasm1 = document.getElementById("rasm_1").files[0];
       const rasm2 = document.getElementById("rasm_2").files[0];
       const rasm3 = document.getElementById("rasm_3").files[0];
       const rasm4 = document.getElementById("rasm_4").files[0];
+      const rasm5 = document.getElementById("rasm_5").files[0];
       const data = new FormData();
-      data.append("rasm", rasm);
       data.append("rasm_1", rasm1);
       data.append("rasm_2", rasm2);
       data.append("rasm_3", rasm3);
       data.append("rasm_4", rasm4);
+      data.append("rasm_5", rasm5);
       data.append("title_uz", values.title_uz);
       data.append("title_ru", values.title_ru);
       data.append("title_en", values.title_en);
@@ -280,24 +280,6 @@ const News = () => {
 
           <h3 className="mt-3 text-2xl">Rasm va sana</h3>
           <div className="grid grid-cols-3 gap-3">
-            {/* Image */}
-            <div>
-              <label
-                htmlFor="rasm"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Asosiy rasm
-              </label>
-              <input
-                id="rasm"
-                name="rasm"
-                type="file"
-                // accept="image/*"
-                className="file-input file-input-bordered w-full md:col-span-1"
-                onChange={formik.handleChange}
-                value={formik.values.rasm}
-              />
-            </div>
             <div>
               {/* Image */}
               <label
@@ -364,6 +346,24 @@ const News = () => {
                 className="file-input file-input-bordered w-full md:col-span-1"
                 onChange={formik.handleChange}
                 value={formik.values.rasm_4}
+              />
+            </div>
+            {/* Image */}
+            <div>
+              <label
+                htmlFor="rasm_5"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Asosiy rasm_5
+              </label>
+              <input
+                id="rasm_5"
+                name="rasm_5"
+                type="file"
+                // accept="image/*"
+                className="file-input file-input-bordered w-full md:col-span-1"
+                onChange={formik.handleChange}
+                value={formik.values.rasm_5}
               />
             </div>
 
@@ -962,7 +962,7 @@ const News = () => {
                       <div className="flex items-center mb-3 relative overflow-hidden">
                         <img
                           className="w-full h-48 md:h-48 object-cover rounded group-hover/item:scale-105 ease-in duration-300 ..."
-                          src={item.rasm}
+                          src={item.rasm_1}
                           alt="Sunset in the mountains"
                         />
                         <div className="absolute top-0 left-3 h-12 w-12 bg-[#802323] text-center flex flex-col text-sm p-1 rounded-b-md">

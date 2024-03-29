@@ -1,6 +1,6 @@
 import axiosInstance from "./index";
 
-const ep = "yangilik/yangilik/";
+const ep = "home/yangilik/";
 
 const get = () => axiosInstance.get(ep);
 

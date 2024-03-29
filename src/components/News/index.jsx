@@ -65,11 +65,13 @@ const News = () => {
       const rasm4 = document.getElementById("rasm_4").files[0];
       const rasm5 = document.getElementById("rasm_5").files[0];
       const data = new FormData();
+
       data.append("rasm_1", rasm1);
-      data.append("rasm_2", rasm2);
-      data.append("rasm_3", rasm3);
-      data.append("rasm_4", rasm4);
-      data.append("rasm_5", rasm5);
+      if (rasm2) data.append("rasm_2", rasm2);
+      if (rasm3) data.append("rasm_3", rasm3);
+      if (rasm4) data.append("rasm_4", rasm4);
+      if (rasm5) data.append("rasm_5", rasm5);
+
       data.append("title_uz", values.title_uz);
       data.append("title_ru", values.title_ru);
       data.append("title_en", values.title_en);
@@ -143,7 +145,7 @@ const News = () => {
     try {
       await APIYangilik.del(id);
       const res = await APIYangilik.get();
-      setNews(res.data);
+      setNews(res?.data);
     } catch (error) {
       console.error("Error deleting news:", error);
     }

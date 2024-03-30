@@ -1,24 +1,21 @@
 import axiosInstance from "./index";
 
-const epGet = "home/elon/";
+const ep = "home/elon/";
 const epPost = "home/elon/post/";
-const epPut = "home/elon/update/";
-const epDel = "home/elon/delete/";
 
-const get = () => axiosInstance.get(epGet);
+const get = () => axiosInstance.get(ep);
 
 const getbyId = (id) => {
-  return axiosInstance.get(`${epGet}${id}/`);
+  return axiosInstance.get(`${ep}${id}/`);
 };
 const post = (item) => {
-  console.log(item);
   return axiosInstance.post(`${epPost}`, item);
 };
 const put = (id, item) => {
-  return axiosInstance.put(`${epPut}${id}/`, item);
+  return axiosInstance.put(`${ep}${id}/`, item);
 };
 const del = (id) => {
-  return axiosInstance.delete(`${epDel}${id}/`);
+  return axiosInstance.delete(`${ep}${id}/`);
 };
 
 const APIElon = { get, getbyId, post, put, del };

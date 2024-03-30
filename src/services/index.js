@@ -5,7 +5,7 @@ const axiosInstance = axios.create({
   baseURL: "http://kspiapi.kokanddeveloper.uz/",
   headers: {
     "Content-Type": "multipart/form-data",
-    "Accept": "application/json",
+    Accept: "application/json",
     Authorization: `Bearer ${token}`,
   },
 });

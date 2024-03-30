@@ -1,6 +1,6 @@
 import axiosInstance from "./index";
 
-const epGet = "home/elon/get/";
+const epGet = "home/elon/";
 const epPost = "home/elon/post/";
 const epPut = "home/elon/update/";
 const epDel = "home/elon/delete/";

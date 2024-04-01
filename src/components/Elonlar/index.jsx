@@ -15,24 +15,40 @@ const News = () => {
   const formik = useFormik({
     initialValues: {
       rasm: "",
-      title: "",
-      detail: "",
+      title_uz: "",
+      title_ru: "",
+      title_en: "",
+      detail_uz: "",
+      detail_ru: "",
+      detail_en: "",
       boshlanish_vaqti: "",
       tugash_vaqti: "",
-      field: "",
-      adress: "",
+      field_uz: "",
+      field_ru: "",
+      field_en: "",
+      adress_uz: "",
+      adress_ru: "",
+      adress_en: "",
       sana: "",
     },
     onSubmit: async (values) => {
       const rasm = document.getElementById("rasm").files[0];
       const data = new FormData();
       data.append("rasm", rasm);
-      data.append("title", values.title);
-      data.append("detail", values.detail);
+      data.append("title_uz", values.title_uz);
+      data.append("title_ru", values.title_ru);
+      data.append("title_en", values.title_en);
+      data.append("detail_uz", values.detail_uz);
+      data.append("detail_ru", values.detail_ru);
+      data.append("detail_en", values.detail_en);
       data.append("boshlanish_vaqti", values.boshlanish_vaqti);
       data.append("tugash_vaqti", values.tugash_vaqti);
-      data.append("field", values.field);
-      data.append("adress", values.adress);
+      data.append("field_uz", values.field_uz);
+      data.append("field_ru", values.field_ru);
+      data.append("field_en", values.field_en);
+      data.append("adress_uz", values.adress_uz);
+      data.append("adress_ru", values.adress_ru);
+      data.append("adress_en", values.adress_en);
       data.append("sana", values.sana);
       await APIElon.post(data);
       for (let entry of data.entries()) {
@@ -90,19 +106,53 @@ const News = () => {
           <div className="grid lg:grid-cols-3 gap-3">
             <div>
               <label
-                htmlFor="title"
+                htmlFor="title_uz"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Sarlavha
+                Sarlavha Uz
               </label>
               <textarea
-                id="title"
-                name="title"
+                id="title_uz"
+                name="title_uz"
                 rows="2"
                 className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Sarlavha..."
                 onChange={formik.handleChange}
-                value={formik.values.title}
+                value={formik.values.title_uz}
+              ></textarea>
+            </div>
+            <div>
+              <label
+                htmlFor="title_ru"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Sarlavha Ru
+              </label>
+              <textarea
+                id="title_ru"
+                name="title_ru"
+                rows="2"
+                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Sarlavha..."
+                onChange={formik.handleChange}
+                value={formik.values.title_ru}
+              ></textarea>
+            </div>
+            <div>
+              <label
+                htmlFor="title_en"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Sarlavha En
+              </label>
+              <textarea
+                id="title_en"
+                name="title_en"
+                rows="2"
+                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Sarlavha..."
+                onChange={formik.handleChange}
+                value={formik.values.title_en}
               ></textarea>
             </div>
 
@@ -158,18 +208,50 @@ const News = () => {
             </div>
             <div>
               <label
-                htmlFor="field"
+                htmlFor="field_uz"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Yo'nalish
+                Yo'nalish Uz
               </label>
               <input
-                id="field"
-                name="field"
+                id="field_uz"
+                name="field_uz"
                 type="text"
                 className="input input-bordered w-full md:col-span-2 xl:col-span-1"
                 onChange={formik.handleChange}
-                value={formik.values.field}
+                value={formik.values.field_uz}
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="field_ru"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Yo'nalish Ru
+              </label>
+              <input
+                id="ffield_ru"
+                name="ffield_ru"
+                type="text"
+                className="input input-bordered w-full md:col-span-2 xl:col-span-1"
+                onChange={formik.handleChange}
+                value={formik.values.field_ru}
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="field_en"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Yo'nalish En
+              </label>
+              <input
+                id="field_en"
+                name="field_en"
+                type="text"
+                className="input input-bordered w-full md:col-span-2 xl:col-span-1"
+                onChange={formik.handleChange}
+                value={formik.values.field_en}
               />
             </div>
             <div>
@@ -191,41 +273,113 @@ const News = () => {
           </div>
 
           {/* Manzil */}
-          <div>
-            <label
-              htmlFor="adress"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Manzil
-            </label>
-            <textarea
-              id="adress"
-              name="adress"
-              rows="2"
-              className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Manzil..."
-              onChange={formik.handleChange}
-              value={formik.values.adress}
-            ></textarea>
+          <div className="grid lg:grid-cols-3 gap-3">
+            <div>
+              <label
+                htmlFor="adress_uz"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Manzil Uz
+              </label>
+              <textarea
+                id="adress_uz"
+                name="adress_uz"
+                rows="2"
+                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Manzil..."
+                onChange={formik.handleChange}
+                value={formik.values.adress_uz}
+              ></textarea>
+            </div>
+            <div>
+              <label
+                htmlFor="adress_ru"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Manzil Ru
+              </label>
+              <textarea
+                id="adress_ru"
+                name="adress_ru"
+                rows="2"
+                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Manzil..."
+                onChange={formik.handleChange}
+                value={formik.values.adress_ru}
+              ></textarea>
+            </div>
+            <div>
+              <label
+                htmlFor="adress_en"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Manzil En
+              </label>
+              <textarea
+                id="adress_en"
+                name="adress_en"
+                rows="2"
+                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Manzil..."
+                onChange={formik.handleChange}
+                value={formik.values.adress_en}
+              ></textarea>
+            </div>
           </div>
 
           {/* MALUMOT */}
-          <div>
-            <label
-              htmlFor="detail"
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Ma'lumot
-            </label>
-            <textarea
-              id="detail"
-              name="detail"
-              rows="4"
-              className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Ma'lumot..."
-              onChange={formik.handleChange}
-              value={formik.values.detail}
-            ></textarea>
+          <div className="grid lg:grid-cols-3 gap-3">
+            <div>
+              <label
+                htmlFor="detail_uz"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Ma'lumot Uz
+              </label>
+              <textarea
+                id="detail_uz"
+                name="detail_uz"
+                rows="4"
+                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Ma'lumot..."
+                onChange={formik.handleChange}
+                value={formik.values.detail_uz}
+              ></textarea>
+            </div>
+            <div>
+              <label
+                htmlFor="detail_ru"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Ma'lumot Ru
+              </label>
+              <textarea
+                id="detail_ru"
+                name="detail_ru"
+                rows="4"
+                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Ma'lumot..."
+                onChange={formik.handleChange}
+                value={formik.values.detail_ru}
+              ></textarea>
+            </div>
+            <div>
+              <label
+                htmlFor="detail_en"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Ma'lumot En
+              </label>
+              <textarea
+                id="detail_en"
+                name="detail_en"
+                rows="4"
+                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Ma'lumot..."
+                onChange={formik.handleChange}
+                value={formik.values.detail_en}
+              ></textarea>
+            </div>
           </div>
 
           {/* BUTTON QOSHISH */}

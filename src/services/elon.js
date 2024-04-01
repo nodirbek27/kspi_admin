@@ -1,7 +1,7 @@
 import axiosInstance from "./index";
 
 const ep = "home/elon/";
-const epPost = "home/elon/post/";
+const epPost = "home/elon/create/";
 
 const get = () => axiosInstance.get(ep);
 

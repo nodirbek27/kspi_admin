@@ -2,7 +2,7 @@ import axios from "axios";
 
 const token = localStorage.getItem("token");
 const axiosInstance = axios.create({
-  baseURL: "https://kspi.pythonanywhere.com/",
+  baseURL: "http://kspiapi.kokanddeveloper.uz/",
   headers: {
     "Content-Type": "multipart/form-data",
     Accept: "application/json",

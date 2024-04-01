@@ -20,6 +20,7 @@ const Sidebar = () => {
 
   const handleClick = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("refreshToken");
   };
   return (
     <div className="relative md:p-3 lg:p-4 xl:p-5 2xl:p-6 z-50">

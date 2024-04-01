@@ -32,13 +32,10 @@ const Login = () => {
       const res = await APILogin.post({
         username: name,
         password: password,
-      });
-      const token = res.data.access;
-      const refreshToken = res.data.refresh
-      
-      console.log(res.data);
-      console.log(res.data.access);
-      console.log(res.data.refresh);
+      })
+        .then().catch()
+      const token = res?.data?.access;
+      const refreshToken = res?.data?.refresh
 
       if (token) {
         localStorage.setItem("token", token);

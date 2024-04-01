@@ -8,7 +8,7 @@ const post = (item) => {
 };
 
 const refreshPost = (item) => {
-  return axiosInstance.post(`${epRef}`, item);
+  return axiosInstance.post(epRef, item);
 };
 
 const APILogin = { post, refreshPost };

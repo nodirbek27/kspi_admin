@@ -10,8 +10,9 @@ const Login = () => {
 
   const refreshToken = async () => {
     try {
+      const refreshToken = localStorage.getItem("refreshToken");
       const res = await APILogin.refreshPost({
-        refresh: "refresh",
+        refresh: refreshToken,
       });
       const token = res.data.access;
       if (token) {
@@ -24,7 +25,7 @@ const Login = () => {
       return false;
     }
   };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -33,8 +34,15 @@ const Login = () => {
         password: password,
       });
       const token = res.data.access;
+      const refreshToken = res.data.refresh
+      
+      console.log(res.data);
+      console.log(res.data.access);
+      console.log(res.data.refresh);
+
       if (token) {
         localStorage.setItem("token", token);
+        localStorage.setItem("refreshToken", refreshToken);
         navigate("/main");
       } else {
         setError("Incorrect credentials");
@@ -97,6 +105,7 @@ const Login = () => {
           >
             Kirish
           </button>
+          {/* <Link to="/main" className="bg-[#004269] hover:bg-[#004269] w-full text-white font-bold text-center p-2 rounded focus:outline-none focus:shadow-outline">Kirish</Link> */}
         </div>
         {error && <p className="text-red-500 text-xs italic">{error}</p>}
       </form>

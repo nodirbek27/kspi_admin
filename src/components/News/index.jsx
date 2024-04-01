@@ -110,7 +110,6 @@ const News = () => {
       data.append("body_9_en", values.body_9_en);
       data.append("sana", values.sana);
       await APIYangilik.post(data);
-      window.location.reload();
     },
   });
 

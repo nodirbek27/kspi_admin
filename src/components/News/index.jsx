@@ -221,7 +221,7 @@ const News = () => {
           {/* QO'SHIMCHA SARLAVHA */}
           <div className="join join-vertical w-full">
             <div className="collapse collapse-plus border border-base-300">
-              <input type="checkbox" name="accordion" defaultChecked />
+              <input type="checkbox" name="accordion" />
               <div className="collapse-title">
                 <h3 className="text-2xl">Qo'shimcha sarlavha</h3>
               </div>

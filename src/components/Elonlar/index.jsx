@@ -230,8 +230,8 @@ const News = () => {
                 Yo'nalish Ru
               </label>
               <input
-                id="ffield_ru"
-                name="ffield_ru"
+                id="field_ru"
+                name="field_ru"
                 type="text"
                 className="input input-bordered w-full md:col-span-2 xl:col-span-1"
                 onChange={formik.handleChange}

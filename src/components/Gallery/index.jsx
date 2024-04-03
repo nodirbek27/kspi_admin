@@ -7,31 +7,80 @@ import APIGallery from "../../services/gallery";
 
 const Gallery = () => {
   const [open, setOpen] = useState(false);
+  const [tur, setTur] = useState(null);
+  const [data, setData] = useState(null);
+  const [selectedTurId, setSelectedTurId] = useState(null);
 
   const hide = () => {
     setOpen(!open);
   };
 
+  // Turni POST qilish
   const formik = useFormik({
     initialValues: {
       tur_uz: "",
       tur_ru: "",
       tur_en: "",
     },
-    onSubmit: async(values) => {
-        await APIGallery.postTur(values)
-        console.log(values);
+    onSubmit: async (values, { resetForm }) => {
+      await APIGallery.postTur(values);
+      resetForm();
+      loadTur();
+      console.log(values);
     },
   });
 
-  const loadTur = async() => {
-    await APIGallery.getTur()
-    .then(res => console.log(res.data))
-  }
+  // Turni GET qilish
+  const loadTur = async () => {
+    await APIGallery.getTur().then((res) => setTur(res.data));
+  };
 
-  useEffect (() => {
-    loadTur()
-  }, [])
+  // Turni DELETE qilish
+  const handleTurDelete = async (id) => {
+    await APIGallery.delTur(id);
+    loadTur();
+  };
+  useEffect(() => {
+    loadTur();
+  }, []);
+
+  // Turni IDsini ushlash
+  const handleClick = (id) => {
+    setSelectedTurId(id);
+  };
+
+  // Rasm yuklash
+  const formik2 = useFormik({
+    initialValues: {
+      tur_id: "",
+      rasm: "",
+    },
+    onSubmit: async (values, { resetForm }) => {
+      const rasm = document.getElementById("rasm").files[0];
+      const data = new FormData();
+
+      data.append("rasm", rasm);
+      data.append("tur_id", selectedTurId);
+
+      await APIGallery.post(data);
+      console.log(data);
+      resetForm();
+      getRasm();
+    },
+  });
+
+  // Rasmni GET qilish
+  const getRasm = async () => {
+    await APIGallery.get().then((res) => setData(res.data));
+  };
+  // Rasmni DELETE qilish
+  const handleDelete = async (id) => {
+    await APIGallery.del(id);
+    getRasm();
+  };
+  useEffect(() => {
+    getRasm();
+  }, []);
 
   return (
     <div className="mx-3 lg:mx-5 lg:max-w-7xl xl:mx-auto">
@@ -95,7 +144,9 @@ const Gallery = () => {
                 value={formik.values.tur_en}
               />
             </div>
-            <button type="submit" className="btn max-w-xs mx-auto w-full">Qo'shish</button>
+            <button type="submit" className="btn max-w-xs mx-auto w-full">
+              Qo'shish
+            </button>
           </div>
         </form>
       </div>
@@ -122,44 +173,24 @@ const Gallery = () => {
           </thead>
           <tbody>
             {/* row 1 */}
-            <tr>
-              <th>1</th>
-              <td>Cy Ganderton</td>
-              <td>Cy Ganderton</td>
-              <td>Cy Ganderton</td>
-              <td>
-                <CiEdit className="text-green-600 cursor-pointer h-5 w-5" />
-              </td>
-              <td>
-                <RiDeleteBin5Line className="text-red-600 cursor-pointer h-5 w-5" />
-              </td>
-            </tr>
-            {/* row 2 */}
-            <tr>
-              <th>2</th>
-              <td>Hart Hagerty</td>
-              <td>Hart Hagerty</td>
-              <td>Hart Hagerty</td>
-              <td>
-                <CiEdit className="text-green-600 cursor-pointer h-5 w-5" />
-              </td>
-              <td>
-                <RiDeleteBin5Line className="text-red-600 cursor-pointer h-5 w-5" />
-              </td>
-            </tr>
-            {/* row 3 */}
-            <tr>
-              <th>3</th>
-              <td>Brice Swyre</td>
-              <td>Brice Swyre</td>
-              <td>Brice Swyre</td>
-              <td>
-                <CiEdit className="text-green-600 cursor-pointer h-5 w-5" />
-              </td>
-              <td>
-                <RiDeleteBin5Line className="text-red-600 cursor-pointer h-5 w-5" />
-              </td>
-            </tr>
+            {tur &&
+              tur.map((item, idx) => (
+                <tr key={idx}>
+                  <th>{item.id}</th>
+                  <td>{item.tur_uz}</td>
+                  <td>{item.tur_ru}</td>
+                  <td>{item.tur_en}</td>
+                  <td>
+                    <CiEdit className="text-green-600 cursor-pointer h-5 w-5" />
+                  </td>
+                  <td>
+                    <RiDeleteBin5Line
+                      onClick={() => handleTurDelete(item.id)}
+                      className="text-red-600 cursor-pointer h-5 w-5"
+                    />
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
@@ -167,33 +198,54 @@ const Gallery = () => {
       {/* Rasm yuklash */}
       <h2 className="text-2xl font-bold mb-5 pt-3">Rasm yuklash</h2>
       <div className="">
-        <form className="card max-w-sm border-2 border-[#555] p-3 gap-3">
+        <form
+          onSubmit={formik2.handleSubmit}
+          className="card max-w-sm border-2 border-[#555] p-3 gap-3"
+        >
           <div className="max-w-xs mx-auto w-full">
-            <label htmlFor="tur" className="mb-3">
+            <label htmlFor="tur_id" className="mb-3">
               Galleriya turlari
             </label>
             <select
-              id="tur"
-              name="tur"
+              id="tur_id"
+              name="tur_id"
               className="select select-bordered w-full"
-              defaultValue={"Galleriya turlari"}
+              onChange={(e) => handleClick(e.target.value)}
+              value={selectedTurId ? selectedTurId : "Galleriya turlari"}
             >
               <option disabled>Galleriya turlari</option>
-              <option>Seminarlar</option>
-              <option>Institut</option>
-              <option>Tadbirlar</option>
+              {tur &&
+                tur.map((item, idx) => (
+                  <option key={idx} value={item.id}>
+                    {item.tur_uz}
+                  </option>
+                ))}
             </select>
           </div>
           <div className="max-w-xs mx-auto w-full">
             <label htmlFor="rasm">Rasm tanlang.!</label>
             <input
               id="rasm"
+              name="rasm"
               type="file"
               className="file-input file-input-bordered w-full"
+              onChange={formik2.handleChange}
+              value={formik2.values.rasm}
             />
           </div>
-          <button className="btn max-w-xs mx-auto w-full">Qo'shish</button>
+          <button type="submit" className="btn max-w-xs mx-auto w-full">
+            Qo'shish
+          </button>
         </form>
+        {data?.map((item, idx) => (
+          <div key={idx}>
+            <div>
+              <img src={item.rasm} alt="rasm" />
+            </div>
+            <p>{item}</p>
+            <button onClick={handleDelete()} className="btn border-2 border-red-600">O'chirish</button>
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -58,7 +58,6 @@ const News = () => {
       sana: "",
     },
     onSubmit: async (values) => {
-      console.log(values);
       const rasm1 = document.getElementById("rasm_1").files[0];
       const rasm2 = document.getElementById("rasm_2").files[0];
       const rasm3 = document.getElementById("rasm_3").files[0];

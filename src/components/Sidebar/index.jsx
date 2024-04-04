@@ -23,10 +23,10 @@ const Sidebar = () => {
     localStorage.removeItem("refreshToken");
   };
   return (
-    <div className="relative md:p-3 lg:p-4 xl:p-5 2xl:p-6 z-50">
+    <div className="sticky top-0 left-0 md:px-3 lg:px-4 xl:px-5 2xl:px-6 z-50">
       {/* NAVBAR */}
-      <div className="border-b-2 sticky top-0 left-0">
-        <div className="flex items-center justify-between p-3">
+      <div className="border-b-2 sticky top-0 left-0 bg-white p-5">
+        <div className="flex items-center justify-between">
           {/* MENU */}
           <div className="py-3">
             <MdOutlineDashboardCustomize

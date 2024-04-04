@@ -44,6 +44,8 @@ const Gallery = () => {
     loadTur();
   }, []);
 
+  // const data1 = tur[0];
+
   // Turni IDsini ushlash
   const handleClick = (id) => {
     setSelectedTurId(id);
@@ -73,6 +75,7 @@ const Gallery = () => {
   const getRasm = async () => {
     await APIGallery.get().then((res) => setData(res.data.reverse()));
   };
+  console.log(data);
   // Rasmni DELETE qilish
   const handleDelete = async (id) => {
     await APIGallery.del(id);

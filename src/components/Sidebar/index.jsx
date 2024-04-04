@@ -25,7 +25,7 @@ const Sidebar = () => {
   return (
     <div className="relative md:p-3 lg:p-4 xl:p-5 2xl:p-6 z-50">
       {/* NAVBAR */}
-      <div className="border-b-2 fixed top-0 left-0 w-full">
+      <div className="border-b-2 sticky top-0 left-0">
         <div className="flex items-center justify-between p-3">
           {/* MENU */}
           <div className="py-3">

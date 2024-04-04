@@ -10,6 +10,26 @@ const News = () => {
   const [news, setNews] = useState(null);
   const [newsOne, setNewsOne] = useState(null);
   const [pageNumber, setPageNumber] = useState(0);
+  const [showFirst, setShowFirst] = useState(false);
+  const [showSecond, setShowSecond] = useState(false);
+  const [showThird, setShowThird] = useState(false);
+  const [showFourth, setShowFourth] = useState(false);
+  const [showFivth, setShowFivth] = useState(false);
+
+
+  const handleButtonClick = () => {
+    if (!showFirst) {
+      setShowFirst(true);
+    } else if (!showSecond) {
+      setShowSecond(true);
+    } else if (!showThird) {
+      setShowThird(true);
+    } else if (!showFourth) {
+      setShowFourth(true);
+    } else if (!showFivth) {
+      setShowFivth(true);
+    }
+  };
 
   // POST
   const formik = useFormik({
@@ -288,7 +308,7 @@ const News = () => {
                 htmlFor="rasm_1"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Qo'shimcha rasm (ixtiyoriy)
+                Asosiy rasm
               </label>
               <input
                 id="rasm_1"
@@ -299,7 +319,7 @@ const News = () => {
                 value={formik.values.rasm_1}
               />
             </div>
-            <div>
+            <div className={showSecond ? "" : "hidden"}>
               {/* Image */}
               <label
                 htmlFor="rasm_2"
@@ -316,7 +336,7 @@ const News = () => {
                 value={formik.values.rasm_2}
               />
             </div>
-            <div>
+            <div className={showThird ? "" : "hidden"}>
               {/* Image */}
               <label
                 htmlFor="rasm_3"
@@ -333,7 +353,7 @@ const News = () => {
                 value={formik.values.rasm_3}
               />
             </div>
-            <div>
+            <div className={showFourth ? "" : "hidden"}>
               {/* Image */}
               <label
                 htmlFor="rasm_4"
@@ -350,13 +370,13 @@ const News = () => {
                 value={formik.values.rasm_4}
               />
             </div>
-            {/* Image */}
-            <div>
+            {/* Image */ }
+            <div className={showFivth ? "" : "hidden"}>
               <label
                 htmlFor="rasm_5"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Asosiy rasm_5
+                Qo'shimcha rasm (ixtiyoriy)
               </label>
               <input
                 id="rasm_5"
@@ -366,6 +386,22 @@ const News = () => {
                 className="file-input file-input-bordered w-full md:col-span-1"
                 onChange={formik.handleChange}
                 value={formik.values.rasm_5}
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="button"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Rasm qo'shish
+              </label>
+              <input
+                id="button"
+                name="button"
+                type="button"
+                className="file-input file-input-bordered w-full md:col-span-1 text-xl font-bold cursor-pointer"
+                onClick={handleButtonClick}
+                value={"+"}
               />
             </div>
 

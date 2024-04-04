@@ -44,6 +44,8 @@ const Gallery = () => {
     loadTur();
   }, []);
 
+  // const data1 = tur[0];
+
   // Turni IDsini ushlash
   const handleClick = (id) => {
     setSelectedTurId(id);
@@ -71,8 +73,9 @@ const Gallery = () => {
 
   // Rasmni GET qilish
   const getRasm = async () => {
-    await APIGallery.get().then((res) => setData(res.data));
+    await APIGallery.get().then((res) => setData(res.data.reverse()));
   };
+  console.log(data);
   // Rasmni DELETE qilish
   const handleDelete = async (id) => {
     await APIGallery.del(id);
@@ -197,10 +200,10 @@ const Gallery = () => {
 
       {/* Rasm yuklash */}
       <h2 className="text-2xl font-bold mb-5 pt-3">Rasm yuklash</h2>
-      <div className="">
+      <div className="md:flex gap-5">
         <form
           onSubmit={formik2.handleSubmit}
-          className="card max-w-sm border-2 border-[#555] p-3 gap-3"
+          className="card max-w-sm border-2 border-[#555] p-3 gap-3 mb-5"
         >
           <div className="max-w-xs mx-auto w-full">
             <label htmlFor="tur_id" className="mb-3">
@@ -237,15 +240,26 @@ const Gallery = () => {
             Qo'shish
           </button>
         </form>
-        {data?.map((item, idx) => (
-          <div key={idx}>
-            <div>
-              <img src={item.rasm} alt="rasm" />
+        <div className="max-w-[340px] md:max-w-[500px] xl:max-w-[800px] mx-auto grid grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-7 gap-3 overflow-y-scroll max-h-[500px] md:max-h-[240px]">
+          {data?.map((item, idx) => (
+            <div key={idx}>
+              <div>
+                <img
+                  className="w-[100px] h-[60px] object-cover rounded-md"
+                  src={item.rasm}
+                  alt="rasm"
+                />
+              </div>
+              <p>Tur: {item.tur_id[0]}</p>
+              <button
+                onClick={() => handleDelete(item.id)}
+                className="btn-sm rounded bg-slate-200 border-2 border-red-600 hover:bg-red-600 hover:text-white font-semibold transition duration-200"
+              >
+                O'chirish
+              </button>
             </div>
-            <p>{item}</p>
-            <button onClick={handleDelete()} className="btn border-2 border-red-600">O'chirish</button>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

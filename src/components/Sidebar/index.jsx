@@ -25,7 +25,7 @@ const Sidebar = () => {
   return (
     <div className="relative md:p-3 lg:p-4 xl:p-5 2xl:p-6 z-50">
       {/* NAVBAR */}
-      <div className="border-b-2">
+      <div className="border-b-2 fixed top-0 left-0 w-full">
         <div className="flex items-center justify-between p-3">
           {/* MENU */}
           <div className="py-3">
@@ -191,7 +191,7 @@ const Sidebar = () => {
                     <div className="collapse-content">
                       <Link
                         to={"/ilmiy-xabarlar"}
-                        className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
+                        className={`flex items-center text-sm gap-3.5 font-medium p-2 pl-0 hover:bg-gray-800 rounded`}
                       >
                         <MdKeyboardDoubleArrowRight size={14} />
                         <h2
@@ -199,12 +199,12 @@ const Sidebar = () => {
                             !open && "opacity-0 translate-x-28 overflow-hidden"
                           }`}
                         >
-                          Qo'qon DPI. Ilmiy xabarlar
+                          Qo'qon DPI. <br /> Ilmiy xabarlar
                         </h2>
                       </Link>
                       <Link
                         to={"/jahon-ilmiy-tadqiqotlar-jurnali"}
-                        className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
+                        className={`flex items-center text-sm gap-3.5 font-medium p-2 pl-0 hover:bg-gray-800 rounded`}
                       >
                         <MdKeyboardDoubleArrowRight size={14} />
                         <h2
@@ -212,7 +212,8 @@ const Sidebar = () => {
                             !open && "opacity-0 translate-x-28 overflow-hidden"
                           }`}
                         >
-                          Jahon ilmiy tadqiqot jurnali
+                          Jahon ilmiy <br />
+                          tadqiqot jurnali
                         </h2>
                       </Link>
                     </div>

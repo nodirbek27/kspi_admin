@@ -11,6 +11,16 @@ const News = () => {
   const [newsOne, setNewsOne] = useState(null);
   const [pageNumber, setPageNumber] = useState(0);
 
+  const loadPost = async () => {
+    try {
+      const res = await APIElon.get();
+      setNews(res.data.reverse());
+      setNewsOne(res.data.slice(pageNumber * itemsPerPage, (pageNumber + 1) * itemsPerPage));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // POST
   const formik = useFormik({
     initialValues: {
@@ -51,34 +61,18 @@ const News = () => {
       data.append("adress_en", values.adress_en);
       data.append("sana", values.sana);
       await APIElon.post(data);
-      for (let entry of data.entries()) {
-        console.log(entry[0], entry[1]);
-      }
+      loadPost()
     },
   });
 
   // GET and PAGINATION
   const itemsPerPage = 4;
   const pagesVisited = pageNumber * itemsPerPage;
+  
   useEffect(() => {
-    const loadPost = async () => {
-      try {
-        await APIElon.get()
-          .then((res) => {
-            setNews(res.data.reverse());
-            setNewsOne(
-              res.data.slice(pagesVisited, pagesVisited + itemsPerPage)
-            );
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      } catch (error) {
-        console.log(error);
-      }
-    };
     loadPost();
   }, [pagesVisited]);
+
   const pageCount = Math.ceil((news && news.length) / itemsPerPage);
   const changePage = ({ selected }) => {
     setPageNumber(selected);
@@ -88,8 +82,7 @@ const News = () => {
   const handleDelete = async (id) => {
     try {
       await APIElon.del(id);
-      const res = await APIElon.get();
-      setNews(res.data);
+      loadPost()
     } catch (error) {
       console.error("Error deleting news:", error);
     }

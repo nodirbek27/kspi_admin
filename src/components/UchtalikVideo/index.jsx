@@ -8,6 +8,12 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 const UchtalikVideo = () => {
   const [fikr, setFikr] = useState(null);
 
+  // Function to extract video ID from YouTube Shorts link and construct embed link
+  const getEmbedLinkFromShortsLink = (shortsLink) => {
+    const videoId = shortsLink.split("/").pop();
+    return `https://www.youtube-nocookie.com/embed/${videoId}?rel=0&controls=1&showinfo=0&autoplay=1&playsinline=1&enablejsapi=1`;
+  };
+
   // POST
   const formik = useFormik({
     initialValues: {
@@ -28,7 +34,7 @@ const UchtalikVideo = () => {
 
       data.append("rasm", rasm);
       data.append("video", video);
-      data.append("link", values.link);
+      data.append("link", getEmbedLinkFromShortsLink(values.link));
       data.append("text_uz", values.text_uz);
       data.append("text_ru", values.text_ru);
       data.append("text_en", values.text_en);

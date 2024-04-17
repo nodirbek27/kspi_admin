@@ -42,7 +42,6 @@ const UchtalikVideo = () => {
       data.append("talaba_ru", values.talaba_ru);
       data.append("talaba_en", values.talaba_en);
       await APIFikr.post(data);
-      console.log(data);
       loadPost();
       resetForm();
     },

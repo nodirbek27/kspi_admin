@@ -22,7 +22,7 @@ import AsosiyVideo from '../pages/Home/AsosiyVideo'
 import InteraktivXizmatlar from '../pages/Home/InteraktivXizmatlar'
 import Statistika from '../pages/Home/Statistika'
 import TalabaFikri from '../pages/Home/TalabaFikri'
-import UchtalikVideo from '../pages/Home/UchtalikVideo'
+import UchtalikVideoPage from '../pages/Home/UchtalikVideoPage'
 import Galleriya from '../pages/Home/Galleriya'
 import Hamkorlar from '../pages/Home/Hamkorlar'
 import Boglanish from '../pages/Home/Boglanish'
@@ -138,7 +138,7 @@ export const routes = [
           path: "/talaba-fikri",
         },
         {
-          element: <UchtalikVideo />,
+          element: <UchtalikVideoPage />,
           path: "/uchtalik-video",
         },
         {

@@ -41,7 +41,7 @@ const News = () => {
       adress_en: "",
       sana: "",
     },
-    onSubmit: async (values) => {
+    onSubmit: async (values, {resetForm}) => {
       const rasm = document.getElementById("rasm").files[0];
       const data = new FormData();
       data.append("rasm", rasm);
@@ -62,6 +62,7 @@ const News = () => {
       data.append("sana", values.sana);
       await APIElon.post(data);
       loadPost()
+      resetForm();
     },
   });
 

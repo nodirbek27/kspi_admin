@@ -1,9 +1,10 @@
 import React from "react";
+import InstitutHaqidaCom from "../../../components/InstitutHaqidaCom";
 
 const InstitutHaqida = () => {
     return (
         <div>
-            InstitutHaqida
+            <InstitutHaqidaCom/>
         </div>
     );
 };

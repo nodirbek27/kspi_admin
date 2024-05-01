@@ -122,14 +122,14 @@ function InstitutHaqidaCom() {
               </div>
               <div className="my-5">
                 <label
-                  htmlFor="bizningMaqsadimiz"
+                  htmlFor="imageOne"
                   className="block mb-2 font-medium text-gray-700"
                 >
                   Rasm
                 </label>
                 <input
                   type="file"
-                  id="bizningMaqsadimiz"
+                  id="imageOne"
                   className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"
                 />
               </div>
@@ -166,14 +166,14 @@ function InstitutHaqidaCom() {
               </div>
               <div className="my-5">
                 <label
-                  htmlFor="bizningMaqsadimiz"
+                  htmlFor="imageTwo"
                   className="block mb-2 font-medium text-gray-700"
                 >
                   Rasm
                 </label>
                 <input
                   type="file"
-                  id="bizningMaqsadimiz"
+                  id="imageTwo"
                   className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"
                 />
               </div>
@@ -210,14 +210,14 @@ function InstitutHaqidaCom() {
               </div>
               <div className="my-5">
                 <label
-                  htmlFor="bizningMaqsadimiz"
+                  htmlFor="imageThree"
                   className="block mb-2 font-medium text-gray-700"
                 >
                   Rasm
                 </label>
                 <input
                   type="file"
-                  id="bizningMaqsadimiz"
+                  id="imageThree"
                   className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"
                 />
               </div>
@@ -254,14 +254,14 @@ function InstitutHaqidaCom() {
               </div>
               <div className="my-5">
                 <label
-                  htmlFor="bizningMaqsadimiz"
+                  htmlFor="imageFourth"
                   className="block mb-2 font-medium text-gray-700"
                 >
                   Rasm
                 </label>
                 <input
                   type="file"
-                  id="bizningMaqsadimiz"
+                  id="imageFourth"
                   className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"
                 />
               </div>
@@ -298,14 +298,14 @@ function InstitutHaqidaCom() {
               </div>
               <div className="my-5">
                 <label
-                  htmlFor="bizningMaqsadimiz"
+                  htmlFor="imageFive"
                   className="block mb-2 font-medium text-gray-700"
                 >
                   Rasm
                 </label>
                 <input
                   type="file"
-                  id="bizningMaqsadimiz"
+                  id="imageFive"
                   className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"
                 />
               </div>
@@ -340,8 +340,8 @@ function InstitutHaqidaCom() {
                   <textarea type="text" id="matn_en" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
                 </div>
               </div>
-              <div className="my-5"><label htmlFor="bizningMaqsadimiz" className="block mb-2 font-medium text-gray-700">Rasm</label>
-                <input type="file" id="bizningMaqsadimiz" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
+              <div className="my-5"><label htmlFor="imageSix" className="block mb-2 font-medium text-gray-700">Rasm</label>
+                <input type="file" id="imageSix" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
               </div>
             </fieldset>
           </form>

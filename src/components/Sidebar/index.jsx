@@ -13,6 +13,7 @@ import { MdAccountCircle } from "react-icons/md";
 import { TiHome } from "react-icons/ti";
 import { Link } from "react-router-dom";
 import { Side, SideOutlet } from "./style";
+import logo from "../../assets/images/logo_kspi.png";
 
 const Sidebar = () => {
   const [open, setOpen] = useState(false);
@@ -670,7 +671,17 @@ const Sidebar = () => {
 
       {/* NAVBAR */}
       <div className="flex flex-col w-full">
-        <div className="ml-auto w-full border-b-2">
+        <div className="flex items-center justify-between w-full border-b-2">
+          <div className="p-2 pl-5 w-[350px]">
+            <Link to="/main" className="flex items-center">
+              <img src={logo} alt="" className="w-[50px] mr-3" />
+              <div className="font-semibold text-xl">
+                Qo'qon davlat
+                <br />
+                pedagogika instituti
+              </div>
+            </Link>
+          </div>
           {/* navbar end */}
           <div className="flex items-center justify-end w-full top-0 left-0 bg-white pr-5">
             <label className="cursor-pointer grid place-items-center mr-5">

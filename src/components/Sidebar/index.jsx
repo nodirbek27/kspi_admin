@@ -37,7 +37,7 @@ const Sidebar = () => {
         } duration-500 text-gray-100`}
       >
         <Side className="overflow-y-scroll h-[100vh] pb-[50px]">
-          <div className={`p-2 flex justify-end pr-5 top-4 mt-2`}>
+          <div className={`p-2 flex justify-end pr-5 mt-6`}>
             <TbMenuDeep
               size={20}
               className={`cursor-pointer flex`}
@@ -675,7 +675,7 @@ const Sidebar = () => {
           <div className="p-2 pl-5 w-[350px]">
             <Link to="/main" className="flex items-center">
               <img src={logo} alt="" className="w-[50px] mr-3" />
-              <div className="font-semibold text-xl">
+              <div className="font-bold md:text-lg lg:text-xl">
                 Qo'qon davlat
                 <br />
                 pedagogika instituti
@@ -683,7 +683,7 @@ const Sidebar = () => {
             </Link>
           </div>
           {/* navbar end */}
-          <div className="flex items-center justify-end w-full top-0 left-0 bg-white pr-5">
+          <div className="flex items-center bg-white pr-5">
             <label className="cursor-pointer grid place-items-center mr-5">
               <input
                 type="checkbox"

@@ -2,24 +2,356 @@ import React from "react";
 
 function InstitutHaqidaCom() {
   return (
-    <div className="max-w-7xl mx-auto">
-      <div className="grid grid-cols-3">
-        <div className="col-span-2 border">
-            <form className="max-w-lg mx-auto">
-                <div className="my-5">
-                    <label htmlFor="bizningMaqsadimiz" className="block mb-2 font-medium text-gray-700">Bizning maqsadimiz <span className="text-red-500">sarlavha</span></label>
-                    <input type="text" id="bizningMaqsadimiz" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300" />
+    <div className="max-w-[1600px] mx-auto">
+      <h1 className="text-3xl font-medium text-gray-700 text-center my-5">Institut haqida</h1>
+      <div className="grid grid-cols-4">
+        <div className="col-span-3 border">
+          <form className="max-w-full mx-auto p-5">
+            <fieldset className="border px-5 mb-5">
+              <legend className="text-red-500 font-medium">
+                Asosiy sahifadagi institut haqida
+              </legend>
+              <div className="my-5 grid grid-cols-3 gap-2">
+                <div>
+                  <label htmlFor="sarlavha_uz" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">uz</span></label>
+                  <input type="text" id="sarlavha_uz" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
                 </div>
-                <div className="my-5">
-                    <label htmlFor="bizningMaqsadimiz" className="block mb-2 font-medium text-gray-700">Bizning maqsadimiz <span className="text-red-500">matn</span></label>
-                    <textarea type="text" id="bizningMaqsadimiz" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
+                <div>
+                  <label htmlFor="sarlavha_ru" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">ru</span></label>
+                  <input type="text" id="sarlavha_ru" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
                 </div>
-            </form>
+                <div>
+                  <label htmlFor="sarlavha_en" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">en</span></label>
+                  <input type="text" id="sarlavha_en" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
+                </div>
+              </div>
+              <div className="my-5 grid grid-cols-3 gap-2">
+                <div>
+                  <label htmlFor="matn_uz" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">uz</span></label>
+                  <textarea type="text" id="matn_uz" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
+                </div>
+                <div>
+                  <label htmlFor="matn_ru" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">ru</span></label>
+                  <textarea type="text" id="matn_ru" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
+                </div>
+                <div>
+                  <label htmlFor="matn_en" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">en</span></label>
+                  <textarea type="text" id="matn_en" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset className="border px-5 mb-5">
+              <legend className="text-red-500 font-medium">
+                Institut haqida 1
+              </legend>
+              <div className="my-5 grid grid-cols-3 gap-2">
+                <div>
+                  <label htmlFor="sarlavha_uz" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">uz</span></label>
+                  <input type="text" id="sarlavha_uz" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
+                </div>
+                <div>
+                  <label htmlFor="sarlavha_ru" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">ru</span></label>
+                  <input type="text" id="sarlavha_ru" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
+                </div>
+                <div>
+                  <label htmlFor="sarlavha_en" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">en</span></label>
+                  <input type="text" id="sarlavha_en" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
+                </div>
+              </div>
+              <div className="my-5 grid grid-cols-3 gap-2">
+                <div>
+                  <label htmlFor="matn_uz" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">uz</span></label>
+                  <textarea type="text" id="matn_uz" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
+                </div>
+                <div>
+                  <label htmlFor="matn_ru" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">ru</span></label>
+                  <textarea type="text" id="matn_ru" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
+                </div>
+                <div>
+                  <label htmlFor="matn_en" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">en</span></label>
+                  <textarea type="text" id="matn_en" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset className="border px-5 mb-5">
+              <legend className="text-red-500 font-medium">Sarlavha 2</legend>
+              <div className="my-5 grid grid-cols-3 gap-2">
+                <div>
+                  <label htmlFor="sarlavha_uz" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">uz</span></label>
+                  <input type="text" id="sarlavha_uz" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
+                </div>
+                <div>
+                  <label htmlFor="sarlavha_ru" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">ru</span></label>
+                  <input type="text" id="sarlavha_ru" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
+                </div>
+                <div>
+                  <label htmlFor="sarlavha_en" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">en</span></label>
+                  <input type="text" id="sarlavha_en" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset className="border px-5 mb-5">
+              <legend className="text-red-500 font-medium">Biz kimmiz</legend>
+              <div className="my-5 grid grid-cols-3 gap-2">
+                <div>
+                  <label htmlFor="sarlavha_uz" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">uz</span></label>
+                  <input type="text" id="sarlavha_uz" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
+                </div>
+                <div>
+                  <label htmlFor="sarlavha_ru" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">ru</span></label>
+                  <input type="text" id="sarlavha_ru" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
+                </div>
+                <div>
+                  <label htmlFor="sarlavha_en" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">en</span></label>
+                  <input type="text" id="sarlavha_en" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
+                </div>
+              </div>
+              <div className="my-5 grid grid-cols-3 gap-2">
+                <div>
+                  <label htmlFor="matn_uz" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">uz</span></label>
+                  <textarea type="text" id="matn_uz" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
+                </div>
+                <div>
+                  <label htmlFor="matn_ru" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">ru</span></label>
+                  <textarea type="text" id="matn_ru" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
+                </div>
+                <div>
+                  <label htmlFor="matn_en" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">en</span></label>
+                  <textarea type="text" id="matn_en" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
+                </div>
+              </div>
+              <div className="my-5">
+                <label
+                  htmlFor="bizningMaqsadimiz"
+                  className="block mb-2 font-medium text-gray-700"
+                >
+                  Rasm
+                </label>
+                <input
+                  type="file"
+                  id="bizningMaqsadimiz"
+                  className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"
+                />
+              </div>
+            </fieldset>
+            <fieldset className="border px-5 mb-5">
+              <legend className="text-red-500 font-medium">Qo'shma hamkorlar</legend>
+              <div className="my-5 grid grid-cols-3 gap-2">
+                <div>
+                  <label htmlFor="sarlavha_uz" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">uz</span></label>
+                  <input type="text" id="sarlavha_uz" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
+                </div>
+                <div>
+                  <label htmlFor="sarlavha_ru" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">ru</span></label>
+                  <input type="text" id="sarlavha_ru" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
+                </div>
+                <div>
+                  <label htmlFor="sarlavha_en" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">en</span></label>
+                  <input type="text" id="sarlavha_en" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
+                </div>
+              </div>
+              <div className="my-5 grid grid-cols-3 gap-2">
+                <div>
+                  <label htmlFor="matn_uz" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">uz</span></label>
+                  <textarea type="text" id="matn_uz" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
+                </div>
+                <div>
+                  <label htmlFor="matn_ru" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">ru</span></label>
+                  <textarea type="text" id="matn_ru" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
+                </div>
+                <div>
+                  <label htmlFor="matn_en" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">en</span></label>
+                  <textarea type="text" id="matn_en" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
+                </div>
+              </div>
+              <div className="my-5">
+                <label
+                  htmlFor="bizningMaqsadimiz"
+                  className="block mb-2 font-medium text-gray-700"
+                >
+                  Rasm
+                </label>
+                <input
+                  type="file"
+                  id="bizningMaqsadimiz"
+                  className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"
+                />
+              </div>
+            </fieldset>
+            <fieldset className="border px-5 mb-5">
+              <legend className="text-red-500 font-medium">Rivojlanayotgan talabalik hayoti</legend>
+              <div className="my-5 grid grid-cols-3 gap-2">
+                <div>
+                  <label htmlFor="sarlavha_uz" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">uz</span></label>
+                  <input type="text" id="sarlavha_uz" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
+                </div>
+                <div>
+                  <label htmlFor="sarlavha_ru" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">ru</span></label>
+                  <input type="text" id="sarlavha_ru" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
+                </div>
+                <div>
+                  <label htmlFor="sarlavha_en" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">en</span></label>
+                  <input type="text" id="sarlavha_en" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
+                </div>
+              </div>
+              <div className="my-5 grid grid-cols-3 gap-2">
+                <div>
+                  <label htmlFor="matn_uz" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">uz</span></label>
+                  <textarea type="text" id="matn_uz" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
+                </div>
+                <div>
+                  <label htmlFor="matn_ru" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">ru</span></label>
+                  <textarea type="text" id="matn_ru" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
+                </div>
+                <div>
+                  <label htmlFor="matn_en" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">en</span></label>
+                  <textarea type="text" id="matn_en" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
+                </div>
+              </div>
+              <div className="my-5">
+                <label
+                  htmlFor="bizningMaqsadimiz"
+                  className="block mb-2 font-medium text-gray-700"
+                >
+                  Rasm
+                </label>
+                <input
+                  type="file"
+                  id="bizningMaqsadimiz"
+                  className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"
+                />
+              </div>
+            </fieldset>
+            <fieldset className="border px-5 mb-5">
+              <legend className="text-red-500 font-medium">Uning barcha shakllarida xilma-xillikka chuqur hurmat</legend>
+              <div className="my-5 grid grid-cols-3 gap-2">
+                <div>
+                  <label htmlFor="sarlavha_uz" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">uz</span></label>
+                  <input type="text" id="sarlavha_uz" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
+                </div>
+                <div>
+                  <label htmlFor="sarlavha_ru" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">ru</span></label>
+                  <input type="text" id="sarlavha_ru" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
+                </div>
+                <div>
+                  <label htmlFor="sarlavha_en" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">en</span></label>
+                  <input type="text" id="sarlavha_en" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
+                </div>
+              </div>
+              <div className="my-5 grid grid-cols-3 gap-2">
+                <div>
+                  <label htmlFor="matn_uz" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">uz</span></label>
+                  <textarea type="text" id="matn_uz" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
+                </div>
+                <div>
+                  <label htmlFor="matn_ru" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">ru</span></label>
+                  <textarea type="text" id="matn_ru" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
+                </div>
+                <div>
+                  <label htmlFor="matn_en" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">en</span></label>
+                  <textarea type="text" id="matn_en" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
+                </div>
+              </div>
+              <div className="my-5">
+                <label
+                  htmlFor="bizningMaqsadimiz"
+                  className="block mb-2 font-medium text-gray-700"
+                >
+                  Rasm
+                </label>
+                <input
+                  type="file"
+                  id="bizningMaqsadimiz"
+                  className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"
+                />
+              </div>
+            </fieldset>
+            <fieldset className="border px-5 mb-5">
+              <legend className="text-red-500 font-medium">Farq qiladigan moliyaviy yordam</legend>
+              <div className="my-5 grid grid-cols-3 gap-2">
+                <div>
+                  <label htmlFor="sarlavha_uz" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">uz</span></label>
+                  <input type="text" id="sarlavha_uz" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
+                </div>
+                <div>
+                  <label htmlFor="sarlavha_ru" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">ru</span></label>
+                  <input type="text" id="sarlavha_ru" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
+                </div>
+                <div>
+                  <label htmlFor="sarlavha_en" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">en</span></label>
+                  <input type="text" id="sarlavha_en" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
+                </div>
+              </div>
+              <div className="my-5 grid grid-cols-3 gap-2">
+                <div>
+                  <label htmlFor="matn_uz" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">uz</span></label>
+                  <textarea type="text" id="matn_uz" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
+                </div>
+                <div>
+                  <label htmlFor="matn_ru" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">ru</span></label>
+                  <textarea type="text" id="matn_ru" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
+                </div>
+                <div>
+                  <label htmlFor="matn_en" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">en</span></label>
+                  <textarea type="text" id="matn_en" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
+                </div>
+              </div>
+              <div className="my-5">
+                <label
+                  htmlFor="bizningMaqsadimiz"
+                  className="block mb-2 font-medium text-gray-700"
+                >
+                  Rasm
+                </label>
+                <input
+                  type="file"
+                  id="bizningMaqsadimiz"
+                  className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"
+                />
+              </div>
+            </fieldset>
+            <fieldset className="border px-5 mb-5">
+              <legend className="text-red-500 font-medium">Sport bilan birga</legend>
+              <div className="my-5 grid grid-cols-3 gap-2">
+                <div>
+                  <label htmlFor="sarlavha_uz" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">uz</span></label>
+                  <input type="text" id="sarlavha_uz" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
+                </div>
+                <div>
+                  <label htmlFor="sarlavha_ru" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">ru</span></label>
+                  <input type="text" id="sarlavha_ru" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
+                </div>
+                <div>
+                  <label htmlFor="sarlavha_en" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">en</span></label>
+                  <input type="text" id="sarlavha_en" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
+                </div>
+              </div>
+              <div className="my-5 grid grid-cols-3 gap-2">
+                <div>
+                  <label htmlFor="matn_uz" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">uz</span></label>
+                  <textarea type="text" id="matn_uz" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
+                </div>
+                <div>
+                  <label htmlFor="matn_ru" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">ru</span></label>
+                  <textarea type="text" id="matn_ru" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
+                </div>
+                <div>
+                  <label htmlFor="matn_en" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">en</span></label>
+                  <textarea type="text" id="matn_en" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
+                </div>
+              </div>
+              <div className="my-5"><label htmlFor="bizningMaqsadimiz" className="block mb-2 font-medium text-gray-700">Rasm</label>
+                <input type="file" id="bizningMaqsadimiz" className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
+              </div>
+            </fieldset>
+          </form>
         </div>
         <div className="border">
           <div className="max-w-7xl mx-auto my-5">
             <div>
-              <p  className="text-xl font-bold font-source text-center text-red-500">←←←Asosiy saxifa uchun→→→</p>
+              <p className="text-xl font-bold font-source text-center text-red-500">
+                ←←←Asosiy saxifa uchun→→→
+              </p>
               <h1 className="text-xl font-bold font-source text-center text-[#004269]">
                 Bizning maqsadimiz
               </h1>
@@ -35,7 +367,9 @@ function InstitutHaqidaCom() {
               </p>
             </div>
             <div>
-            <p  className="text-xl font-bold font-source text-center text-red-500">←←←Institut haqida uchun→→→</p>
+              <p className="text-xl font-bold font-source text-center text-red-500">
+                ←←←Institut haqida uchun→→→
+              </p>
               <h1 className="text-xl font-bold font-source text-center text-[#004269]">
                 Biz haqimizda
               </h1>
@@ -168,7 +502,7 @@ function InstitutHaqidaCom() {
                   <h3 className="text-xl font-medium">
                     Uning barcha shakllarida xilma-xillikka chuqur hurmat
                   </h3>
-                  <p className="text-md md:text-xl mt-3">
+                  <p className="text-md mt-3">
                     QDPI tajriba, qiziqishlar va istiqboldagi xilma-xillikni
                     qadrlaydi. Biz barcha talabalar bir-birining tajribasidan
                     o'rganish va o'z qarashlari va tasavvurlari haqida tanqidiy

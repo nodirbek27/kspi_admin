@@ -9,7 +9,7 @@ const Side = styled.div`
 `;
 
 const SideOutlet = styled.div`
-height: 94vh;
+  height: 89vh;
   overflow: hidden;
   overflow-y: scroll;
   &::-webkit-scrollbar {

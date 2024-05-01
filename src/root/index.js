@@ -1,18 +1,18 @@
 import React from "react";
-import { Outlet, useLocation } from "react-router-dom";
+// import { Outlet, useLocation } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 
 const Root = () => {
-    const location = useLocation();
+    // const location = useLocation();
 
-    if (location.pathname === "/") {
-        return <Outlet />;
-    }
+    // if (location.pathname === "/") {
+    //     return <Outlet />;
+    // }
 
     return (
         <div>
             <Sidebar />
-            <Outlet />
+            {/* <Outlet /> */}
         </div>
     );
 };

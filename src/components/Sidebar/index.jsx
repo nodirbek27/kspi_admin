@@ -1,42 +1,678 @@
 import React, { useState } from "react";
-import { MdOutlineDashboardCustomize } from "react-icons/md";
+import { Outlet, useLocation } from "react-router-dom";
 import { BiSolidInstitution } from "react-icons/bi";
 import { MdOutlineLocalActivity } from "react-icons/md";
 import { VscSymbolStructure } from "react-icons/vsc";
 import { PiStudentDuotone } from "react-icons/pi";
 import { TbNews } from "react-icons/tb";
+import { TbMenuDeep } from "react-icons/tb";
 import { TfiAnnouncement } from "react-icons/tfi";
 import { GoPeople } from "react-icons/go";
 import { CgWorkAlt } from "react-icons/cg";
 import { MdAccountCircle } from "react-icons/md";
-import { MdKeyboardDoubleArrowRight } from "react-icons/md";
-import { IoMdArrowRoundForward } from "react-icons/io";
 import { TiHome } from "react-icons/ti";
-import { FaArrowLeft } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { Side, SideOutlet } from "./style";
 
 const Sidebar = () => {
   const [open, setOpen] = useState(false);
+
+  const location = useLocation();
+
+  if (location.pathname === "/") {
+    return <Outlet />;
+  }
 
   const handleClick = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("refreshToken");
   };
   return (
-    <div className="sticky top-0 left-0 md:px-3 lg:px-4 xl:px-5 2xl:px-6 z-50">
-      {/* NAVBAR */}
-      <div className="border-b-2 sticky top-0 left-0 bg-white p-5">
-        <div className="flex items-center justify-between">
-          {/* MENU */}
-          <div className="py-3">
-            <MdOutlineDashboardCustomize
-              size={26}
-              className="cursor-pointer"
+    <div className="flex top-0 left-0">
+      {/* SIDEBAR */}
+      <div
+        className={`h-[100vh] bg-[#0e0e0e] left-0 top-0 ${
+          open ? "w-72" : "w-12 px-0"
+        } duration-500 text-gray-100`}
+      >
+        <Side className="overflow-y-scroll h-[100vh] pb-[50px]">
+          <div className={`p-2 flex justify-end pr-5 top-4 mt-2`}>
+            <TbMenuDeep
+              size={20}
+              className={`cursor-pointer flex`}
               onClick={() => setOpen(!open)}
             />
           </div>
+          <div className="flex flex-col gap-4 relative top-10">
+            <Link
+              to={"/yangiliklar"}
+              className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
+            >
+              <div className="block">
+                <TbNews size={20} />
+              </div>
+              <h2
+                className={`whitespace-pre duration-500 ${
+                  !open && "opacity-0 translate-x-28 overflow-hidden"
+                }`}
+              >
+                Yangiliklar
+              </h2>
+            </Link>
+
+            <Link
+              to={"/elonlar"}
+              className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
+            >
+              <div className="block">
+                <TfiAnnouncement size={20} />
+              </div>
+              <h2
+                className={`whitespace-pre duration-500 ${
+                  !open && "opacity-0 translate-x-28 overflow-hidden"
+                }`}
+              >
+                E'lonlar
+              </h2>
+            </Link>
+
+            <div className="join join-vertical w-full">
+              {/* HOME */}
+
+              <div className="collapse collapse-arrow join-item">
+                <input type="checkbox" name="my-accordion-4" />
+                <div className="collapse-title flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded">
+                  <TiHome size={20} />
+                  <h2
+                    className={`whitespace-pre duration-500 ${
+                      !open && "opacity-0 translate-x-28 overflow-hidden"
+                    }`}
+                  >
+                    Home
+                  </h2>
+                </div>
+
+                <div className="collapse-content">
+                  <Link
+                    to={"/hemis"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      HEMIS tizimi
+                    </h2>
+                  </Link>
+                  <div className="collapse collapse-arrow join-item">
+                    <input type="checkbox" name="my-accordion-4" />
+                    <div className="collapse-title flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6">
+                      <h2
+                        className={`whitespace-pre duration-500 ${
+                          !open && "opacity-0 translate-x-28 overflow-hidden"
+                        }`}
+                      >
+                        Institut jurnali
+                      </h2>
+                    </div>
+                    <div className="collapse-content">
+                      <Link
+                        to={"/ilmiy-xabarlar"}
+                        className={`flex items-center text-sm gap-3.5 font-medium p-2 pl-0 hover:bg-gray-800 rounded`}
+                      >
+                        <h2
+                          className={`whitespace-pre duration-500 pl-5 ${
+                            !open && "opacity-0 translate-x-28 overflow-hidden"
+                          }`}
+                        >
+                          Qo'qon DPI. <br /> Ilmiy xabarlar
+                        </h2>
+                      </Link>
+                      <Link
+                        to={"/jahon-ilmiy-tadqiqotlar-jurnali"}
+                        className={`flex items-center text-sm gap-3.5 font-medium p-2 pl-0 hover:bg-gray-800 rounded`}
+                      >
+                        <h2
+                          className={`whitespace-pre duration-500 pl-5 ${
+                            !open && "opacity-0 translate-x-28 overflow-hidden"
+                          }`}
+                        >
+                          Jahon ilmiy <br />
+                          tadqiqot jurnali
+                        </h2>
+                      </Link>
+                    </div>
+                  </div>
+                  <Link
+                    to={"/konfirensiyalar"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      Konfirensiyalar
+                    </h2>
+                  </Link>
+                  <Link
+                    to={"/ikkinchi-ta'lim"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      Ikkinchi ta'lim
+                    </h2>
+                  </Link>
+                  <Link
+                    to={"/ochiq-manbalar"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      Ochiq manbalar
+                    </h2>
+                  </Link>
+                  <Link
+                    to={"/asosiy-video"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      Asosiy video
+                    </h2>
+                  </Link>
+                  <Link
+                    to={"/interaktiv-xizmatlar"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      Interaktiv xizmatlar
+                    </h2>
+                  </Link>
+                  <Link
+                    to={"/statistika"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      Statistika
+                    </h2>
+                  </Link>
+                  <Link
+                    to={"/talaba-fikri"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      Talaba fikri
+                    </h2>
+                  </Link>
+                  <Link
+                    to={"/uchtalik-video"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      Uchtalik video
+                    </h2>
+                  </Link>
+                  <Link
+                    to={"/galleriya"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      Galleriya
+                    </h2>
+                  </Link>
+                  <Link
+                    to={"/hamkorlar"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      Hamkorlar
+                    </h2>
+                  </Link>
+                  <Link
+                    to={"/boglanish"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      Bog'lanish
+                    </h2>
+                  </Link>
+                </div>
+              </div>
+              {/* INSTITUT */}
+              <div className="collapse collapse-arrow join-item">
+                <input type="checkbox" name="my-accordion-4" />
+                <div className="collapse-title flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded">
+                  <BiSolidInstitution size={20} />
+                  <h2
+                    className={`whitespace-pre duration-500 ${
+                      !open && "opacity-0 translate-x-28 overflow-hidden"
+                    }`}
+                  >
+                    Institut
+                  </h2>
+                </div>
+                <div className="collapse-content">
+                  <Link
+                    to={"/institut-kengashi"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      Institut kengashi
+                    </h2>
+                  </Link>
+                  <Link
+                    to={"/institut-haqida"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      Institut haqida
+                    </h2>
+                  </Link>
+                  <Link
+                    to={"/institut-tuzilmasi"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      Institut tuzilmasi
+                    </h2>
+                  </Link>
+                  <Link
+                    to={"/rekvizitlar"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      Rekvizitlar
+                    </h2>
+                  </Link>
+                  <Link
+                    to={"/virtual-qabulxona"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      Virtual qabulxona
+                    </h2>
+                  </Link>
+                </div>
+              </div>
+              {/* FAOLIYAT */}
+              <div className="collapse collapse-arrow join-item">
+                <input type="checkbox" name="my-accordion-4" />
+                <div className="collapse-title flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded">
+                  <MdOutlineLocalActivity size={20} />
+                  <h2
+                    className={`whitespace-pre duration-500 ${
+                      !open && "opacity-0 translate-x-28 overflow-hidden"
+                    }`}
+                  >
+                    Faoliyat
+                  </h2>
+                </div>
+                <div className="collapse-content">
+                  <Link
+                    to={"/jamoatchilik-kengashi"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      Jamoatchilik kengashi
+                    </h2>
+                  </Link>
+                  <Link
+                    to={"/madaniy-marifiy-faoliyat"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      Madaniy-ma'rifiy
+                    </h2>
+                  </Link>
+                  <Link
+                    to={"/oquv-uslubiy-faoliyat"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      O'quv-uslubiy
+                    </h2>
+                  </Link>
+                  <Link
+                    to={"/akademik-litsey"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      Akademik litsey
+                    </h2>
+                  </Link>
+                  <Link
+                    to={"/ilmiy-faoliyat"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      Ilmiy faoliyat
+                    </h2>
+                  </Link>
+                  {/* <Link
+                                    to={"/"}
+                                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                                >
+                                    <h2
+                                        className={`whitespace-pre duration-500 ${
+                                            !open &&
+                                            "opacity-0 translate-x-28 overflow-hidden"
+                                        }`}
+                                    >
+                                        Yoshlar bilan ishlash, ma'naviy va
+                                        marifiy yo'nalishdagi ishlar
+                                    </h2>
+                                </Link> */}
+                </div>
+              </div>
+              {/* Tuzilma */}
+              <div className="collapse collapse-arrow join-item">
+                <input type="checkbox" name="my-accordion-4" />
+                <div className="collapse-title flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded">
+                  <VscSymbolStructure size={20} />
+                  <h2
+                    className={`whitespace-pre duration-500 ${
+                      !open && "opacity-0 translate-x-28 overflow-hidden"
+                    }`}
+                  >
+                    Tuzilma
+                  </h2>
+                </div>
+                <div className="collapse-content">
+                  <Link
+                    to={"/rektorat"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      Rektorat
+                    </h2>
+                  </Link>
+                  <Link
+                    to={"/fakultetlar"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      Fakultetlar
+                    </h2>
+                  </Link>
+                  <Link
+                    to={"/kafedralar"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      Kafedralar
+                    </h2>
+                  </Link>
+                  <Link
+                    to={"/bolimlar"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      Bo'limlar
+                    </h2>
+                  </Link>
+                  <Link
+                    to={"/markazlar"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      Markazlar
+                    </h2>
+                  </Link>
+                </div>
+              </div>
+              {/* Talabalar */}
+              <div className="collapse collapse-arrow join-item">
+                <input type="checkbox" name="my-accordion-4" />
+                <div className="collapse-title flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded">
+                  <PiStudentDuotone size={20} />
+                  <h2
+                    className={`whitespace-pre duration-500 ${
+                      !open && "opacity-0 translate-x-28 overflow-hidden"
+                    }`}
+                  >
+                    Talabalar
+                  </h2>
+                </div>
+                <div className="collapse-content">
+                  <Link
+                    to={"/bakalavriat"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      Bakalavriat
+                    </h2>
+                  </Link>
+                  <Link
+                    to={"/magistratura"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      Magistratura
+                    </h2>
+                  </Link>
+                  <Link
+                    to={"/talabalar-turar-joyi"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      Talabalar turar joyi
+                    </h2>
+                  </Link>
+                </div>
+              </div>
+              {/* Tuzilma */}
+              <div className="collapse collapse-arrow join-item">
+                <input type="checkbox" name="my-accordion-4" />
+                <div className="collapse-title flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded">
+                  <GoPeople size={20} />
+                  <h2
+                    className={`whitespace-pre duration-500 ${
+                      !open && "opacity-0 translate-x-28 overflow-hidden"
+                    }`}
+                  >
+                    Abiturient
+                  </h2>
+                </div>
+                <div className="collapse-content">
+                  <Link
+                    to={"/abiturient-bakalavriat"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      Bakalavriat
+                    </h2>
+                  </Link>
+                  <Link
+                    to={"/abiturient-magistratura"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      Magistratura
+                    </h2>
+                  </Link>
+                  <Link
+                    to={"/xorijiy-talabalar-qabul"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      Xorijiy talabalar qabul
+                    </h2>
+                  </Link>
+                  <Link
+                    to={"/call-markaz"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      Call markaz
+                    </h2>
+                  </Link>
+                  <Link
+                    to={"/meyoriy-huquqiy-hujjatlar"}
+                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded pl-6`}
+                  >
+                    <h2
+                      className={`whitespace-pre duration-500 ${
+                        !open && "opacity-0 translate-x-28 overflow-hidden"
+                      }`}
+                    >
+                      Me'yoriy huquqiy hujjatlar
+                    </h2>
+                  </Link>
+                </div>
+              </div>
+            </div>
+            <Link
+              to={"/vakansiyalar"}
+              className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
+            >
+              <div className="block">
+                <CgWorkAlt size={20} />
+              </div>
+              <h2
+                className={`whitespace-pre duration-500 ${
+                  !open && "opacity-0 translate-x-28 overflow-hidden"
+                }`}
+              >
+                Bo'sh ish o'rinlari
+              </h2>
+            </Link>
+          </div>
+        </Side>
+      </div>
+
+      {/* NAVBAR */}
+      <div className="flex flex-col w-full">
+        <div className="ml-auto w-full border-b-2">
           {/* navbar end */}
-          <div className="flex items-center">
+          <div className="flex items-center justify-end w-full top-0 left-0 bg-white pr-5">
             <label className="cursor-pointer grid place-items-center mr-5">
               <input
                 type="checkbox"
@@ -101,692 +737,9 @@ const Sidebar = () => {
             </div>
           </div>
         </div>
-      </div>
-
-      {/* SIDEBAR */}
-      <div
-        className={`h-[100vh] bg-[#0e0e0e] overflow-auto ... left-0 top-0 ${
-          open ? "w-72 pl-4 fixed left-0 top-0" : "w-0 px-0 absolute"
-        } duration-500 text-gray-100 scrollbar-thumb-gray-400 scrollbar-track-gray-200`}
-      >
-        <div className="scrollbar-thin overflow-y-scroll h-full">
-          <div
-            className={`p-2 flex justify-end fixed top-4 left-60 ${
-              !open && "hidden"
-            }`}
-          >
-            <FaArrowLeft
-              size={20}
-              className="cursor-pointer flex text-end"
-              onClick={() => setOpen(!open)}
-            />
-          </div>
-          <div className="mt-4 flex flex-col gap-4 relative top-20">
-            <Link
-              to={"/yangiliklar"}
-              className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-            >
-              <TbNews size={20} />
-              <h2
-                className={`whitespace-pre duration-500 ${
-                  !open && "opacity-0 translate-x-28 overflow-hidden"
-                }`}
-              >
-                Yangiliklar
-              </h2>
-            </Link>
-            <Link
-              to={"/elonlar"}
-              className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-            >
-              <TfiAnnouncement size={20} />
-              <h2
-                className={`whitespace-pre duration-500 ${
-                  !open && "opacity-0 translate-x-28 overflow-hidden"
-                }`}
-              >
-                E'lonlar
-              </h2>
-            </Link>
-            <div className="join join-vertical w-full">
-              {/* HOME */}
-              <div className="collapse collapse-arrow join-item">
-                <input type="radio" name="my-accordion-4" />
-                <div className="collapse-title flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded">
-                  <TiHome size={20} />
-                  <h2
-                    className={`whitespace-pre duration-500 ${
-                      !open && "opacity-0 translate-x-28 overflow-hidden"
-                    }`}
-                  >
-                    Home
-                  </h2>
-                </div>
-                <div className="collapse-content">
-                  <Link
-                    to={"/hemis"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      HEMIS tizimi
-                    </h2>
-                  </Link>
-                  <div className="collapse collapse-arrow join-item">
-                    <input type="checkbox" name="my-accordion-4" />
-                    <div className="collapse-title flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded">
-                      <IoMdArrowRoundForward size={14} />
-                      <h2
-                        className={`whitespace-pre duration-500 ${
-                          !open && "opacity-0 translate-x-28 overflow-hidden"
-                        }`}
-                      >
-                        Institut jurnali
-                      </h2>
-                    </div>
-                    <div className="collapse-content">
-                      <Link
-                        to={"/ilmiy-xabarlar"}
-                        className={`flex items-center text-sm gap-3.5 font-medium p-2 pl-0 hover:bg-gray-800 rounded`}
-                      >
-                        <MdKeyboardDoubleArrowRight size={14} />
-                        <h2
-                          className={`whitespace-pre duration-500 ${
-                            !open && "opacity-0 translate-x-28 overflow-hidden"
-                          }`}
-                        >
-                          Qo'qon DPI. <br /> Ilmiy xabarlar
-                        </h2>
-                      </Link>
-                      <Link
-                        to={"/jahon-ilmiy-tadqiqotlar-jurnali"}
-                        className={`flex items-center text-sm gap-3.5 font-medium p-2 pl-0 hover:bg-gray-800 rounded`}
-                      >
-                        <MdKeyboardDoubleArrowRight size={14} />
-                        <h2
-                          className={`whitespace-pre duration-500 ${
-                            !open && "opacity-0 translate-x-28 overflow-hidden"
-                          }`}
-                        >
-                          Jahon ilmiy <br />
-                          tadqiqot jurnali
-                        </h2>
-                      </Link>
-                    </div>
-                  </div>
-                  <Link
-                    to={"/konfirensiyalar"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      Konfirensiyalar
-                    </h2>
-                  </Link>
-                  <Link
-                    to={"/ikkinchi-ta'lim"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      Ikkinchi ta'lim
-                    </h2>
-                  </Link>
-                  <Link
-                    to={"/ochiq-manbalar"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      Ochiq manbalar
-                    </h2>
-                  </Link>
-                  <Link
-                    to={"/asosiy-video"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      Asosiy video
-                    </h2>
-                  </Link>
-                  <Link
-                    to={"/interaktiv-xizmatlar"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      Interaktiv xizmatlar
-                    </h2>
-                  </Link>
-                  <Link
-                    to={"/statistika"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      Statistika
-                    </h2>
-                  </Link>
-                  <Link
-                    to={"/talaba-fikri"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      Talaba fikri
-                    </h2>
-                  </Link>
-                  <Link
-                    to={"/uchtalik-video"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      Uchtalik video
-                    </h2>
-                  </Link>
-                  <Link
-                    to={"/galleriya"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      Galleriya
-                    </h2>
-                  </Link>
-                  <Link
-                    to={"/hamkorlar"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      Hamkorlar
-                    </h2>
-                  </Link>
-                  <Link
-                    to={"/boglanish"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      Bog'lanish
-                    </h2>
-                  </Link>
-                </div>
-              </div>
-              {/* INSTITUT */}
-              <div className="collapse collapse-arrow join-item">
-                <input type="radio" name="my-accordion-4" />
-                <div className="collapse-title flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded">
-                  <BiSolidInstitution size={20} />
-                  <h2
-                    className={`whitespace-pre duration-500 ${
-                      !open && "opacity-0 translate-x-28 overflow-hidden"
-                    }`}
-                  >
-                    Institut
-                  </h2>
-                </div>
-                <div className="collapse-content">
-                  <Link
-                    to={"/institut-kengashi"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      Institut kengashi
-                    </h2>
-                  </Link>
-                  <Link
-                    to={"/institut-haqida"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      Institut haqida
-                    </h2>
-                  </Link>
-                  <Link
-                    to={"/institut-tuzilmasi"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      Institut tuzilmasi
-                    </h2>
-                  </Link>
-                  <Link
-                    to={"/rekvizitlar"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      Rekvizitlar
-                    </h2>
-                  </Link>
-                  <Link
-                    to={"/virtual-qabulxona"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      Virtual qabulxona
-                    </h2>
-                  </Link>
-                </div>
-              </div>
-              {/* FAOLIYAT */}
-              <div className="collapse collapse-arrow join-item">
-                <input type="radio" name="my-accordion-4" />
-                <div className="collapse-title flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded">
-                  <MdOutlineLocalActivity size={20} />
-                  <h2
-                    className={`whitespace-pre duration-500 ${
-                      !open && "opacity-0 translate-x-28 overflow-hidden"
-                    }`}
-                  >
-                    Faoliyat
-                  </h2>
-                </div>
-                <div className="collapse-content">
-                  <Link
-                    to={"/jamoatchilik-kengashi"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      Jamoatchilik kengashi
-                    </h2>
-                  </Link>
-                  <Link
-                    to={"/madaniy-marifiy-faoliyat"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      Madaniy-ma'rifiy
-                    </h2>
-                  </Link>
-                  <Link
-                    to={"/oquv-uslubiy-faoliyat"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      O'quv-uslubiy
-                    </h2>
-                  </Link>
-                  <Link
-                    to={"/akademik-litsey"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      Akademik litsey
-                    </h2>
-                  </Link>
-                  <Link
-                    to={"/ilmiy-faoliyat"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      Ilmiy faoliyat
-                    </h2>
-                  </Link>
-                  {/* <Link
-                                    to={"/"}
-                                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                                >
-                                    <IoMdArrowRoundForward size={14} />
-                                    <h2
-                                        className={`whitespace-pre duration-500 ${
-                                            !open &&
-                                            "opacity-0 translate-x-28 overflow-hidden"
-                                        }`}
-                                    >
-                                        Yoshlar bilan ishlash, ma'naviy va
-                                        marifiy yo'nalishdagi ishlar
-                                    </h2>
-                                </Link> */}
-                </div>
-              </div>
-              {/* Tuzilma */}
-              <div className="collapse collapse-arrow join-item">
-                <input type="radio" name="my-accordion-4" />
-                <div className="collapse-title flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded">
-                  <VscSymbolStructure size={20} />
-                  <h2
-                    className={`whitespace-pre duration-500 ${
-                      !open && "opacity-0 translate-x-28 overflow-hidden"
-                    }`}
-                  >
-                    Tuzilma
-                  </h2>
-                </div>
-                <div className="collapse-content">
-                  <Link
-                    to={"/rektorat"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      Rektorat
-                    </h2>
-                  </Link>
-                  <Link
-                    to={"/fakultetlar"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      Fakultetlar
-                    </h2>
-                  </Link>
-                  <Link
-                    to={"/kafedralar"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      Kafedralar
-                    </h2>
-                  </Link>
-                  <Link
-                    to={"/bolimlar"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      Bo'limlar
-                    </h2>
-                  </Link>
-                  <Link
-                    to={"/markazlar"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      Markazlar
-                    </h2>
-                  </Link>
-                </div>
-              </div>
-              {/* Talabalar */}
-              <div className="collapse collapse-arrow join-item">
-                <input type="radio" name="my-accordion-4" />
-                <div className="collapse-title flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded">
-                  <PiStudentDuotone size={20} />
-                  <h2
-                    className={`whitespace-pre duration-500 ${
-                      !open && "opacity-0 translate-x-28 overflow-hidden"
-                    }`}
-                  >
-                    Talabalar
-                  </h2>
-                </div>
-                <div className="collapse-content">
-                  <Link
-                    to={"/bakalavriat"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      Bakalavriat
-                    </h2>
-                  </Link>
-                  <Link
-                    to={"/magistratura"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      Magistratura
-                    </h2>
-                  </Link>
-                  <Link
-                    to={"/talabalar-turar-joyi"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      Talabalar turar joyi
-                    </h2>
-                  </Link>
-                </div>
-              </div>
-              {/* Tuzilma */}
-              <div className="collapse collapse-arrow join-item">
-                <input type="radio" name="my-accordion-4" />
-                <div className="collapse-title flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded">
-                  <GoPeople size={20} />
-                  <h2
-                    className={`whitespace-pre duration-500 ${
-                      !open && "opacity-0 translate-x-28 overflow-hidden"
-                    }`}
-                  >
-                    Abiturient
-                  </h2>
-                </div>
-                <div className="collapse-content">
-                  <Link
-                    to={"/abiturient-bakalavriat"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      Bakalavriat
-                    </h2>
-                  </Link>
-                  <Link
-                    to={"/abiturient-magistratura"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      Magistratura
-                    </h2>
-                  </Link>
-                  <Link
-                    to={"/xorijiy-talabalar-qabul"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      Xorijiy talabalar qabul
-                    </h2>
-                  </Link>
-                  <Link
-                    to={"/call-markaz"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      Call markaz
-                    </h2>
-                  </Link>
-                  <Link
-                    to={"/meyoriy-huquqiy-hujjatlar"}
-                    className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-                  >
-                    <IoMdArrowRoundForward size={14} />
-                    <h2
-                      className={`whitespace-pre duration-500 ${
-                        !open && "opacity-0 translate-x-28 overflow-hidden"
-                      }`}
-                    >
-                      Me'yoriy huquqiy hujjatlar
-                    </h2>
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <Link
-              to={"/vakansiyalar"}
-              className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-            >
-              <CgWorkAlt size={20} />
-              <h2
-                className={`whitespace-pre duration-500 ${
-                  !open && "opacity-0 translate-x-28 overflow-hidden"
-                }`}
-              >
-                Bo'sh ish o'rinlari
-              </h2>
-            </Link>
-            {/* TEST */}
-            <Link
-              to={"/test"}
-              className={`flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded`}
-            >
-              <CgWorkAlt size={20} />
-              <h2
-                className={`whitespace-pre duration-500 ${
-                  !open && "opacity-0 translate-x-28 overflow-hidden"
-                }`}
-              >
-                Test
-              </h2>
-            </Link>
-          </div>
-        </div>
+        <SideOutlet className="px-5">
+          <Outlet />
+        </SideOutlet>
       </div>
     </div>
   );

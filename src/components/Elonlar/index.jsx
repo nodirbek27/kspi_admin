@@ -61,7 +61,7 @@ const News = () => {
       data.append("adress_en", values.adress_en);
       data.append("sana", values.sana);
       await APIElon.post(data);
-      loadPost()
+      loadPost();
       resetForm();
     },
   });

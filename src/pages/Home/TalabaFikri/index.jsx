@@ -1,9 +1,10 @@
 import React from "react";
+import TalabaFikr from "../../../components/TalabaFikr";
 
 const TalabaFikri = () => {
     return (
         <div>
-            TalabaFikri
+            <TalabaFikr />
         </div>
     );
 };

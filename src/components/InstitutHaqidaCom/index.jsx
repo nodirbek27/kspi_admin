@@ -93,14 +93,13 @@ function InstitutHaqidaCom() {
         sport_bilan_birga: null,
       },
       onSubmit: async (values, {resetForm}) => {
-        alert(JSON.stringify(values, null, 3))
         const data = new FormData();
         for(let key in values){
           data.append(key, values[key]);
         };
         try{
-          const responses = await APIInstitutHaqida.postInstitutHaqida(data);
-          setYes(responses);
+          const resPost = await APIInstitutHaqida.postInstitutHaqida(data);
+          setYes(resPost);
           resetForm();
           fetchData()
         }
@@ -501,7 +500,7 @@ function InstitutHaqidaCom() {
             <button type="submit" className="btn btn-primary">sssssssssssss</button>
           </form>
         </div>
-        <div className="border">
+        <div onSubmit={formik.handleSubmit} className="border">
           <div className="max-w-7xl mx-auto my-5">
             <div>
               <p className="text-xl font-bold font-source text-center text-red-500">
@@ -716,6 +715,7 @@ function InstitutHaqidaCom() {
               </div>
             </div>
           </div>
+          <button type="submit" className="btn">update</button>
         </div>
       </div>
     </div>

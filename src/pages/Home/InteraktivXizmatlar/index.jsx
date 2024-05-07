@@ -1,9 +1,10 @@
 import React from "react";
+import Interaktiv from "../../../components/Interaktiv";
 
 const InteraktivXizmatlar = () => {
     return (
         <div>
-            InteraktivXizmatlar
+            <Interaktiv />
         </div>
     );
 };

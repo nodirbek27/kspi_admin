@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import APITalaba from "../../services/talabaFikr";
+import { CiEdit } from "react-icons/ci";
+import { RiDeleteBin5Line } from "react-icons/ri";
 
 const TalabaFikr = () => {
   const [data, setData] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
 
   // Post
   const formik = useFormik({
@@ -20,10 +23,8 @@ const TalabaFikr = () => {
       talaba_inferior_en: "",
     },
     onSubmit: async (values, { resetForm }) => {
-      const rasm = document.getElementById("rasm").files[0];
       const data = new FormData();
-
-      data.append("talaba_rasm", rasm);
+      data.append("talaba_rasm", selectedFile);
       data.append("talaba_coment_uz", values.talaba_coment_uz);
       data.append("talaba_coment_ru", values.talaba_coment_ru);
       data.append("talaba_coment_en", values.talaba_coment_en);
@@ -35,7 +36,7 @@ const TalabaFikr = () => {
       data.append("talaba_inferior_en", values.talaba_inferior_en);
       await APITalaba.post(data);
       getData();
-      formik.resetForm();
+      resetForm();
     },
   });
 
@@ -45,11 +46,11 @@ const TalabaFikr = () => {
       .then((res) => {
         setData(res.data);
       })
-
       .catch((error) => console.log(error));
   };
-//   getData();
-//   console.log(data);
+  useEffect(() => {
+    getData();
+  }, []);
 
   // DELETE
   const handleDelete = async (id) => {
@@ -77,21 +78,26 @@ const TalabaFikr = () => {
             </figure>
             <div className="card-body">
               <h2 className="card-title">{item.talaba_coment_uz}</h2>
-              <p>{item.talaba_ism_uz}</p>
+              <p className="text-end">{item.talaba_ism_uz}</p>
+              <p className="text-end">{item.talaba_inferior_uz}</p>
               <div className="card-actions justify-end">
-                <button className="btn btn-primary">Tahrirlash</button>
-                <button
-                  className="btn btn-primary"
-                  onClick={() => handleDelete(item.id)}
-                >
-                  O'chirish
+                {/* Tahrirlash */}
+                <button className="btn" to={`/yangiliklar/${item.id}`}>
+                  <CiEdit className="text-green-600 cursor-pointer h-5 w-5" />
+                </button>
+                {/* O'chirish */}
+                <button className="btn" onClick={() => handleDelete(item.id)}>
+                  <RiDeleteBin5Line className="text-red-600 cursor-pointer h-5 w-5" />
                 </button>
               </div>
             </div>
           </div>
         ))}
 
-      <form onSubmit={formik.handleSubmit} className="flex flex-col gap-2">
+      <form
+        onSubmit={formik.handleSubmit}
+        className={`flex flex-col gap-2 ${data?.length >= 1 ? "hidden" : ""}`}
+      >
         <h3 className="mt-3 text-2xl">Talaba fikri yuklash</h3>
         {/* Fikri */}
         <div className="grid lg:grid-cols-3 gap-3">
@@ -203,7 +209,7 @@ const TalabaFikr = () => {
           </div>
         </div>
 
-        {/* Ism familiya */}
+        {/* Kursi va yo'nalishi */}
         <div className="grid lg:grid-cols-3 gap-3">
           <div>
             <label
@@ -258,6 +264,7 @@ const TalabaFikr = () => {
           </div>
         </div>
 
+        {/* File input */}
         <div className="grid grid-cols-3 gap-3">
           <div>
             <label
@@ -271,8 +278,7 @@ const TalabaFikr = () => {
               name="rasm"
               type="file"
               className="file-input file-input-bordered w-full md:col-span-1"
-              onChange={formik.handleChange}
-              value={formik.values.rasm}
+              onChange={(e) => setSelectedFile(e.target.files[0])}
             />
           </div>
         </div>

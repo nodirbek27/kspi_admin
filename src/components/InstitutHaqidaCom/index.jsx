@@ -1,158 +1,179 @@
 import React, { useEffect, useState } from "react";
 import APIInstitutHaqida from "../../services/institutHaqida";
-import { useFormik } from "formik";
+import { Formik, useField, useFormik } from "formik";
+
+const MyTextInput = ({label, tab, ...props}) => {
+  const [field, meta] = useField(props);
+  return (
+    <div>
+      <label htmlFor={props.id || props.name} className="block mb-2 font-medium text-gray-700">{label} <span className="text-red-500">{tab}</span></label>
+      <input className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300" {...field} {...props} />
+      {meta.touched && meta.error ? (<div className="error">{meta.error}</div>) : null}
+    </div>
+  )
+}
+
+const MyTextarea = ({label, tab, ...props}) => {
+  const [field, meta] = useField(props);
+  return (
+    <div>
+      <label htmlFor={props.id || props.name} className="block mb-2 font-medium text-gray-700">{label}<span className="text-red-500">{tab}</span></label>
+      <textarea className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300" {...field} {...props}></textarea>
+      {meta.touched && meta.error ? (<div>{meta.error}</div>) : null}
+    </div>
+  )
+}
 
 function InstitutHaqidaCom() {
-  
   const [datas, setDatas] = useState([]);
-  const [yes, setYes] = useState([]);
-  
-  const fetchData = async() => {
-    try{
+  // const [yes, setYes] = useState([]);
+  const [isEdit, setIsEdit] = useState(false);
+  console.log(isEdit);
+
+  const fetchData = async () => {
+    try {
       const response = await APIInstitutHaqida.getInstitutHaqida();
       setDatas(response.data);
-    } catch(error){
+    } catch (error) {
       console.log(error);
     }
-  }
-  
+  };
+
   console.log(datas);
-    
-    const formik = useFormik({
-      initialValues: {
-        bizning_maqsadimiz_title_uz: '',
-        bizning_maqsadimiz_title_ru: '',
-        bizning_maqsadimiz_title_en: '',
-        bizning_maqsadimiz_text_uz: '',
-        bizning_maqsadimiz_text_ru: '',
-        bizning_maqsadimiz_text_en: '',
-        
-        biz_haqimizda_title_uz: '',
-        biz_haqimizda_title_ru: '',
-        biz_haqimizda_title_en: '',
-        biz_haqimizda_text_uz: '',
-        biz_haqimizda_text_ru: '',
-        biz_haqimizda_text_en: '',
-        
-        institut_rasm: null,
-        
-        qoshimcha_title_uz: '',
-        qoshimcha_title_ru: '',
-        qoshimcha_title_en: '',
-        
-        biz_kimmiz_title_uz: '',
-        biz_kimmiz_title_ru: '',
-        biz_kimmiz_title_en: '',
-        biz_kimmiz_text_uz: '',
-        biz_kimmiz_text_ru: '',
-        biz_kimmiz_text_en: '',
-        biz_kimmiz: null,
-        
-        qoshma_hamkorlar_title_uz: '',
-        qoshma_hamkorlar_title_ru: '',
-        qoshma_hamkorlar_title_en: '',
-        qoshma_hamkorlar_text_uz: '',
-        qoshma_hamkorlar_text_ru: '',
-        qoshma_hamkorlar_text_en: '',
-        qoshma_hamkorlar: null,
-        
-        rivojlanayotgan_talabalar_hayoti_title_uz: '',
-        rivojlanayotgan_talabalar_hayoti_title_ru: '',
-        rivojlanayotgan_talabalar_hayoti_title_en: '',
-        rivojlanayotgan_talabalar_hayoti_text_uz: '',
-        rivojlanayotgan_talabalar_hayoti_text_ru: '',
-        rivojlanayotgan_talabalar_hayoti_text_en: '',
-        rivojlanayotgan_talabalar_hayoti: null,
-        
-        kirish_title_uz: '',
-        kirish_title_ru: '',
-        kirish_title_en: '',
-        
-        barcha_shakillar_title_uz: '',
-        barcha_shakillar_title_ru: '',
-        barcha_shakillar_title_en: '',
-        barcha_shakillar_text_uz: '',
-        barcha_shakillar_text_ru: '',
-        barcha_shakillar_text_en: '',
-        barcha_shakillar: null,
-        
-        moliyaviy_yordam_title_uz: '',
-        moliyaviy_yordam_title_ru: '',
-        moliyaviy_yordam_title_en: '',
-        moliyaviy_yordam_text_uz: '',
-        moliyaviy_yordam_text_ru: '',
-        moliyaviy_yordam_text_en: '',
-        moliyaviy_yordam: null,
-        
-        sport_bilan_birga_title_uz: '',
-        sport_bilan_birga_title_ru: '',
-        sport_bilan_birga_title_en: '',
-        sport_bilan_birga_text_uz: '',
-        sport_bilan_birga_text_ru: '',
-        sport_bilan_birga_text_en: '',
-        sport_bilan_birga: null,
-      },
-      onSubmit: async (values, {resetForm}) => {
-        alert(JSON.stringify(values, null, 3))
-        const data = new FormData();
-        for(let key in values){
-          data.append(key, values[key]);
-        };
-        try{
-          const responses = await APIInstitutHaqida.postInstitutHaqida(data);
-          setYes(responses);
-          resetForm();
-          fetchData()
-        }
-        catch(error){
-          console.error("Xatolik sodir bo'ldi:", error);
-        }
-      },
-    })
 
-    useEffect(()=>{
-      fetchData()
-    },[])
+  const formik = useFormik({
+    initialValues: {
+      bizning_maqsadimiz_title_uz: "",
+      bizning_maqsadimiz_title_ru: "",
+      bizning_maqsadimiz_title_en: "",
+      bizning_maqsadimiz_text_uz: "",
+      bizning_maqsadimiz_text_ru: "",
+      bizning_maqsadimiz_text_en: "",
 
-    console.log(yes);
-    
-    return (
+      biz_haqimizda_title_uz: "",
+      biz_haqimizda_title_ru: "",
+      biz_haqimizda_title_en: "",
+      biz_haqimizda_text_uz: "",
+      biz_haqimizda_text_ru: "",
+      biz_haqimizda_text_en: "",
+
+      institut_rasm: null,
+
+      qoshimcha_title_uz: "",
+      qoshimcha_title_ru: "",
+      qoshimcha_title_en: "",
+
+      biz_kimmiz_title_uz: "",
+      biz_kimmiz_title_ru: "",
+      biz_kimmiz_title_en: "",
+      biz_kimmiz_text_uz: "",
+      biz_kimmiz_text_ru: "",
+      biz_kimmiz_text_en: "",
+      biz_kimmiz: null,
+
+      qoshma_hamkorlar_title_uz: "",
+      qoshma_hamkorlar_title_ru: "",
+      qoshma_hamkorlar_title_en: "",
+      qoshma_hamkorlar_text_uz: "",
+      qoshma_hamkorlar_text_ru: "",
+      qoshma_hamkorlar_text_en: "",
+      qoshma_hamkorlar: null,
+
+      rivojlanayotgan_talabalar_hayoti_title_uz: "",
+      rivojlanayotgan_talabalar_hayoti_title_ru: "",
+      rivojlanayotgan_talabalar_hayoti_title_en: "",
+      rivojlanayotgan_talabalar_hayoti_text_uz: "",
+      rivojlanayotgan_talabalar_hayoti_text_ru: "",
+      rivojlanayotgan_talabalar_hayoti_text_en: "",
+      rivojlanayotgan_talabalar_hayoti: null,
+
+      kirish_title_uz: "",
+      kirish_title_ru: "",
+      kirish_title_en: "",
+
+      barcha_shakillar_title_uz: "",
+      barcha_shakillar_title_ru: "",
+      barcha_shakillar_title_en: "",
+      barcha_shakillar_text_uz: "",
+      barcha_shakillar_text_ru: "",
+      barcha_shakillar_text_en: "",
+      barcha_shakillar: null,
+
+      moliyaviy_yordam_title_uz: "",
+      moliyaviy_yordam_title_ru: "",
+      moliyaviy_yordam_title_en: "",
+      moliyaviy_yordam_text_uz: "",
+      moliyaviy_yordam_text_ru: "",
+      moliyaviy_yordam_text_en: "",
+      moliyaviy_yordam: null,
+
+      sport_bilan_birga_title_uz: "",
+      sport_bilan_birga_title_ru: "",
+      sport_bilan_birga_title_en: "",
+      sport_bilan_birga_text_uz: "",
+      sport_bilan_birga_text_ru: "",
+      sport_bilan_birga_text_en: "",
+      sport_bilan_birga: null,
+    },
+    onSubmit: async (values, { resetForm }) => {
+      if (isEdit) {
+        console.log("Put");
+      } else {
+        console.log("Post");
+      }
+      // const data = new FormData();
+      // for (let key in values) {
+      //   data.append(key, values[key]);
+      // }
+      // try {
+      //   const resPost = await APIInstitutHaqida.postInstitutHaqida(data);
+      //   setYes(resPost);
+      //   resetForm();
+      //   fetchData();
+      // } catch (error) {
+      //   console.error("Xatolik sodir bo'ldi:", error); sssssss
+      // }
+    },
+  });
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleSet = (item) => {
+    setIsEdit(!isEdit);
+    formik.setValues({
+      bizning_maqsadimiz_title_uz: item.bizning_maqsadimiz_title_uz,
+      bizning_maqsadimiz_title_ru: item.bizning_maqsadimiz_title_ru,
+      bizning_maqsadimiz_title_en: item.bizning_maqsadimiz_title_en,
+    });
+  };
+
+  return (
     <div className="max-w-[1600px] mx-auto">
-      <h1 className="text-3xl font-medium text-gray-700 text-center my-5">Institut haqida</h1>
+      <h1 className="text-3xl font-medium text-gray-700 text-center my-5">
+        Institut haqida
+      </h1>
       <div className="grid grid-cols-4">
+        <Formik>
         <div className="col-span-3 border">
-          <form onSubmit={formik.handleSubmit} className="max-w-full mx-auto p-5">
+          <form
+            onSubmit={formik.handleSubmit}
+            className="max-w-full mx-auto p-5"
+          >
             <fieldset className="border px-5 mb-5">
               <legend className="text-red-500 font-medium">
                 Asosiy sahifadagi institut haqida
               </legend>
-              <div className="my-5 grid grid-cols-3 gap-2">
-                <div>
-                  <label htmlFor="bizning_maqsadimiz_title_uz" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">uz</span></label>
-                  <input type="text" id="bizning_maqsadimiz_title_uz" name="bizning_maqsadimiz_title_uz" onChange={formik.handleChange} value={formik.values.bizning_maqsadimiz_title_uz} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
-                </div>
-                <div>
-                  <label htmlFor="bizning_maqsadimiz_title_ru" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">ru</span></label>
-                  <input type="text"  id="bizning_maqsadimiz_title_ru" name="bizning_maqsadimiz_title_ru" onChange={formik.handleChange} value={formik.values.bizning_maqsadimiz_title_ru} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
-                </div>
-                <div>
-                  <label htmlFor="bizning_maqsadimiz_title_ru" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">en</span></label>
-                  <input type="text"  id="bizning_maqsadimiz_title_en" name="bizning_maqsadimiz_title_en" onChange={formik.handleChange} value={formik.values.bizning_maqsadimiz_title_en} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
-                </div>
+              <div className="my-5 grid grid-cols-3 gap-2">             
+                <MyTextInput type="text" label="Sarlavha" tab="uz" id="bizning_maqsadimiz_title_uz" name="bizning_maqsadimiz_title_uz" onChange={formik.handleChange}/>
+                <MyTextInput type="text" label="Sarlavha" tab="ru" id="bizning_maqsadimiz_title_ru" name="bizning_maqsadimiz_title_ru" onChange={formik.handleChange}/>
+                <MyTextInput type="text" label="Sarlavha" tab="en" id="bizning_maqsadimiz_title_en" name="bizning_maqsadimiz_title_en" onChange={formik.handleChange}/>
               </div>
               <div className="my-5 grid grid-cols-3 gap-2">
-                <div>
-                  <label htmlFor="bizning_maqsadimiz_text_uz" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">uz</span></label>
-                  <textarea type="text" id="bizning_maqsadimiz_text_uz" name="bizning_maqsadimiz_text_uz" onChange={formik.handleChange} value={formik.values.bizning_maqsadimiz_text_uz} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
-                </div>
-                <div>
-                  <label htmlFor="bizning_maqsadimiz_text_ru" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">ru</span></label>
-                  <textarea type="text" id="bizning_maqsadimiz_text_ru" name="bizning_maqsadimiz_text_ru" onChange={formik.handleChange} value={formik.values.bizning_maqsadimiz_text_ru} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
-                </div>
-                <div>
-                  <label htmlFor="bizning_maqsadimiz_text_en" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">en</span></label>
-                  <textarea type="text" id="bizning_maqsadimiz_text_en" name="bizning_maqsadimiz_text_en" onChange={formik.handleChange} value={formik.values.bizning_maqsadimiz_text_en} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
-                </div>
+                <MyTextarea type="text" label="Matn" tab="uz" id="bizning_maqsadimiz_text_uz" name="bizning_maqsadimiz_text_uz" onChange={formik.handleChange}/>
+                <MyTextarea type="text" label="Matn" tab="ru" id="bizning_maqsadimiz_text_ru" name="bizning_maqsadimiz_text_ru" onChange={formik.handleChange}/>
+                <MyTextarea type="text" label="Matn" tab="en" id="bizning_maqsadimiz_text_en" name="bizning_maqsadimiz_text_en" onChange={formik.handleChange}/>
               </div>
             </fieldset>
             <fieldset className="border px-5 mb-5">
@@ -160,348 +181,155 @@ function InstitutHaqidaCom() {
                 Institut haqida 1
               </legend>
               <div className="my-5 grid grid-cols-3 gap-2">
-                <div>
-                  <label htmlFor="biz_haqimizda_title_uz" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">uz</span></label>
-                  <input type="text" id="biz_haqimizda_title_uz" name="biz_haqimizda_title_uz" onChange={formik.handleChange} value={formik.values.biz_haqimizda_title_uz} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
-                </div>
-                <div>
-                  <label htmlFor="biz_haqimizda_title_ru" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">ru</span></label>
-                  <input type="text" id="biz_haqimizda_title_ru" name="biz_haqimizda_title_ru" onChange={formik.handleChange} value={formik.values.biz_haqimizda_title_ru} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
-                </div>
-                <div>
-                  <label htmlFor="biz_haqimizda_title_en" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">en</span></label>
-                  <input type="text" id="biz_haqimizda_title_en" name="biz_haqimizda_title_en" onChange={formik.handleChange} value={formik.values.biz_haqimizda_title_en} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
-                </div>
+                <MyTextInput type="text" label="Sarlavha" tab="uz" id="biz_haqimizda_title_uz" name="biz_haqimizda_title_uz" onChange={formik.handleChange}/>
+                <MyTextInput type="text" label="Sarlavha" tab="ru" id="biz_haqimizda_title_ru" name="biz_haqimizda_title_ru" onChange={formik.handleChange}/>
+                <MyTextInput type="text" label="Sarlavha" tab="en" id="biz_haqimizda_title_en" name="biz_haqimizda_title_en" onChange={formik.handleChange}/>
               </div>
               <div className="my-5 grid grid-cols-3 gap-2">
-                <div>
-                  <label htmlFor="biz_haqimizda_text_uz" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">uz</span></label>
-                  <textarea type="text" id="biz_haqimizda_text_uz" name="biz_haqimizda_text_uz" onChange={formik.handleChange} value={formik.values.biz_haqimizda_text_uz} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
-                </div>
-                <div>
-                  <label htmlFor="biz_haqimizda_text_ru" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">ru</span></label>
-                  <textarea type="text" id="biz_haqimizda_text_ru" name="biz_haqimizda_text_ru" onChange={formik.handleChange} value={formik.values.biz_haqimizda_text_ru} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
-                </div>
-                <div>
-                  <label htmlFor="biz_haqimizda_text_en" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">en</span></label>
-                  <textarea type="text"id="biz_haqimizda_text_en" name="biz_haqimizda_text_en" onChange={formik.handleChange} value={formik.values.biz_haqimizda_text_en} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
-                </div>
+                <MyTextarea type="text" label="Matn" tab="uz" id="biz_haqimizda_text_uz" name="biz_haqimizda_text_uz" onChange={formik.handleChange}/>
+                <MyTextarea type="text" label="Matn" tab="ru" id="biz_haqimizda_text_ru" name="biz_haqimizda_text_ru" onChange={formik.handleChange}/>
+                <MyTextarea type="text" label="Matn" tab="en" id="biz_haqimizda_text_en" name="biz_haqimizda_text_en" onChange={formik.handleChange}/>
               </div>
             </fieldset>
             <fieldset className="border px-5 mb-5">
-              <legend className="text-red-500 font-medium">Institut rasmi</legend>
-                <div className="my-5">
-                  <label
-                    htmlFor="institut_rasm"
-                    className="block mb-2 font-medium text-gray-700"
-                  >
-                    Rasm
-                  </label>
-                  <input
-                    type="file"
-                    id="institut_rasm" name="institut_rasm"
-                    onChange={(event) => formik.setFieldValue("institut_rasm", event.currentTarget.files[0])}
-                    className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"
-                  />
-                </div>
+              <legend className="text-red-500 font-medium">
+                Institut rasmi
+              </legend>
+              <div className="my-5">
+                <MyTextInput type="file" labe="Rasm" tab="" id="institut_rasm" name="institut_rasm" onChange={(event) => formik.setFieldValue("institut_rasm", event.currentTarget.files[0])}/>
+              </div>
             </fieldset>
             <fieldset className="border px-5 mb-5">
               <legend className="text-red-500 font-medium">Sarlavha 2</legend>
               <div className="my-5 grid grid-cols-3 gap-2">
-                <div>
-                  <label htmlFor="qoshimcha_title_uz" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">uz</span></label>
-                  <input type="text" id="qoshimcha_title_uz" name="qoshimcha_title_uz" onChange={formik.handleChange} value={formik.values.qoshimcha_title_uz} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
-                </div>
-                <div>
-                  <label htmlFor="qoshimcha_title_ru" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">ru</span></label>
-                  <input type="text" id="qoshimcha_title_ru" name="qoshimcha_title_ru" onChange={formik.handleChange} value={formik.values.qoshimcha_title_ru} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
-                </div>
-                <div>
-                  <label htmlFor="qoshimcha_title_en" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">en</span></label>
-                  <input type="text" id="qoshimcha_title_en" name="qoshimcha_title_en" onChange={formik.handleChange} value={formik.values.qoshimcha_title_en} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
-                </div>
+                <MyTextInput type="text" label="Sarlavha" tab="uz" id="qoshimcha_title_uz" name="qoshimcha_title_uz" onChange={formik.handleChange}/>
+                <MyTextInput type="text" label="Sarlavha" tab="ru" id="qoshimcha_title_ru" name="qoshimcha_title_ru" onChange={formik.handleChange}/>
+                <MyTextInput type="text" label="Sarlavha" tab="en" id="qoshimcha_title_en" name="qoshimcha_title_en" onChange={formik.handleChange}/>
               </div>
             </fieldset>
             <fieldset className="border px-5 mb-5">
               <legend className="text-red-500 font-medium">Biz kimmiz</legend>
               <div className="my-5 grid grid-cols-3 gap-2">
-                <div>
-                  <label htmlFor="biz_kimmiz_title_uz" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">uz</span></label>
-                  <input type="text" id="biz_kimmiz_title_uz" name="biz_kimmiz_title_uz" onChange={formik.handleChange} value={formik.values.biz_kimmiz_title_uz} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
-                </div>
-                <div>
-                  <label htmlFor="biz_kimmiz_title_ru" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">ru</span></label>
-                  <input type="text" id="biz_kimmiz_title_ru" name="biz_kimmiz_title_ru" onChange={formik.handleChange} value={formik.values.biz_kimmiz_title_ru} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
-                </div>
-                <div>
-                  <label htmlFor="biz_kimmiz_title_en" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">en</span></label>
-                  <input type="text" id="biz_kimmiz_title_en" name="biz_kimmiz_title_en" onChange={formik.handleChange} value={formik.values.biz_kimmiz_title_en} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
-                </div>
+                <MyTextInput type="text" label="Sarlavha" tab="uz" id="biz_kimmiz_title_uz" name="biz_kimmiz_title_uz" onChange={formik.handleChange}/>
+                <MyTextInput type="text" label="Sarlavha" tab="ru" id="biz_kimmiz_title_ru" name="biz_kimmiz_title_ru" onChange={formik.handleChange}/>
+                <MyTextInput type="text" label="Sarlavha" tab="en" id="biz_kimmiz_title_en" name="biz_kimmiz_title_en" onChange={formik.handleChange}/>
               </div>
               <div className="my-5 grid grid-cols-3 gap-2">
-                <div>
-                  <label htmlFor="biz_kimmiz_text_uz" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">uz</span></label>
-                  <textarea type="text" id="biz_kimmiz_text_uz" name="biz_kimmiz_text_uz" onChange={formik.handleChange} value={formik.values.biz_kimmiz_text_uz} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
-                </div>
-                <div>
-                  <label htmlFor="biz_kimmiz_text_ru" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">ru</span></label>
-                  <textarea type="text" id="biz_kimmiz_text_ru" name="biz_kimmiz_text_ru" onChange={formik.handleChange} value={formik.values.biz_kimmiz_text_ru} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
-                </div>
-                <div>
-                  <label htmlFor="biz_kimmiz_text_en" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">en</span></label>
-                  <textarea type="text" id="biz_kimmiz_text_en" name="biz_kimmiz_text_en" onChange={formik.handleChange} value={formik.values.biz_kimmiz_text_en} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
-                </div>
+                <MyTextarea type="text" label="Matn" tab="uz" id="biz_kimmiz_text_uz" name="biz_kimmiz_text_uz" onChange={formik.handleChange}/>
+                <MyTextarea type="text" label="Matn" tab="ru" id="biz_kimmiz_text_ru" name="biz_kimmiz_text_ru" onChange={formik.handleChange}/>
+                <MyTextarea type="text" label="Matn" tab="en" id="biz_kimmiz_text_en" name="biz_kimmiz_text_en" onChange={formik.handleChange}/>
               </div>
               <div className="my-5">
-                <label
-                  htmlFor="imageOne"
-                  className="block mb-2 font-medium text-gray-700"
-                >
-                  Rasm
-                </label>
-                <input
-                  type="file"
-                  id="biz_kimmiz" name="biz_kimmiz"
-                  onChange={(event) => formik.setFieldValue("biz_kimmiz", event.currentTarget.files[0])}
-                  className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"
-                />
+                <MyTextInput type="file" labe="Rasm" tab="" id="biz_kimmiz" name="biz_kimmiz" onChange={(event) => formik.setFieldValue("biz_kimmiz", event.currentTarget.files[0])}/>
               </div>
             </fieldset>
             <fieldset className="border px-5 mb-5">
-              <legend className="text-red-500 font-medium">Qo'shma hamkorlar</legend>
+              <legend className="text-red-500 font-medium">
+                Qo'shma hamkorlar
+              </legend>
               <div className="my-5 grid grid-cols-3 gap-2">
-                <div>
-                  <label htmlFor="qoshma_hamkorlar_title_uz" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">uz</span></label>
-                  <input type="text" id="qoshma_hamkorlar_title_uz" name="qoshma_hamkorlar_title_uz" onChange={formik.handleChange} value={formik.values.qoshma_hamkorlar_title_uz} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
-                </div>
-                <div>
-                  <label htmlFor="qoshma_hamkorlar_title_ru" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">ru</span></label>
-                  <input type="text" id="qoshma_hamkorlar_title_ru" name="qoshma_hamkorlar_title_ru" onChange={formik.handleChange} value={formik.values.qoshma_hamkorlar_title_ru} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
-                </div>
-                <div>
-                  <label htmlFor="qoshma_hamkorlar_title_en" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">en</span></label>
-                  <input type="text" id="qoshma_hamkorlar_title_en" name="qoshma_hamkorlar_title_en" onChange={formik.handleChange} value={formik.values.qoshma_hamkorlar_title_en} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
-                </div>
+                <MyTextInput type="text" label="Sarlavha" tab="uz" id="qoshma_hamkorlar_title_uz" name="qoshma_hamkorlar_title_uz" onChange={formik.handleChange}/>
+                <MyTextInput type="text" label="Sarlavha" tab="ru" id="qoshma_hamkorlar_title_ru" name="qoshma_hamkorlar_title_ru" onChange={formik.handleChange}/>
+                <MyTextInput type="text" label="Sarlavha" tab="en" id="qoshma_hamkorlar_title_en" name="qoshma_hamkorlar_title_en" onChange={formik.handleChange}/>
               </div>
               <div className="my-5 grid grid-cols-3 gap-2">
-                <div>
-                  <label htmlFor="qoshma_hamkorlar_text_uz" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">uz</span></label>
-                  <textarea type="text" id="qoshma_hamkorlar_text_uz" name="qoshma_hamkorlar_text_uz" onChange={formik.handleChange} value={formik.values.qoshma_hamkorlar_text_uz} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
-                </div>
-                <div>
-                  <label htmlFor="qoshma_hamkorlar_text_ru" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">ru</span></label>
-                  <textarea type="text" id="qoshma_hamkorlar_text_ru" name="qoshma_hamkorlar_text_ru" onChange={formik.handleChange} value={formik.values.qoshma_hamkorlar_text_ru} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
-                </div>
-                <div>
-                  <label htmlFor="qoshma_hamkorlar_text_en" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">en</span></label>
-                  <textarea type="text" id="qoshma_hamkorlar_text_en" name="qoshma_hamkorlar_text_en" onChange={formik.handleChange} value={formik.values.qoshma_hamkorlar_text_en} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
-                </div>
+                <MyTextarea type="text" label="Matn" tab="uz" id="qoshma_hamkorlar_text_uz" name="qoshma_hamkorlar_text_uz" onChange={formik.handleChange}/>
+                <MyTextarea type="text" label="Matn" tab="ru" id="qoshma_hamkorlar_text_ru" name="qoshma_hamkorlar_text_ru" onChange={formik.handleChange}/>
+                <MyTextarea type="text" label="Matn" tab="en" id="qoshma_hamkorlar_text_en" name="qoshma_hamkorlar_text_en" onChange={formik.handleChange}/>
               </div>
               <div className="my-5">
-                <label
-                  htmlFor="imageTwo"
-                  className="block mb-2 font-medium text-gray-700"
-                >
-                  Rasm
-                </label>
-                <input
-                  type="file"
-                  id="qoshma_hamkorlar" name="qoshma_hamkorlar"
-                  onChange={(event) => formik.setFieldValue("qoshma_hamkorlar", event.currentTarget.files[0])}
-                  className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"
-                />
+                <MyTextInput type="file" labe="Rasm" tab="" id="qoshma_hamkorlar" name="qoshma_hamkorlar" onChange={(event) => formik.setFieldValue("qoshma_hamkorlar", event.currentTarget.files[0])}/>
               </div>
             </fieldset>
             <fieldset className="border px-5 mb-5">
-              <legend className="text-red-500 font-medium">Rivojlanayotgan talabalik hayoti</legend>
+              <legend className="text-red-500 font-medium">
+                Rivojlanayotgan talabalik hayoti
+              </legend>
               <div className="my-5 grid grid-cols-3 gap-2">
-                <div>
-                  <label htmlFor="rivojlanayotgan_talabalar_hayoti_title_uz" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">uz</span></label>
-                  <input type="text" id="rivojlanayotgan_talabalar_hayoti_title_uz" name="rivojlanayotgan_talabalar_hayoti_title_uz" onChange={formik.handleChange} value={formik.values.rivojlanayotgan_talabalar_hayoti_title_uz} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
-                </div>
-                <div>
-                  <label htmlFor="rivojlanayotgan_talabalar_hayoti_title_ru" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">ru</span></label>
-                  <input type="text" id="rivojlanayotgan_talabalar_hayoti_title_ru" name="rivojlanayotgan_talabalar_hayoti_title_ru" onChange={formik.handleChange} value={formik.values.rivojlanayotgan_talabalar_hayoti_title_ru} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
-                </div>
-                <div>
-                  <label htmlFor="rivojlanayotgan_talabalar_hayoti_title_en" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">en</span></label>
-                  <input type="text" id="rivojlanayotgan_talabalar_hayoti_title_en" name="rivojlanayotgan_talabalar_hayoti_title_en" onChange={formik.handleChange} value={formik.values.rivojlanayotgan_talabalar_hayoti_title_en} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
-                </div>
+                <MyTextInput type="text" label="Sarlavha" tab="uz" id="rivojlanayotgan_talabalar_hayoti_title_uz" name="rivojlanayotgan_talabalar_hayoti_title_uz" onChange={formik.handleChange}/>
+                <MyTextInput type="text" label="Sarlavha" tab="ru" id="rivojlanayotgan_talabalar_hayoti_title_ru" name="rivojlanayotgan_talabalar_hayoti_title_ru" onChange={formik.handleChange}/>
+                <MyTextInput type="text" label="Sarlavha" tab="en" id="rivojlanayotgan_talabalar_hayoti_title_en" name="rivojlanayotgan_talabalar_hayoti_title_en" onChange={formik.handleChange}/>
               </div>
               <div className="my-5 grid grid-cols-3 gap-2">
-                <div>
-                  <label htmlFor="rivojlanayotgan_talabalar_hayoti_text_uz" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">uz</span></label>
-                  <textarea type="text" id="rivojlanayotgan_talabalar_hayoti_text_uz" name="rivojlanayotgan_talabalar_hayoti_text_uz" onChange={formik.handleChange} value={formik.values.rivojlanayotgan_talabalar_hayoti_text_uz} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
-                </div>
-                <div>
-                  <label htmlFor="rivojlanayotgan_talabalar_hayoti_text_ru" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">ru</span></label>
-                  <textarea type="text" id="rivojlanayotgan_talabalar_hayoti_text_ru" name="rivojlanayotgan_talabalar_hayoti_text_ru" onChange={formik.handleChange} value={formik.values.rivojlanayotgan_talabalar_hayoti_text_ru} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
-                </div>
-                <div>
-                  <label htmlFor="rivojlanayotgan_talabalar_hayoti_text_en" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">en</span></label>
-                  <textarea type="text" id="rivojlanayotgan_talabalar_hayoti_text_en" name="rivojlanayotgan_talabalar_hayoti_text_en" onChange={formik.handleChange} value={formik.values.rivojlanayotgan_talabalar_hayoti_text_en} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
-                </div>
+                <MyTextarea type="text" label="Matn" tab="uz" id="rivojlanayotgan_talabalar_hayoti_text_uz" name="rivojlanayotgan_talabalar_hayoti_text_uz" onChange={formik.handleChange}/>
+                <MyTextarea type="text" label="Matn" tab="ru" id="rivojlanayotgan_talabalar_hayoti_text_ru" name="rivojlanayotgan_talabalar_hayoti_text_ru" onChange={formik.handleChange}/>
+                <MyTextarea type="text" label="Matn" tab="en" id="rivojlanayotgan_talabalar_hayoti_text_en" name="rivojlanayotgan_talabalar_hayoti_text_en" onChange={formik.handleChange}/>
               </div>
               <div className="my-5">
-                <label
-                  htmlFor="imageThree"
-                  className="block mb-2 font-medium text-gray-700"
-                >
-                  Rasm
-                </label>
-                <input
-                  type="file"
-                  id="rivojlanayotgan_talabalar_hayoti" name="rivojlanayotgan_talabalar_hayoti"
-                  onChange={(event) => formik.setFieldValue("rivojlanayotgan_talabalar_hayoti", event.currentTarget.files[0])}
-                  className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"
-                />
+                <MyTextInput type="file" labe="Rasm" tab="" id="rivojlanayotgan_talabalar_hayoti" name="rivojlanayotgan_talabalar_hayoti" onChange={(event) => formik.setFieldValue("rivojlanayotgan_talabalar_hayoti", event.currentTarget.files[0])}/>
               </div>
             </fieldset>
             <fieldset className="border px-5 mb-5">
-              <legend className="text-red-500 font-medium">Sarlavha 3 (Kirish)</legend>
+              <legend className="text-red-500 font-medium">
+                Sarlavha 3 (Kirish)
+              </legend>
               <div className="my-5 grid grid-cols-3 gap-2">
-                <div>
-                  <label htmlFor="kirish_title_uz" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">uz</span></label>
-                  <input type="text" id="kirish_title_uz" name="kirish_title_uz" onChange={formik.handleChange} value={formik.values.kirish_title_uz} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
-                </div>
-                <div>
-                  <label htmlFor="kirish_title_ru" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">ru</span></label>
-                  <input type="text" id="kirish_title_ru" name="kirish_title_ru" onChange={formik.handleChange} value={formik.values.kirish_title_ru} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
-                </div>
-                <div>
-                  <label htmlFor="kirish_title_en" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">en</span></label>
-                  <input type="text" id="kirish_title_en" name="kirish_title_en" onChange={formik.handleChange} value={formik.values.kirish_title_en} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
-                </div>
+                <MyTextInput type="text" label="Sarlavha" tab="uz" id="kirish_title_uz" name="kirish_title_uz" onChange={formik.handleChange}/>
+                <MyTextInput type="text" label="Sarlavha" tab="ru" id="kirish_title_ru" name="kirish_title_ru" onChange={formik.handleChange}/>
+                <MyTextInput type="text" label="Sarlavha" tab="en" id="kirish_title_en" name="kirish_title_en" onChange={formik.handleChange}/>
               </div>
             </fieldset>
             <fieldset className="border px-5 mb-5">
-              <legend className="text-red-500 font-medium">Uning barcha shakllarida xilma-xillikka chuqur hurmat</legend>
+              <legend className="text-red-500 font-medium">
+                Uning barcha shakllarida xilma-xillikka chuqur hurmat
+              </legend>
               <div className="my-5 grid grid-cols-3 gap-2">
-                <div>
-                  <label htmlFor="barcha_shakillar_title_uz" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">uz</span></label>
-                  <input type="text" id="barcha_shakillar_title_uz" name="barcha_shakillar_title_uz" onChange={formik.handleChange} value={formik.values.barcha_shakillar_title_uz} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
-                </div>
-                <div>
-                  <label htmlFor="barcha_shakillar_title_ru" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">ru</span></label>
-                  <input type="text" id="barcha_shakillar_title_ru" name="barcha_shakillar_title_ru" onChange={formik.handleChange} value={formik.values.barcha_shakillar_title_ru} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
-                </div>
-                <div>
-                  <label htmlFor="barcha_shakillar_title_en" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">en</span></label>
-                  <input type="text" id="barcha_shakillar_title_en" name="barcha_shakillar_title_en" onChange={formik.handleChange} value={formik.values.barcha_shakillar_title_en} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
-                </div>
+                <MyTextInput type="text" label="Sarlavha" tab="uz" id="barcha_shakillar_title_uz" name="barcha_shakillar_title_uz" onChange={formik.handleChange}/>
+                <MyTextInput type="text" label="Sarlavha" tab="ru" id="barcha_shakillar_title_ru" name="barcha_shakillar_title_ru" onChange={formik.handleChange}/>
+                <MyTextInput type="text" label="Sarlavha" tab="en" id="barcha_shakillar_title_en" name="barcha_shakillar_title_en" onChange={formik.handleChange}/>
               </div>
               <div className="my-5 grid grid-cols-3 gap-2">
-                <div>
-                  <label htmlFor="barcha_shakillar_text_uz" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">uz</span></label>
-                  <textarea type="text" id="barcha_shakillar_text_uz" name="barcha_shakillar_text_uz" onChange={formik.handleChange} value={formik.values.barcha_shakillar_text_uz} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
-                </div>
-                <div>
-                  <label htmlFor="barcha_shakillar_text_ru" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">ru</span></label>
-                  <textarea type="text" id="barcha_shakillar_text_ru" name="barcha_shakillar_text_ru" onChange={formik.handleChange} value={formik.values.barcha_shakillar_text_ru} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
-                </div>
-                <div>
-                  <label htmlFor="barcha_shakillar_text_en" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">en</span></label>
-                  <textarea type="text" id="barcha_shakillar_text_en" name="barcha_shakillar_text_en" onChange={formik.handleChange} value={formik.values.barcha_shakillar_text_en} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
-                </div>
+                <MyTextarea type="text" label="Matn" tab="uz" id="barcha_shakillar_text_uz" name="barcha_shakillar_text_uz" onChange={formik.handleChange}/>
+                <MyTextarea type="text" label="Matn" tab="ru" id="barcha_shakillar_text_ru" name="barcha_shakillar_text_ru" onChange={formik.handleChange}/>
+                <MyTextarea type="text" label="Matn" tab="en" id="barcha_shakillar_text_en" name="barcha_shakillar_text_en" onChange={formik.handleChange}/>
               </div>
               <div className="my-5">
-                <label
-                  htmlFor="imageFourth"
-                  className="block mb-2 font-medium text-gray-700"
-                >
-                  Rasm
-                </label>
-                <input
-                  type="file"
-                  id="barcha_shakillar" name="barcha_shakillar"
-                  onChange={(event) => formik.setFieldValue("barcha_shakillar", event.currentTarget.files[0])}
-                  className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"
-                />
+                <MyTextInput type="file" labe="Rasm" tab="" id="barcha_shakillar" name="barcha_shakillar" onChange={(event) => formik.setFieldValue("barcha_shakillar", event.currentTarget.files[0])}/>
               </div>
             </fieldset>
             <fieldset className="border px-5 mb-5">
-              <legend className="text-red-500 font-medium">Farq qiladigan moliyaviy yordam</legend>
+              <legend className="text-red-500 font-medium">
+                Farq qiladigan moliyaviy yordam
+              </legend>
               <div className="my-5 grid grid-cols-3 gap-2">
-                <div>
-                  <label htmlFor="moliyaviy_yordam_title_uz" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">uz</span></label>
-                  <input type="text" id="moliyaviy_yordam_title_uz" name="moliyaviy_yordam_title_uz" onChange={formik.handleChange} value={formik.values.moliyaviy_yordam_title_uz} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
-                </div>
-                <div>
-                  <label htmlFor="moliyaviy_yordam_title_ru" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">ru</span></label>
-                  <input type="text" id="moliyaviy_yordam_title_ru" name="moliyaviy_yordam_title_ru" onChange={formik.handleChange} value={formik.values.moliyaviy_yordam_title_ru} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
-                </div>
-                <div>
-                  <label htmlFor="moliyaviy_yordam_title_en" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">en</span></label>
-                  <input type="text" id="moliyaviy_yordam_title_en" name="moliyaviy_yordam_title_en" onChange={formik.handleChange} value={formik.values.moliyaviy_yordam_title_en} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
-                </div>
+                <MyTextInput type="text" label="Sarlavha" tab="uz" id="moliyaviy_yordam_title_uz" name="moliyaviy_yordam_title_uz" onChange={formik.handleChange}/>
+                <MyTextInput type="text" label="Sarlavha" tab="ru" id="moliyaviy_yordam_title_ru" name="moliyaviy_yordam_title_ru" onChange={formik.handleChange}/>
+                <MyTextInput type="text" label="Sarlavha" tab="en" id="moliyaviy_yordam_title_en" name="moliyaviy_yordam_title_en" onChange={formik.handleChange}/>
               </div>
               <div className="my-5 grid grid-cols-3 gap-2">
-                <div>
-                  <label htmlFor="moliyaviy_yordam_text_uz" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">uz</span></label>
-                  <textarea type="text" id="moliyaviy_yordam_text_uz" name="moliyaviy_yordam_text_uz" onChange={formik.handleChange} value={formik.values.moliyaviy_yordam_text_uz} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
-                </div>
-                <div>
-                  <label htmlFor="moliyaviy_yordam_text_ru" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">ru</span></label>
-                  <textarea type="text" id="moliyaviy_yordam_text_ru" name="moliyaviy_yordam_text_ru" onChange={formik.handleChange} value={formik.values.moliyaviy_yordam_text_ru} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
-                </div>
-                <div>
-                  <label htmlFor="moliyaviy_yordam_text_en" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">en</span></label>
-                  <textarea type="text" id="moliyaviy_yordam_text_en" name="moliyaviy_yordam_text_en" onChange={formik.handleChange} value={formik.values.moliyaviy_yordam_text_en} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
-                </div>
+                <MyTextarea type="text" label="Matn" tab="uz" id="moliyaviy_yordam_text_uz" name="moliyaviy_yordam_text_uz" onChange={formik.handleChange}/>
+                <MyTextarea type="text" label="Matn" tab="ru" id="moliyaviy_yordam_text_ru" name="moliyaviy_yordam_text_ru" onChange={formik.handleChange}/>
+                <MyTextarea type="text" label="Matn" tab="en" id="moliyaviy_yordam_text_en" name="moliyaviy_yordam_text_en" onChange={formik.handleChange}/>
               </div>
               <div className="my-5">
-                <label
-                  htmlFor="imageFive"
-                  className="block mb-2 font-medium text-gray-700"
-                >
-                  Rasm
-                </label>
-                <input
-                  type="file"
-                  id="moliyaviy_yordam" name="moliyaviy_yordam"
-                  onChange={(event) => formik.setFieldValue("moliyaviy_yordam", event.currentTarget.files[0])}
-                  className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"
-                />
+                <MyTextInput type="file" labe="Rasm" tab="" id="moliyaviy_yordam" name="moliyaviy_yordam" onChange={(event) => formik.setFieldValue("moliyaviy_yordam", event.currentTarget.files[0])}/>
               </div>
             </fieldset>
             <fieldset className="border px-5 mb-5">
-              <legend className="text-red-500 font-medium">Sport bilan birga</legend>
+              <legend className="text-red-500 font-medium">
+                Sport bilan birga
+              </legend>
               <div className="my-5 grid grid-cols-3 gap-2">
-                <div>
-                  <label htmlFor="sport_bilan_birga_title_uz" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">uz</span></label>
-                  <input type="text" id="sport_bilan_birga_title_uz" name="sport_bilan_birga_title_uz" onChange={formik.handleChange} value={formik.values.sport_bilan_birga_title_uz} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
-                </div>
-                <div>
-                  <label htmlFor="sport_bilan_birga_title_ru" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">ru</span></label>
-                  <input type="text" id="sport_bilan_birga_title_ru" name="sport_bilan_birga_title_ru" onChange={formik.handleChange} value={formik.values.sport_bilan_birga_title_ru} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
-                </div>
-                <div>
-                  <label htmlFor="sport_bilan_birga_title_en" className="block mb-2 font-medium text-gray-700">Sarlavha{" "} <span className="text-red-500">en</span></label>
-                  <input type="text" id="sport_bilan_birga_title_en" name="sport_bilan_birga_title_en" onChange={formik.handleChange} value={formik.values.sport_bilan_birga_title_en} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
-                </div>
+                <MyTextInput type="text" label="Sarlavha" tab="uz" id="sport_bilan_birga_title_uz" name="sport_bilan_birga_title_uz" onChange={formik.handleChange}/>
+                <MyTextInput type="text" label="Sarlavha" tab="ru" id="sport_bilan_birga_title_ru" name="sport_bilan_birga_title_ru" onChange={formik.handleChange}/>
+                <MyTextInput type="text" label="Sarlavha" tab="en" id="sport_bilan_birga_title_en" name="sport_bilan_birga_title_en" onChange={formik.handleChange}/>
               </div>
               <div className="my-5 grid grid-cols-3 gap-2">
-                <div>
-                  <label htmlFor="sport_bilan_birga_text_uz" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">uz</span></label>
-                  <textarea type="text" id="sport_bilan_birga_text_uz" name="sport_bilan_birga_text_uz" onChange={formik.handleChange} value={formik.values.sport_bilan_birga_text_uz} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
-                </div>
-                <div>
-                  <label htmlFor="sport_bilan_birga_text_ru" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">ru</span></label>
-                  <textarea type="text"  id="sport_bilan_birga_text_ru" name="sport_bilan_birga_text_ru" onChange={formik.handleChange} value={formik.values.sport_bilan_birga_text_ru} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
-                </div>
-                <div>
-                  <label htmlFor="sport_bilan_birga_text_en" className="block mb-2 font-medium text-gray-700">Matn{" "}<span className="text-red-500">en</span></label>
-                  <textarea type="text"  id="sport_bilan_birga_text_en" name="sport_bilan_birga_text_en" onChange={formik.handleChange} value={formik.values.sport_bilan_birga_text_en} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"></textarea>
-                </div>
+                <MyTextarea type="text" label="Matn" tab="uz" id="sport_bilan_birga_text_uz" name="sport_bilan_birga_text_uz" onChange={formik.handleChange}/>
+                <MyTextarea type="text" label="Matn" tab="ru" id="sport_bilan_birga_text_ru" name="sport_bilan_birga_text_ru" onChange={formik.handleChange}/>
+                <MyTextarea type="text" label="Matn" tab="en" id="sport_bilan_birga_text_en" name="sport_bilan_birga_text_en" onChange={formik.handleChange}/>
               </div>
-              <div className="my-5"><label htmlFor="imageSix" className="block mb-2 font-medium text-gray-700">Rasm</label>
-                <input type="file" id="sport_bilan_birga" name="sport_bilan_birga" onChange={(event) => formik.setFieldValue("sport_bilan_birga", event.currentTarget.files[0])} className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"/>
+              <div className="my-5">
+                <MyTextInput type="file" labe="Rasm" tab="" id="sport_bilan_birga" name="sport_bilan_birga" onChange={(event) => formik.setFieldValue("sport_bilan_birga", event.currentTarget.files[0])}/>
               </div>
             </fieldset>
-            <button type="submit" className="btn btn-primary">sssssssssssss</button>
+            <button type="submit" className="btn btn-primary">
+              {isEdit ? "Saqlash (put)" : "Jo'natish (post)"}
+            </button>
           </form>
         </div>
-        <div className="border">
+        </Formik>
+        <div onSubmit={formik.handleSubmit} className="border">
           <div className="max-w-7xl mx-auto my-5">
             <div>
               <p className="text-xl font-bold font-source text-center text-red-500">
@@ -716,6 +544,24 @@ function InstitutHaqidaCom() {
               </div>
             </div>
           </div>
+          {datas?.map((item) => (
+            <div key={item.id}>
+              <button
+                onClick={() => handleSet(item)}
+                type="submit"
+                className="btn"
+              >
+                {isEdit ? "Saqlashh" : "Update"}
+              </button>
+            </div>
+          ))}
+          <button
+            onClick={() => setIsEdit(!isEdit)}
+            type="submit"
+            className="btn"
+          >
+            {isEdit ? "Saqlashh" : "Update"}
+          </button>
         </div>
       </div>
     </div>

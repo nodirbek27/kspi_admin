@@ -1,9 +1,6 @@
 import axiosInstance from "./index";
 
 const ep = "home/yangilik/"
-const epPost = "home/yangilik/create/"
-const epPut = "home/yangilik/update/"
-const epDel = "home/yangilik/delete/"
 
 const get = () => axiosInstance.get(ep);
 
@@ -12,13 +9,13 @@ const getbyId = (id) => {
 };
 const post = (item) => {
   console.log(item);
-  return axiosInstance.post(`${epPost}`, item);
+  return axiosInstance.post(`${ep}`, item);
 };
 const patch = (id, item) => {
-  return axiosInstance.patch(`${epPut}${id}/`, item);
+  return axiosInstance.patch(`${ep}${id}/`, item);
 };
 const del = (id) => {
-  return axiosInstance.delete(`${epDel}${id}/`);
+  return axiosInstance.delete(`${ep}${id}/`);
 };
 
 const APIYangilik = { get, getbyId, post, patch, del };

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import APIInstitutHaqida from "../../services/institutHaqida";
 import { Formik, useField, useFormik } from "formik";
 
+// Component MyTextInput
 const MyTextInput = ({label, tab, ...props}) => {
   const [field, meta] = useField(props);
   return (
@@ -13,6 +14,7 @@ const MyTextInput = ({label, tab, ...props}) => {
   )
 }
 
+// Component MyTextarea 
 const MyTextarea = ({label, tab, ...props}) => {
   const [field, meta] = useField(props);
   return (
@@ -26,7 +28,7 @@ const MyTextarea = ({label, tab, ...props}) => {
 
 function InstitutHaqidaCom() {
   const [datas, setDatas] = useState([]);
-  // const [yes, setYes] = useState([]);
+  const [yes, setYes] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
   console.log(isEdit);
 
@@ -121,18 +123,18 @@ function InstitutHaqidaCom() {
       } else {
         console.log("Post");
       }
-      // const data = new FormData();
-      // for (let key in values) {
-      //   data.append(key, values[key]);
-      // }
-      // try {
-      //   const resPost = await APIInstitutHaqida.postInstitutHaqida(data);
-      //   setYes(resPost);
-      //   resetForm();
-      //   fetchData();
-      // } catch (error) {
-      //   console.error("Xatolik sodir bo'ldi:", error); sssssss
-      // }
+      const data = new FormData();
+      for (let key in values) {
+        data.append(key, values[key]);
+      }
+      try {
+        const resPost = await APIInstitutHaqida.postInstitutHaqida(data);
+        setYes(resPost);
+        resetForm();
+        fetchData();
+      } catch (error) {
+        console.error("Xatolik sodir bo'ldi:", error);
+      }
     },
   });
 

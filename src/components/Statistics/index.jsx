@@ -99,12 +99,10 @@ const Statistics = () => {
               <h2 className="text-2xl">{item.statistika_title_uz}</h2>
               <h3 className="card-subtitle text-xl mb-3">{item.statistika_text_uz}</h3>
               <div className="card-actions justify-evenly border-2 p-5 rounded mb-3">
-                {/* Tahrirlash */}
                 <div className="flex flex-col text-center">
-                  <h3 className="text-xl">{item.talaba_nomer}</h3>
+                  <h3 className="text-xl">{item.talaba_nomer} { console.log(item.talaba_nomer)}</h3>
                   <div>{item.talaba_title_uz}</div>
                 </div>
-                {/* O'chirish */}
                 <div className="flex flex-col text-center">
                   <h3 className="text-xl">{item.phd_nomer}</h3>
                   <div>{item.phd_title_uz}</div>
@@ -281,35 +279,35 @@ const Statistics = () => {
           </div>
           <div>
             <label
-              htmlFor="phd_title_en"
+              htmlFor="talaba_title_en"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
               Talabalar En
             </label>
             <input
-              id="phd_title_en"
-              name="phd_title_en"
+              id="talaba_title_en"
+              name="talaba_title_en"
               className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Talabalar..."
               onChange={formik.handleChange}
-              value={formik.values.phd_title_en}
+              value={formik.values.talaba_title_en}
             />
           </div>
           <div>
             <label
-              htmlFor="phd_nomer"
+              htmlFor="talaba_nomer"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
               Talabalar soni
             </label>
             <input
-              id="phd_nomer"
-              name="phd_nomer"
+              id="talaba_nomer"
+              name="talaba_nomer"
               type="number"
               className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Talabalar soni..."
               onChange={formik.handleChange}
-              value={formik.values.phd_nomer}
+              value={formik.values.talaba_nomer}
             />
           </div>
         </div>
@@ -350,35 +348,35 @@ const Statistics = () => {
           </div>
           <div>
             <label
-              htmlFor="talaba_title_en"
+              htmlFor="phd_title_en"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
               Phd En
             </label>
             <input
-              id="talaba_title_en"
-              name="talaba_title_en"
+              id="phd_title_en"
+              name="phd_title_en"
               className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Phd..."
               onChange={formik.handleChange}
-              value={formik.values.talaba_title_en}
+              value={formik.values.phd_title_en}
             />
           </div>
           <div>
             <label
-              htmlFor="talaba_nomer"
+              htmlFor="phd_nomer"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
               Phd soni
             </label>
             <input
-              id="talaba_nomer"
-              name="talaba_nomer"
+              id="phd_nomer"
+              name="phd_nomer"
               type="number"
               className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Phd soni..."
               onChange={formik.handleChange}
-              value={formik.values.talaba_nomer}
+              value={formik.values.phd_nomer}
             />
           </div>
         </div>

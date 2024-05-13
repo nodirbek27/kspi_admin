@@ -1,34 +1,182 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { RiDeleteBin5Line } from "react-icons/ri";
+import { useFormik } from "formik";
+import APIInteraktiv from "../../services/interaktiv";
 
 const Interaktiv = () => {
+  const [data, setData] = useState(null);
+  const [dataMasofaviy, setDataMasofaviy] = useState(null);
+
+  // Post
+  const formik = useFormik({
+    initialValues: {
+      link: "",
+    },
+    onSubmit: async (values, { resetForm }) => {
+      const data = new FormData();
+      data.append("link", values.link);
+      await APIInteraktiv.post(data);
+      resetForm();
+      getData();
+    },
+  });
+  // GET qilish
+  const getData = async () => {
+    await APIInteraktiv.get().then((res) => setData(res.data));
+  };
+  // Delete qilish
+  const handleDelete = async (id) => {
+    await APIInteraktiv.del(id);
+    getData();
+  };
+
+  // Post
+  const formik2 = useFormik({
+    initialValues: {
+      link: "",
+    },
+    onSubmit: async (values, { resetForm }) => {
+      const data = new FormData();
+      data.append("link", values.link);
+      await APIInteraktiv.postMasofaviy(data);
+      resetForm();
+      getDataMasofaviy();
+    },
+  });
+  // GET qilish
+  const getDataMasofaviy = async () => {
+    await APIInteraktiv.getMasofaviy().then((res) =>
+      setDataMasofaviy(res.data)
+    );
+  };
+  // Delete qilish
+  const handleDeleteMasofaviy = async (id) => {
+    await APIInteraktiv.delMasofaviy(id);
+    getDataMasofaviy();
+  };
+
+  useEffect(() => {
+    getData();
+    getDataMasofaviy();
+  }, []);
+
   return (
     <div>
       <h2 className="text-2xl font-bold text-center mb-5 p-3">
         Interaktiv xizmatlar
       </h2>
       <div>
-        <button
-          className="btn"
-          onClick={() => document.getElementById("my_modal_2").showModal()}
-        >
-          E-kutubxona
-        </button>
-        <dialog id="my_modal_2" className="modal">
-          <div className="modal-box">
-            <h3 className="font-bold text-lg mb-3">Link</h3>
-            <form className="flex justify-between">
-              <input
-                type="text"
-                placeholder="https://kspi.uz"
-                className="input input-bordered w-full max-w-xs"
-              />
-              <button className="btn" type="submit">Saqlash</button>
-            </form>
-          </div>
-          <form method="dialog" className="modal-backdrop">
-            <button>close</button>
+        {/* Post */}
+        <div className="max-w-7xl mx-auto mb-5">
+          <form
+            onSubmit={formik.handleSubmit}
+            className={`${data?.length >= 1 ? "hidden" : ""}`}
+          >
+            <table className="table">
+              <tbody>
+                {/* row 1 */}
+                <tr className="grid grid-cols-3">
+                  <td className="font-bold">E-kutubxona</td>
+                  <td className="text-center">
+                    <input
+                      id="link"
+                      name="link"
+                      type="text"
+                      placeholder="https://kspi.uz"
+                      className="input input-bordered w-full max-w-xs"
+                      onChange={formik.handleChange}
+                      value={formik.values.link}
+                    />
+                  </td>
+                  <td className="text-center">
+                    <button
+                      type="submit"
+                      className="btn btn-success text-white"
+                    >
+                      Saqlash
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </form>
-        </dialog>
+          <form
+            onSubmit={formik2.handleSubmit}
+            className={`${dataMasofaviy?.length >= 1 ? "hidden" : ""}`}
+          >
+            <table className="table">
+              <tbody>
+                {/* row 2 */}
+                <tr className="grid grid-cols-3">
+                  <td className="font-bold">Masofaviy ta'lim</td>
+                  <td className="text-center">
+                    <input
+                      id="link"
+                      name="link"
+                      type="text"
+                      placeholder="https://kspi.uz"
+                      className="input input-bordered w-full max-w-xs"
+                      onChange={formik2.handleChange}
+                      value={formik2.values.link}
+                    />
+                  </td>
+                  <td className="text-center">
+                    <button
+                      type="submit"
+                      className="btn btn-success text-white"
+                    >
+                      Saqlash
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </form>
+        </div>
+
+        {/* Get */}
+        <div className="max-w-7xl mx-auto">
+          <table className="table border-separate">
+            {/* head */}
+            <thead>
+              <tr>
+                <th className="text-lg font-bold">Nomi</th>
+                <th className="text-center text-lg font-bold">Link</th>
+                <th className="text-center text-lg font-bold">O'chirish</th>
+              </tr>
+            </thead>
+            <tbody>
+              {/* row 1 */}
+              {data &&
+                data.map((item) => (
+                  <tr className="bg-base-200">
+                    <td className="font-bold">E-kutubxona</td>
+                    <td className="text-center text-blue-400">{item.link}</td>
+                    <td>
+                      <RiDeleteBin5Line
+                        onClick={() => handleDelete(item.id)}
+                        className="text-red-600 cursor-pointer h-5 w-5 mx-auto"
+                      />
+                    </td>
+                  </tr>
+                ))}
+              {/* row 2 */}
+              {dataMasofaviy &&
+                dataMasofaviy.map((item) => (
+                  <tr>
+                    <td className="font-bold">Masofaviy ta'lim</td>
+                    <td className="text-center text-blue-400">{item.link}</td>
+                    <td>
+                      <RiDeleteBin5Line
+                        onClick={() => handleDeleteMasofaviy(item.id)}
+                        className="text-red-600 cursor-pointer h-5 w-5 mx-auto"
+                      />
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

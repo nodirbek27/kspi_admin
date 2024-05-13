@@ -67,7 +67,6 @@ const Gallery = () => {
     },
   });
 
-
   // Rasmni GET qilish
   const getRasm = async () => {
     await APIGallery.get().then((res) => setData(res.data.reverse()));

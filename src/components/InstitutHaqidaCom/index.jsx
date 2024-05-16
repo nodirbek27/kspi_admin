@@ -28,9 +28,7 @@ const MyTextarea = ({label, tab, ...props}) => {
 
 function InstitutHaqidaCom() {
   const [datas, setDatas] = useState([]);
-  const [yes, setYes] = useState([]);
-  const [isEdit, setIsEdit] = useState(false);
-  console.log(isEdit);
+  // const [yes, setYes] = useState([]);
 
   const fetchData = async () => {
     try {
@@ -118,23 +116,18 @@ function InstitutHaqidaCom() {
       sport_bilan_birga: null,
     },
     onSubmit: async (values, { resetForm }) => {
-      if (isEdit) {
-        console.log("Put");
-      } else {
-        console.log("Post");
-      }
       const data = new FormData();
       for (let key in values) {
         data.append(key, values[key]);
       }
       try {
         const resPost = await APIInstitutHaqida.postInstitutHaqida(data);
-        setYes(resPost);
-        resetForm();
+        console.log(resPost);
         fetchData();
       } catch (error) {
         console.error("Xatolik sodir bo'ldi:", error);
       }
+      resetForm();
     },
   });
 
@@ -142,21 +135,12 @@ function InstitutHaqidaCom() {
     fetchData();
   }, []);
 
-  const handleSet = (item) => {
-    setIsEdit(!isEdit);
-    formik.setValues({
-      bizning_maqsadimiz_title_uz: item.bizning_maqsadimiz_title_uz,
-      bizning_maqsadimiz_title_ru: item.bizning_maqsadimiz_title_ru,
-      bizning_maqsadimiz_title_en: item.bizning_maqsadimiz_title_en,
-    });
-  };
-
   return (
     <div className="max-w-[1600px] mx-auto">
       <h1 className="text-3xl font-medium text-gray-700 text-center my-5">
         Institut haqida
       </h1>
-      <div className="grid grid-cols-4">
+      <div className="grid grid-cols-4 h-screen">
         <Formik>
         <div className="col-span-3 border">
           <form
@@ -325,13 +309,13 @@ function InstitutHaqidaCom() {
                 <MyTextInput type="file" labe="Rasm" tab="" id="sport_bilan_birga" name="sport_bilan_birga" onChange={(event) => formik.setFieldValue("sport_bilan_birga", event.currentTarget.files[0])}/>
               </div>
             </fieldset>
-            <button type="submit" className="btn btn-primary">
-              {isEdit ? "Saqlash (put)" : "Jo'natish (post)"}
+            <button type="submit" className="btn btn-success">
+              Saqlash{/* {isEdit ? "Saqlash (put)" : "Jo'natish (post)"} */}
             </button>
           </form>
         </div>
         </Formik>
-        <div onSubmit={formik.handleSubmit} className="border">
+        <div onSubmit={formik.handleSubmit} className="border overflow-auto relative">
           <div className="max-w-7xl mx-auto my-5">
             <div>
               <p className="text-xl font-bold font-source text-center text-red-500">
@@ -546,24 +530,7 @@ function InstitutHaqidaCom() {
               </div>
             </div>
           </div>
-          {datas?.map((item) => (
-            <div key={item.id}>
-              <button
-                onClick={() => handleSet(item)}
-                type="submit"
-                className="btn"
-              >
-                {isEdit ? "Saqlashh" : "Update"}
-              </button>
-            </div>
-          ))}
-          <button
-            onClick={() => setIsEdit(!isEdit)}
-            type="submit"
-            className="btn"
-          >
-            {isEdit ? "Saqlashh" : "Update"}
-          </button>
+          <button className="btn btn-secondary z-50 sticky bottom-5 left-4">O'zgartirish</button>
         </div>
       </div>
     </div>

@@ -1,11 +1,8 @@
-import React from "react";
+import React, { memo } from "react";
+import { useFormik } from "formik";
 
 const Vakansiyalar = () => {
-    return (
-        <div>
-            Vakansiyalar
-        </div>
-    );
+  return <div>Vakansiyalar</div>;
 };
 
-export default Vakansiyalar;
+export default memo(Vakansiyalar);

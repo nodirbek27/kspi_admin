@@ -1,9 +1,10 @@
 import React from "react";
+import CallMarkazCom from "../../../components/CallMarkazCom";
 
 const CallMarkaz = () => {
     return (
         <div>
-            CallMarkaz
+            <CallMarkazCom />
         </div>
     );
 };

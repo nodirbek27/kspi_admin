@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState} from "react";
 import APIInstitutHaqida from "../../services/institutHaqida";
 import { Formik, useField, useFormik } from "formik";
 
@@ -25,10 +25,12 @@ const MyTextarea = ({label, tab, ...props}) => {
     </div>
   )
 }
+ 
+const InstitutHaqidaCom = () => {
 
-function InstitutHaqidaCom() {
   const [datas, setDatas] = useState([]);
-  // const [yes, setYes] = useState([]);
+  const [edit, setEdit] = useState(false)
+  const [id, setId] = useState(null)
 
   const fetchData = async () => {
     try {
@@ -49,20 +51,20 @@ function InstitutHaqidaCom() {
       bizning_maqsadimiz_text_uz: "",
       bizning_maqsadimiz_text_ru: "",
       bizning_maqsadimiz_text_en: "",
-
+  
       biz_haqimizda_title_uz: "",
       biz_haqimizda_title_ru: "",
       biz_haqimizda_title_en: "",
       biz_haqimizda_text_uz: "",
       biz_haqimizda_text_ru: "",
       biz_haqimizda_text_en: "",
-
+  
       institut_rasm: null,
-
+  
       qoshimcha_title_uz: "",
       qoshimcha_title_ru: "",
       qoshimcha_title_en: "",
-
+  
       biz_kimmiz_title_uz: "",
       biz_kimmiz_title_ru: "",
       biz_kimmiz_title_en: "",
@@ -70,7 +72,7 @@ function InstitutHaqidaCom() {
       biz_kimmiz_text_ru: "",
       biz_kimmiz_text_en: "",
       biz_kimmiz: null,
-
+  
       qoshma_hamkorlar_title_uz: "",
       qoshma_hamkorlar_title_ru: "",
       qoshma_hamkorlar_title_en: "",
@@ -78,7 +80,7 @@ function InstitutHaqidaCom() {
       qoshma_hamkorlar_text_ru: "",
       qoshma_hamkorlar_text_en: "",
       qoshma_hamkorlar: null,
-
+  
       rivojlanayotgan_talabalar_hayoti_title_uz: "",
       rivojlanayotgan_talabalar_hayoti_title_ru: "",
       rivojlanayotgan_talabalar_hayoti_title_en: "",
@@ -86,11 +88,11 @@ function InstitutHaqidaCom() {
       rivojlanayotgan_talabalar_hayoti_text_ru: "",
       rivojlanayotgan_talabalar_hayoti_text_en: "",
       rivojlanayotgan_talabalar_hayoti: null,
-
+  
       kirish_title_uz: "",
       kirish_title_ru: "",
       kirish_title_en: "",
-
+  
       barcha_shakillar_title_uz: "",
       barcha_shakillar_title_ru: "",
       barcha_shakillar_title_en: "",
@@ -98,7 +100,7 @@ function InstitutHaqidaCom() {
       barcha_shakillar_text_ru: "",
       barcha_shakillar_text_en: "",
       barcha_shakillar: null,
-
+  
       moliyaviy_yordam_title_uz: "",
       moliyaviy_yordam_title_ru: "",
       moliyaviy_yordam_title_en: "",
@@ -106,7 +108,7 @@ function InstitutHaqidaCom() {
       moliyaviy_yordam_text_ru: "",
       moliyaviy_yordam_text_en: "",
       moliyaviy_yordam: null,
-
+  
       sport_bilan_birga_title_uz: "",
       sport_bilan_birga_title_ru: "",
       sport_bilan_birga_title_en: "",
@@ -115,25 +117,101 @@ function InstitutHaqidaCom() {
       sport_bilan_birga_text_en: "",
       sport_bilan_birga: null,
     },
-    onSubmit: async (values, { resetForm }) => {
+    onSubmit: async (values, onSubmitProps) => {
       const data = new FormData();
       for (let key in values) {
         data.append(key, values[key]);
       }
       try {
-        const resPost = await APIInstitutHaqida.postInstitutHaqida(data);
-        console.log(resPost);
+        if(!edit && datas.length === 0){
+          await APIInstitutHaqida.postInstitutHaqida(data);
+        }else{
+          await APIInstitutHaqida.putInstitutHaqida(id, data)
+          setEdit(false)
+          setId(null)
+        }
+        onSubmitProps.resetForm()
         fetchData();
       } catch (error) {
         console.error("Xatolik sodir bo'ldi:", error);
       }
-      resetForm();
     },
-  });
+  });  
 
-  useEffect(() => {
+  const handleEdit = (id) => {
+    setEdit(true);
+    setId(id);
+    formik.setValues({
+      bizning_maqsadimiz_title_uz: datas[0].bizning_maqsadimiz_title_uz,
+      bizning_maqsadimiz_title_ru: datas[0].bizning_maqsadimiz_title_ru,
+      bizning_maqsadimiz_title_en: datas[0].bizning_maqsadimiz_title_en,
+      bizning_maqsadimiz_text_uz: datas[0].bizning_maqsadimiz_text_uz,
+      bizning_maqsadimiz_text_ru: datas[0].bizning_maqsadimiz_text_ru,
+      bizning_maqsadimiz_text_en: datas[0].bizning_maqsadimiz_text_uz,
+  
+      biz_haqimizda_title_uz: datas[0].biz_haqimizda_title_uz,
+      biz_haqimizda_title_ru: datas[0].biz_haqimizda_title_ru,
+      biz_haqimizda_title_en: datas[0].biz_haqimizda_title_en,
+      biz_haqimizda_text_uz: datas[0].biz_haqimizda_text_uz,
+      biz_haqimizda_text_ru: datas[0].biz_haqimizda_text_ru,
+      biz_haqimizda_text_en: datas[0].biz_haqimizda_text_en,
+  
+  
+      qoshimcha_title_uz: datas[0].qoshimcha_title_uz,
+      qoshimcha_title_ru: datas[0].qoshimcha_title_ru,
+      qoshimcha_title_en: datas[0].qoshimcha_title_en,
+  
+      biz_kimmiz_title_uz: datas[0].biz_kimmiz_title_uz,
+      biz_kimmiz_title_ru: datas[0].biz_kimmiz_title_ru,
+      biz_kimmiz_title_en: datas[0].biz_kimmiz_title_en,
+      biz_kimmiz_text_uz: datas[0].biz_kimmiz_text_uz,
+      biz_kimmiz_text_ru: datas[0].biz_kimmiz_text_ru,
+      biz_kimmiz_text_en: datas[0].biz_kimmiz_text_en,
+  
+      qoshma_hamkorlar_title_uz: datas[0].qoshma_hamkorlar_title_uz,
+      qoshma_hamkorlar_title_ru: datas[0].qoshma_hamkorlar_title_ru,
+      qoshma_hamkorlar_title_en: datas[0].qoshma_hamkorlar_title_en,
+      qoshma_hamkorlar_text_uz: datas[0].qoshma_hamkorlar_text_uz,
+      qoshma_hamkorlar_text_ru: datas[0].qoshma_hamkorlar_text_ru,
+      qoshma_hamkorlar_text_en: datas[0].qoshma_hamkorlar_text_en,
+  
+      rivojlanayotgan_talabalar_hayoti_title_uz: datas[0].rivojlanayotgan_talabalar_hayoti_title_uz,
+      rivojlanayotgan_talabalar_hayoti_title_ru: datas[0].rivojlanayotgan_talabalar_hayoti_title_ru,
+      rivojlanayotgan_talabalar_hayoti_title_en: datas[0].rivojlanayotgan_talabalar_hayoti_title_en,
+      rivojlanayotgan_talabalar_hayoti_text_uz: datas[0].rivojlanayotgan_talabalar_hayoti_text_uz,
+      rivojlanayotgan_talabalar_hayoti_text_ru: datas[0].rivojlanayotgan_talabalar_hayoti_text_ru,
+      rivojlanayotgan_talabalar_hayoti_text_en: datas[0].rivojlanayotgan_talabalar_hayoti_text_en,
+  
+      kirish_title_uz: datas[0].kirish_title_uz,
+      kirish_title_ru: datas[0].kirish_title_ru,
+      kirish_title_en: datas[0].kirish_title_en,
+  
+      barcha_shakillar_title_uz: datas[0].barcha_shakillar_title_uz,
+      barcha_shakillar_title_ru: datas[0].barcha_shakillar_title_ru,
+      barcha_shakillar_title_en: datas[0].barcha_shakillar_title_en,
+      barcha_shakillar_text_uz: datas[0].barcha_shakillar_text_uz,
+      barcha_shakillar_text_ru: datas[0].barcha_shakillar_text_ru,
+      barcha_shakillar_text_en: datas[0].barcha_shakillar_text_en,
+  
+      moliyaviy_yordam_title_uz: datas[0].moliyaviy_yordam_title_uz,
+      moliyaviy_yordam_title_ru: datas[0].moliyaviy_yordam_title_ru,
+      moliyaviy_yordam_title_en: datas[0].moliyaviy_yordam_title_en,
+      moliyaviy_yordam_text_uz: datas[0].moliyaviy_yordam_text_uz,
+      moliyaviy_yordam_text_ru: datas[0].moliyaviy_yordam_text_ru,
+      moliyaviy_yordam_text_en: datas[0].moliyaviy_yordam_text_en,
+  
+      sport_bilan_birga_title_uz: datas[0].sport_bilan_birga_title_uz,
+      sport_bilan_birga_title_ru: datas[0].sport_bilan_birga_title_ru,
+      sport_bilan_birga_title_en: datas[0].sport_bilan_birga_title_en,
+      sport_bilan_birga_text_uz: datas[0].sport_bilan_birga_text_uz,
+      sport_bilan_birga_text_ru: datas[0].sport_bilan_birga_text_ru,
+      sport_bilan_birga_text_en: datas[0].sport_bilan_birga_text_en,
+    })
+  }
+
+  useEffect(()=>{
     fetchData();
-  }, []);
+  },[])
 
   return (
     <div className="max-w-[1600px] mx-auto">
@@ -152,14 +230,14 @@ function InstitutHaqidaCom() {
                 Asosiy sahifadagi institut haqida
               </legend>
               <div className="my-5 grid grid-cols-3 gap-2">             
-                <MyTextInput type="text" label="Sarlavha" tab="uz" id="bizning_maqsadimiz_title_uz" name="bizning_maqsadimiz_title_uz" onChange={formik.handleChange}/>
-                <MyTextInput type="text" label="Sarlavha" tab="ru" id="bizning_maqsadimiz_title_ru" name="bizning_maqsadimiz_title_ru" onChange={formik.handleChange}/>
-                <MyTextInput type="text" label="Sarlavha" tab="en" id="bizning_maqsadimiz_title_en" name="bizning_maqsadimiz_title_en" onChange={formik.handleChange}/>
+                <MyTextInput type="text" label="Sarlavha" tab="uz" id="bizning_maqsadimiz_title_uz" name="bizning_maqsadimiz_title_uz" onChange={formik.handleChange} value={formik.values.bizning_maqsadimiz_title_uz}/>
+                <MyTextInput type="text" label="Sarlavha" tab="ru" id="bizning_maqsadimiz_title_ru" name="bizning_maqsadimiz_title_ru" onChange={formik.handleChange} value={formik.values.bizning_maqsadimiz_title_ru}/>
+                <MyTextInput type="text" label="Sarlavha" tab="en" id="bizning_maqsadimiz_title_en" name="bizning_maqsadimiz_title_en" onChange={formik.handleChange} value={formik.values.bizning_maqsadimiz_title_en}/>
               </div>
               <div className="my-5 grid grid-cols-3 gap-2">
-                <MyTextarea type="text" label="Matn" tab="uz" id="bizning_maqsadimiz_text_uz" name="bizning_maqsadimiz_text_uz" onChange={formik.handleChange}/>
-                <MyTextarea type="text" label="Matn" tab="ru" id="bizning_maqsadimiz_text_ru" name="bizning_maqsadimiz_text_ru" onChange={formik.handleChange}/>
-                <MyTextarea type="text" label="Matn" tab="en" id="bizning_maqsadimiz_text_en" name="bizning_maqsadimiz_text_en" onChange={formik.handleChange}/>
+                <MyTextarea type="text" label="Matn" tab="uz" id="bizning_maqsadimiz_text_uz" name="bizning_maqsadimiz_text_uz" onChange={formik.handleChange} value={formik.values.bizning_maqsadimiz_text_uz}/>
+                <MyTextarea type="text" label="Matn" tab="ru" id="bizning_maqsadimiz_text_ru" name="bizning_maqsadimiz_text_ru" onChange={formik.handleChange} value={formik.values.bizning_maqsadimiz_text_ru}/>
+                <MyTextarea type="text" label="Matn" tab="en" id="bizning_maqsadimiz_text_en" name="bizning_maqsadimiz_text_en" onChange={formik.handleChange} value={formik.values.bizning_maqsadimiz_text_en}/>
               </div>
             </fieldset>
             <fieldset className="border px-5 mb-5">
@@ -167,14 +245,14 @@ function InstitutHaqidaCom() {
                 Institut haqida 1
               </legend>
               <div className="my-5 grid grid-cols-3 gap-2">
-                <MyTextInput type="text" label="Sarlavha" tab="uz" id="biz_haqimizda_title_uz" name="biz_haqimizda_title_uz" onChange={formik.handleChange}/>
-                <MyTextInput type="text" label="Sarlavha" tab="ru" id="biz_haqimizda_title_ru" name="biz_haqimizda_title_ru" onChange={formik.handleChange}/>
-                <MyTextInput type="text" label="Sarlavha" tab="en" id="biz_haqimizda_title_en" name="biz_haqimizda_title_en" onChange={formik.handleChange}/>
+                <MyTextInput type="text" label="Sarlavha" tab="uz" id="biz_haqimizda_title_uz" name="biz_haqimizda_title_uz" onChange={formik.handleChange} value={formik.values.biz_haqimizda_title_uz}/>
+                <MyTextInput type="text" label="Sarlavha" tab="ru" id="biz_haqimizda_title_ru" name="biz_haqimizda_title_ru" onChange={formik.handleChange} value={formik.values.biz_haqimizda_title_ru}/>
+                <MyTextInput type="text" label="Sarlavha" tab="en" id="biz_haqimizda_title_en" name="biz_haqimizda_title_en" onChange={formik.handleChange} value={formik.values.biz_haqimizda_title_en}/>
               </div>
               <div className="my-5 grid grid-cols-3 gap-2">
-                <MyTextarea type="text" label="Matn" tab="uz" id="biz_haqimizda_text_uz" name="biz_haqimizda_text_uz" onChange={formik.handleChange}/>
-                <MyTextarea type="text" label="Matn" tab="ru" id="biz_haqimizda_text_ru" name="biz_haqimizda_text_ru" onChange={formik.handleChange}/>
-                <MyTextarea type="text" label="Matn" tab="en" id="biz_haqimizda_text_en" name="biz_haqimizda_text_en" onChange={formik.handleChange}/>
+                <MyTextarea type="text" label="Matn" tab="uz" id="biz_haqimizda_text_uz" name="biz_haqimizda_text_uz" onChange={formik.handleChange} value={formik.values.biz_haqimizda_text_uz}/>
+                <MyTextarea type="text" label="Matn" tab="ru" id="biz_haqimizda_text_ru" name="biz_haqimizda_text_ru" onChange={formik.handleChange} value={formik.values.biz_haqimizda_text_ru}/>
+                <MyTextarea type="text" label="Matn" tab="en" id="biz_haqimizda_text_en" name="biz_haqimizda_text_en" onChange={formik.handleChange} value={formik.values.biz_haqimizda_text_en}/>
               </div>
             </fieldset>
             <fieldset className="border px-5 mb-5">
@@ -182,31 +260,31 @@ function InstitutHaqidaCom() {
                 Institut rasmi
               </legend>
               <div className="my-5">
-                <MyTextInput type="file" labe="Rasm" tab="" id="institut_rasm" name="institut_rasm" onChange={(event) => formik.setFieldValue("institut_rasm", event.currentTarget.files[0])}/>
+                <MyTextInput type="file" label="Rasm" tab="" id="institut_rasm" name="institut_rasm" onChange={(event) => formik.setFieldValue("institut_rasm", event.currentTarget.files[0])}/>
               </div>
             </fieldset>
             <fieldset className="border px-5 mb-5">
               <legend className="text-red-500 font-medium">Sarlavha 2</legend>
               <div className="my-5 grid grid-cols-3 gap-2">
-                <MyTextInput type="text" label="Sarlavha" tab="uz" id="qoshimcha_title_uz" name="qoshimcha_title_uz" onChange={formik.handleChange}/>
-                <MyTextInput type="text" label="Sarlavha" tab="ru" id="qoshimcha_title_ru" name="qoshimcha_title_ru" onChange={formik.handleChange}/>
-                <MyTextInput type="text" label="Sarlavha" tab="en" id="qoshimcha_title_en" name="qoshimcha_title_en" onChange={formik.handleChange}/>
+                <MyTextInput type="text" label="Sarlavha" tab="uz" id="qoshimcha_title_uz" name="qoshimcha_title_uz" onChange={formik.handleChange} value={formik.values.qoshimcha_title_uz}/>
+                <MyTextInput type="text" label="Sarlavha" tab="ru" id="qoshimcha_title_ru" name="qoshimcha_title_ru" onChange={formik.handleChange} value={formik.values.qoshimcha_title_ru}/>
+                <MyTextInput type="text" label="Sarlavha" tab="en" id="qoshimcha_title_en" name="qoshimcha_title_en" onChange={formik.handleChange} value={formik.values.qoshimcha_title_en}/>
               </div>
             </fieldset>
             <fieldset className="border px-5 mb-5">
               <legend className="text-red-500 font-medium">Biz kimmiz</legend>
               <div className="my-5 grid grid-cols-3 gap-2">
-                <MyTextInput type="text" label="Sarlavha" tab="uz" id="biz_kimmiz_title_uz" name="biz_kimmiz_title_uz" onChange={formik.handleChange}/>
-                <MyTextInput type="text" label="Sarlavha" tab="ru" id="biz_kimmiz_title_ru" name="biz_kimmiz_title_ru" onChange={formik.handleChange}/>
-                <MyTextInput type="text" label="Sarlavha" tab="en" id="biz_kimmiz_title_en" name="biz_kimmiz_title_en" onChange={formik.handleChange}/>
+                <MyTextInput type="text" label="Sarlavha" tab="uz" id="biz_kimmiz_title_uz" name="biz_kimmiz_title_uz" onChange={formik.handleChange} value={formik.values.biz_kimmiz_title_uz}/>
+                <MyTextInput type="text" label="Sarlavha" tab="ru" id="biz_kimmiz_title_ru" name="biz_kimmiz_title_ru" onChange={formik.handleChange} value={formik.values.biz_kimmiz_title_ru}/>
+                <MyTextInput type="text" label="Sarlavha" tab="en" id="biz_kimmiz_title_en" name="biz_kimmiz_title_en" onChange={formik.handleChange} value={formik.values.biz_kimmiz_title_en}/>
               </div>
               <div className="my-5 grid grid-cols-3 gap-2">
-                <MyTextarea type="text" label="Matn" tab="uz" id="biz_kimmiz_text_uz" name="biz_kimmiz_text_uz" onChange={formik.handleChange}/>
-                <MyTextarea type="text" label="Matn" tab="ru" id="biz_kimmiz_text_ru" name="biz_kimmiz_text_ru" onChange={formik.handleChange}/>
-                <MyTextarea type="text" label="Matn" tab="en" id="biz_kimmiz_text_en" name="biz_kimmiz_text_en" onChange={formik.handleChange}/>
+                <MyTextarea type="text" label="Matn" tab="uz" id="biz_kimmiz_text_uz" name="biz_kimmiz_text_uz" onChange={formik.handleChange} value={formik.values.biz_kimmiz_text_uz}/>
+                <MyTextarea type="text" label="Matn" tab="ru" id="biz_kimmiz_text_ru" name="biz_kimmiz_text_ru" onChange={formik.handleChange} value={formik.values.biz_kimmiz_text_ru}/>
+                <MyTextarea type="text" label="Matn" tab="en" id="biz_kimmiz_text_en" name="biz_kimmiz_text_en" onChange={formik.handleChange} value={formik.values.biz_kimmiz_text_en}/>
               </div>
               <div className="my-5">
-                <MyTextInput type="file" labe="Rasm" tab="" id="biz_kimmiz" name="biz_kimmiz" onChange={(event) => formik.setFieldValue("biz_kimmiz", event.currentTarget.files[0])}/>
+                <MyTextInput type="file" label="Rasm" tab="" id="biz_kimmiz" name="biz_kimmiz" onChange={(event) => formik.setFieldValue("biz_kimmiz", event.currentTarget.files[0])}/>
               </div>
             </fieldset>
             <fieldset className="border px-5 mb-5">
@@ -214,17 +292,17 @@ function InstitutHaqidaCom() {
                 Qo'shma hamkorlar
               </legend>
               <div className="my-5 grid grid-cols-3 gap-2">
-                <MyTextInput type="text" label="Sarlavha" tab="uz" id="qoshma_hamkorlar_title_uz" name="qoshma_hamkorlar_title_uz" onChange={formik.handleChange}/>
-                <MyTextInput type="text" label="Sarlavha" tab="ru" id="qoshma_hamkorlar_title_ru" name="qoshma_hamkorlar_title_ru" onChange={formik.handleChange}/>
-                <MyTextInput type="text" label="Sarlavha" tab="en" id="qoshma_hamkorlar_title_en" name="qoshma_hamkorlar_title_en" onChange={formik.handleChange}/>
+                <MyTextInput type="text" label="Sarlavha" tab="uz" id="qoshma_hamkorlar_title_uz" name="qoshma_hamkorlar_title_uz" onChange={formik.handleChange} value={formik.values.qoshma_hamkorlar_title_uz}/>
+                <MyTextInput type="text" label="Sarlavha" tab="ru" id="qoshma_hamkorlar_title_ru" name="qoshma_hamkorlar_title_ru" onChange={formik.handleChange} value={formik.values.qoshma_hamkorlar_title_ru}/>
+                <MyTextInput type="text" label="Sarlavha" tab="en" id="qoshma_hamkorlar_title_en" name="qoshma_hamkorlar_title_en" onChange={formik.handleChange} value={formik.values.qoshma_hamkorlar_title_en}/>
               </div>
               <div className="my-5 grid grid-cols-3 gap-2">
-                <MyTextarea type="text" label="Matn" tab="uz" id="qoshma_hamkorlar_text_uz" name="qoshma_hamkorlar_text_uz" onChange={formik.handleChange}/>
-                <MyTextarea type="text" label="Matn" tab="ru" id="qoshma_hamkorlar_text_ru" name="qoshma_hamkorlar_text_ru" onChange={formik.handleChange}/>
-                <MyTextarea type="text" label="Matn" tab="en" id="qoshma_hamkorlar_text_en" name="qoshma_hamkorlar_text_en" onChange={formik.handleChange}/>
+                <MyTextarea type="text" label="Matn" tab="uz" id="qoshma_hamkorlar_text_uz" name="qoshma_hamkorlar_text_uz" onChange={formik.handleChange} value={formik.values.qoshma_hamkorlar_text_uz}/>
+                <MyTextarea type="text" label="Matn" tab="ru" id="qoshma_hamkorlar_text_ru" name="qoshma_hamkorlar_text_ru" onChange={formik.handleChange} value={formik.values.qoshma_hamkorlar_text_ru}/>
+                <MyTextarea type="text" label="Matn" tab="en" id="qoshma_hamkorlar_text_en" name="qoshma_hamkorlar_text_en" onChange={formik.handleChange} value={formik.values.qoshma_hamkorlar_text_en}/>
               </div>
               <div className="my-5">
-                <MyTextInput type="file" labe="Rasm" tab="" id="qoshma_hamkorlar" name="qoshma_hamkorlar" onChange={(event) => formik.setFieldValue("qoshma_hamkorlar", event.currentTarget.files[0])}/>
+                <MyTextInput type="file" label="Rasm" tab="" id="qoshma_hamkorlar" name="qoshma_hamkorlar" onChange={(event) => formik.setFieldValue("qoshma_hamkorlar", event.currentTarget.files[0])}/>
               </div>
             </fieldset>
             <fieldset className="border px-5 mb-5">
@@ -232,17 +310,17 @@ function InstitutHaqidaCom() {
                 Rivojlanayotgan talabalik hayoti
               </legend>
               <div className="my-5 grid grid-cols-3 gap-2">
-                <MyTextInput type="text" label="Sarlavha" tab="uz" id="rivojlanayotgan_talabalar_hayoti_title_uz" name="rivojlanayotgan_talabalar_hayoti_title_uz" onChange={formik.handleChange}/>
-                <MyTextInput type="text" label="Sarlavha" tab="ru" id="rivojlanayotgan_talabalar_hayoti_title_ru" name="rivojlanayotgan_talabalar_hayoti_title_ru" onChange={formik.handleChange}/>
-                <MyTextInput type="text" label="Sarlavha" tab="en" id="rivojlanayotgan_talabalar_hayoti_title_en" name="rivojlanayotgan_talabalar_hayoti_title_en" onChange={formik.handleChange}/>
+                <MyTextInput type="text" label="Sarlavha" tab="uz" id="rivojlanayotgan_talabalar_hayoti_title_uz" name="rivojlanayotgan_talabalar_hayoti_title_uz" onChange={formik.handleChange} value={formik.values.rivojlanayotgan_talabalar_hayoti_title_uz}/>
+                <MyTextInput type="text" label="Sarlavha" tab="ru" id="rivojlanayotgan_talabalar_hayoti_title_ru" name="rivojlanayotgan_talabalar_hayoti_title_ru" onChange={formik.handleChange} value={formik.values.rivojlanayotgan_talabalar_hayoti_title_ru}/>
+                <MyTextInput type="text" label="Sarlavha" tab="en" id="rivojlanayotgan_talabalar_hayoti_title_en" name="rivojlanayotgan_talabalar_hayoti_title_en" onChange={formik.handleChange} value={formik.values.rivojlanayotgan_talabalar_hayoti_title_en}/>
               </div>
               <div className="my-5 grid grid-cols-3 gap-2">
-                <MyTextarea type="text" label="Matn" tab="uz" id="rivojlanayotgan_talabalar_hayoti_text_uz" name="rivojlanayotgan_talabalar_hayoti_text_uz" onChange={formik.handleChange}/>
-                <MyTextarea type="text" label="Matn" tab="ru" id="rivojlanayotgan_talabalar_hayoti_text_ru" name="rivojlanayotgan_talabalar_hayoti_text_ru" onChange={formik.handleChange}/>
-                <MyTextarea type="text" label="Matn" tab="en" id="rivojlanayotgan_talabalar_hayoti_text_en" name="rivojlanayotgan_talabalar_hayoti_text_en" onChange={formik.handleChange}/>
+                <MyTextarea type="text" label="Matn" tab="uz" id="rivojlanayotgan_talabalar_hayoti_text_uz" name="rivojlanayotgan_talabalar_hayoti_text_uz" onChange={formik.handleChange} value={formik.values.rivojlanayotgan_talabalar_hayoti_text_uz}/>
+                <MyTextarea type="text" label="Matn" tab="ru" id="rivojlanayotgan_talabalar_hayoti_text_ru" name="rivojlanayotgan_talabalar_hayoti_text_ru" onChange={formik.handleChange} value={formik.values.rivojlanayotgan_talabalar_hayoti_text_ru}/>
+                <MyTextarea type="text" label="Matn" tab="en" id="rivojlanayotgan_talabalar_hayoti_text_en" name="rivojlanayotgan_talabalar_hayoti_text_en" onChange={formik.handleChange} value={formik.values.rivojlanayotgan_talabalar_hayoti_text_en}/>
               </div>
               <div className="my-5">
-                <MyTextInput type="file" labe="Rasm" tab="" id="rivojlanayotgan_talabalar_hayoti" name="rivojlanayotgan_talabalar_hayoti" onChange={(event) => formik.setFieldValue("rivojlanayotgan_talabalar_hayoti", event.currentTarget.files[0])}/>
+                <MyTextInput type="file" label="Rasm" tab="" id="rivojlanayotgan_talabalar_hayoti" name="rivojlanayotgan_talabalar_hayoti" onChange={(event) => formik.setFieldValue("rivojlanayotgan_talabalar_hayoti", event.currentTarget.files[0])}/>
               </div>
             </fieldset>
             <fieldset className="border px-5 mb-5">
@@ -250,9 +328,9 @@ function InstitutHaqidaCom() {
                 Sarlavha 3 (Kirish)
               </legend>
               <div className="my-5 grid grid-cols-3 gap-2">
-                <MyTextInput type="text" label="Sarlavha" tab="uz" id="kirish_title_uz" name="kirish_title_uz" onChange={formik.handleChange}/>
-                <MyTextInput type="text" label="Sarlavha" tab="ru" id="kirish_title_ru" name="kirish_title_ru" onChange={formik.handleChange}/>
-                <MyTextInput type="text" label="Sarlavha" tab="en" id="kirish_title_en" name="kirish_title_en" onChange={formik.handleChange}/>
+                <MyTextInput type="text" label="Sarlavha" tab="uz" id="kirish_title_uz" name="kirish_title_uz" onChange={formik.handleChange} value={formik.values.kirish_title_uz}/>
+                <MyTextInput type="text" label="Sarlavha" tab="ru" id="kirish_title_ru" name="kirish_title_ru" onChange={formik.handleChange} value={formik.values.kirish_title_ru}/>
+                <MyTextInput type="text" label="Sarlavha" tab="en" id="kirish_title_en" name="kirish_title_en" onChange={formik.handleChange} value={formik.values.kirish_title_en}/>
               </div>
             </fieldset>
             <fieldset className="border px-5 mb-5">
@@ -260,17 +338,17 @@ function InstitutHaqidaCom() {
                 Uning barcha shakllarida xilma-xillikka chuqur hurmat
               </legend>
               <div className="my-5 grid grid-cols-3 gap-2">
-                <MyTextInput type="text" label="Sarlavha" tab="uz" id="barcha_shakillar_title_uz" name="barcha_shakillar_title_uz" onChange={formik.handleChange}/>
-                <MyTextInput type="text" label="Sarlavha" tab="ru" id="barcha_shakillar_title_ru" name="barcha_shakillar_title_ru" onChange={formik.handleChange}/>
-                <MyTextInput type="text" label="Sarlavha" tab="en" id="barcha_shakillar_title_en" name="barcha_shakillar_title_en" onChange={formik.handleChange}/>
+                <MyTextInput type="text" label="Sarlavha" tab="uz" id="barcha_shakillar_title_uz" name="barcha_shakillar_title_uz" onChange={formik.handleChange} value={formik.values.barcha_shakillar_title_uz}/>
+                <MyTextInput type="text" label="Sarlavha" tab="ru" id="barcha_shakillar_title_ru" name="barcha_shakillar_title_ru" onChange={formik.handleChange} value={formik.values.barcha_shakillar_title_ru}/>
+                <MyTextInput type="text" label="Sarlavha" tab="en" id="barcha_shakillar_title_en" name="barcha_shakillar_title_en" onChange={formik.handleChange} value={formik.values.barcha_shakillar_title_en}/>
               </div>
               <div className="my-5 grid grid-cols-3 gap-2">
-                <MyTextarea type="text" label="Matn" tab="uz" id="barcha_shakillar_text_uz" name="barcha_shakillar_text_uz" onChange={formik.handleChange}/>
-                <MyTextarea type="text" label="Matn" tab="ru" id="barcha_shakillar_text_ru" name="barcha_shakillar_text_ru" onChange={formik.handleChange}/>
-                <MyTextarea type="text" label="Matn" tab="en" id="barcha_shakillar_text_en" name="barcha_shakillar_text_en" onChange={formik.handleChange}/>
+                <MyTextarea type="text" label="Matn" tab="uz" id="barcha_shakillar_text_uz" name="barcha_shakillar_text_uz" onChange={formik.handleChange} value={formik.values.barcha_shakillar_text_uz}/>
+                <MyTextarea type="text" label="Matn" tab="ru" id="barcha_shakillar_text_ru" name="barcha_shakillar_text_ru" onChange={formik.handleChange} value={formik.values.barcha_shakillar_text_ru}/>
+                <MyTextarea type="text" label="Matn" tab="en" id="barcha_shakillar_text_en" name="barcha_shakillar_text_en" onChange={formik.handleChange} value={formik.values.barcha_shakillar_text_en}/>
               </div>
               <div className="my-5">
-                <MyTextInput type="file" labe="Rasm" tab="" id="barcha_shakillar" name="barcha_shakillar" onChange={(event) => formik.setFieldValue("barcha_shakillar", event.currentTarget.files[0])}/>
+                <MyTextInput type="file" label="Rasm" tab="" id="barcha_shakillar" name="barcha_shakillar" onChange={(event) => formik.setFieldValue("barcha_shakillar", event.currentTarget.files[0])}/>
               </div>
             </fieldset>
             <fieldset className="border px-5 mb-5">
@@ -278,17 +356,17 @@ function InstitutHaqidaCom() {
                 Farq qiladigan moliyaviy yordam
               </legend>
               <div className="my-5 grid grid-cols-3 gap-2">
-                <MyTextInput type="text" label="Sarlavha" tab="uz" id="moliyaviy_yordam_title_uz" name="moliyaviy_yordam_title_uz" onChange={formik.handleChange}/>
-                <MyTextInput type="text" label="Sarlavha" tab="ru" id="moliyaviy_yordam_title_ru" name="moliyaviy_yordam_title_ru" onChange={formik.handleChange}/>
-                <MyTextInput type="text" label="Sarlavha" tab="en" id="moliyaviy_yordam_title_en" name="moliyaviy_yordam_title_en" onChange={formik.handleChange}/>
+                <MyTextInput type="text" label="Sarlavha" tab="uz" id="moliyaviy_yordam_title_uz" name="moliyaviy_yordam_title_uz" onChange={formik.handleChange} value={formik.values.moliyaviy_yordam_title_uz}/>
+                <MyTextInput type="text" label="Sarlavha" tab="ru" id="moliyaviy_yordam_title_ru" name="moliyaviy_yordam_title_ru" onChange={formik.handleChange} value={formik.values.moliyaviy_yordam_title_ru}/>
+                <MyTextInput type="text" label="Sarlavha" tab="en" id="moliyaviy_yordam_title_en" name="moliyaviy_yordam_title_en" onChange={formik.handleChange} value={formik.values.moliyaviy_yordam_title_en}/>
               </div>
               <div className="my-5 grid grid-cols-3 gap-2">
-                <MyTextarea type="text" label="Matn" tab="uz" id="moliyaviy_yordam_text_uz" name="moliyaviy_yordam_text_uz" onChange={formik.handleChange}/>
-                <MyTextarea type="text" label="Matn" tab="ru" id="moliyaviy_yordam_text_ru" name="moliyaviy_yordam_text_ru" onChange={formik.handleChange}/>
-                <MyTextarea type="text" label="Matn" tab="en" id="moliyaviy_yordam_text_en" name="moliyaviy_yordam_text_en" onChange={formik.handleChange}/>
+                <MyTextarea type="text" label="Matn" tab="uz" id="moliyaviy_yordam_text_uz" name="moliyaviy_yordam_text_uz" onChange={formik.handleChange} value={formik.values.moliyaviy_yordam_text_uz}/>
+                <MyTextarea type="text" label="Matn" tab="ru" id="moliyaviy_yordam_text_ru" name="moliyaviy_yordam_text_ru" onChange={formik.handleChange} value={formik.values.moliyaviy_yordam_text_ru}/>
+                <MyTextarea type="text" label="Matn" tab="en" id="moliyaviy_yordam_text_en" name="moliyaviy_yordam_text_en" onChange={formik.handleChange} value={formik.values.moliyaviy_yordam_text_en}/>
               </div>
               <div className="my-5">
-                <MyTextInput type="file" labe="Rasm" tab="" id="moliyaviy_yordam" name="moliyaviy_yordam" onChange={(event) => formik.setFieldValue("moliyaviy_yordam", event.currentTarget.files[0])}/>
+                <MyTextInput type="file" label="Rasm" tab="" id="moliyaviy_yordam" name="moliyaviy_yordam" onChange={(event) => formik.setFieldValue("moliyaviy_yordam", event.currentTarget.files[0])}/>
               </div>
             </fieldset>
             <fieldset className="border px-5 mb-5">
@@ -296,242 +374,180 @@ function InstitutHaqidaCom() {
                 Sport bilan birga
               </legend>
               <div className="my-5 grid grid-cols-3 gap-2">
-                <MyTextInput type="text" label="Sarlavha" tab="uz" id="sport_bilan_birga_title_uz" name="sport_bilan_birga_title_uz" onChange={formik.handleChange}/>
-                <MyTextInput type="text" label="Sarlavha" tab="ru" id="sport_bilan_birga_title_ru" name="sport_bilan_birga_title_ru" onChange={formik.handleChange}/>
-                <MyTextInput type="text" label="Sarlavha" tab="en" id="sport_bilan_birga_title_en" name="sport_bilan_birga_title_en" onChange={formik.handleChange}/>
+                <MyTextInput type="text" label="Sarlavha" tab="uz" id="sport_bilan_birga_title_uz" name="sport_bilan_birga_title_uz" onChange={formik.handleChange} value={formik.values.sport_bilan_birga_title_uz}/>
+                <MyTextInput type="text" label="Sarlavha" tab="ru" id="sport_bilan_birga_title_ru" name="sport_bilan_birga_title_ru" onChange={formik.handleChange} value={formik.values.sport_bilan_birga_title_ru}/>
+                <MyTextInput type="text" label="Sarlavha" tab="en" id="sport_bilan_birga_title_en" name="sport_bilan_birga_title_en" onChange={formik.handleChange} value={formik.values.sport_bilan_birga_title_en}/>
               </div>
               <div className="my-5 grid grid-cols-3 gap-2">
-                <MyTextarea type="text" label="Matn" tab="uz" id="sport_bilan_birga_text_uz" name="sport_bilan_birga_text_uz" onChange={formik.handleChange}/>
-                <MyTextarea type="text" label="Matn" tab="ru" id="sport_bilan_birga_text_ru" name="sport_bilan_birga_text_ru" onChange={formik.handleChange}/>
-                <MyTextarea type="text" label="Matn" tab="en" id="sport_bilan_birga_text_en" name="sport_bilan_birga_text_en" onChange={formik.handleChange}/>
+                <MyTextarea type="text" label="Matn" tab="uz" id="sport_bilan_birga_text_uz" name="sport_bilan_birga_text_uz" onChange={formik.handleChange} value={formik.values.sport_bilan_birga_text_uz}/>
+                <MyTextarea type="text" label="Matn" tab="ru" id="sport_bilan_birga_text_ru" name="sport_bilan_birga_text_ru" onChange={formik.handleChange} value={formik.values.sport_bilan_birga_text_ru}/>
+                <MyTextarea type="text" label="Matn" tab="en" id="sport_bilan_birga_text_en" name="sport_bilan_birga_text_en" onChange={formik.handleChange} value={formik.values.sport_bilan_birga_text_en}/>
               </div>
               <div className="my-5">
-                <MyTextInput type="file" labe="Rasm" tab="" id="sport_bilan_birga" name="sport_bilan_birga" onChange={(event) => formik.setFieldValue("sport_bilan_birga", event.currentTarget.files[0])}/>
+                <MyTextInput type="file" label="Rasm" tab="" id="sport_bilan_birga" name="sport_bilan_birga" onChange={(event) => formik.setFieldValue("sport_bilan_birga", event.currentTarget.files[0])}/>
               </div>
             </fieldset>
             <button type="submit" className="btn btn-success">
-              Saqlash{/* {isEdit ? "Saqlash (put)" : "Jo'natish (post)"} */}
+              {!edit ? "post" : "put"}
             </button>
           </form>
         </div>
         </Formik>
-        <div onSubmit={formik.handleSubmit} className="border overflow-auto relative">
-          <div className="max-w-7xl mx-auto my-5">
-            <div>
-              <p className="text-xl font-bold font-source text-center text-red-500">
-                ←←←Asosiy saxifa uchun→→→
-              </p>
-              <h1 className="text-xl font-bold font-source text-center text-[#004269]">
-                Bizning maqsadimiz
-              </h1>
-              <p className="text-xl font-light text-center my-10">
-                Qo'qon davlat pedagogika instituti bundan qariyb 93 yil avval
-                gumanitar ta'limni rivojlantirish maqsadida tashkil etilgan.
-                Bizning vazifamiz zamonaviy pedagogikaning yangilanishi va
-                rivojlanishiga hissa qo'shish, o'quvchilarda yetakchilik
-                fazilatlarini shakllantirish va rivojlantirish, fundamental
-                bilimlarni targ'ib qilish va ijodkorlikni qaror toptirish,
-                o'zbek pedagogikasining muvaffaqiyatli taraqqiy etishiga hissa
-                qo'shadigan innovatsion tadqiqotlar olib borishdan iborat.
-              </p>
-            </div>
-            <div>
-              <p className="text-xl font-bold font-source text-center text-red-500">
-                ←←←Institut haqida uchun→→→
-              </p>
-              <h1 className="text-xl font-bold font-source text-center text-[#004269]">
-                Biz haqimizda
-              </h1>
-            </div>
-            <div className="px-2">
-              <p className="text-xl font-light text-center my-10">
-                Muqimiy nomidagi Qo'qon davlat pedagogika instituti 1931-yil
-                yanvar oyida o'z faoliyatini boshlab kelmoqda. Qo'qon davlat
-                pedagogika institutida oliy ta'limda amalga oshiralayotgan tub
-                islohotlar sharoitida sezilarli ijobiy o'zgarishlar ro'y
-                bermoqda. Oliygohning qiyofasi o'zgarib, moddiy-texnika bazasi
-                yaxshilanmoqda, ilmiy ishlanmalarni moliyalashtirish va ijtimoiy
-                qo'llab-quvvatlash kuchaytirilmoqda. Oliy ta'lim ilm-fan ishlab
-                chiqarish o'rtasida uzviylik yaratildi. Bularning barchasi oliy
-                ta'limga bo'lgan yondashuvni o'zgartirib, uning sifati hamda
-                darajasini ko'tarishga xizmat qilmoqda.
-              </p>
-            </div>
-            <div className="px-4 xl:px-0 py-4">
-              <img
-                src=""
-                className="w-full max-h-[547px] shadow-2xl rounded-xl opacity-75"
-                alt=""
-              />
-            </div>
-            <div>
-              <h1 className="text-xl font-bold font-source text-center text-[#004269]">
-                Tadqiqot, o'qitish va murabbiylik sohasidagi mukammallik
-              </h1>
-              <div className="grid items-center grid-cols-1 px-6 my-20">
-                <div className="z-10 mx-6">
-                  <img
-                    src=""
-                    className="w-full lg:max-h-40 xl:h-[460px] shadow-2xl"
-                    alt=""
-                  />
-                </div>
-                <div className="bg-[#F1F5F9] p-10 -mt-6">
-                  <h3 className="text-xl font-medium">Biz kimmiz</h3>
-                  <p className="text-md mt-3">
-                    Fakultetimiz, talabalarimiz va xodimlarimizni harakatga
-                    keltiradigan narsa bu imkoniyatlar ruhi, boshqa odamlarning
-                    farzandlariga foyda keltirish uchun yagona farzandi
-                    xotirasiga Institutimizda biz o'tmishimizdan saboq olamiz,
-                    lekin kelajakka e'tibor qaratamiz va doimiy ravishda dunyoni
-                    yaxshiroq joyga aylantirishning yangi usullarini qidiramiz.
-                    Biz oliy ta'lim gullab-yashnayotgan jamiyatni
-                    qo'llab-quvvatlashda muhim rol o'ynashiga qattiq ishonamiz.
-                    Institutimiz nafaqat talabalarni o'zlari tanlagan yo'lga
-                    tayyorlaydilar, balki ular fuqarolar rahbarlari va
-                    muammolarni hal qiluvchilarning keyingi avlodini yaratishga
-                    yordam beradi. Oliy ta'lim muassasalari jamiyatimizda faqat
-                    bilimlarni yaratish va tarqatishga bag'ishlangan o'ziga xos
-                    va doimiy vazifani bajaradi.
+        {datas && datas.map((data) => {
+          return (
+            <div key={data.id} className="border overflow-auto relative">
+              <div className="max-w-7xl mx-auto my-5">
+                <div>
+                  <p className="text-xl font-bold font-source text-center text-red-500">
+                    ←←←Asosiy saxifa uchun→→→
+                  </p>
+                  <h1 className="text-xl font-bold font-source text-center text-[#004269]">
+                    {data.bizning_maqsadimiz_title_uz}
+                  </h1>
+                  <p className="text-xl font-light text-center my-10">
+                    {data.bizning_maqsadimiz_text_uz}
                   </p>
                 </div>
-              </div>
-              <div className="grid items-center grid-cols-1 px-6 my-20">
-                <div className="z-10 mx-6">
-                  <img
-                    src=""
-                    className="w-full lg:max-h-40 xl:h-[460px] shadow-2xl"
-                    alt=""
-                  />
+                <div>
+                  <p className="text-xl font-bold font-source text-center text-red-500">
+                    ←←←Institut haqida uchun→→→
+                  </p>
+                  <h1 className="text-xl font-bold font-source text-center text-[#004269]">
+                    {data.biz_haqimizda_title_uz}
+                  </h1>
                 </div>
-                <div className="bg-[#F1F5F9] p-10 -mt-6">
-                  <h3 className="text-xl font-medium">Qo'shma hamkorlar</h3>
-                  <p className="text-md mt-3">
-                    Institutimizda 4 ta xorijiy oliy ta'lim muassalalari bilan
-                    hamkorlikda bakalavriat va magistratura mutaxassisliklari
-                    bo'yicha qo'shma ta'lim dasturlari asosida o'qitish ham
-                    yo'lga qo'yilgan. Rossiyaning Akmulla nomli Boshqird davlat
-                    pedagogika universiteti (BDPU), Rossiya davlat kasb-hunar
-                    pedagogika universiteti (RDKXPU), Qozon federal universiteti
-                    va Belarusning Yanka kupala nomidagi Grodno davlat
-                    universitetilari (GrDU) bilan jami 168 nafar talaba qo'shma
-                    ta'lim dasturlari asosida o'qitilmoqda.
+                <div className="px-2">
+                  <p className="text-xl font-light text-center my-10">
+                    {data.biz_haqimizda_text_uz}
                   </p>
                 </div>
-              </div>
-              <div className="grid items-center grid-cols-1 px-6">
-                <div className="z-10 mx-6">
+                <div className="px-4 xl:px-0 py-4">
                   <img
-                    src=""
-                    className="w-full lg:max-h-40 xl:h-[460px] shadow-2xl"
-                    alt=""
+                    src={data.institut_rasm}
+                    className="w-full lg:max-h-40 xl:h-[460px] shadow-2xl opacity-75"
+                    alt="Institut rasm"
                   />
                 </div>
-                <div className="bg-[#F1F5F9] p-10 -mt-6">
-                  <h3 className="text-xl font-medium">
-                    Rivojlanayotgan talabalik hayoti
-                  </h3>
-                  <p className="text-md mt-3">
-                    Rivojlanayotgan turar joy kampusi Institutimiz taklif
-                    qiladigan jahon miqyosidagi ta'lim tajribasining ajralmas
-                    qismidir. Institutimizda akapella qo'shiqchilaridan tortib
-                    olimpiya sportchilarigacha bo'lgan dunyoning turli
-                    burchaklaridan kelgan ijodiy va qobiliyatli odamlar
-                    hamjamiyati yashaydi. Talabalar 600 dan ortiq talaba
-                    tashkilotlari orasidan diniy, etnik va madaniy guruhlardan
-                    tortib, san'at va jamoat xizmatiga, ijtimoiy, sport va
-                    ko'ngilochar tadbirlarga e'tibor qaratadigan tashkilotlarga
-                    jalb qilishlari mumkin.
-                  </p>
+                <div>
+                  <h1 className="text-xl font-bold font-source text-center text-[#004269]">
+                    {data.qoshimcha_title_uz}
+                  </h1>
+                  <div className="grid items-center grid-cols-1 px-6 my-20">
+                    <div className="z-10 mx-6">
+                      <img
+                        src={data.biz_kimmiz}
+                        className="w-full lg:max-h-40 xl:h-[460px] shadow-2xl"
+                        alt="Biz kimmiz"
+                      />
+                    </div>
+                    <div className="bg-[#F1F5F9] p-10 -mt-6">
+                      <h3 className="text-xl font-medium">{data.biz_kimmiz_title_uz}</h3>
+                      <p className="text-md mt-3">
+                        {data.biz_kimmiz_text_uz}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="grid items-center grid-cols-1 px-6 my-20">
+                    <div className="z-10 mx-6">
+                      <img
+                        src={data.qoshma_hamkorlar}
+                        className="w-full lg:max-h-40 xl:h-[460px] shadow-2xl"
+                      alt="Qo'shma hamkorlar"
+                      />
+                    </div>
+                    <div className="bg-[#F1F5F9] p-10 -mt-6">
+                      <h3 className="text-xl font-medium">{data.qoshma_hamkorlar_title_uz}</h3>
+                      <p className="text-md mt-3">
+                        {data.qoshma_hamkorlar_text_uz}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="grid items-center grid-cols-1 px-6">
+                    <div className="z-10 mx-6">
+                      <img
+                        src={data.rivojlanayotgan_talabalar_hayoti}
+                        className="w-full lg:max-h-40 xl:h-[460px] shadow-2xl"
+                        alt="Rivojlanayotgan talabalar hayoti"
+                      />
+                    </div>
+                    <div className="bg-[#F1F5F9] p-10 -mt-6">
+                      <h3 className="text-xl font-medium">
+                        {data.rivojlanayotgan_talabalar_hayoti_title_uz}
+                      </h3>
+                      <p className="text-md mt-3">
+                        {data.rivojlanayotgan_talabalar_hayoti_text_uz}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
+              <div
+                className="py-5 max-w-[1910px] mx-auto"
+                // style={{
+                //   backgroundImage: `url(${require("../../assets/images/institutHaqidaCom/bacgroundSayt.png")})`,
+                //   backgroundRepeat: "no-repeat",
+                //   backgroundSize: "cover",
+                // }}
+              >
+                <div className="max-w-7xl mx-auto">
+                  <h1 className="text-xl font-bold font-source text-center text-[#ffffff]">
+                    {data.kirish_title_uz}
+                  </h1>
+                  <div className="grid items-center grid-cols-1 px-6">
+                    <div className="z-10 mx-6">
+                      <img
+                        src={data.barcha_shakillar}
+                        className="w-full lg:max-h-40 xl:h-[460px] shadow-2xl"
+                        alt=""
+                      />
+                    </div>
+                    <div className="bg-[#F1F5F9] p-10 -mt-6">
+                      <h3 className="text-xl font-medium">
+                        {data.barcha_shakillar_title_uz}
+                      </h3>
+                      <p className="text-md mt-3">
+                        {data.barcha_shakillar_text_uz}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="grid items-center grid-cols-1 px-6 py-20">
+                    <div className="z-10 mx-6">
+                      <img
+                        src={data.moliyaviy_yordam}
+                        className="w-full lg:max-h-40 xl:h-[460px] shadow-2xl"
+                        alt=""
+                      />
+                    </div>
+                    <div className="bg-[#F1F5F9] p-10 -mt-6">
+                      <h3 className="text-xl font-medium">
+                        {data.moliyaviy_yordam_title_uz}
+                      </h3>
+                      <p className="text-md mt-3">
+                        {data.moliyaviy_yordam_text_uz}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="max-w-7xl mx-auto">
+                <div className="grid items-center grid-cols-1 px-6">
+                  <div className="z-10 mx-6">
+                    <img
+                      src={data.sport_bilan_birga}
+                      className="w-full lg:max-h-40 xl:h-[460px] shadow-2xl"
+                      alt="Sport bilan birga"
+                    />
+                  </div>
+                  <div className="bg-[#F1F5F9] p-10 -mt-6">
+                    <h3 className="text-xl font-medium">{data.sport_bilan_birga_title_uz}</h3>
+                    <p className="text-md mt-3">{data.sport_bilan_birga_text_uz}</p>
+                  </div>
+                </div>
+              </div>
+              <button type="submit" onClick={() => handleEdit(data.id)} className="btn btn-secondary z-50 sticky bottom-5 left-4">O'zgartirish</button>
             </div>
-          </div>
-          <div
-            className="py-5 max-w-[1910px] mx-auto"
-            // style={{
-            //   backgroundImage: `url(${require("../../assets/images/institutHaqidaCom/bacgroundSayt.png")})`,
-            //   backgroundRepeat: "no-repeat",
-            //   backgroundSize: "cover",
-            // }}
-          >
-            <div className="max-w-7xl mx-auto">
-              <h1 className="text-xl font-bold font-source text-center text-[#ffffff]">
-                Kirish
-              </h1>
-              <div className="grid items-center grid-cols-1 px-6">
-                <div className="z-10 mx-6">
-                  <img
-                    src=""
-                    className="w-full lg:max-h-40 xl:h-[460px] shadow-2xl"
-                    alt=""
-                  />
-                </div>
-                <div className="bg-[#F1F5F9] p-10 -mt-6">
-                  <h3 className="text-xl font-medium">
-                    Uning barcha shakllarida xilma-xillikka chuqur hurmat
-                  </h3>
-                  <p className="text-md mt-3">
-                    QDPI tajriba, qiziqishlar va istiqboldagi xilma-xillikni
-                    qadrlaydi. Biz barcha talabalar bir-birining tajribasidan
-                    o'rganish va o'z qarashlari va tasavvurlari haqida tanqidiy
-                    fikr yuritish imkoniyatiga ega bo'lgan kampus muhitini
-                    yaratishga harakat qilmoqdamiz. Institutimiz barcha
-                    talabalarga irqiy, ijtimoiy-iqtisodiy, geografik va siyosiy
-                    yo'nalishlar bo'ylab hamjamiyat va aloqa o'rnatish uchun
-                    imkoniyat va vositalarni taqdim etishga intiladi, bu
-                    ko'pincha ko'proq tushunish, o'zaro hurmat va haqiqiy
-                    do'stlikka to'sqinlik qiladi. Ijtimoiy mas'uliyat va axloqni
-                    qadrlashni rivojlantirish imkoniyatlari Institutimiz ta'lim
-                    tajribasining ajralmas qismidir.
-                  </p>
-                </div>
-              </div>
-              <div className="grid items-center grid-cols-1 px-6 py-20">
-                <div className="z-10 mx-6">
-                  <img
-                    src=""
-                    className="w-full lg:max-h-40 xl:h-[460px] shadow-2xl"
-                    alt=""
-                  />
-                </div>
-                <div className="bg-[#F1F5F9] p-10 -mt-6">
-                  <h3 className="text-xl font-medium">
-                    Farq qiladigan moliyaviy yordam
-                  </h3>
-                  <p className="text-md mt-3">
-                    Biz har bir talabani QDPIda muvaffaqiyatli o'qish uchun
-                    zarur bo'lgan to'liq miqdorda moliyaviy yordam olishda
-                    qo'llab-quvvatlashga intilamiz. Moliyaviy tenglikka bo'lgan
-                    bu majburiyat nafaqat uni olgan talabalarning hayotini,
-                    balki ular bilan birga o'qiyotganlarning ta'limini ham
-                    o'zgartiradi. institutimiz magistrantlarining qariyb 70
-                    foizi moliyaviy yordam oladi, kam ta'minlangan oilalar esa
-                    o'qish uchun to'lov, xona va ovqat bilan to'liq
-                    ta'minlanadi. QDPIda bakalavr darajasini olganlarning 80
-                    foizdan ortig'i qarzsiz bitiradi.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="max-w-7xl mx-auto">
-            <div className="grid items-center grid-cols-1 px-6">
-              <div className="z-10 mx-6">
-                <img
-                  src=""
-                  className="w-full lg:max-h-40 xl:h-[460px] shadow-2xl"
-                  alt=""
-                />
-              </div>
-              <div className="bg-[#F1F5F9] p-10 -mt-6">
-                <h3 className="text-xl font-medium">Sport bilan birga</h3>
-                <p className="text-md mt-3">Sport bilan birga</p>
-              </div>
-            </div>
-          </div>
-          <button className="btn btn-secondary z-50 sticky bottom-5 left-4">O'zgartirish</button>
-        </div>
+          )
+        })}
       </div>
     </div>
   );

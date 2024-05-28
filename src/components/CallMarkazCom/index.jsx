@@ -1,78 +1,33 @@
 import React, { useState } from "react";
-import {
-  FaBold,
-  FaItalic,
-  FaUnderline,
-  FaLink,
-  FaAlignCenter,
-  FaAlignLeft,
-  FaAlignRight,
-  FaListUl,
-  FaListOl,
-} from "react-icons/fa";
-import { LuImagePlus } from "react-icons/lu";
+
+import ReactQuill from "react-quill";
+import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
+import "react-quill/dist/quill.snow.css";
 
 const CallMarkazCom = () => {
-  const [text, setText] = useState("");
-  const [classes, setClasses] = useState([]);
+  const [value, setValue] = useState("");
 
-  const handleCommand = (command) => {
-    setClasses((prevClasses) => {
-      if (prevClasses.includes(command)) {
-        return prevClasses.filter((cls) => cls !== command);
-      } else {
-        return [...prevClasses, command];
-      }
-    });
+  const convertDeltaToHtml = (delta) => {
+    const converter = new QuillDeltaToHtmlConverter(delta.ops, {});
+    return converter.convert();
   };
 
-  const handleLink = () => {
-    // Link handling logic
-  };
-
-  const handleImage = () => {
-    // Image handling logic
+  const getHtmlOutput = (value) => {
+    try {
+      const delta = JSON.parse(value);
+      return convertDeltaToHtml(delta);
+    } catch (e) {
+      return "";
+    }
   };
 
   return (
-    <div className="p-4 max-w-xl mx-auto">
-      <div className="flex py-5">
-        <FaBold onClick={() => handleCommand("font-bold")} className="mr-3 cursor-pointer" />
-        <FaItalic onClick={() => handleCommand("italic")} className="mr-3 cursor-pointer" />
-        <FaUnderline
-          onClick={() => handleCommand("underline")}
-          className="mr-3 cursor-pointer"
-        />
-        <FaLink onClick={handleLink} className="mr-3 cursor-pointer" />
-        <FaAlignLeft
-          onClick={() => handleCommand("text-left")}
-          className="mr-3 cursor-pointer"
-        />
-        <FaAlignCenter
-          onClick={() => handleCommand("text-center")}
-          className="mr-3 cursor-pointer" />
-        <FaAlignRight
-          onClick={() => handleCommand("text-right")}
-          className="mr-3 cursor-pointer"
-        />
-        <FaListOl
-          onClick={() => handleCommand("list-decimal")}
-          className="mr-3 cursor-pointer"
-        />
-        <FaListUl
-          onClick={() => handleCommand("list-disc")}
-          className="mr-3 cursor-pointer"
-        />
-        <LuImagePlus onClick={handleImage} className="mr-3 cursor-pointer" />
-      </div>
-      <textarea
-        className={`w-full h-64 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-600 ${classes.join(" ")}`}
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        placeholder="Matn kiriting..."
-      ></textarea>
-      <div className="mt-4 p-4 border rounded bg-gray-100">
-        {`<p className="${classes.join(" ")}">${text}</p>`}
+    <div className="mx-2 lg:mx-5 xl:mx-10">
+      <h1 className="text-3xl font-bold text-center mb-5 pt-3">Call markaz</h1>
+      <ReactQuill theme="snow" value={value} onChange={setValue} />
+      <div className="mt-5">
+        <h2 className="text-xl font-semibold">HTML Output:</h2>
+        <pre className="p-4 border rounded bg-gray-100">{getHtmlOutput(value)}</pre>
       </div>
     </div>
   );

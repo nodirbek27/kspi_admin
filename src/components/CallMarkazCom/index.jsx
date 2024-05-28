@@ -1,106 +1,36 @@
-import React, { useEffect, useState } from "react";
-import ReactQuill, { Quill } from "react-quill";
+import React, { useState } from "react";
+
+import ReactQuill from "react-quill";
+import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 import "react-quill/dist/quill.snow.css";
-import ImageResize from "quill-image-resize-module-react";
-import Editor from "./EditorWithUseQuill";
-import APICallMarkaz from "../../services/callMarkaz";
-
-import "./styles.css";
-
-Quill.register("modules/imageResize", ImageResize);
 
 const CallMarkazCom = () => {
-  const [editorHtml, setEditorHtml] = useState("");
-  const [data, setData] = useState(null);
+  const [value, setValue] = useState("");
 
-  const handleChange = (html) => {
-    setEditorHtml(html);
+  const convertDeltaToHtml = (delta) => {
+    const converter = new QuillDeltaToHtmlConverter(delta.ops, {});
+    return converter.convert();
   };
 
-  const handlePost = async () => {
+  const getHtmlOutput = (value) => {
     try {
-      await APICallMarkaz.post({ body_uz: editorHtml });
-      getData();
-    } catch (error) {
-      console.error("Error posting data", error);
+      const delta = JSON.parse(value);
+      return convertDeltaToHtml(delta);
+    } catch (e) {
+      return "";
     }
   };
-
-  const getData = async () => {
-    try {
-      const res = await APICallMarkaz.get();
-      setData(res.data);
-    } catch (error) {
-      console.error("Error fetching data", error);
-    }
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
 
   return (
-    <div>
-      <ReactQuill
-        theme="snow"
-        onChange={handleChange}
-        value={editorHtml}
-        modules={Editor.modules}
-        formats={Editor.formats}
-        bounds={"#root"}
-        placeholder={"Write something ..."}
-      />
-      <button className="btn" onClick={handlePost}>
-        Yuklash
-      </button>
-
-      {data && data.map((item) => (
-        <div key={item.id}>
-          {item.body_uz}
-        </div>
-      ))}
+    <div className="mx-2 lg:mx-5 xl:mx-10">
+      <h1 className="text-3xl font-bold text-center mb-5 pt-3">Call markaz</h1>
+      <ReactQuill theme="snow" value={value} onChange={setValue} />
+      <div className="mt-5">
+        <h2 className="text-xl font-semibold">HTML Output:</h2>
+        <pre className="p-4 border rounded bg-gray-100">{getHtmlOutput(value)}</pre>
+      </div>
     </div>
   );
 };
-
-Editor.modules = {
-  toolbar: [
-    [{ header: [] }, { font: [] }],
-    [{ size: [] }],
-    ["bold", "italic", "underline", "strike", "blockquote"],
-    [
-      { list: "ordered" },
-      { list: "bullet" },
-      { indent: "-1" },
-      { indent: "+1" },
-    ],
-    ["link", "image", "video"],
-    ["clean"],
-  ],
-  clipboard: {
-    matchVisual: false,
-  },
-  imageResize: {
-    parchment: Quill.import("parchment"),
-    modules: ["Resize", "DisplaySize"],
-  },
-};
-
-Editor.formats = [
-  "header",
-  "font",
-  "size",
-  "bold",
-  "italic",
-  "underline",
-  "strike",
-  "blockquote",
-  "list",
-  "bullet",
-  "indent",
-  "link",
-  "image",
-  "video",
-];
 
 export default CallMarkazCom;

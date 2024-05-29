@@ -36,13 +36,12 @@ const InstitutHaqidaCom = () => {
     try {
       const response = await APIInstitutHaqida.getInstitutHaqida();
       setDatas(response.data);
+      console.log();
     } catch (error) {
       console.log(error);
     }
   };
-
-  console.log(datas);
-
+  
   const formik = useFormik({
     initialValues: {
       bizning_maqsadimiz_title_uz: "",
@@ -119,6 +118,7 @@ const InstitutHaqidaCom = () => {
     },
     onSubmit: async (values, onSubmitProps) => {
       const data = new FormData();
+      console.log(data);
       for (let key in values) {
         data.append(key, values[key]);
       }
@@ -141,78 +141,88 @@ const InstitutHaqidaCom = () => {
   const handleEdit = (id) => {
     setEdit(true);
     setId(id);
-    formik.setValues({
-      bizning_maqsadimiz_title_uz: datas[0].bizning_maqsadimiz_title_uz,
-      bizning_maqsadimiz_title_ru: datas[0].bizning_maqsadimiz_title_ru,
-      bizning_maqsadimiz_title_en: datas[0].bizning_maqsadimiz_title_en,
-      bizning_maqsadimiz_text_uz: datas[0].bizning_maqsadimiz_text_uz,
-      bizning_maqsadimiz_text_ru: datas[0].bizning_maqsadimiz_text_ru,
-      bizning_maqsadimiz_text_en: datas[0].bizning_maqsadimiz_text_uz,
-  
-      biz_haqimizda_title_uz: datas[0].biz_haqimizda_title_uz,
-      biz_haqimizda_title_ru: datas[0].biz_haqimizda_title_ru,
-      biz_haqimizda_title_en: datas[0].biz_haqimizda_title_en,
-      biz_haqimizda_text_uz: datas[0].biz_haqimizda_text_uz,
-      biz_haqimizda_text_ru: datas[0].biz_haqimizda_text_ru,
-      biz_haqimizda_text_en: datas[0].biz_haqimizda_text_en,
-  
-  
-      qoshimcha_title_uz: datas[0].qoshimcha_title_uz,
-      qoshimcha_title_ru: datas[0].qoshimcha_title_ru,
-      qoshimcha_title_en: datas[0].qoshimcha_title_en,
-  
-      biz_kimmiz_title_uz: datas[0].biz_kimmiz_title_uz,
-      biz_kimmiz_title_ru: datas[0].biz_kimmiz_title_ru,
-      biz_kimmiz_title_en: datas[0].biz_kimmiz_title_en,
-      biz_kimmiz_text_uz: datas[0].biz_kimmiz_text_uz,
-      biz_kimmiz_text_ru: datas[0].biz_kimmiz_text_ru,
-      biz_kimmiz_text_en: datas[0].biz_kimmiz_text_en,
-  
-      qoshma_hamkorlar_title_uz: datas[0].qoshma_hamkorlar_title_uz,
-      qoshma_hamkorlar_title_ru: datas[0].qoshma_hamkorlar_title_ru,
-      qoshma_hamkorlar_title_en: datas[0].qoshma_hamkorlar_title_en,
-      qoshma_hamkorlar_text_uz: datas[0].qoshma_hamkorlar_text_uz,
-      qoshma_hamkorlar_text_ru: datas[0].qoshma_hamkorlar_text_ru,
-      qoshma_hamkorlar_text_en: datas[0].qoshma_hamkorlar_text_en,
-  
-      rivojlanayotgan_talabalar_hayoti_title_uz: datas[0].rivojlanayotgan_talabalar_hayoti_title_uz,
-      rivojlanayotgan_talabalar_hayoti_title_ru: datas[0].rivojlanayotgan_talabalar_hayoti_title_ru,
-      rivojlanayotgan_talabalar_hayoti_title_en: datas[0].rivojlanayotgan_talabalar_hayoti_title_en,
-      rivojlanayotgan_talabalar_hayoti_text_uz: datas[0].rivojlanayotgan_talabalar_hayoti_text_uz,
-      rivojlanayotgan_talabalar_hayoti_text_ru: datas[0].rivojlanayotgan_talabalar_hayoti_text_ru,
-      rivojlanayotgan_talabalar_hayoti_text_en: datas[0].rivojlanayotgan_talabalar_hayoti_text_en,
-  
-      kirish_title_uz: datas[0].kirish_title_uz,
-      kirish_title_ru: datas[0].kirish_title_ru,
-      kirish_title_en: datas[0].kirish_title_en,
-  
-      barcha_shakillar_title_uz: datas[0].barcha_shakillar_title_uz,
-      barcha_shakillar_title_ru: datas[0].barcha_shakillar_title_ru,
-      barcha_shakillar_title_en: datas[0].barcha_shakillar_title_en,
-      barcha_shakillar_text_uz: datas[0].barcha_shakillar_text_uz,
-      barcha_shakillar_text_ru: datas[0].barcha_shakillar_text_ru,
-      barcha_shakillar_text_en: datas[0].barcha_shakillar_text_en,
-  
-      moliyaviy_yordam_title_uz: datas[0].moliyaviy_yordam_title_uz,
-      moliyaviy_yordam_title_ru: datas[0].moliyaviy_yordam_title_ru,
-      moliyaviy_yordam_title_en: datas[0].moliyaviy_yordam_title_en,
-      moliyaviy_yordam_text_uz: datas[0].moliyaviy_yordam_text_uz,
-      moliyaviy_yordam_text_ru: datas[0].moliyaviy_yordam_text_ru,
-      moliyaviy_yordam_text_en: datas[0].moliyaviy_yordam_text_en,
-  
-      sport_bilan_birga_title_uz: datas[0].sport_bilan_birga_title_uz,
-      sport_bilan_birga_title_ru: datas[0].sport_bilan_birga_title_ru,
-      sport_bilan_birga_title_en: datas[0].sport_bilan_birga_title_en,
-      sport_bilan_birga_text_uz: datas[0].sport_bilan_birga_text_uz,
-      sport_bilan_birga_text_ru: datas[0].sport_bilan_birga_text_ru,
-      sport_bilan_birga_text_en: datas[0].sport_bilan_birga_text_en,
-    })
+    const data = datas.find(item => item.id === id);
+    if(data){
+      formik.setValues({
+        bizning_maqsadimiz_title_uz: data.bizning_maqsadimiz_title_uz,
+        bizning_maqsadimiz_title_ru: data.bizning_maqsadimiz_title_ru,
+        bizning_maqsadimiz_title_en: data.bizning_maqsadimiz_title_en,
+        bizning_maqsadimiz_text_uz: data.bizning_maqsadimiz_text_uz,
+        bizning_maqsadimiz_text_ru: data.bizning_maqsadimiz_text_ru,
+        bizning_maqsadimiz_text_en: data.bizning_maqsadimiz_text_uz,
+        
+        biz_haqimizda_title_uz: data.biz_haqimizda_title_uz,
+        biz_haqimizda_title_ru: data.biz_haqimizda_title_ru,
+        biz_haqimizda_title_en: data.biz_haqimizda_title_en,
+        biz_haqimizda_text_uz: data.biz_haqimizda_text_uz,
+        biz_haqimizda_text_ru: data.biz_haqimizda_text_ru,
+        biz_haqimizda_text_en: data.biz_haqimizda_text_en,
+        
+        institut_rasm: data.institut_rasm,
+        
+        qoshimcha_title_uz: data.qoshimcha_title_uz,
+        qoshimcha_title_ru: data.qoshimcha_title_ru,
+        qoshimcha_title_en: data.qoshimcha_title_en,
+        
+        biz_kimmiz_title_uz: data.biz_kimmiz_title_uz,
+        biz_kimmiz_title_ru: data.biz_kimmiz_title_ru,
+        biz_kimmiz_title_en: data.biz_kimmiz_title_en,
+        biz_kimmiz_text_uz: data.biz_kimmiz_text_uz,
+        biz_kimmiz_text_ru: data.biz_kimmiz_text_ru,
+        biz_kimmiz_text_en: data.biz_kimmiz_text_en,
+        biz_kimmiz: data.biz_kimmiz,
+        
+        qoshma_hamkorlar_title_uz: data.qoshma_hamkorlar_title_uz,
+        qoshma_hamkorlar_title_ru: data.qoshma_hamkorlar_title_ru,
+        qoshma_hamkorlar_title_en: data.qoshma_hamkorlar_title_en,
+        qoshma_hamkorlar_text_uz: data.qoshma_hamkorlar_text_uz,
+        qoshma_hamkorlar_text_ru: data.qoshma_hamkorlar_text_ru,
+        qoshma_hamkorlar_text_en: data.qoshma_hamkorlar_text_en,
+        qoshma_hamkorlar: data.qoshma_hamkorlar,
+        
+        rivojlanayotgan_talabalar_hayoti_title_uz: data.rivojlanayotgan_talabalar_hayoti_title_uz,
+        rivojlanayotgan_talabalar_hayoti_title_ru: data.rivojlanayotgan_talabalar_hayoti_title_ru,
+        rivojlanayotgan_talabalar_hayoti_title_en: data.rivojlanayotgan_talabalar_hayoti_title_en,
+        rivojlanayotgan_talabalar_hayoti_text_uz: data.rivojlanayotgan_talabalar_hayoti_text_uz,
+        rivojlanayotgan_talabalar_hayoti_text_ru: data.rivojlanayotgan_talabalar_hayoti_text_ru,
+        rivojlanayotgan_talabalar_hayoti_text_en: data.rivojlanayotgan_talabalar_hayoti_text_en,
+        rivojlanayotgan_talabalar_hayoti: data.rivojlanayotgan_talabalar_hayoti,
+        
+        kirish_title_uz: data.kirish_title_uz,
+        kirish_title_ru: data.kirish_title_ru,
+        kirish_title_en: data.kirish_title_en,
+        
+        barcha_shakillar_title_uz: data.barcha_shakillar_title_uz,
+        barcha_shakillar_title_ru: data.barcha_shakillar_title_ru,
+        barcha_shakillar_title_en: data.barcha_shakillar_title_en,
+        barcha_shakillar_text_uz: data.barcha_shakillar_text_uz,
+        barcha_shakillar_text_ru: data.barcha_shakillar_text_ru,
+        barcha_shakillar_text_en: data.barcha_shakillar_text_en,
+        barcha_shakillar: data.barcha_shakillar,
+        
+        moliyaviy_yordam_title_uz: data.moliyaviy_yordam_title_uz,
+        moliyaviy_yordam_title_ru: data.moliyaviy_yordam_title_ru,
+        moliyaviy_yordam_title_en: data.moliyaviy_yordam_title_en,
+        moliyaviy_yordam_text_uz: data.moliyaviy_yordam_text_uz,
+        moliyaviy_yordam_text_ru: data.moliyaviy_yordam_text_ru,
+        moliyaviy_yordam_text_en: data.moliyaviy_yordam_text_en,
+        moliyaviy_yordam: data.moliyaviy_yordam,
+        
+        sport_bilan_birga_title_uz: data.sport_bilan_birga_title_uz,
+        sport_bilan_birga_title_ru: data.sport_bilan_birga_title_ru,
+        sport_bilan_birga_title_en: data.sport_bilan_birga_title_en,
+        sport_bilan_birga_text_uz: data.sport_bilan_birga_text_uz,
+        sport_bilan_birga_text_ru: data.sport_bilan_birga_text_ru,
+        sport_bilan_birga_text_en: data.sport_bilan_birga_text_en,
+        sport_bilan_birga: data.sport_bilan_birga,
+      })
+    }
   }
-
+  
   useEffect(()=>{
     fetchData();
   },[])
-
+  
   return (
     <div className="max-w-[1600px] mx-auto">
       <h1 className="text-3xl font-medium text-gray-700 text-center my-5">
@@ -481,14 +491,7 @@ const InstitutHaqidaCom = () => {
                   </div>
                 </div>
               </div>
-              <div
-                className="py-5 max-w-[1910px] mx-auto"
-                // style={{
-                //   backgroundImage: `url(${require("../../assets/images/institutHaqidaCom/bacgroundSayt.png")})`,
-                //   backgroundRepeat: "no-repeat",
-                //   backgroundSize: "cover",
-                // }}
-              >
+              <div className="py-5 max-w-[1910px] mx-auto">
                 <div className="max-w-7xl mx-auto">
                   <h1 className="text-xl font-bold font-source text-center text-[#ffffff]">
                     {data.kirish_title_uz}

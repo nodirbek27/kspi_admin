@@ -11,6 +11,7 @@ const News = () => {
   const [newsOne, setNewsOne] = useState(null);
   const [pageNumber, setPageNumber] = useState(0);
 
+  // GET
   const loadPost = async () => {
     try {
       const res = await APIElon.get();

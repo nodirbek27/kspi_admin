@@ -1,0 +1,15 @@
+#textEditor h1 {
+  font-size: 42px;
+}
+#textEditor h2 {
+  font-size: 36px;
+}
+#textEditor .ql-align-center {
+  text-align: center;
+}
+#textEditor .ql-align-right {
+  text-align: right;
+}
+#textEditor .ql-align-justify {
+  text-align: justify;
+}

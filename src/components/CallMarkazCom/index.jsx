@@ -1,36 +1,36 @@
-import React, { useState } from "react";
-
-import ReactQuill from "react-quill";
-import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
-import "react-quill/dist/quill.snow.css";
+import React from 'react';
+import { useMultiRootEditor } from '@ckeditor/ckeditor5-react';
+import MultiRootEditor from '@ckeditor/ckeditor5-build-multi-root';
 
 const CallMarkazCom = () => {
-  const [value, setValue] = useState("");
+    const editorProps = {
+        editor: MultiRootEditor,
+        data: {
+            intro: '<h1>React multi-root editor</h1>',
+            content: '<p>Hello from CKEditor&nbsp;5 multi-root!</p>'
+        },
+        config: {
+      
+        }
+    };
 
-  const convertDeltaToHtml = (delta) => {
-    const converter = new QuillDeltaToHtmlConverter(delta.ops, {});
-    return converter.convert();
-  };
+    const {
+        editor, toolbarElement, editableElements,
+        data, setData,
+        attributes, setAttributes
+    } = useMultiRootEditor( editorProps );
+    console.log(data.content);
 
-  const getHtmlOutput = (value) => {
-    try {
-      const delta = JSON.parse(value);
-      return convertDeltaToHtml(delta);
-    } catch (e) {
-      return "";
-    }
-  };
+    return (
+        <div className="App">
+            <h2>Using CKEditor&nbsp;5 multi-root build in React</h2>
 
-  return (
-    <div className="mx-2 lg:mx-5 xl:mx-10">
-      <h1 className="text-3xl font-bold text-center mb-5 pt-3">Call markaz</h1>
-      <ReactQuill theme="snow" value={value} onChange={setValue} />
-      <div className="mt-5">
-        <h2 className="text-xl font-semibold">HTML Output:</h2>
-        <pre className="p-4 border rounded bg-gray-100">{getHtmlOutput(value)}</pre>
-      </div>
-    </div>
-  );
-};
+            { toolbarElement }
+
+            { editableElements }
+        </div>
+    );
+}
 
 export default CallMarkazCom;
+

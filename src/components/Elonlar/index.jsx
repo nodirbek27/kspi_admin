@@ -72,7 +72,7 @@ const News = () => {
   
   useEffect(() => {
     loadPost();
-  }, [pagesVisited]);
+  },[pagesVisited]);
 
   const pageCount = Math.ceil((news && news.length) / itemsPerPage);
   const changePage = ({ selected }) => {

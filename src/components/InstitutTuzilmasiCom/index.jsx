@@ -1,57 +1,92 @@
-import React from 'react';
-import { Formik} from 'formik';
+import React, { useEffect, useRef, useState } from 'react';
+import { Formik, useFormik} from 'formik';
 import MyTextInput from '../MyTextInput';
 import APIinstitutTuzilmasi from '../../services/institutTuzilmasi';
 
 function InstitutTuzilmasiCom() {
+    const [edit, setEdit] = useState(true)
+    const [datas, setDatas] = useState([]);
+
+    const fileInputRefs = {
+        rasm_1: useRef(null),
+        rasm_2: useRef(null),
+        rasm_3: useRef(null),
+        rasm_4: useRef(null),
+        rasm_5: useRef(null),
+        pdf_fayl: useRef(null),
+    }
+
+    const fechtData = async () =>{
+        try{
+            const response = await APIinstitutTuzilmasi.getInstitutTuzilmasi();
+            setDatas(response.data)
+        }catch(error){
+            console.error("Xatolik yuz berdi!", error);
+        }
+    }
+
+    console.log(datas);
+
+    const formik = useFormik({
+        initialValues: { 
+            name_uz: "",
+            name_ru: "",
+            name_en: "",
+            rasm_1: null,
+            rasm_2: null,
+            rasm_3: null,
+            rasm_4: null,
+            rasm_5: null,
+            pdf_fayl: null,
+        }, // Initial values for formik
+        onSubmit: async (values, onSubmitProps) => {
+            const data = new FormData();
+            for(let key in values ){
+                data.append(key, values[key]);  
+            }
+            try {
+                await APIinstitutTuzilmasi.postInstitutTuzilmasi(data)
+                Object.values(fileInputRefs).forEach(ref => {
+                    if(ref.current){
+                        ref.current.value = '';
+                    }
+                })
+                fechtData()
+                onSubmitProps.resetForm()
+            } catch(error){
+                console.error("Xatolik sodir bo'ldi!", error);
+            }
+        }
+    })
+
+    useEffect(() => {
+        fechtData()
+    },[])
+
   return (
     <div className='max-w-[1600px] mx-auto'>
       <h1 className="text-3xl font-medium text-gray-700 text-center my-5">Institut tuzilmasi</h1>
       <div className="grid grid-cols-4">
         <div className='col-span-3 border p-5'>
-            <Formik
-            initialValues={{ 
-                name_uz: "",
-                name_ru: "",
-                name_en: "",
-                rasm_1: null,
-                rasm_2: null,
-                rasm_3: null,
-                rasm_4: null,
-                rasm_5: null,
-                pdf_fayl: null,
-            }} // Initial values for formik
-            onSubmit={async (values, onSubmitProps) => {
-                const data = new FormData();
-                for(let key in values ){
-                    data.append(key, values[key]);
-                }
-                try {
-                    await APIinstitutTuzilmasi.postInstitutTuzilmasi()
-                    onSubmitProps.resetForm()
-                } catch(error){
-                    console.error("Xatolik sodir bo'ldi!", error);
-                }
-            }}
-            >
-                <form>
-                <fieldset className="border px-5 mb-5">
-                    <legend className="text-red-500 font-medium">Institut tuzilmasi</legend>
-                    <div className="grid grid-cols-3 gap-2 my-5">
-                        <MyTextInput type="text" name="name_uz" label="Sarlavha" tab="uz"/>
-                        <MyTextInput type="text" name="name_ru" label="Sarlavha" tab="ru"/>
-                        <MyTextInput type="text" name="name_eng" label="Sarlavha" tab="eng"/>
-                    </div>
-                    <div className="grid gap-5 my-5">
-                        <MyTextInput type="file" name="rasm_1" label="Rasm" tab="1"/>
-                        <MyTextInput type="file" name="rasm_2" label="Rasm" tab="2"/>
-                        <MyTextInput type="file" name="rasm_3" label="Rasm" tab="3"/>
-                        <MyTextInput type="file" name="rasm_4" label="Rasm" tab="4"/>
-                        <MyTextInput type="file" name="rasm_5" label="Rasm" tab="5"/>
-                        <MyTextInput type="file" name="pdf_fayl" label="PDF" tab="file"/>
-                    </div>
-                </fieldset>
-                <button className='btn btn-success'>Saqlash</button>
+            <Formik>
+                <form onSubmit={formik.handleSubmit}>
+                    <fieldset className="border px-5 mb-5">
+                        <legend className="text-red-500 font-medium">Institut tuzilmasi</legend>
+                        <div className="grid grid-cols-3 gap-2 my-5">
+                            <MyTextInput type="text" id="name_uz" name="name_uz" label="Sarlavha" tab="uz" value={formik.values.name_uz} onChange={formik.handleChange}/>
+                            <MyTextInput type="text" id="name_ru" name="name_ru" label="Sarlavha" tab="ru" value={formik.values.name_ru} onChange={formik.handleChange}/>
+                            <MyTextInput type="text" id="name_en" name="name_en" label="Sarlavha" tab="eng" value={formik.values.name_en} onChange={formik.handleChange}/>
+                        </div>
+                        <div className="grid gap-5 my-5">
+                            <MyTextInput type="file" id="rasm_1" name="rasm_1" label="Rasm" tab="1" innerRef={fileInputRefs.rasm_1} onChange={(event) => formik.setFieldValue("rasm_1", event.currentTarget.files[0])}/>
+                            <MyTextInput type="file" id="rasm_2" name="rasm_2" label="Rasm" tab="2" innerRef={fileInputRefs.rasm_2} onChange={(event) => formik.setFieldValue("rasm_2", event.currentTarget.files[0])}/>
+                            <MyTextInput type="file" id="rasm_3" name="rasm_3" label="Rasm" tab="3" innerRef={fileInputRefs.rasm_3} onChange={(event) => formik.setFieldValue("rasm_3", event.currentTarget.files[0])}/>
+                            <MyTextInput type="file" id="rasm_4" name="rasm_4" label="Rasm" tab="4" innerRef={fileInputRefs.rasm_4} onChange={(event) => formik.setFieldValue("rasm_4", event.currentTarget.files[0])}/>
+                            <MyTextInput type="file" id="rasm_5" name="rasm_5" label="Rasm" tab="5" innerRef={fileInputRefs.rasm_5} onChange={(event) => formik.setFieldValue("rasm_5", event.currentTarget.files[0])}/>
+                            <MyTextInput type="file" id="pdf_fayl" name="pdf_fayl" label="PDF" tab="file" innerRef={fileInputRefs.pdf_fayl} onChange={(event) => formik.setFieldValue("pdf_fayl", event.currentTarget.files[0])}/>
+                        </div>
+                    </fieldset>
+                    <button type='submit' className='btn btn-success'>Saqlash</button>
                 </form>
             </Formik>
         </div>

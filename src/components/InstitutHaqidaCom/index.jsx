@@ -1,31 +1,9 @@
 import React, { useEffect, useState} from "react";
 import APIInstitutHaqida from "../../services/institutHaqida";
-import { Formik, useField, useFormik } from "formik";
+import { Formik, useFormik } from "formik";
+import MyTextInput from "../MyTextInput";
+import MyTextarea from "../MyTextarea";
 
-// Component MyTextInput
-const MyTextInput = ({label, tab, ...props}) => {
-  const [field, meta] = useField(props);
-  return (
-    <div>
-      <label htmlFor={props.id || props.name} className="block mb-2 font-medium text-gray-700">{label} <span className="text-red-500">{tab}</span></label>
-      <input className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300" {...field} {...props} />
-      {meta.touched && meta.error ? (<div className="error">{meta.error}</div>) : null}
-    </div>
-  )
-}
-
-// Component MyTextarea 
-const MyTextarea = ({label, tab, ...props}) => {
-  const [field, meta] = useField(props);
-  return (
-    <div>
-      <label htmlFor={props.id || props.name} className="block mb-2 font-medium text-gray-700">{label}<span className="text-red-500">{tab}</span></label>
-      <textarea className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300" {...field} {...props}></textarea>
-      {meta.touched && meta.error ? (<div>{meta.error}</div>) : null}
-    </div>
-  )
-}
- 
 const InstitutHaqidaCom = () => {
 
   const [datas, setDatas] = useState([]);
@@ -36,11 +14,11 @@ const InstitutHaqidaCom = () => {
     try {
       const response = await APIInstitutHaqida.getInstitutHaqida();
       setDatas(response.data);
-      console.log();
     } catch (error) {
       console.log(error);
     }
   };
+  console.log(datas);
   
   const formik = useFormik({
     initialValues: {
@@ -118,7 +96,6 @@ const InstitutHaqidaCom = () => {
     },
     onSubmit: async (values, onSubmitProps) => {
       const data = new FormData();
-      console.log(data);
       for (let key in values) {
         data.append(key, values[key]);
       }

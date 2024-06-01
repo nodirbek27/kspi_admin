@@ -10,10 +10,6 @@ const CallMarkazCom = () => {
     title_ru: "",
     title_en: "",
     tel_nomer_1: "",
-    tel_nomer_2: "",
-    tel_nomer_3: "",
-    tel_nomer_4: "",
-    tel_nomer_5: "",
   });
   const [content, setContent] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -61,10 +57,6 @@ const CallMarkazCom = () => {
       title_ru: formData.title_ru,
       title_en: formData.title_en,
       tel_nomer_1: formData.tel_nomer_1,
-      tel_nomer_2: formData.tel_nomer_2,
-      tel_nomer_3: formData.tel_nomer_3,
-      tel_nomer_4: formData.tel_nomer_4,
-      tel_nomer_5: formData.tel_nomer_5,
       body_uz: data.contentUz,
       body_ru: data.contentRu,
       body_en: data.contentEn,
@@ -79,10 +71,6 @@ const CallMarkazCom = () => {
         title_ru: "",
         title_en: "",
         tel_nomer_1: "",
-        tel_nomer_2: "",
-        tel_nomer_3: "",
-        tel_nomer_4: "",
-        tel_nomer_5: "",
       });
     } catch (error) {
       console.error("Error posting data:", error);
@@ -120,7 +108,7 @@ const CallMarkazCom = () => {
     <div className="App">
       <h1 className="text-2xl font-bold mb-5 p-3 text-center">Call markaz</h1>
 
-      <form onSubmit={handleSubmit} id="form">
+      <form onSubmit={handleSubmit} id="form" className={`${content.length >= 1 ? "hidden" : ""}`}>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mb-3">
           <textarea
             placeholder="Sarlavha Uz"
@@ -158,42 +146,6 @@ const CallMarkazCom = () => {
             className="input input-bordered"
             required
           ></textarea>
-          <textarea
-            placeholder="Telefon nomer"
-            id="tel_nomer_2"
-            name="tel_nomer_2"
-            value={formData.tel_nomer_2}
-            onChange={handleChange}
-            className="input input-bordered"
-            required
-          ></textarea>
-          <textarea
-            placeholder="Telefon nomer"
-            id="tel_nomer_3"
-            name="tel_nomer_3"
-            value={formData.tel_nomer_3}
-            onChange={handleChange}
-            className="input input-bordered"
-            required
-          ></textarea>
-          <textarea
-            placeholder="Telefon nomer"
-            id="tel_nomer_4"
-            name="tel_nomer_4"
-            value={formData.tel_nomer_4}
-            onChange={handleChange}
-            className="input input-bordered"
-            required
-          ></textarea>
-          <textarea
-            placeholder="Telefon nomer"
-            id="tel_nomer_5"
-            name="tel_nomer_5"
-            value={formData.tel_nomer_5}
-            onChange={handleChange}
-            className="input input-bordered"
-            required
-          ></textarea>
         </div>
 
         {toolbarElement}
@@ -209,8 +161,8 @@ const CallMarkazCom = () => {
       ) : error ? (
         <p>Error loading content: {error.message}</p>
       ) : (
-        content.map((item) => (
-          <div key={item.id} className="content-item">
+        content?.map((item) => (
+          <div key={item.id} className={` content-item`}>
             <h2>{item.title_uz}</h2>
             <p dangerouslySetInnerHTML={{ __html: item.body_uz }}></p>
             <h2>{item.title_ru}</h2>

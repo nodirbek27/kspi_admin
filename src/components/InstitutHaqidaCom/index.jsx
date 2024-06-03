@@ -375,7 +375,7 @@ const InstitutHaqidaCom = () => {
               </div>
             </fieldset>
             <button type="submit" className="btn btn-success">
-              {!edit ? "post" : "put"}
+              {!edit ? "Yuborish" : "Saqlash"}
             </button>
           </form>
         </div>

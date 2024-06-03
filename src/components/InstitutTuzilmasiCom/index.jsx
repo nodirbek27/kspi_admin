@@ -4,7 +4,8 @@ import MyTextInput from '../MyTextInput';
 import APIinstitutTuzilmasi from '../../services/institutTuzilmasi';
 
 function InstitutTuzilmasiCom() {
-    const [edit, setEdit] = useState(true)
+    const [edit, setEdit] = useState(false)
+    const [id, setId] = useState(null)
     const [datas, setDatas] = useState([]);
 
     const fileInputRefs = {
@@ -45,20 +46,51 @@ function InstitutTuzilmasiCom() {
                 data.append(key, values[key]);  
             }
             try {
-                await APIinstitutTuzilmasi.postInstitutTuzilmasi(data)
+                if(!edit && datas.length === 0) {
+                    await APIinstitutTuzilmasi.postInstitutTuzilmasi(data);
+                }else{
+                    await APIinstitutTuzilmasi.putInstitutTuzilmasi(id, data);
+                    setEdit(false);
+                    setId(null);
+                }
                 Object.values(fileInputRefs).forEach(ref => {
                     if(ref.current){
                         ref.current.value = '';
                     }
                 })
-                fechtData()
                 onSubmitProps.resetForm()
+                fechtData()
             } catch(error){
                 console.error("Xatolik sodir bo'ldi!", error);
+                Object.values(fileInputRefs).forEach(ref => {
+                    if(ref.current){
+                        ref.current.value = '';
+                    }
+                })
+                onSubmitProps.resetForm()
             }
         }
     })
 
+    const handleEdit = (id) => {
+        setEdit(true);
+        setId(id);
+        const data = datas.find(item => item.id === id);
+        console.log(data)
+        if(data){
+            formik.setValues({
+                name_uz: data.name_uz,
+                name_ru: data.name_ru,
+                name_en: data.name_en,
+                rasm_1: data.rasm_1,
+                rasm_2: data.rasm_2,
+                rasm_3: data.rasm_3,
+                rasm_4: data.rasm_4,
+                rasm_5: data.rasm_5,
+                pdf_fayl: data.pdf_fayl,
+            })
+        }
+    }
     useEffect(() => {
         fechtData()
     },[])
@@ -86,24 +118,31 @@ function InstitutTuzilmasiCom() {
                             <MyTextInput type="file" id="pdf_fayl" name="pdf_fayl" label="PDF" tab="file" innerRef={fileInputRefs.pdf_fayl} onChange={(event) => formik.setFieldValue("pdf_fayl", event.currentTarget.files[0])}/>
                         </div>
                     </fieldset>
-                    <button type='submit' className='btn btn-success'>Saqlash</button>
+                    <button type='submit' className='btn btn-success'>
+                        {!edit ? "Yuborish" : "Saqlash"}
+                    </button>
                 </form>
             </Formik>
         </div>
         <div className='col-span-1 border p-2'>
-            <div>
-                <h3 className="text-xl font-bold font-source text-center text-[#004269]">Institut tuzilmasi</h3>
-                <div>
-                    <img src="" alt="" className="w-full lg:max-h-40 xl:h-[460px] shadow-2xl opacity-75 mt-5"/>
-                    <img src="" alt="" className="w-full lg:max-h-40 xl:h-[460px] shadow-2xl opacity-75 mt-5"/>
-                    <img src="" alt="" className="w-full lg:max-h-40 xl:h-[460px] shadow-2xl opacity-75 mt-5"/>
-                    <img src="" alt="" className="w-full lg:max-h-40 xl:h-[460px] shadow-2xl opacity-75 mt-5"/>
-                    <img src="" alt="" className="w-full lg:max-h-40 xl:h-[460px] shadow-2xl opacity-75 mt-5"/>
-                </div>
-                <div>
-                    {/* <a className='btn btn-accent w-full mt-5'>PDF shaklini yuklab oling</a> */}
-                </div>
-            </div>
+            {datas && datas.map((data) => {  
+                return (
+                    <div key={data.id}>
+                        <h3 className="text-xl font-bold font-source text-center text-[#004269]">{data.name_uz}</h3>
+                        <div>
+                            <img src={data.rasm_1} alt="" className="w-full lg:max-h-40 xl:h-[460px] shadow-2xl opacity-75 mt-5"/>
+                            <img src={data.rasm_2} alt="" className="w-full lg:max-h-40 xl:h-[460px] shadow-2xl opacity-75 mt-5"/>
+                            <img src={data.rasm_3} alt="" className="w-full lg:max-h-40 xl:h-[460px] shadow-2xl opacity-75 mt-5"/>
+                            <img src={data.rasm_4} alt="" className="w-full lg:max-h-40 xl:h-[460px] shadow-2xl opacity-75 mt-5"/>
+                            <img src={data.rasm_5} alt="" className="w-full lg:max-h-40 xl:h-[460px] shadow-2xl opacity-75 mt-5"/>
+                        </div>
+                        <div className='text-center py-5'>
+                            <a href={data.pdf_fayl} className='text-blue-500 font-bold' target='blank' rel="noopener noreferrer">PDF variantini yuklab oling</a>
+                        </div>
+                        <button type='submit' className='btn btn-secondary' onClick={() => handleEdit(data.id)}>O'zgartirish</button>
+                    </div>
+                )
+            })}
         </div>
       </div>
     </div>

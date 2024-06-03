@@ -49,7 +49,6 @@ const CallMarkazCom = () => {
     }));
   };
 
-  // Post
   const handleSubmit = async (e) => {
     e.preventDefault();
     const postData = {
@@ -77,7 +76,6 @@ const CallMarkazCom = () => {
     }
   };
 
-  // Get
   const getData = async () => {
     setLoading(true);
     try {
@@ -90,7 +88,6 @@ const CallMarkazCom = () => {
     }
   };
 
-  // Delete
   const handleDelete = async (id) => {
     try {
       await APICallMarkaz.del(id);
@@ -162,13 +159,13 @@ const CallMarkazCom = () => {
         <p>Error loading content: {error.message}</p>
       ) : (
         content?.map((item) => (
-          <div key={item.id} className={` content-item`}>
+          <div key={item.id} className="content-item">
             <h2>{item.title_uz}</h2>
-            <p dangerouslySetInnerHTML={{ __html: item.body_uz }}></p>
+            <p className="mb-5" dangerouslySetInnerHTML={{ __html: item.body_uz }}></p>
             <h2>{item.title_ru}</h2>
-            <p dangerouslySetInnerHTML={{ __html: item.body_ru }}></p>
+            <p className="mb-5" dangerouslySetInnerHTML={{ __html: item.body_ru }}></p>
             <h2>{item.title_en}</h2>
-            <p dangerouslySetInnerHTML={{ __html: item.body_en }}></p>
+            <p className="mb-5" dangerouslySetInnerHTML={{ __html: item.body_en }}></p>
             <button className="btn" onClick={() => handleDelete(item.id)}>
               <RiDeleteBin5Line className="text-red-600 cursor-pointer h-5 w-5" />
             </button>

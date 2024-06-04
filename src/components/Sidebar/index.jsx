@@ -30,7 +30,6 @@ const Sidebar = () => {
     localStorage.removeItem("refreshToken");
   };
 
-  console.log(handleClickOpen);
   
   return (
     <div className="flex top-0 left-0">

@@ -3,6 +3,7 @@ import { useMultiRootEditor } from "@ckeditor/ckeditor5-react";
 import MultiRootEditor from "@ckeditor/ckeditor5-build-multi-root";
 import APICallMarkaz from "../../services/callMarkaz";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import "./style.css";
 
 const CallMarkazCom = () => {
   const [formData, setFormData] = useState({
@@ -39,7 +40,8 @@ const CallMarkazCom = () => {
     },
   };
 
-  const { editor, toolbarElement, editableElements, data } = useMultiRootEditor(editorProps);
+  const { toolbarElement, editableElements, data } =
+    useMultiRootEditor(editorProps);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -49,7 +51,6 @@ const CallMarkazCom = () => {
     }));
   };
 
-  // Post
   const handleSubmit = async (e) => {
     e.preventDefault();
     const postData = {
@@ -77,7 +78,6 @@ const CallMarkazCom = () => {
     }
   };
 
-  // Get
   const getData = async () => {
     setLoading(true);
     try {
@@ -90,7 +90,6 @@ const CallMarkazCom = () => {
     }
   };
 
-  // Delete
   const handleDelete = async (id) => {
     try {
       await APICallMarkaz.del(id);
@@ -108,7 +107,11 @@ const CallMarkazCom = () => {
     <div className="App">
       <h1 className="text-2xl font-bold mb-5 p-3 text-center">Call markaz</h1>
 
-      <form onSubmit={handleSubmit} id="form" className={`${content.length >= 1 ? "hidden" : ""}`}>
+      <form
+        onSubmit={handleSubmit}
+        id="form"
+        className={`${content.length >= 1 ? "hidden" : ""}`}
+      >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mb-3">
           <textarea
             placeholder="Sarlavha Uz"
@@ -162,13 +165,37 @@ const CallMarkazCom = () => {
         <p>Error loading content: {error.message}</p>
       ) : (
         content?.map((item) => (
-          <div key={item.id} className={` content-item`}>
-            <h2>{item.title_uz}</h2>
-            <p dangerouslySetInnerHTML={{ __html: item.body_uz }}></p>
-            <h2>{item.title_ru}</h2>
-            <p dangerouslySetInnerHTML={{ __html: item.body_ru }}></p>
-            <h2>{item.title_en}</h2>
-            <p dangerouslySetInnerHTML={{ __html: item.body_en }}></p>
+          <div key={item.id} className="content-items">
+            <div className="mb-5">
+              <p
+                className="mb-5 content-item"
+                dangerouslySetInnerHTML={{ __html: item.body_uz }}
+              ></p>
+              <div className="flex justify-between items-center">
+                <h2 className="text-xl">{item.title_uz}</h2>
+                <div>{item.tel_nomer_1}</div>
+              </div>
+            </div>
+            <div className="mb-5">
+              <p
+                className="mb-5 content-item"
+                dangerouslySetInnerHTML={{ __html: item.body_ru }}
+              ></p>
+              <div className="flex justify-between items-center">
+                <h2 className="text-xl">{item.title_ru}</h2>
+                <div>{item.tel_nomer_1}</div>
+              </div>
+            </div>
+            <div className="mb-5">
+              <p
+                className="mb-5 content-item"
+                dangerouslySetInnerHTML={{ __html: item.body_en }}
+              ></p>
+              <div className="flex justify-between items-center">
+                <h2 className="text-xl">{item.title_en}</h2>
+                <div>{item.tel_nomer_1}</div>
+              </div>
+            </div>
             <button className="btn" onClick={() => handleDelete(item.id)}>
               <RiDeleteBin5Line className="text-red-600 cursor-pointer h-5 w-5" />
             </button>

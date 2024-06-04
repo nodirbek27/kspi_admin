@@ -17,7 +17,7 @@ import logo from "../../assets/images/logo_kspi.png";
 
 const Sidebar = () => {
   const [open, setOpen] = useState(false);
-  const [handleClickOpen, setHandleClickOpen] = useState(false);
+  // const [handleClickOpen, setHandleClickOpen] = useState(false);
 
   const location = useLocation();
 
@@ -30,7 +30,6 @@ const Sidebar = () => {
     localStorage.removeItem("refreshToken");
   };
 
-  console.log(handleClickOpen);
   
   return (
     <div className="flex top-0 left-0">
@@ -84,7 +83,7 @@ const Sidebar = () => {
             <div className="join join-vertical w-full">
               {/* HOME */}
 
-              <div className="collapse collapse-arrow join-item" onClick={() => setHandleClickOpen( open)}>
+              <div className="collapse collapse-arrow join-item">
                 <input type="checkbox" name="my-accordion-4" />
                 <div className="collapse-title flex items-center text-sm gap-3.5 font-medium p-2 hover:bg-gray-800 rounded">
                   <TiHome size={20} />

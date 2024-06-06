@@ -171,9 +171,9 @@ const CallMarkazCom = () => {
                 className="mb-5 content-item"
                 dangerouslySetInnerHTML={{ __html: item.body_uz }}
               ></p>
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center border p-2 rounded">
                 <h2 className="text-xl">{item.title_uz}</h2>
-                <div>{item.tel_nomer_1}</div>
+                <div className="text-xl">{item.tel_nomer_1}</div>
               </div>
             </div>
             <div className="mb-5">
@@ -181,9 +181,9 @@ const CallMarkazCom = () => {
                 className="mb-5 content-item"
                 dangerouslySetInnerHTML={{ __html: item.body_ru }}
               ></p>
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center border p-2 rounded">
                 <h2 className="text-xl">{item.title_ru}</h2>
-                <div>{item.tel_nomer_1}</div>
+                <div className="text-xl">{item.tel_nomer_1}</div>
               </div>
             </div>
             <div className="mb-5">
@@ -191,9 +191,9 @@ const CallMarkazCom = () => {
                 className="mb-5 content-item"
                 dangerouslySetInnerHTML={{ __html: item.body_en }}
               ></p>
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center border p-2 rounded">
                 <h2 className="text-xl">{item.title_en}</h2>
-                <div>{item.tel_nomer_1}</div>
+                <div className="text-xl">{item.tel_nomer_1}</div>
               </div>
             </div>
             <button className="btn" onClick={() => handleDelete(item.id)}>

@@ -5,6 +5,7 @@ import { MdEdit, MdDelete } from "react-icons/md";
 import { TextWarn } from "./styled";
 import { BiBlock } from "react-icons/bi";
 import APITuzilmaRectorat from "../../../services/tuzilmaRectoray";
+import * as Yup from "yup";
 
 const Rektorat = () => {
     const [dataLavozim, setDataLavozim] = useState([]);
@@ -12,6 +13,8 @@ const Rektorat = () => {
     const [warn, setWarn] = useState(false);
     const [errTxt, setErrTxt] = useState(false);
     // const [confrim, setConfrim] = useState(false);
+
+    const [isEdit, setIsEdit] = useState(null);
 
     const getDataLavozim = () =>
         APITuzilmaRectorat.get()
@@ -21,6 +24,18 @@ const Rektorat = () => {
     //     APITuzilmaRectorat.getN()
     //         .then((res) => setDataNomzod(res.data))
     //         .catch((err) => console.log(err));
+
+    const validationSchema = Yup.object().shape({
+        firstName: Yup.string()
+            .min(2, "Too Short!")
+            .max(50, "Too Long!")
+            .required("Required"),
+        lastName: Yup.string()
+            .min(2, "Too Short!")
+            .max(50, "Too Long!")
+            .required("Required"),
+        email: Yup.string().email("Invalid email").required("Required"),
+    });
 
     const formik = useFormik({
         initialValues: {
@@ -39,8 +54,9 @@ const Rektorat = () => {
                     setErrTxt(false);
                 }, 5000);
             } else {
-                APITuzilmaRectorat.post(values);
-                getDataLavozim();
+                APITuzilmaRectorat.post(values)
+                    .then(() => getDataLavozim())
+                    .catch((err) => console.log(err));
                 formik.resetForm();
             }
         },
@@ -67,6 +83,7 @@ const Rektorat = () => {
             biografiya_ru: "",
             biografiya_en: "",
         },
+        validationSchema,
         onSubmit: (values) => {
             if (values.markaz_id === "0" || values.markaz_id === "") {
                 setWarn(true);
@@ -76,6 +93,34 @@ const Rektorat = () => {
             }
         },
     });
+
+    const onDel = (id) => {
+        const res = window.confirm("Ishonchingiz komilmi?");
+        if (res) {
+            APITuzilmaRectorat.del(id)
+                .then(() => getDataLavozim())
+                .catch((err) => console.log(err));
+        }
+    };
+
+    const onEdit = ({ id, name_uz, name_ru, name_en }, boolean) => {
+        if (boolean) {
+            const { id, ...res } = isEdit;
+            const data = res;
+            APITuzilmaRectorat.patch(id, data);
+            setIsEdit(null);
+            getDataLavozim();
+        } else {
+            setIsEdit({ id, name_uz, name_ru, name_en });
+        }
+    };
+
+    const handleChangeEdit = (e) => {
+        setIsEdit({
+            ...isEdit,
+            [e.target.name]: e.target.value,
+        });
+    };
 
     useEffect(() => {
         formik_2.values.markaz_id === "0" ? setWarn(true) : setWarn(false);
@@ -132,112 +177,199 @@ const Rektorat = () => {
     ];
 
     return (
-        <div className="flex justify-center">
-            <div className="w-full h-full">
-                <h1 className="text-center text-[1.5rem] font-medium">
-                    Reactarat
+        <div className="relative">
+            <div className="w-full">
+                <h1 className="text-center text-[1.8rem] font-medium">
+                    Rektorat
                 </h1>
-                <div>
-                    <h1 className="text-[1.2rem] font-medium">
-                        Rektarat lavozim yaratish
-                    </h1>
-                    <form
-                        className="flex items-center gap-2"
-                        onSubmit={formik.handleSubmit}
-                    >
-                        <label className="w-[25%]" htmlFor="name_uz">
-                            <h3>Lavozim uz</h3>
-                            <textarea
-                                className="w-full input input-bordered px-[7px]"
-                                type="text"
-                                id="name_uz"
-                                value={formik.values.name_uz}
-                                onChange={formik.handleChange}
-                            />
-                        </label>
-                        <label className="w-[25%]" htmlFor="name_ru">
-                            <h3>Lavozim ru</h3>
-                            <textarea
-                                className="w-full input input-bordered px-[7px]"
-                                type="text"
-                                id="name_ru"
-                                value={formik.values.name_ru}
-                                onChange={formik.handleChange}
-                            />
-                        </label>
-                        <label className="w-[25%]" htmlFor="name_en">
-                            <h3>Lavozim en</h3>
-                            <textarea
-                                className="w-full input input-bordered px-[7px]"
-                                type="text"
-                                id="name_en"
-                                value={formik.values.name_en}
-                                onChange={formik.handleChange}
-                            />
-                        </label>
-                        <button
-                            className={`${
-                                errTxt
-                                    ? "bg-red-500 hover:bg-red-600"
-                                    : "bg-blue-400 hover:bg-blue-600"
-                            } flex justify-center items-center gap-1 w-[25%] h-[48px] text-white mt-[18px] font-bold rounded-lg active:scale-95`}
-                            type="submit"
+                <div className="w-full my-12">
+                    <div>
+                        <h1 className="text-[1.4rem] font-medium">
+                            Rektarat lavozim yaratish
+                        </h1>
+                        <form
+                            className="flex items-center gap-2"
+                            onSubmit={formik.handleSubmit}
                         >
-                            SUBMIT
-                            {errTxt ? (
-                                <BiBlock />
-                            ) : (
-                                <RxArrowTopRight className="font-bold text-[20px] mt-[2px]" />
-                            )}
-                        </button>
-                    </form>
-                    <TextWarn
-                        className={`${
-                            errTxt ? "inline-block" : "hidden"
-                        } w-full font-medium text-center`}
-                    >
-                        Hamma kiritish bo'limlari kiritilishi shart!
-                    </TextWarn>
-                </div>
-                <div>
-                    <h1 className="text-[1.2rem] font-medium">
-                        Rektarat lavozimlari:
-                    </h1>
-                    <ol className="list-decimal flex flex-col gap-2 ps-4">
-                        {dataLavozim?.length !== 0 && dataLavozim ? (
-                            dataLavozim?.map(({ id, name_uz }) => (
-                                <li
-                                    className="border bg-gray-50 shadow-md p-2"
-                                    key={id}
-                                >
-                                    <div className="flex justify-between items-center">
-                                        <p className=" inline-block">
-                                            {name_uz}
-                                        </p>
-                                        <div className="flex gap-2">
-                                            <button className="flex items-center gap-2 bg-blue-400 rounded-md py-1 px-4 text-white font-medium hover:bg-blue-600 active:scale-95">
-                                                <span>Tahrirlash</span>
-                                                <MdEdit />
-                                            </button>
-                                            <button className="flex items-center gap-2 bg-red-500 rounded-md py-1 px-4 text-white font-medium hover:bg-red-600 active:scale-95">
-                                                <span>Delete</span>
-                                                <MdDelete />
-                                            </button>
+                            <label className="w-[25%]" htmlFor="name_uz">
+                                <h3>Lavozim uz</h3>
+                                <textarea
+                                    className="w-full input input-bordered px-[7px]"
+                                    type="text"
+                                    id="name_uz"
+                                    value={formik.values.name_uz}
+                                    onChange={formik.handleChange}
+                                />
+                            </label>
+                            <label className="w-[25%]" htmlFor="name_ru">
+                                <h3>Lavozim ru</h3>
+                                <textarea
+                                    className="w-full input input-bordered px-[7px]"
+                                    type="text"
+                                    id="name_ru"
+                                    value={formik.values.name_ru}
+                                    onChange={formik.handleChange}
+                                />
+                            </label>
+                            <label className="w-[25%]" htmlFor="name_en">
+                                <h3>Lavozim en</h3>
+                                <textarea
+                                    className="w-full input input-bordered px-[7px]"
+                                    type="text"
+                                    id="name_en"
+                                    value={formik.values.name_en}
+                                    onChange={formik.handleChange}
+                                />
+                            </label>
+                            <button
+                                className={`${
+                                    errTxt
+                                        ? "bg-red-500 hover:bg-red-600"
+                                        : "bg-blue-400 hover:bg-blue-600"
+                                } flex justify-center items-center gap-1 w-[25%] h-[48px] text-white mt-[18px] font-bold rounded-lg active:scale-95`}
+                                type="submit"
+                            >
+                                SUBMIT
+                                {errTxt ? (
+                                    <BiBlock />
+                                ) : (
+                                    <RxArrowTopRight className="font-bold text-[20px] mt-[2px]" />
+                                )}
+                            </button>
+                        </form>
+                        <TextWarn
+                            className={`${
+                                errTxt ? "inline-block" : "hidden"
+                            } w-full font-medium text-center`}
+                        >
+                            Hamma kiritish bo'limlari kiritilishi shart!
+                        </TextWarn>
+                    </div>
+                    <div className="mt-5">
+                        <h1 className="text-[1.2rem] font-medium mb-2">
+                            Rektarat lavozimlari:
+                        </h1>
+                        <ol className="list-decimal flex flex-col gap-2 ps-4">
+                            {dataLavozim?.length !== 0 && dataLavozim ? (
+                                dataLavozim?.map((item) => (
+                                    <li
+                                        className="border bg-gray-50 shadow-md p-2"
+                                        key={item.id}
+                                    >
+                                        <div className="flex justify-between gap-20 items-center">
+                                            <div className="w-full flex flex-col justify-start items-start">
+                                                <p className="w-full">
+                                                    <b>name_uz:</b>
+                                                    {isEdit?.id === item.id ? (
+                                                        <textarea
+                                                            type="text"
+                                                            name="name_uz"
+                                                            id="name_uz"
+                                                            className="w-full border border-black rounded-sm"
+                                                            onChange={
+                                                                handleChangeEdit
+                                                            }
+                                                            value={
+                                                                isEdit.name_uz
+                                                            }
+                                                        />
+                                                    ) : (
+                                                        item.name_uz
+                                                    )}
+                                                </p>
+                                                <p className="w-full">
+                                                    <b>name_ru:</b>
+                                                    {isEdit?.id === item.id ? (
+                                                        <textarea
+                                                            type="text"
+                                                            name="name_ru"
+                                                            id="name_ru"
+                                                            className="w-full border border-black rounded-sm"
+                                                            onChange={
+                                                                handleChangeEdit
+                                                            }
+                                                            value={
+                                                                isEdit.name_ru
+                                                            }
+                                                        />
+                                                    ) : (
+                                                        item.name_ru
+                                                    )}
+                                                </p>
+                                                <p className="w-full">
+                                                    <b>name_en:</b>
+                                                    {isEdit?.id === item.id ? (
+                                                        <textarea
+                                                            type="text"
+                                                            name="name_en"
+                                                            id="name_en"
+                                                            className="w-full border border-black rounded-sm"
+                                                            onChange={
+                                                                handleChangeEdit
+                                                            }
+                                                            value={
+                                                                isEdit.name_en
+                                                            }
+                                                        />
+                                                    ) : (
+                                                        item.name_en
+                                                    )}
+                                                </p>
+                                            </div>
+                                            <div className="flex gap-2">
+                                                <button
+                                                    onClick={() =>
+                                                        onEdit(
+                                                            item,
+                                                            isEdit?.id ===
+                                                                item.id
+                                                        )
+                                                    }
+                                                    className="flex items-center gap-2 bg-gray-400 rounded-md py-1 px-4 text-white font-medium hover:bg-gray-600 active:scale-95"
+                                                >
+                                                    {isEdit?.id === item.id ? (
+                                                        <>
+                                                            <span>
+                                                                Jo'natish
+                                                            </span>
+                                                            <RxArrowTopRight />
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <span>
+                                                                Tahrirlash
+                                                            </span>
+                                                            <MdEdit />
+                                                        </>
+                                                    )}
+                                                </button>
+                                                <button
+                                                    onClick={() =>
+                                                        onDel(item.id)
+                                                    }
+                                                    className="flex items-center gap-2 bg-red-500 rounded-md py-1 px-4 text-white font-medium hover:bg-red-600 active:scale-95"
+                                                >
+                                                    <span>Delete</span>
+                                                    <MdDelete />
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
-                            ))
-                        ) : (
-                            <div className="text-red-600">
-                                Ma'lumot mavjud emas!
-                            </div>
-                        )}
-                    </ol>
+                                    </li>
+                                ))
+                            ) : (
+                                <div className="text-red-600">
+                                    Ma'lumot mavjud emas!
+                                </div>
+                            )}
+                        </ol>
+                    </div>
                 </div>
 
-                <div>
-                    <h1 className="text-[1.2rem] font-medium">
-                        Rektarat lavozim nomzodlarini yaratish
+                <div className="w-full border border-red-600" />
+
+                <div className="my-10">
+                    <h1 className="text-[1.4rem] font-medium mb-2">
+                        Rektarat lavozim nomzodini yaratish
                     </h1>
                     <div className="flex flex-col gap-4">
                         <form
@@ -508,12 +640,16 @@ const Rektorat = () => {
                                     onChange={formik_2.handleChange}
                                 />
                             </label>
-                            <button type="submit" className="w-full bg-blue-400 hover:bg-blue-600 flex justify-center items-center gap-1 h-[48px] text-white mt-[18px] font-bold rounded-lg active:scale-95 ">
+                            <button
+                                type="submit"
+                                className="w-full bg-blue-400 hover:bg-blue-600 flex justify-center items-center gap-1 h-[48px] text-white mt-[18px] font-bold rounded-lg active:scale-95 "
+                            >
                                 Submit
                             </button>
                         </form>
-                        <div>
-                            <h1 className="text-[1.2rem] font-medium">
+
+                        <div className="my-10">
+                            <h1 className="text-[1.2rem] font-medium mb-2">
                                 Rektarat lavozimlari:
                             </h1>
                             <ol className="list-decimal flex flex-col gap-2 ps-4">

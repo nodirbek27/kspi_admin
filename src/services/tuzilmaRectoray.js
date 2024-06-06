@@ -10,6 +10,8 @@ const getById = (id) => {
     return axiosInstance.get(`${ep}${id}`);
 };
 
+const del = (id) => axiosInstance.delete(`${ep}${id}/`)
+
 const post = (item) => {
     return axiosInstance.post(`${ep}`, item);
 };
@@ -22,6 +24,7 @@ const APITuzilmaRectorat = {
     get,
     getN,
     getById,
+    del,
     post,
     patch,
 };

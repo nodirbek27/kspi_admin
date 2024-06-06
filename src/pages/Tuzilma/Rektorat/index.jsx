@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import { RxArrowTopRight } from "react-icons/rx";
 import { MdEdit, MdDelete } from "react-icons/md";
+import { TextWarn } from "./styled";
 
 const Rektorat = () => {
+
+    const [warn, setWarn] = useState(false);
+
     const faceData = [
         {
             id: 1,
@@ -169,9 +173,10 @@ const Rektorat = () => {
                                 </option>
                             ))}
                         </select>
-                        <h2 className="text-red-600">
+                        <TextWarn className={warn ? "inline-block" : "hidden"}>
                             Avval qaysi lavozimgaligini kiriting!
-                        </h2>
+                        </TextWarn>
+
                     </div>
                 </div>
             </div>

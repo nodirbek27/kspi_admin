@@ -26,8 +26,6 @@ function InstitutTuzilmasiCom() {
     }
   };
 
-  // console.log(datas);
-
   const formik = useFormik({
     initialValues: {
       name_uz: "",
@@ -53,12 +51,6 @@ function InstitutTuzilmasiCom() {
             name_uz: values.name_uz,
             name_ru: values.name_ru,
             name_en: values.name_en,
-            rasm_1: values.rasm_1,
-            rasm_2: values.rasm_2,
-            rasm_3: values.rasm_3,
-            rasm_4: values.rasm_4,
-            rasm_5: values.rasm_5,
-            pdf_fayl: values.pdf_fayl,
           };
           await APIinstitutTuzilmasi.putInstitutTuzilmasi(id, mem);
           setEdit(false);

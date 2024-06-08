@@ -4,10 +4,10 @@ import { RxArrowTopRight } from "react-icons/rx";
 import { MdEdit, MdDelete } from "react-icons/md";
 import { TextWarn } from "./styled";
 import { BiBlock } from "react-icons/bi";
-import APITuzilmaRectorat from "../../../services/tuzilmaRectoray";
+import APITuzilmaRectorat from "../../services/tuzilmaRectoray";
 import * as Yup from "yup";
 
-const Rektorat = () => {
+const Fakultetlar = () => {
   const [dataLavozim, setDataLavozim] = useState([]);
   // const [dataNomzod, setDataNomzod] = useState([]);
   const [warn, setWarn] = useState(false);
@@ -179,11 +179,11 @@ const Rektorat = () => {
   return (
     <div className="relative">
       <div className="w-full">
-        <h1 className="text-center text-[1.8rem] font-medium">Rektorat</h1>
+        <h1 className="text-center text-[1.8rem] font-medium">Fakultetlar</h1>
         <div className="w-full my-12">
           <div>
             <h1 className="text-[1.4rem] font-medium">
-              Rektarat lavozim yaratish
+              Fakultet lavozim yaratish
             </h1>
             <form
               className="flex items-center gap-2"
@@ -245,7 +245,7 @@ const Rektorat = () => {
           </div>
           <div className="mt-5">
             <h1 className="text-[1.2rem] font-medium mb-2">
-              Rektarat lavozimlari:
+              Fakultet lavozimlari:
             </h1>
             <ol className="list-decimal flex flex-col gap-2 ps-4">
               {dataLavozim?.length !== 0 && dataLavozim ? (
@@ -338,7 +338,7 @@ const Rektorat = () => {
 
         <div className="my-10">
           <h1 className="text-[1.4rem] font-medium mb-2">
-            Rektarat lavozim nomzodini yaratish
+            Fakultet lavozim nomzodini yaratish
           </h1>
           <div className="flex flex-col gap-4">
             <form
@@ -600,7 +600,7 @@ const Rektorat = () => {
 
             <div className="my-10">
               <h1 className="text-[1.2rem] font-medium mb-2">
-                Rektarat lavozimlari:
+                Fakultet lavozimlari:
               </h1>
               <ol className="list-decimal flex flex-col gap-2 ps-4">
                 {data?.length !== 0 && data ? (
@@ -660,4 +660,4 @@ const Rektorat = () => {
   );
 };
 
-export default Rektorat;
+export default Fakultetlar;

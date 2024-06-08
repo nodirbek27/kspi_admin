@@ -11,7 +11,7 @@ const del = (id) => {
 };
 
 // Turi boyicha
-const epTur = "home/galareya/tur/";
+const epTur = "home/galareya_tur/";
 
 const getTur = () => axiosInstance.get(epTur);
 const postTur = (item) => {

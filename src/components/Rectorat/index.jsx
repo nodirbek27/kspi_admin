@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useFormik } from "formik";
 import { RxArrowTopRight } from "react-icons/rx";
 import { MdEdit, MdDelete } from "react-icons/md";
@@ -15,6 +15,11 @@ const Rektorat = () => {
 
     const [isEdit, setIsEdit] = useState(null);
 
+    // Rasm
+    const [file, setFile] = useState(null);
+
+    const rasm = useRef(null);
+
     const getDataLavozim = () =>
         APITuzilmaRectorat.get()
             .then((res) => setDataLavozim(res.data))
@@ -26,15 +31,74 @@ const Rektorat = () => {
             .catch((err) => console.log(err));
 
     const validationSchema = Yup.object().shape({
-        firstName: Yup.string()
-            .min(2, "Too Short!")
-            .max(50, "Too Long!")
-            .required("Required"),
-        lastName: Yup.string()
-            .min(2, "Too Short!")
-            .max(50, "Too Long!")
-            .required("Required"),
-        email: Yup.string().email("Invalid email").required("Required"),
+        lavozim_uz: Yup.string()
+            .min(3, "Juda kam!")
+            .max(300, "Juda ko'p!")
+            .required("To'ldirilishi shart!"),
+        lavozim_ru: Yup.string()
+            .min(3, "Juda kam!")
+            .max(300, "Juda ko'p!")
+            .required("To'ldirilishi shart!"),
+        lavozim_en: Yup.string()
+            .min(3, "Juda kam!")
+            .max(300, "Juda ko'p!")
+            .required("To'ldirilishi shart!"),
+        fish_uz: Yup.string()
+            .min(3, "Juda kam!")
+            .max(300, "Juda ko'p!")
+            .required("To'ldirilishi shart!"),
+        fish_ru: Yup.string()
+            .min(3, "Juda kam!")
+            .max(300, "Juda ko'p!")
+            .required("To'ldirilishi shart!"),
+        fish_en: Yup.string()
+            .min(3, "Juda kam!")
+            .max(300, "Juda ko'p!")
+            .required("To'ldirilishi shart!"),
+        unvon_uz: Yup.string()
+            .min(3, "Juda kam!")
+            .max(300, "Juda ko'p!")
+            .required("To'ldirilishi shart!"),
+        unvon_ru: Yup.string()
+            .min(3, "Juda kam!")
+            .max(300, "Juda ko'p!")
+            .required("To'ldirilishi shart!"),
+        unvon_en: Yup.string()
+            .min(3, "Juda kam!")
+            .max(300, "Juda ko'p!")
+            .required("To'ldirilishi shart!"),
+        qabul_soati_uz: Yup.string()
+            .min(3, "Juda kam!")
+            .max(300, "Juda ko'p!")
+            .required("To'ldirilishi shart!"),
+        qabul_soati_ru: Yup.string()
+            .min(3, "Juda kam!")
+            .max(300, "Juda ko'p!")
+            .required("To'ldirilishi shart!"),
+        qabul_soati_en: Yup.string()
+            .min(3, "Juda kam!")
+            .max(300, "Juda ko'p!")
+            .required("To'ldirilishi shart!"),
+        telefon_nomer: Yup.number()
+            .min(3, "Juda kam!")
+            // .max(300, "Juda ko'p!")
+            .required("To'ldirilishi shart!"),
+        tg_username: Yup.string()
+            .min(3, "Juda kam!")
+            .max(300, "Juda ko'p!")
+            .required("To'ldirilishi shart!"),
+        biografiya_uz: Yup.string()
+            .min(3, "Juda kam!")
+            .max(300, "Juda ko'p!")
+            .required("To'ldirilishi shart!"),
+        biografiya_ru: Yup.string()
+            .min(3, "Juda kam!")
+            .max(300, "Juda ko'p!")
+            .required("To'ldirilishi shart!"),
+        biografiya_en: Yup.string()
+            .min(3, "Juda kam!")
+            .max(300, "Juda ko'p!")
+            .required("To'ldirilishi shart!"),
     });
 
     const formik = useFormik({
@@ -64,7 +128,7 @@ const Rektorat = () => {
 
     const formik_2 = useFormik({
         initialValues: {
-            markaz_id: "",
+            rektorat_id: "",
             lavozim_uz: "",
             lavozim_ru: "",
             lavozim_en: "",
@@ -85,14 +149,26 @@ const Rektorat = () => {
         },
         validationSchema,
         onSubmit: (values) => {
-            if (values.markaz_id === "0" || values.markaz_id === "") {
+            if (values.rektorat_id === "0" || values.rektorat_id === "") {
                 setWarn(true);
             } else {
                 setWarn(false);
-                console.log(values);
+                const data = { ...values, rasm: file };
+                APITuzilmaRectorat.postN(data)
+                    .then(() => getDataNomzod())
+                    .catch((err) => console.log(err));
+                formik_2.resetForm();
+                setFile(null);
+                if (rasm.current) {
+                    rasm.current.value = "";
+                }
             }
         },
     });
+    // Rasm
+    const handleChange = (e) => {
+        setFile(e.target.files[0]);
+    };
 
     const onDel = (id) => {
         const res = window.confirm("Ishonchingiz komilmi?");
@@ -123,58 +199,13 @@ const Rektorat = () => {
     };
 
     useEffect(() => {
-        formik_2.values.markaz_id === "0" ? setWarn(true) : setWarn(false);
-    }, [formik_2.values.markaz_id]);
+        formik_2.values.rektorat_id === "0" ? setWarn(true) : setWarn(false);
+    }, [formik_2.values.rektorat_id]);
 
     useEffect(() => {
         getDataLavozim();
         getDataNomzod();
     }, []);
-
-    // const data = [
-    //     {
-    //         id: 1,
-    //         rektorat_id: 1,
-    //         lavozim_uz: "string",
-    //         lavozim_ru: "string",
-    //         lavozim_en: "string",
-    //         fish_uz: "string",
-    //         fish_ru: "string",
-    //         fish_en: "string",
-    //         unvon_uz: "string",
-    //         unvon_ru: "string",
-    //         unvon_en: "string",
-    //         qabul_soati_uz: "string",
-    //         qabul_soati_ru: "string",
-    //         qabul_soati_en: "string",
-    //         telefon_nomer: "string",
-    //         tg_username: "string",
-    //         biografiya_uz: "string",
-    //         biografiya_ru: "string",
-    //         biografiya_en: "string",
-    //     },
-    //     {
-    //         id: 2,
-    //         rektorat_id: 1,
-    //         lavozim_uz: "string",
-    //         lavozim_ru: "string",
-    //         lavozim_en: "string",
-    //         fish_uz: "string",
-    //         fish_ru: "string",
-    //         fish_en: "string",
-    //         unvon_uz: "string",
-    //         unvon_ru: "string",
-    //         unvon_en: "string",
-    //         qabul_soati_uz: "string",
-    //         qabul_soati_ru: "string",
-    //         qabul_soati_en: "string",
-    //         telefon_nomer: "string",
-    //         tg_username: "string",
-    //         biografiya_uz: "string",
-    //         biografiya_ru: "string",
-    //         biografiya_en: "string",
-    //     },
-    // ];
 
     return (
         <div className="relative">
@@ -378,12 +409,12 @@ const Rektorat = () => {
                         >
                             <div className="flex items-center gap-4">
                                 <select
-                                    name="markaz_id"
-                                    id="markaz_id"
+                                    name="rektorat_id"
+                                    id="rektorat_id"
                                     className={`${
-                                        warn && "select-secondary"
+                                        warn && "select-error"
                                     } select select-bordered w-full max-w-xs`}
-                                    value={formik_2.values.markaz_id}
+                                    value={formik_2.values.rektorat_id}
                                     onChange={formik_2.handleChange}
                                 >
                                     <option value="0">Birini tanlang!</option>
@@ -411,7 +442,7 @@ const Rektorat = () => {
                                     <textarea
                                         type="text"
                                         id="lavozim_uz"
-                                        className="w-full input input-bordered px-[7px]"
+                                        className={`${formik_2.errors.lavozim_uz && "input-error"} w-full input input-bordered px-[7px]`}
                                         value={formik_2.values.lavozim_uz}
                                         onChange={formik_2.handleChange}
                                     />
@@ -425,7 +456,7 @@ const Rektorat = () => {
                                     <textarea
                                         type="text"
                                         id="lavozim_ru"
-                                        className="w-full input input-bordered px-[7px]"
+                                        className={`${formik_2.errors.lavozim_ru && "input-error"} w-full input input-bordered px-[7px]`}
                                         value={formik_2.values.lavozim_ru}
                                         onChange={formik_2.handleChange}
                                     />
@@ -439,7 +470,7 @@ const Rektorat = () => {
                                     <textarea
                                         type="text"
                                         id="lavozim_en"
-                                        className="w-full input input-bordered px-[7px]"
+                                        className={`${formik_2.errors.lavozim_en && "input-error"} w-full input input-bordered px-[7px]`}
                                         value={formik_2.values.lavozim_en}
                                         onChange={formik_2.handleChange}
                                     />
@@ -452,7 +483,7 @@ const Rektorat = () => {
                                     <textarea
                                         type="text"
                                         id="fish_uz"
-                                        className="w-full input input-bordered px-[7px]"
+                                        className={`${formik_2.errors.fish_uz && "input-error"} w-full input input-bordered px-[7px]`}
                                         value={formik_2.values.fish_uz}
                                         onChange={formik_2.handleChange}
                                     />
@@ -463,7 +494,7 @@ const Rektorat = () => {
                                     <textarea
                                         type="text"
                                         id="fish_ru"
-                                        className="w-full input input-bordered px-[7px]"
+                                        className={`${formik_2.errors.fish_ru && "input-error"} w-full input input-bordered px-[7px]`}
                                         value={formik_2.values.fish_ru}
                                         onChange={formik_2.handleChange}
                                     />
@@ -474,7 +505,7 @@ const Rektorat = () => {
                                     <textarea
                                         type="text"
                                         id="fish_en"
-                                        className="w-full input input-bordered px-[7px]"
+                                        className={`${formik_2.errors.fish_en && "input-error"} w-full input input-bordered px-[7px]`}
                                         value={formik_2.values.fish_en}
                                         onChange={formik_2.handleChange}
                                     />
@@ -490,7 +521,7 @@ const Rektorat = () => {
                                     <textarea
                                         type="text"
                                         id="unvon_uz"
-                                        className="w-full input input-bordered px-[7px]"
+                                        className={`${formik_2.errors.unvon_uz && "input-error"} w-full input input-bordered px-[7px]`}
                                         value={formik_2.values.unvon_uz}
                                         onChange={formik_2.handleChange}
                                     />
@@ -504,7 +535,7 @@ const Rektorat = () => {
                                     <textarea
                                         type="text"
                                         id="unvon_ru"
-                                        className="w-full input input-bordered px-[7px]"
+                                        className={`${formik_2.errors.unvon_ru && "input-error"} w-full input input-bordered px-[7px]`}
                                         value={formik_2.values.unvon_ru}
                                         onChange={formik_2.handleChange}
                                     />
@@ -518,7 +549,7 @@ const Rektorat = () => {
                                     <textarea
                                         type="text"
                                         id="unvon_en"
-                                        className="w-full input input-bordered px-[7px]"
+                                        className={`${formik_2.errors.unvon_en && "input-error"} w-full input input-bordered px-[7px]`}
                                         value={formik_2.values.unvon_en}
                                         onChange={formik_2.handleChange}
                                     />
@@ -534,7 +565,7 @@ const Rektorat = () => {
                                     <textarea
                                         type="text"
                                         id="qabul_soati_uz"
-                                        className="w-full input input-bordered px-[7px]"
+                                        className={`${formik_2.errors.qabul_soati_uz && "input-error"} w-full input input-bordered px-[7px]`}
                                         value={formik_2.values.qabul_soati_uz}
                                         onChange={formik_2.handleChange}
                                     />
@@ -548,7 +579,7 @@ const Rektorat = () => {
                                     <textarea
                                         type="text"
                                         id="qabul_soati_ru"
-                                        className="w-full input input-bordered px-[7px]"
+                                        className={`${formik_2.errors.qabul_soati_ru && "input-error"} w-full input input-bordered px-[7px]`}
                                         value={formik_2.values.qabul_soati_ru}
                                         onChange={formik_2.handleChange}
                                     />
@@ -562,7 +593,7 @@ const Rektorat = () => {
                                     <textarea
                                         type="text"
                                         id="qabul_soati_en"
-                                        className="w-full input input-bordered px-[7px]"
+                                        className={`${formik_2.errors.qabul_soati_en && "input-error"} w-full input input-bordered px-[7px]`}
                                         value={formik_2.values.qabul_soati_en}
                                         onChange={formik_2.handleChange}
                                     />
@@ -578,7 +609,7 @@ const Rektorat = () => {
                                     <textarea
                                         type="text"
                                         id="biografiya_uz"
-                                        className="w-full input input-bordered px-[7px]"
+                                        className={`${formik_2.errors.biografiya_uz && "input-error"} w-full input input-bordered px-[7px]`}
                                         value={formik_2.values.biografiya_uz}
                                         onChange={formik_2.handleChange}
                                     />
@@ -592,7 +623,7 @@ const Rektorat = () => {
                                     <textarea
                                         type="text"
                                         id="biografiya_ru"
-                                        className="w-full input input-bordered px-[7px]"
+                                        className={`${formik_2.errors.biografiya_ru && "input-error"} w-full input input-bordered px-[7px]`}
                                         value={formik_2.values.biografiya_ru}
                                         onChange={formik_2.handleChange}
                                     />
@@ -606,7 +637,7 @@ const Rektorat = () => {
                                     <textarea
                                         type="text"
                                         id="biografiya_en"
-                                        className="w-full input input-bordered px-[7px]"
+                                        className={`${formik_2.errors.biografiya_en && "input-error"} w-full input input-bordered px-[7px]`}
                                         value={formik_2.values.biografiya_en}
                                         onChange={formik_2.handleChange}
                                     />
@@ -622,7 +653,7 @@ const Rektorat = () => {
                                     <input
                                         type="number"
                                         id="telefon_nomer"
-                                        className="w-full input input-bordered px-[7px]"
+                                        className={`${formik_2.errors.telefon_nomer && "input-error"} w-full input input-bordered px-[7px]`}
                                         value={formik_2.values.telefon_nomer}
                                         onChange={formik_2.handleChange}
                                     />
@@ -637,34 +668,26 @@ const Rektorat = () => {
                                     <input
                                         type="text"
                                         id="tg_username"
-                                        className="w-full input input-bordered px-[7px]"
+                                        className={`${formik_2.errors.tg_username && "input-error"} w-full input input-bordered px-[7px]`}
                                         value={formik_2.values.tg_username}
                                         onChange={formik_2.handleChange}
                                     />
                                 </label>
 
-                                {/* tg_username */}
+                                {/* Rasm */}
                                 <label className="w-[33.33%]" htmlFor="rasm">
-                                    Rasm
+                                    Rasmi
                                     <input
+                                        ref={rasm}
+                                        onChange={handleChange}
                                         type="file"
                                         id="rasm"
+                                        name="rasm"
                                         className="w-full file-input file-input-bordered"
-                                        value={formik_2.values.rasm}
-                                        onChange={formik_2.handleChange}
                                     />
                                 </label>
                             </div>
-                            <div className="flex items-center">
-                                <input
-                                    type="checkbox"
-                                    id="bolim_boshligi"
-                                    className="checkbox mr-3"
-                                    value={formik_2.values.bolim_boshligi}
-                                    onChange={formik_2.handleChange}
-                                />
-                                <p>Bo'lim boshlig'imi.?</p>
-                            </div>
+
                             <button
                                 type="submit"
                                 className="w-full bg-blue-400 hover:bg-blue-600 flex justify-center items-center gap-1 h-[48px] text-white mt-[18px] font-bold rounded-lg active:scale-95 "
@@ -685,6 +708,14 @@ const Rektorat = () => {
                                             key={item.id}
                                         >
                                             <div className="flex flex-col items-start gap-4">
+                                                <div className="flex justify-center w-full">
+                                                    <div className="w-[30%] h-auto">
+                                                        <img
+                                                            src={item.rasm}
+                                                            alt="Lavozim rasmi"
+                                                        />
+                                                    </div>
+                                                </div>
                                                 <div>
                                                     <p>
                                                         <b>Lavozim:</b>{" "}

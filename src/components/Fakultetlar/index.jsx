@@ -4,7 +4,7 @@ import { RxArrowTopRight } from "react-icons/rx";
 import { MdEdit, MdDelete } from "react-icons/md";
 import { TextWarn } from "./styled";
 import { BiBlock } from "react-icons/bi";
-import APITuzilmaRectorat from "../../services/tuzilmaRectoray";
+import APITuzilmaRectorat from "../../services/tuzilmaRectorat";
 import * as Yup from "yup";
 
 const Fakultetlar = () => {

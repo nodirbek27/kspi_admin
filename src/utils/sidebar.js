@@ -1,409 +1,475 @@
 //Icons
-import Analitika from "../assets/icons/analytics.svg?react";
-import Lid from "../assets/icons/lid.svg?react";
-import Finance from "../assets/icons/finance.svg?react";
-import Students from "../assets/icons/student.svg?react";
-import Groups from "../assets/icons/group.svg?react";
-import Course from "../assets/icons/course.svg?react";
-import HR from "../assets/icons/hr.svg?react";
-import Settings from "../assets/icons/setting.svg?react";
+// import Settings from "../assets/icons/setting.svg?react";
 
-import { BiSolidInstitution } from "react-icons/bi";
-import { MdOutlineLocalActivity } from "react-icons/md";
-import { VscSymbolStructure } from "react-icons/vsc";
-import { PiStudentDuotone } from "react-icons/pi";
-import { TbNews } from "react-icons/tb";
-import { TbMenuDeep } from "react-icons/tb";
-import { TfiAnnouncement } from "react-icons/tfi";
-import { GoPeople } from "react-icons/go";
-import { CgWorkAlt } from "react-icons/cg";
-import { MdAccountCircle } from "react-icons/md";
-import { TiHome } from "react-icons/ti";
+import { ReactComponent as Analitika } from "../assets/icons/analytics.svg";
 
-//Components
-import Generics from "../view/Generics";
+import AnalitikaView from "../pages/Main";
+import NewsPage from "../pages/NewsPage";
+import Generics from "../pages/NewsEditPage";
+import Elonlar from "../pages/ElonlarPage";
+
+// LOGIN
+import Login from "../components/Login"
+
+// HOME
+import HEMIS from '../pages/Home/HEMIS'
+import InstitutJurnali from '../pages/Home/InstitutJurnali'
+import Konfirensiyalar from '../pages/Home/Konfirensiyalar'
+import IkkinchiTalim from '../pages/Home/IkkinchiTalim'
+import OchiqManbalar from '../pages/Home/OchiqManbalar'
+import AsosiyVideo from '../pages/Home/AsosiyVideo'
+import InteraktivXizmatlar from '../pages/Home/InteraktivXizmatlar'
+import Statistika from '../pages/Home/Statistika'
+import TalabaFikri from '../pages/Home/TalabaFikri'
+import UchtalikVideoPage from '../pages/Home/UchtalikVideoPage'
+import Galleriya from '../pages/Home/Galleriya'
+import Hamkorlar from '../pages/Home/Hamkorlar'
+import Boglanish from '../pages/Home/Boglanish'
+
+// INSTITUT
+import InstitutKengashi from '../pages/Institut/InstitutKengashi'
+import InstitutHaqida from '../pages/Institut/InstitutHaqida'
+import InstitutTuzilmasi from '../pages/Institut/InstitutTuzilmasi'
+import Rekvizitlar from '../pages/Institut/Rekvizitlar'
+import VirtualQabulxona from '../pages/Institut/VirtualQabulxona'
+
+// FAOLIYAT
+import JamoatchilikKengashi from '../pages/Faoliyat/JamoatchilikKengashi'
+import MadaniyMarifiy from '../pages/Faoliyat/MadaniyMarifiy'
+import OquvUslubiy from '../pages/Faoliyat/OquvUslubiy'
+import AkademikLitsey from '../pages/Faoliyat/AkademikLitsey'
+import Ilmiy from '../pages/Faoliyat/Ilmiy'
+
+// TUZILMA
+import Rektorat from '../pages/Tuzilma/Rektorat'
+import Fakultetlar from '../pages/Tuzilma/Fakultetlar'
+import Kafedralar from '../pages/Tuzilma/Kafedralar'
+import Bolimlar from '../pages/Tuzilma/Bolimlar'
+import Markazlar from '../pages/Tuzilma/Markazlar'
+
+// TALABALAR
+import Bakalavriat from '../pages/Talabalar/Bakalavriat'
+import Magistratura from '../pages/Talabalar/Magistratura'
+import TalabalarTurarJoyi from '../pages/Talabalar/TalabalarTurarJoyi'
+
+// ABITURIENT
+import AbiturientBakalavriat from '../pages/Abiturient/Bakalavriat'
+import AbiturientMagistratura from '../pages/Abiturient/Magistratura'
+import MeyoriyHuquqiyHujjatlar from '../pages/Abiturient/MeyoriyHuquqiyHujjatlar'
+import XorijiyTalabalarQabul from '../pages/Abiturient/XorijiyTalabalarQabul'
+import CallMarkaz from '../pages/Abiturient/CallMarkaz'
+
+// BO'SH ISH O'RINLARI
+import Vakansiyalar from '../pages/Vakansiyalar'
+
 
 const sidebar = [
   {
     id: 1,
-    title: "Yangiliklar",
-    path: "/yangiliklar",
+    title: "Analitika",
+    path: "/analitika",
     icon: Analitika,
     isPrivate: true,
-    element: Generics,
+    element: AnalitikaView,
     role: ["admin"],
   },
   {
     id: 2,
-    title: "E'lonlar",
-    path: "/elonlar",
+    title: "Yangiliklar",
+    path: "/yangiliklar",
     icon: Analitika,
     isPrivate: true,
-    element: Generics,
+    element: NewsPage,
     role: ["admin"],
   },
   {
     id: 3,
-    title: "Home",
-    path: "/home",
-    icon: Lid,
+    title: "E'lonlar",
+    path: "/elonlar",
+    icon: Analitika,
     isPrivate: true,
-    element: Generics,
+    element: Elonlar,
     role: ["admin"],
-    children: [
-      {
-        id: `3-1`,
-        title: "Hemis tizimi",
-        path: "/home/hemis",
-        isPrivate: true,
-        element: Generics,
-        role: ["admin", "manager"],
-      },
-      {
-        id: `3-2`,
-        title: "Institut jurnali",
-        path: "/home/first-class",
-        isPrivate: true,
-        element: Generics,
-        role: ["admin", "manager"],
-      },
-      {
-        id: `3-3`,
-        title: "Konferensiyalar",
-        path: "/home/konfirensiyalar",
-        isPrivate: true,
-        element: Generics,
-        role: ["admin", "manager"],
-      },
-      {
-        id: `3-4`,
-        title: "Ikkinchi ta'lim",
-        path: "/home/ikkinchi-ta'lim",
-        isPrivate: true,
-        element: Generics,
-        role: ["admin", "manager"],
-      },
-      {
-        id: `3-5`,
-        title: "Ochiq manbalar",
-        path: "/home/ochiq-manbalar",
-        isPrivate: true,
-        element: Generics,
-        role: ["admin", "manager"],
-      },
-      {
-        id: `3-6`,
-        title: "Asosiy video",
-        path: "/home/asosiy-video",
-        isPrivate: true,
-        element: Generics,
-        role: ["admin", "manager"],
-      },
-      {
-        id: `3-7`,
-        title: "Interaktiv xizmatlar",
-        path: "/home/interaktiv-xizmatlar",
-        isPrivate: true,
-        element: Generics,
-        role: ["admin", "manager"],
-      },
-      {
-        id: `3-8`,
-        title: "Statistika",
-        path: "/home/statistika",
-        isPrivate: true,
-        element: Generics,
-        role: ["admin", "manager"],
-      },
-      {
-        id: `3-9`,
-        title: "Talaba fikri",
-        path: "/home/talaba-fikri",
-        isPrivate: true,
-        element: Generics,
-        role: ["admin", "manager"],
-      },
-      {
-        id: `3-10`,
-        title: "Uchtalik video",
-        path: "/home/uchtalik-video",
-        isPrivate: true,
-        element: Generics,
-        role: ["admin", "manager"],
-      },
-      {
-        id: `3-11`,
-        title: "Galleriya",
-        path: "/home/galleriya",
-        isPrivate: true,
-        element: Generics,
-        role: ["admin", "manager"],
-      },
-      {
-        id: `3-12`,
-        title: "Hamkorlar",
-        path: "/home/hamkorlar",
-        isPrivate: true,
-        element: Generics,
-        role: ["admin", "manager"],
-      },
-      {
-        id: `3-13`,
-        title: "Bog'lanish",
-        path: "/home/boglanish",
-        isPrivate: true,
-        element: Generics,
-        role: ["admin", "manager"],
-      },
-    ],
   },
   {
     id: 4,
-    title: "Institut",
-    path: "/institut",
-    icon: Finance,
+    title: "Home",
+    path: "/home",
+    icon: Analitika,
     isPrivate: true,
-    element: Generics,
+    element: Analitika,
     role: ["admin"],
     children: [
       {
         id: `4-1`,
-        title: "Institut kengashi",
-        path: "/institut/institut-kengashi",
+        title: "Hemis tizimi",
+        path: "/home/hemis",
         isPrivate: true,
-        element: Generics,
+        element: HEMIS,
         role: ["admin", "manager"],
       },
       {
         id: `4-2`,
-        title: "Institut haqida",
-        path: "/institut/institut-haqida",
+        title: "Institut jurnali",
+        path: "/home/first-class",
         isPrivate: true,
-        element: Generics,
+        element: InstitutJurnali,
         role: ["admin", "manager"],
       },
       {
         id: `4-3`,
-        title: "Institut tuzilmasi",
-        path: "/institut/institut-tuzilmasi",
+        title: "Konferensiyalar",
+        path: "/home/konfirensiyalar",
         isPrivate: true,
-        element: Generics,
+        element: Konfirensiyalar,
         role: ["admin", "manager"],
       },
       {
         id: `4-4`,
-        title: "Rekvizitlar",
-        path: "/institut/rekvizitlar",
+        title: "Ikkinchi ta'lim",
+        path: "/home/ikkinchi-ta'lim",
         isPrivate: true,
-        element: Generics,
+        element: IkkinchiTalim,
         role: ["admin", "manager"],
       },
       {
         id: `4-5`,
-        title: "Virtual qabulxona",
-        path: "/institut/virtual-qabulxona",
+        title: "Ochiq manbalar",
+        path: "/home/ochiq-manbalar",
         isPrivate: true,
-        element: Generics,
+        element: OchiqManbalar,
+        role: ["admin", "manager"],
+      },
+      {
+        id: `4-6`,
+        title: "Asosiy video",
+        path: "/home/asosiy-video",
+        isPrivate: true,
+        element: AsosiyVideo,
+        role: ["admin", "manager"],
+      },
+      {
+        id: `4-7`,
+        title: "Interaktiv xizmatlar",
+        path: "/home/interaktiv-xizmatlar",
+        isPrivate: true,
+        element: InteraktivXizmatlar,
+        role: ["admin", "manager"],
+      },
+      {
+        id: `4-8`,
+        title: "Statistika",
+        path: "/home/statistika",
+        isPrivate: true,
+        element: Statistika,
+        role: ["admin", "manager"],
+      },
+      {
+        id: `4-9`,
+        title: "Talaba fikri",
+        path: "/home/talaba-fikri",
+        isPrivate: true,
+        element: TalabaFikri,
+        role: ["admin", "manager"],
+      },
+      {
+        id: `4-10`,
+        title: "Uchtalik video",
+        path: "/home/uchtalik-video",
+        isPrivate: true,
+        element: UchtalikVideoPage,
+        role: ["admin", "manager"],
+      },
+      {
+        id: `4-11`,
+        title: "Galleriya",
+        path: "/home/galleriya",
+        isPrivate: true,
+        element: Galleriya,
+        role: ["admin", "manager"],
+      },
+      {
+        id: `4-12`,
+        title: "Hamkorlar",
+        path: "/home/hamkorlar",
+        isPrivate: true,
+        element: Hamkorlar,
+        role: ["admin", "manager"],
+      },
+      {
+        id: `4-13`,
+        title: "Bog'lanish",
+        path: "/home/boglanish",
+        isPrivate: true,
+        element: Boglanish,
         role: ["admin", "manager"],
       },
     ],
   },
   {
-    id: 4,
-    title: "Faoliyat",
-    path: "/faoliyat",
-    icon: Students,
+    id: 5,
+    title: "Institut",
+    path: "/institut",
+    icon: Analitika,
     isPrivate: true,
     element: Generics,
-    role: ["admin", "mentor", "manager"],
+    role: ["admin"],
     children: [
       {
         id: `5-1`,
-        title: "Jamoatchilik kengashi",
-        path: "/faoliyat/jamoatchilik-kengashi",
+        title: "Institut kengashi",
+        path: "/institut/institut-kengashi",
         isPrivate: true,
-        element: Generics,
+        element: InstitutKengashi,
         role: ["admin", "manager"],
       },
       {
         id: `5-2`,
-        title: "Madaniy-ma'rifiy",
-        path: "/faoliyat/madaniy-marifiy-faoliyat",
+        title: "Institut haqida",
+        path: "/institut/institut-haqida",
         isPrivate: true,
-        element: Generics,
+        element: InstitutHaqida,
         role: ["admin", "manager"],
       },
       {
         id: `5-3`,
-        title: "O'quv-uslubiy",
-        path: "/faoliyat/oquv-uslubiy-faoliyat",
+        title: "Institut tuzilmasi",
+        path: "/institut/institut-tuzilmasi",
         isPrivate: true,
-        element: Generics,
+        element: InstitutTuzilmasi,
         role: ["admin", "manager"],
       },
       {
         id: `5-4`,
-        title: "Akademik litsey",
-        path: "/faoliyat/akademik-litsey",
+        title: "Rekvizitlar",
+        path: "/institut/rekvizitlar",
         isPrivate: true,
-        element: Generics,
+        element: Rekvizitlar,
         role: ["admin", "manager"],
       },
       {
         id: `5-5`,
-        title: "Ilmiy faoliyat",
-        path: "/faoliyat/ilmiy-faoliyat",
+        title: "Virtual qabulxona",
+        path: "/institut/virtual-qabulxona",
         isPrivate: true,
-        element: Generics,
+        element: VirtualQabulxona,
         role: ["admin", "manager"],
       },
     ],
   },
   {
     id: 6,
-    title: "Tuzilma",
-    path: "/tuzilma",
-    icon: Groups,
+    title: "Faoliyat",
+    path: "/faoliyat",
+    icon: Analitika,
     isPrivate: true,
     element: Generics,
     role: ["admin", "mentor", "manager"],
     children: [
       {
         id: `6-1`,
-        title: "Rektorat",
-        path: "/tuzilma/rektorat",
+        title: "Jamoatchilik kengashi",
+        path: "/faoliyat/jamoatchilik-kengashi",
         isPrivate: true,
-        element: Generics,
+        element: JamoatchilikKengashi,
         role: ["admin", "manager"],
       },
       {
         id: `6-2`,
-        title: "Fakultetlar",
-        path: "/tuzilma/fakultetlar",
+        title: "Madaniy-ma'rifiy",
+        path: "/faoliyat/madaniy-marifiy-faoliyat",
         isPrivate: true,
-        element: Generics,
+        element: MadaniyMarifiy,
         role: ["admin", "manager"],
       },
       {
         id: `6-3`,
-        title: "Kafedralar",
-        path: "/tuzilma/kafedralar",
+        title: "O'quv-uslubiy",
+        path: "/faoliyat/oquv-uslubiy-faoliyat",
         isPrivate: true,
-        element: Generics,
+        element: OquvUslubiy,
         role: ["admin", "manager"],
       },
       {
         id: `6-4`,
-        title: "Bo'limlar",
-        path: "/tuzilma/bolimlar",
+        title: "Akademik litsey",
+        path: "/faoliyat/akademik-litsey",
         isPrivate: true,
-        element: Generics,
+        element: AkademikLitsey,
         role: ["admin", "manager"],
       },
       {
         id: `6-5`,
-        title: "Markazlar",
-        path: "/tuzilma/markazlar",
+        title: "Ilmiy faoliyat",
+        path: "/faoliyat/ilmiy-faoliyat",
         isPrivate: true,
-        element: Generics,
+        element: Ilmiy,
         role: ["admin", "manager"],
       },
     ],
   },
   {
     id: 7,
-    title: "Talabalar",
-    path: "/talabalar",
-    icon: Course,
+    title: "Tuzilma",
+    path: "/tuzilma",
+    icon: Analitika,
     isPrivate: true,
     element: Generics,
     role: ["admin", "mentor", "manager"],
     children: [
       {
         id: `7-1`,
-        title: "Bakalavriat",
-        path: "/talabalar/bakalavriat",
+        title: "Rektorat",
+        path: "/tuzilma/rektorat",
         isPrivate: true,
-        element: Generics,
+        element: Rektorat,
         role: ["admin", "manager"],
       },
       {
         id: `7-2`,
-        title: "Magistratura",
-        path: "/talabalar/magistratura",
+        title: "Fakultetlar",
+        path: "/tuzilma/fakultetlar",
         isPrivate: true,
-        element: Generics,
+        element: Fakultetlar,
         role: ["admin", "manager"],
       },
       {
         id: `7-3`,
-        title: "Talabalar turar joyi",
-        path: "/talabalar/talabalar-turar-joyi",
+        title: "Kafedralar",
+        path: "/tuzilma/kafedralar",
         isPrivate: true,
-        element: Generics,
+        element: Kafedralar,
+        role: ["admin", "manager"],
+      },
+      {
+        id: `7-4`,
+        title: "Bo'limlar",
+        path: "/tuzilma/bolimlar",
+        isPrivate: true,
+        element: Bolimlar,
+        role: ["admin", "manager"],
+      },
+      {
+        id: `7-5`,
+        title: "Markazlar",
+        path: "/tuzilma/markazlar",
+        isPrivate: true,
+        element: Markazlar,
         role: ["admin", "manager"],
       },
     ],
   },
   {
     id: 8,
-    title: "Abiturient",
-    path: "/abiturient",
-    icon: HR,
+    title: "Talabalar",
+    path: "/talabalar",
+    icon: Analitika,
     isPrivate: true,
     element: Generics,
-    role: ["admin", "manager"],
+    role: ["admin", "mentor", "manager"],
     children: [
       {
         id: `8-1`,
         title: "Bakalavriat",
-        path: "/abiturient/abiturient-bakalavriat",
+        path: "/talabalar/bakalavriat",
         isPrivate: true,
-        element: Generics,
+        element: Bakalavriat,
         role: ["admin", "manager"],
       },
       {
         id: `8-2`,
         title: "Magistratura",
-        path: "/abiturient/abiturient-magistratura",
+        path: "/talabalar/magistratura",
         isPrivate: true,
-        element: Generics,
+        element: Magistratura,
         role: ["admin", "manager"],
       },
       {
         id: `8-3`,
-        title: "Xorijiy talabalar qabul",
-        path: "/abiturient/xorijiy-talabalar-qabul",
+        title: "Talabalar turar joyi",
+        path: "/talabalar/talabalar-turar-joyi",
         isPrivate: true,
-        element: Generics,
-        role: ["admin", "manager"],
-      },
-      {
-        id: `8-4`,
-        title: "Call markaz",
-        path: "/abiturient/call-markaz",
-        isPrivate: true,
-        element: Generics,
-        role: ["admin", "manager"],
-      },
-      {
-        id: `8-5`,
-        title: "Me'yoriy huquqiy hujjatlar",
-        path: "/abiturient/meyoriy-huquqiy-hujjatlar",
-        isPrivate: true,
-        element: Generics,
+        element: TalabalarTurarJoyi,
         role: ["admin", "manager"],
       },
     ],
   },
   {
     id: 9,
-    title: "Bo'sh ish o'rinlari",
-    path: "/vakansiyalar",
-    icon: Settings,
+    title: "Abiturient",
+    path: "/abiturient",
+    icon: Analitika,
     isPrivate: true,
     element: Generics,
     role: ["admin", "manager"],
+    children: [
+      {
+        id: `9-1`,
+        title: "Bakalavriat",
+        path: "/abiturient/abiturient-bakalavriat",
+        isPrivate: true,
+        element: AbiturientBakalavriat,
+        role: ["admin", "manager"],
+      },
+      {
+        id: `9-2`,
+        title: "Magistratura",
+        path: "/abiturient/abiturient-magistratura",
+        isPrivate: true,
+        element: AbiturientMagistratura,
+        role: ["admin", "manager"],
+      },
+      {
+        id: `9-3`,
+        title: "Xorijiy talabalar qabul",
+        path: "/abiturient/xorijiy-talabalar-qabul",
+        isPrivate: true,
+        element: XorijiyTalabalarQabul,
+        role: ["admin", "manager"],
+      },
+      {
+        id: `9-4`,
+        title: "Call markaz",
+        path: "/abiturient/call-markaz",
+        isPrivate: true,
+        element: CallMarkaz,
+        role: ["admin", "manager"],
+      },
+      {
+        id: `9-5`,
+        title: "Me'yoriy huquqiy hujjatlar",
+        path: "/abiturient/meyoriy-huquqiy-hujjatlar",
+        isPrivate: true,
+        element: MeyoriyHuquqiyHujjatlar,
+        role: ["admin", "manager"],
+      },
+    ],
+  },
+  {
+    id: 10,
+    title: "Bo'sh ish o'rinlari",
+    path: "/vakansiyalar",
+    icon: Analitika,
+    isPrivate: true,
+    element: Vakansiyalar,
+    role: ["admin", "manager"],
+  },
+  
+  {
+    id: 11,
+    title: "Log In",
+    path: "/login",
+    isPrivate: true,
+    element: Login,
+    hidden: true,
+  },
+  {
+    id: 12,
+    title: "Reset",
+    path: "/reset",
+    isPrivate: true,
+    element: Generics,
+    hidden: true,
   },
 ];
 

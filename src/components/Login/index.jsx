@@ -40,7 +40,7 @@ const Login = () => {
       if (token) {
         localStorage.setItem("token", token);
         localStorage.setItem("refreshToken", refreshToken);
-        navigate("/main");
+        navigate("/analitika");
       } else {
         setError("Incorrect credentials");
       }

@@ -14,6 +14,7 @@ const Rektorat = () => {
     const [errTxt, setErrTxt] = useState(false);
 
     const [isEdit, setIsEdit] = useState(null);
+    const [isEditN, setIsEditN] = useState(null);
 
     // Rasm
     const [file, setFile] = useState(null);
@@ -174,7 +175,10 @@ const Rektorat = () => {
         const res = window.confirm("Ishonchingiz komilmi?");
         if (res) {
             APITuzilmaRectorat.del(id)
-                .then(() => getDataLavozim())
+                .then(() => {
+                    getDataLavozim();
+                    setIsEdit(null);
+                })
                 .catch((err) => console.log(err));
         }
     };
@@ -191,9 +195,31 @@ const Rektorat = () => {
         }
     };
 
+    const onEditN = (item, boolean) => {
+        if (boolean) {
+            // const { id, ...res } = isEdit;
+            // const data = res;
+            // APITuzilmaRectorat.patch(id, data);
+            // setIsEdit(null);
+            // getDataLavozim();
+            setIsEditN(null);
+            getDataNomzod();
+        } else {
+            setIsEditN({ ...item });
+            // setIsEdit({ id, name_uz, name_ru, name_en });
+        }
+    };
+
     const handleChangeEdit = (e) => {
         setIsEdit({
             ...isEdit,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    const handleChangeEditN = (e) => {
+        setIsEditN({
+            ...isEditN,
             [e.target.name]: e.target.value,
         });
     };
@@ -210,7 +236,7 @@ const Rektorat = () => {
     return (
         <div className="relative">
             <div className="w-full">
-                <h1 className="text-center text-[1.8rem] font-medium">
+                <h1 className="text-center text-[1.8rem] font-medium mt-4">
                     Rektorat
                 </h1>
                 <div className="w-full my-12">
@@ -356,7 +382,11 @@ const Rektorat = () => {
                                                                 item.id
                                                         )
                                                     }
-                                                    className="flex items-center gap-2 bg-gray-400 rounded-md py-1 px-4 text-white font-medium hover:bg-gray-600 active:scale-95"
+                                                    className={` ${
+                                                        isEdit?.id === item.id
+                                                            ? "bg-blue-400 hover:bg-blue-600"
+                                                            : "bg-gray-400 hover:bg-gray-600"
+                                                    } flex items-center gap-2  rounded-md py-1 px-4 text-white font-medium active:scale-95`}
                                                 >
                                                     {isEdit?.id === item.id ? (
                                                         <>
@@ -442,7 +472,10 @@ const Rektorat = () => {
                                     <textarea
                                         type="text"
                                         id="lavozim_uz"
-                                        className={`${formik_2.errors.lavozim_uz && "input-error"} w-full input input-bordered px-[7px]`}
+                                        className={`${
+                                            formik_2.errors.lavozim_uz &&
+                                            "input-error"
+                                        } w-full input input-bordered px-[7px]`}
                                         value={formik_2.values.lavozim_uz}
                                         onChange={formik_2.handleChange}
                                     />
@@ -456,7 +489,10 @@ const Rektorat = () => {
                                     <textarea
                                         type="text"
                                         id="lavozim_ru"
-                                        className={`${formik_2.errors.lavozim_ru && "input-error"} w-full input input-bordered px-[7px]`}
+                                        className={`${
+                                            formik_2.errors.lavozim_ru &&
+                                            "input-error"
+                                        } w-full input input-bordered px-[7px]`}
                                         value={formik_2.values.lavozim_ru}
                                         onChange={formik_2.handleChange}
                                     />
@@ -470,7 +506,10 @@ const Rektorat = () => {
                                     <textarea
                                         type="text"
                                         id="lavozim_en"
-                                        className={`${formik_2.errors.lavozim_en && "input-error"} w-full input input-bordered px-[7px]`}
+                                        className={`${
+                                            formik_2.errors.lavozim_en &&
+                                            "input-error"
+                                        } w-full input input-bordered px-[7px]`}
                                         value={formik_2.values.lavozim_en}
                                         onChange={formik_2.handleChange}
                                     />
@@ -483,7 +522,10 @@ const Rektorat = () => {
                                     <textarea
                                         type="text"
                                         id="fish_uz"
-                                        className={`${formik_2.errors.fish_uz && "input-error"} w-full input input-bordered px-[7px]`}
+                                        className={`${
+                                            formik_2.errors.fish_uz &&
+                                            "input-error"
+                                        } w-full input input-bordered px-[7px]`}
                                         value={formik_2.values.fish_uz}
                                         onChange={formik_2.handleChange}
                                     />
@@ -494,7 +536,10 @@ const Rektorat = () => {
                                     <textarea
                                         type="text"
                                         id="fish_ru"
-                                        className={`${formik_2.errors.fish_ru && "input-error"} w-full input input-bordered px-[7px]`}
+                                        className={`${
+                                            formik_2.errors.fish_ru &&
+                                            "input-error"
+                                        } w-full input input-bordered px-[7px]`}
                                         value={formik_2.values.fish_ru}
                                         onChange={formik_2.handleChange}
                                     />
@@ -505,7 +550,10 @@ const Rektorat = () => {
                                     <textarea
                                         type="text"
                                         id="fish_en"
-                                        className={`${formik_2.errors.fish_en && "input-error"} w-full input input-bordered px-[7px]`}
+                                        className={`${
+                                            formik_2.errors.fish_en &&
+                                            "input-error"
+                                        } w-full input input-bordered px-[7px]`}
                                         value={formik_2.values.fish_en}
                                         onChange={formik_2.handleChange}
                                     />
@@ -521,7 +569,10 @@ const Rektorat = () => {
                                     <textarea
                                         type="text"
                                         id="unvon_uz"
-                                        className={`${formik_2.errors.unvon_uz && "input-error"} w-full input input-bordered px-[7px]`}
+                                        className={`${
+                                            formik_2.errors.unvon_uz &&
+                                            "input-error"
+                                        } w-full input input-bordered px-[7px]`}
                                         value={formik_2.values.unvon_uz}
                                         onChange={formik_2.handleChange}
                                     />
@@ -535,7 +586,10 @@ const Rektorat = () => {
                                     <textarea
                                         type="text"
                                         id="unvon_ru"
-                                        className={`${formik_2.errors.unvon_ru && "input-error"} w-full input input-bordered px-[7px]`}
+                                        className={`${
+                                            formik_2.errors.unvon_ru &&
+                                            "input-error"
+                                        } w-full input input-bordered px-[7px]`}
                                         value={formik_2.values.unvon_ru}
                                         onChange={formik_2.handleChange}
                                     />
@@ -549,7 +603,10 @@ const Rektorat = () => {
                                     <textarea
                                         type="text"
                                         id="unvon_en"
-                                        className={`${formik_2.errors.unvon_en && "input-error"} w-full input input-bordered px-[7px]`}
+                                        className={`${
+                                            formik_2.errors.unvon_en &&
+                                            "input-error"
+                                        } w-full input input-bordered px-[7px]`}
                                         value={formik_2.values.unvon_en}
                                         onChange={formik_2.handleChange}
                                     />
@@ -565,7 +622,10 @@ const Rektorat = () => {
                                     <textarea
                                         type="text"
                                         id="qabul_soati_uz"
-                                        className={`${formik_2.errors.qabul_soati_uz && "input-error"} w-full input input-bordered px-[7px]`}
+                                        className={`${
+                                            formik_2.errors.qabul_soati_uz &&
+                                            "input-error"
+                                        } w-full input input-bordered px-[7px]`}
                                         value={formik_2.values.qabul_soati_uz}
                                         onChange={formik_2.handleChange}
                                     />
@@ -579,7 +639,10 @@ const Rektorat = () => {
                                     <textarea
                                         type="text"
                                         id="qabul_soati_ru"
-                                        className={`${formik_2.errors.qabul_soati_ru && "input-error"} w-full input input-bordered px-[7px]`}
+                                        className={`${
+                                            formik_2.errors.qabul_soati_ru &&
+                                            "input-error"
+                                        } w-full input input-bordered px-[7px]`}
                                         value={formik_2.values.qabul_soati_ru}
                                         onChange={formik_2.handleChange}
                                     />
@@ -593,7 +656,10 @@ const Rektorat = () => {
                                     <textarea
                                         type="text"
                                         id="qabul_soati_en"
-                                        className={`${formik_2.errors.qabul_soati_en && "input-error"} w-full input input-bordered px-[7px]`}
+                                        className={`${
+                                            formik_2.errors.qabul_soati_en &&
+                                            "input-error"
+                                        } w-full input input-bordered px-[7px]`}
                                         value={formik_2.values.qabul_soati_en}
                                         onChange={formik_2.handleChange}
                                     />
@@ -609,7 +675,10 @@ const Rektorat = () => {
                                     <textarea
                                         type="text"
                                         id="biografiya_uz"
-                                        className={`${formik_2.errors.biografiya_uz && "input-error"} w-full input input-bordered px-[7px]`}
+                                        className={`${
+                                            formik_2.errors.biografiya_uz &&
+                                            "input-error"
+                                        } w-full input input-bordered px-[7px]`}
                                         value={formik_2.values.biografiya_uz}
                                         onChange={formik_2.handleChange}
                                     />
@@ -623,7 +692,10 @@ const Rektorat = () => {
                                     <textarea
                                         type="text"
                                         id="biografiya_ru"
-                                        className={`${formik_2.errors.biografiya_ru && "input-error"} w-full input input-bordered px-[7px]`}
+                                        className={`${
+                                            formik_2.errors.biografiya_ru &&
+                                            "input-error"
+                                        } w-full input input-bordered px-[7px]`}
                                         value={formik_2.values.biografiya_ru}
                                         onChange={formik_2.handleChange}
                                     />
@@ -637,7 +709,10 @@ const Rektorat = () => {
                                     <textarea
                                         type="text"
                                         id="biografiya_en"
-                                        className={`${formik_2.errors.biografiya_en && "input-error"} w-full input input-bordered px-[7px]`}
+                                        className={`${
+                                            formik_2.errors.biografiya_en &&
+                                            "input-error"
+                                        } w-full input input-bordered px-[7px]`}
                                         value={formik_2.values.biografiya_en}
                                         onChange={formik_2.handleChange}
                                     />
@@ -653,7 +728,10 @@ const Rektorat = () => {
                                     <input
                                         type="number"
                                         id="telefon_nomer"
-                                        className={`${formik_2.errors.telefon_nomer && "input-error"} w-full input input-bordered px-[7px]`}
+                                        className={`${
+                                            formik_2.errors.telefon_nomer &&
+                                            "input-error"
+                                        } w-full input input-bordered px-[7px]`}
                                         value={formik_2.values.telefon_nomer}
                                         onChange={formik_2.handleChange}
                                     />
@@ -668,7 +746,10 @@ const Rektorat = () => {
                                     <input
                                         type="text"
                                         id="tg_username"
-                                        className={`${formik_2.errors.tg_username && "input-error"} w-full input input-bordered px-[7px]`}
+                                        className={`${
+                                            formik_2.errors.tg_username &&
+                                            "input-error"
+                                        } w-full input input-bordered px-[7px]`}
                                         value={formik_2.values.tg_username}
                                         onChange={formik_2.handleChange}
                                     />
@@ -708,8 +789,8 @@ const Rektorat = () => {
                                             key={item.id}
                                         >
                                             <div className="flex flex-col items-start gap-4">
-                                                <div className="flex justify-center w-full">
-                                                    <div className="w-[30%] h-auto">
+                                                <div className="w-full">
+                                                    <div className="w-[200px] h-auto">
                                                         <img
                                                             src={item.rasm}
                                                             alt="Lavozim rasmi"
@@ -718,12 +799,46 @@ const Rektorat = () => {
                                                 </div>
                                                 <div>
                                                     <p>
-                                                        <b>Lavozim:</b>{" "}
-                                                        {item.lavozim_uz}
+                                                        <b>Lavozim: </b>
+                                                        {isEditN?.id ===
+                                                        item.id ? (
+                                                            <textarea
+                                                                type="text"
+                                                                name="lavozim_uz"
+                                                                id="lavozim_uz"
+                                                                className="w-full border border-black rounded-sm"
+                                                                onChange={
+                                                                    handleChangeEditN
+                                                                }
+                                                                value={
+                                                                    isEditN.lavozim_uz
+                                                                }
+                                                            />
+                                                        ) : (
+                                                            item.lavozim_uz
+                                                        )}
+                                                        {/* {item.lavozim_uz} */}
                                                     </p>
                                                     <p>
-                                                        <b>FISH:</b>{" "}
-                                                        {item.fish_uz}
+                                                        <b>FISH:</b>
+                                                        {isEditN?.id ===
+                                                        item.id ? (
+                                                            <textarea
+                                                                type="text"
+                                                                name="fish_uz"
+                                                                id="fish_uz"
+                                                                className="w-full border border-black rounded-sm"
+                                                                onChange={
+                                                                    handleChangeEditN
+                                                                }
+                                                                value={
+                                                                    isEditN.fish_uz
+                                                                }
+                                                            />
+                                                        ) : (
+                                                            item.fish_uz
+                                                        )}
+                                                        {/* {item.fish_uz} */}
                                                     </p>
                                                     <p>
                                                         <b>Unvon:</b>{" "}
@@ -748,11 +863,37 @@ const Rektorat = () => {
                                                 </div>
                                                 <div className="w-full flex justify-end">
                                                     <div className="flex gap-2">
-                                                        <button className="flex items-center gap-2 bg-blue-400 rounded-md py-1 px-4 text-white font-medium hover:bg-blue-600 active:scale-95">
-                                                            <span>
-                                                                Tahrirlash
-                                                            </span>
-                                                            <MdEdit />
+                                                        <button
+                                                            onClick={() =>
+                                                                onEditN(
+                                                                    item,
+                                                                    isEditN?.id ===
+                                                                        item.id
+                                                                )
+                                                            }
+                                                            className={` ${
+                                                                isEditN?.id ===
+                                                                item.id
+                                                                    ? "bg-blue-400 hover:bg-blue-600"
+                                                                    : "bg-gray-400 hover:bg-gray-600"
+                                                            } flex items-center gap-2  rounded-md py-1 px-4 text-white font-medium active:scale-95`}
+                                                        >
+                                                            {isEditN?.id ===
+                                                            item.id ? (
+                                                                <>
+                                                                    <span>
+                                                                        Jo'natish
+                                                                    </span>
+                                                                    <RxArrowTopRight />
+                                                                </>
+                                                            ) : (
+                                                                <>
+                                                                    <span>
+                                                                        Tahrirlash
+                                                                    </span>
+                                                                    <MdEdit />
+                                                                </>
+                                                            )}
                                                         </button>
                                                         <button className="flex items-center gap-2 bg-red-500 rounded-md py-1 px-4 text-white font-medium hover:bg-red-600 active:scale-95">
                                                             <span>Delete</span>

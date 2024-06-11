@@ -1,6 +1,5 @@
-import { Container } from "./style";
-
 import { Navigate, Route, Routes } from "react-router-dom";
+import { Container } from "./style";
 import sidebar from "../utils/sidebar";
 import { Sidebar } from "../components/Sidebar";
 
@@ -11,7 +10,7 @@ export const Root = () => {
         <Route element={<Sidebar />}>
           {sidebar.map((parent) => {
             const ElementParent = parent.element;
-            if (parent?.children?.length) {
+            if (parent?.children) {
               return parent.children.map((child) => {
                 const ElementChild = child.element;
                 return (
@@ -24,16 +23,32 @@ export const Root = () => {
               });
             } else
               return (
-                <Route
-                  key={parent.id}
-                  path={parent.path}
-                  element={<ElementParent />}
-                />
+                !parent.hidden && (
+                  <Route
+                    key={parent.id}
+                    path={parent.path}
+                    element={<ElementParent />}
+                  />
+                )
               );
           })}
         </Route>
+
+        {sidebar.map((parent) => {
+          const ElementParent = parent.element;
+          return (
+            parent.hidden && (
+              <Route
+                key={parent.id}
+                path={parent.path}
+                element={<ElementParent />}
+              />
+            )
+          );
+        })}
+
         <Route path="/" element={<Navigate to={"/analitika"} />} />
-        <Route path="*" element={<h1>404 Not Found</h1>} />
+        <Route path="*" element={<h1>404 not found</h1>} />
       </Routes>
     </Container>
   );

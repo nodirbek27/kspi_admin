@@ -8,19 +8,7 @@ import ReactPaginate from "react-paginate";
 
 const News = () => {
   const [news, setNews] = useState(null);
-  const [newsOne, setNewsOne] = useState(null);
   const [pageNumber, setPageNumber] = useState(0);
-
-  // GET
-  const loadPost = async () => {
-    try {
-      const res = await APIElon.get();
-      setNews(res.data.reverse());
-      setNewsOne(res.data.slice(pageNumber * itemsPerPage, (pageNumber + 1) * itemsPerPage));
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   // POST
   const formik = useFormik({
@@ -67,18 +55,30 @@ const News = () => {
     },
   });
 
-  // GET and PAGINATION
-  const itemsPerPage = 4;
-  const pagesVisited = pageNumber * itemsPerPage;
-  
-  useEffect(() => {
-    loadPost();
-  },[pagesVisited]);
+ // GET
+const loadPost = async () => {
+  try {
+    const res = await APIElon.get();
+    setNews(res.data.reverse());
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-  const pageCount = Math.ceil((news && news.length) / itemsPerPage);
-  const changePage = ({ selected }) => {
-    setPageNumber(selected);
-  };
+// GET and PAGINATION
+const itemsPerPage = 4;
+const pagesVisited = pageNumber * itemsPerPage;
+
+useEffect(() => {
+  loadPost();
+}, []);
+
+const pageCount = Math.ceil((news && news.length) / itemsPerPage);
+const changePage = ({ selected }) => {
+  setPageNumber(selected);
+};
+
+const displayedNews = news && news.slice(pagesVisited, pagesVisited + itemsPerPage);
 
   // DELETE
   const handleDelete = async (id) => {
@@ -391,8 +391,8 @@ const News = () => {
         <h2 className="text-2xl font-bold mb-5 p-3">Tahrirlash va o'chirish</h2>
         {/* GET */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-7xl mx-auto">
-          {newsOne &&
-            newsOne.map((item, idx) => (
+          {displayedNews &&
+            displayedNews.map((item, idx) => (
               <div key={idx}>
                 {item && (
                   <div className="p-4 max-w-sm lg:max-w-xs xl:max-w-md mx-auto group/item hover:cursor-pointer h-full">

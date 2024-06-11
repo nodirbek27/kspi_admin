@@ -1,7 +1,7 @@
 import axiosInstance from ".";
 
 const ep = "tuzilma/rektorat/";
-const epN = "tuzilma/rektorat/rahbar/";
+const epN = "tuzilma/rektorat_rahbar/";
 
 const get = () => axiosInstance.get(ep);
 const getN = () => axiosInstance.get(epN);
@@ -16,6 +16,10 @@ const post = (item) => {
     return axiosInstance.post(`${ep}`, item);
 };
 
+const postN = (item) => {
+    return axiosInstance.post(`${epN}`, item);
+};
+
 const patch = (id, item) => {
     return axiosInstance.patch(`${ep}${id}/`, item);
 };
@@ -26,6 +30,7 @@ const APITuzilmaRectorat = {
     getById,
     del,
     post,
+    postN,
     patch,
 };
 

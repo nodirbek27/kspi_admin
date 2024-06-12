@@ -26,6 +26,8 @@ function InstitutTuzilmasiCom() {
     }
   };
 
+  console.log(datas);
+
   const formik = useFormik({
     initialValues: {
       name_uz: "",
@@ -75,9 +77,9 @@ function InstitutTuzilmasiCom() {
     },
   });
 
-  const faceData = {link: "sdakdokaosd", name: "Orifxon", f: "Toychiyev"}
-  const {link, ...res} = faceData
-  console.log(res); 
+  // const faceData = {link: "sdakdokaosd", name: "Orifxon", f: "Toychiyev"}
+  // const {link, ...res} = faceData
+  // console.log(res); 
 
   const handleEdit = (id) => {
     setEdit(true);

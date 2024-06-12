@@ -153,16 +153,18 @@ const Rektorat = () => {
             if (values.rektorat_id === "0" || values.rektorat_id === "") {
                 setWarn(true);
             } else {
-                setWarn(false);
-                const data = { ...values, rasm: file };
-                APITuzilmaRectorat.postN(data)
-                    .then(() => getDataNomzod())
-                    .catch((err) => console.log(err));
-                formik_2.resetForm();
-                setFile(null);
-                if (rasm.current) {
-                    rasm.current.value = "";
+                if (file) {
+                    const data = { ...values, rasm: file };
+                    APITuzilmaRectorat.postN(data)
+                        .then(() => getDataNomzod())
+                        .catch((err) => console.log(err));
+                    formik_2.resetForm();
+                    setFile(null);
+                    if (rasm.current) {
+                        rasm.current.value = "";
+                    }
                 }
+                setWarn(false);
             }
         },
     });
@@ -183,6 +185,19 @@ const Rektorat = () => {
         }
     };
 
+    // onDelN
+    const onDelN = (id) => {
+        const res = window.confirm("Ishonchingiz komilmi?");
+        if (res) {
+            APITuzilmaRectorat.delN(id)
+                .then(() => {
+                    getDataNomzod();
+                    setIsEditN(null);
+                })
+                .catch((err) => console.log(err));
+        }
+    };
+
     const onEdit = ({ id, name_uz, name_ru, name_en }, boolean) => {
         if (boolean) {
             const { id, ...res } = isEdit;
@@ -197,16 +212,18 @@ const Rektorat = () => {
 
     const onEditN = (item, boolean) => {
         if (boolean) {
-            // const { id, ...res } = isEdit;
-            // const data = res;
-            // APITuzilmaRectorat.patch(id, data);
-            // setIsEdit(null);
-            // getDataLavozim();
+            const { id, rasm, ...res } = isEditN;
+            let data = res;
+            if (file) {
+                data = {...res, rasm: file}
+            }
+            console.log(isEditN);
+            console.log(data);
+            // APITuzilmaRectorat.patchN(item.id, data);
             setIsEditN(null);
             getDataNomzod();
         } else {
             setIsEditN({ ...item });
-            // setIsEdit({ id, name_uz, name_ru, name_en });
         }
     };
 
@@ -235,7 +252,7 @@ const Rektorat = () => {
 
     return (
         <div className="relative">
-            <div className="w-full">
+            <div className="w-full p-[10px]">
                 <h1 className="text-center text-[1.8rem] font-medium mt-4">
                     Rektorat
                 </h1>
@@ -316,7 +333,7 @@ const Rektorat = () => {
                                         <div className="flex justify-between gap-20 items-center">
                                             <div className="w-full flex flex-col justify-start items-start">
                                                 <p className="w-full">
-                                                    <b>name_uz:</b>
+                                                    <b>Name uz: </b>
                                                     {isEdit?.id === item.id ? (
                                                         <textarea
                                                             type="text"
@@ -335,7 +352,7 @@ const Rektorat = () => {
                                                     )}
                                                 </p>
                                                 <p className="w-full">
-                                                    <b>name_ru:</b>
+                                                    <b>Name ru: </b>
                                                     {isEdit?.id === item.id ? (
                                                         <textarea
                                                             type="text"
@@ -354,7 +371,7 @@ const Rektorat = () => {
                                                     )}
                                                 </p>
                                                 <p className="w-full">
-                                                    <b>name_en:</b>
+                                                    <b>Name en: </b>
                                                     {isEdit?.id === item.id ? (
                                                         <textarea
                                                             type="text"
@@ -764,7 +781,10 @@ const Rektorat = () => {
                                         type="file"
                                         id="rasm"
                                         name="rasm"
-                                        className="w-full file-input file-input-bordered"
+                                        className={`${
+                                            !file &&
+                                            "file-input-error text-red-600"
+                                        } w-full file-input file-input-bordered`}
                                     />
                                 </label>
                             </div>
@@ -789,16 +809,36 @@ const Rektorat = () => {
                                             key={item.id}
                                         >
                                             <div className="flex flex-col items-start gap-4">
-                                                <div className="w-full">
+                                                <div className="flex flex-col gap-y-4 w-full">
                                                     <div className="w-[200px] h-auto">
                                                         <img
                                                             src={item.rasm}
                                                             alt="Lavozim rasmi"
                                                         />
                                                     </div>
+                                                    {isEditN?.id ===
+                                                        item.id && (
+                                                        <label htmlFor="rasm">
+                                                            <div className="text-red-600 font-medium">
+                                                                Agar rasim
+                                                                jo'natilmasa o'z
+                                                                holida qoladi!
+                                                            </div>
+                                                            <input
+                                                                ref={rasm}
+                                                                onChange={
+                                                                    handleChange
+                                                                }
+                                                                type="file"
+                                                                id="rasm"
+                                                                name="rasm"
+                                                                className="w-[400px] file-input file-input-bordered mt-2"
+                                                            />
+                                                        </label>
+                                                    )}
                                                 </div>
                                                 <div>
-                                                    <p>
+                                                    <p >
                                                         <b>Lavozim: </b>
                                                         {isEditN?.id ===
                                                         item.id ? (
@@ -806,7 +846,7 @@ const Rektorat = () => {
                                                                 type="text"
                                                                 name="lavozim_uz"
                                                                 id="lavozim_uz"
-                                                                className="w-full border border-black rounded-sm"
+                                                                className="w-full border border-black rounded-sm py-[2px] px-[5px]"
                                                                 onChange={
                                                                     handleChangeEditN
                                                                 }
@@ -827,7 +867,7 @@ const Rektorat = () => {
                                                                 type="text"
                                                                 name="fish_uz"
                                                                 id="fish_uz"
-                                                                className="w-full border border-black rounded-sm"
+                                                                className="w-full border border-black rounded-sm py-[2px] px-[5px]"
                                                                 onChange={
                                                                     handleChangeEditN
                                                                 }
@@ -841,24 +881,109 @@ const Rektorat = () => {
                                                         {/* {item.fish_uz} */}
                                                     </p>
                                                     <p>
-                                                        <b>Unvon:</b>{" "}
-                                                        {item.unvon_uz}
+                                                        <b>Unvon:</b>
+                                                        {isEditN?.id ===
+                                                        item.id ? (
+                                                            <textarea
+                                                                type="text"
+                                                                name="unvon_uz"
+                                                                id="unvon_uz"
+                                                                className="w-full border border-black rounded-sm py-[2px] px-[5px]"
+                                                                onChange={
+                                                                    handleChangeEditN
+                                                                }
+                                                                value={
+                                                                    isEditN.unvon_uz
+                                                                }
+                                                            />
+                                                        ) : (
+                                                            item.unvon_uz
+                                                        )}
+                                                        {/* {item.unvon_uz} */}
                                                     </p>
                                                     <p>
-                                                        <b>Qabul soatlari:</b>{" "}
-                                                        {item.qabul_soati_uz}
+                                                        <b>Qabul soatlari:</b>
+                                                        {isEditN?.id ===
+                                                        item.id ? (
+                                                            <textarea
+                                                                type="text"
+                                                                name="qabul_soati_uz"
+                                                                id="qabul_soati_uz"
+                                                                className="w-full border border-black rounded-sm py-[2px] px-[5px]"
+                                                                onChange={
+                                                                    handleChangeEditN
+                                                                }
+                                                                value={
+                                                                    isEditN.qabul_soati_uz
+                                                                }
+                                                            />
+                                                        ) : (
+                                                            item.fish_uz
+                                                        )}
+                                                        {/* {item.qabul_soati_uz} */}
                                                     </p>
                                                     <p>
-                                                        <b>Telefon no'meri:</b>{" "}
-                                                        {item.telefon_nomer}
+                                                        <b>Telefon no'meri:</b>
+                                                        {isEditN?.id ===
+                                                        item.id ? (
+                                                            <input
+                                                                type="number"
+                                                                name="telefon_nomer"
+                                                                id="telefon_nomer"
+                                                                className="w-full border border-black rounded-sm py-[2px] px-[5px]"
+                                                                onChange={
+                                                                    handleChangeEditN
+                                                                }
+                                                                value={
+                                                                    isEditN.telefon_nomer
+                                                                }
+                                                            />
+                                                        ) : (
+                                                            item.telefon_nomer
+                                                        )}
+                                                        {/* {item.telefon_nomer} */}
                                                     </p>
                                                     <p>
-                                                        <b>Telegram linki:</b>{" "}
-                                                        {item.tg_username}
+                                                        <b>Telegram linki:</b>
+                                                        {isEditN?.id ===
+                                                        item.id ? (
+                                                            <textarea
+                                                                type="text"
+                                                                name="tg_username"
+                                                                id="tg_username"
+                                                                className="w-full border border-black rounded-sm py-[2px] px-[5px]"
+                                                                onChange={
+                                                                    handleChangeEditN
+                                                                }
+                                                                value={
+                                                                    isEditN.tg_username
+                                                                }
+                                                            />
+                                                        ) : (
+                                                            item.fish_uz
+                                                        )}
+                                                        {/* {item.tg_username} */}
                                                     </p>
                                                     <p>
-                                                        <b>Biografyasi:</b>{" "}
-                                                        {item.biografiya_uz}
+                                                        <b>Biografyasi:</b>
+                                                        {isEditN?.id ===
+                                                        item.id ? (
+                                                            <textarea
+                                                                type="text"
+                                                                name="biografiya_uz"
+                                                                id="biografiya_uz"
+                                                                className="w-full border border-black rounded-sm py-[2px] px-[5px]"
+                                                                onChange={
+                                                                    handleChangeEditN
+                                                                }
+                                                                value={
+                                                                    isEditN.biografiya_uz
+                                                                }
+                                                            />
+                                                        ) : (
+                                                            item.fish_uz
+                                                        )}
+                                                        {/* {item.biografiya_uz} */}
                                                     </p>
                                                 </div>
                                                 <div className="w-full flex justify-end">
@@ -895,7 +1020,12 @@ const Rektorat = () => {
                                                                 </>
                                                             )}
                                                         </button>
-                                                        <button className="flex items-center gap-2 bg-red-500 rounded-md py-1 px-4 text-white font-medium hover:bg-red-600 active:scale-95">
+                                                        <button
+                                                            onClick={() =>
+                                                                onDelN(item.id)
+                                                            }
+                                                            className="flex items-center gap-2 bg-red-500 rounded-md py-1 px-4 text-white font-medium hover:bg-red-600 active:scale-95"
+                                                        >
                                                             <span>Delete</span>
                                                             <MdDelete />
                                                         </button>

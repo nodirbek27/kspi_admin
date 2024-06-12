@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { useFormik } from "formik";
 import APIInteraktiv from "../../services/interaktiv";
+import { RxArrowTopRight } from "react-icons/rx";
 
 const Interaktiv = () => {
   const [data, setData] = useState(null);
@@ -89,11 +90,12 @@ const Interaktiv = () => {
                     />
                   </td>
                   <td className="text-center">
-                    <button
+                  <button
+                      className="bg-blue-400 hover:bg-blue-600 flex justify-center items-center gap-1 w-[100%] h-[48px] text-white font-bold rounded-lg active:scale-95"
                       type="submit"
-                      className="btn btn-success text-white"
                     >
-                      Saqlash
+                      SUBMIT
+                      <RxArrowTopRight className="font-bold text-[20px] mt-[2px]" />
                     </button>
                   </td>
                 </tr>
@@ -122,10 +124,11 @@ const Interaktiv = () => {
                   </td>
                   <td className="text-center">
                     <button
+                      className="bg-blue-400 hover:bg-blue-600 flex justify-center items-center gap-1 w-[100%] h-[48px] text-white font-bold rounded-lg active:scale-95"
                       type="submit"
-                      className="btn btn-success text-white"
                     >
-                      Saqlash
+                      SUBMIT
+                      <RxArrowTopRight className="font-bold text-[20px] mt-[2px]" />
                     </button>
                   </td>
                 </tr>

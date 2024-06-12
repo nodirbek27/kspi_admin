@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import APITalaba from "../../services/talabaFikr";
 import { CiEdit } from "react-icons/ci";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import { RxArrowTopRight } from "react-icons/rx";
 
 const TalabaFikr = () => {
   const [data, setData] = useState(null);
@@ -277,17 +278,18 @@ const TalabaFikr = () => {
               id="rasm"
               name="rasm"
               type="file"
-              className="file-input file-input-bordered w-full md:col-span-1"
+              className="file-input file-input-bordered file-input-info text-red-600 w-full md:col-span-1"
               onChange={(e) => setSelectedFile(e.target.files[0])}
             />
           </div>
         </div>
         <button
-          type="submit"
-          className="btn bg-gray-800 hover:bg-gray-700 text-white"
-        >
-          Qo'shish
-        </button>
+            className="bg-blue-400 hover:bg-blue-600 flex justify-center items-center gap-1 w-[100%] h-[48px] text-white mt-[18px] font-bold rounded-lg active:scale-95"
+            type="submit"
+          >
+            SUBMIT
+            <RxArrowTopRight className="font-bold text-[20px] mt-[2px]" />
+          </button>
       </form>
     </div>
   );

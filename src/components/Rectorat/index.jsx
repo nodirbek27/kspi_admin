@@ -20,17 +20,31 @@ const Rektorat = () => {
     const [file, setFile] = useState(null);
     const rasm = useRef(null);
     // load
-    const [load, setLoad] = useState(false);
+    const [load, setLoad] = useState(true);
 
-    const getDataLavozim = () =>
+    const getDataLavozim = () => {
         APITuzilmaRectorat.get()
-            .then((res) => setDataLavozim(res.data))
-            .catch((err) => console.log(err));
+            .then((res) => {
+                setDataLavozim(res.data);
+                setLoad(false);
+            })
+            .catch((err) => {
+                setLoad(false);
+                console.log(err);
+            });
+    };
 
-    const getDataNomzod = () =>
+    const getDataNomzod = () => {
         APITuzilmaRectorat.getN()
-            .then((res) => setDataNomzod(res.data))
-            .catch((err) => console.log(err));
+            .then((res) => {
+                setDataNomzod(res.data);
+                setLoad(false);
+            })
+            .catch((err) => {
+                setLoad(false);
+                console.log(err);
+            });
+    };
 
     const validationSchema = Yup.object().shape({
         lavozim_uz: Yup.string()
@@ -120,8 +134,11 @@ const Rektorat = () => {
                     setErrTxt(false);
                 }, 5000);
             } else {
+                setLoad(true);
                 APITuzilmaRectorat.post(values)
-                    .then(() => getDataLavozim())
+                    .then(() => {
+                        getDataLavozim();
+                    })
                     .catch((err) => console.log(err));
                 formik.resetForm();
             }
@@ -155,6 +172,7 @@ const Rektorat = () => {
                 setWarn(true);
             } else {
                 if (file) {
+                    setLoad(true);
                     const data = { ...values, rasm: file };
                     APITuzilmaRectorat.postN(data)
                         .then(() => getDataNomzod())
@@ -169,43 +187,58 @@ const Rektorat = () => {
             }
         },
     });
+
     // Rasm
     const handleChange = (e) => {
         setFile(e.target.files[0]);
     };
 
     const onDel = (id) => {
-        const res = window.confirm("Ishonchingiz komilmi?");
-        if (res) {
-            APITuzilmaRectorat.del(id)
-                .then(() => {
-                    getDataLavozim();
-                    setIsEdit(null);
-                })
-                .catch((err) => console.log(err));
+        if (isEdit) {
+            alert("Siz tahrirlash jarayonidasiz!");
+        } else {
+            const res = window.confirm("Ishonchingiz komilmi?");
+            if (res) {
+                setLoad(true);
+                APITuzilmaRectorat.del(id)
+                    .then(() => {
+                        getDataLavozim();
+                        setIsEdit(null);
+                    })
+                    .catch((err) => console.log(err));
+            }
         }
     };
 
     // onDelN
     const onDelN = (id) => {
-        const res = window.confirm("Ishonchingiz komilmi?");
-        if (res) {
-            APITuzilmaRectorat.delN(id)
-                .then(() => {
-                    getDataNomzod();
-                    setIsEditN(null);
-                })
-                .catch((err) => console.log(err));
+        if (isEditN) {
+            alert("Siz tahrirlash jarayonidasiz!");
+        } else {
+            const res = window.confirm("Ishonchingiz komilmi?");
+            if (res) {
+                setLoad(true);
+                APITuzilmaRectorat.delN(id)
+                    .then(() => {
+                        getDataNomzod();
+                        setIsEditN(null);
+                    })
+                    .catch((err) => console.log(err));
+            }
         }
     };
 
     const onEdit = ({ id, name_uz, name_ru, name_en }, boolean) => {
         if (boolean) {
+            setLoad(true);
             const { id, ...res } = isEdit;
             const data = res;
-            APITuzilmaRectorat.patch(id, data);
+            APITuzilmaRectorat.patch(id, data)
+                .then(() => {
+                    getDataLavozim();
+                })
+                .catch((err) => console.log(err));
             setIsEdit(null);
-            getDataLavozim();
         } else {
             const res = window.confirm("Ishonchingiz komilmi?");
             if (res) {
@@ -216,14 +249,18 @@ const Rektorat = () => {
 
     const onEditN = (item, boolean) => {
         if (boolean) {
+            setLoad(true);
             const { id, rasm, ...res } = isEditN;
             let data = res;
             if (file) {
                 data = { ...res, rasm: file };
             }
-            APITuzilmaRectorat.patchN(item.id, data);
+            APITuzilmaRectorat.patchN(item.id, data)
+                .then(() => {
+                    getDataNomzod();
+                })
+                .catch((err) => console.log(err));
             setIsEditN(null);
-            getDataNomzod();
         } else {
             const res = window.confirm("Ishonchingiz komilmi?");
             if (res) {
@@ -251,13 +288,18 @@ const Rektorat = () => {
     }, [formik_2.values.rektorat_id]);
 
     useEffect(() => {
+        setLoad(true);
         getDataLavozim();
         getDataNomzod();
     }, []);
 
     return (
         <div className="relative">
-            <div className="fixed top-[76px] right-[15px] w-[calc(100%-310px)] h-[90vh] bg-[#0000002d] border boredr-[red] z-50 rounded-xl">
+            <div
+                className={`${
+                    !load && "hidden z-50"
+                } fixed top-[60px] right-[15px] w-[calc(100%-310px)] h-[100vh] bg-[#0000002d] border boredr-[red] `}
+            >
                 <div className="w-full h-full flex justify-center items-center relative">
                     <Loader />
                 </div>

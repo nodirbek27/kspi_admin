@@ -154,7 +154,10 @@ const CallMarkazCom = () => {
         {toolbarElement}
         {editableElements}
 
-        <button type="submit" className="btn btn-primary mt-5">
+        <button
+          type="submit"
+          className="w-full bg-blue-400 hover:bg-blue-600 flex justify-center items-center gap-1 h-[48px] text-white mt-[18px] font-bold rounded-lg active:scale-95 "
+        >
           Submit
         </button>
       </form>

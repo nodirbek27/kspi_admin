@@ -12,11 +12,6 @@ import Elonlar from "../pages/ElonlarPage";
 import Login from "../components/Login"
 
 // HOME
-import HEMIS from '../pages/Home/HEMIS'
-import InstitutJurnali from '../pages/Home/InstitutJurnali'
-import Konfirensiyalar from '../pages/Home/Konfirensiyalar'
-import IkkinchiTalim from '../pages/Home/IkkinchiTalim'
-import OchiqManbalar from '../pages/Home/OchiqManbalar'
 import AsosiyVideo from '../pages/Home/AsosiyVideo'
 import InteraktivXizmatlar from '../pages/Home/InteraktivXizmatlar'
 import Statistika from '../pages/Home/Statistika'
@@ -102,46 +97,6 @@ const sidebar = [
     children: [
       {
         id: `4-1`,
-        title: "Hemis tizimi",
-        path: "/home/hemis",
-        isPrivate: true,
-        element: HEMIS,
-        role: ["admin", "manager"],
-      },
-      {
-        id: `4-2`,
-        title: "Institut jurnali",
-        path: "/home/first-class",
-        isPrivate: true,
-        element: InstitutJurnali,
-        role: ["admin", "manager"],
-      },
-      {
-        id: `4-3`,
-        title: "Konferensiyalar",
-        path: "/home/konfirensiyalar",
-        isPrivate: true,
-        element: Konfirensiyalar,
-        role: ["admin", "manager"],
-      },
-      {
-        id: `4-4`,
-        title: "Ikkinchi ta'lim",
-        path: "/home/ikkinchi-ta'lim",
-        isPrivate: true,
-        element: IkkinchiTalim,
-        role: ["admin", "manager"],
-      },
-      {
-        id: `4-5`,
-        title: "Ochiq manbalar",
-        path: "/home/ochiq-manbalar",
-        isPrivate: true,
-        element: OchiqManbalar,
-        role: ["admin", "manager"],
-      },
-      {
-        id: `4-6`,
         title: "Asosiy video",
         path: "/home/asosiy-video",
         isPrivate: true,
@@ -149,7 +104,7 @@ const sidebar = [
         role: ["admin", "manager"],
       },
       {
-        id: `4-7`,
+        id: `4-2`,
         title: "Interaktiv xizmatlar",
         path: "/home/interaktiv-xizmatlar",
         isPrivate: true,
@@ -157,7 +112,7 @@ const sidebar = [
         role: ["admin", "manager"],
       },
       {
-        id: `4-8`,
+        id: `4-3`,
         title: "Statistika",
         path: "/home/statistika",
         isPrivate: true,
@@ -165,7 +120,7 @@ const sidebar = [
         role: ["admin", "manager"],
       },
       {
-        id: `4-9`,
+        id: `4-4`,
         title: "Talaba fikri",
         path: "/home/talaba-fikri",
         isPrivate: true,
@@ -173,7 +128,7 @@ const sidebar = [
         role: ["admin", "manager"],
       },
       {
-        id: `4-10`,
+        id: `4-5`,
         title: "Uchtalik video",
         path: "/home/uchtalik-video",
         isPrivate: true,
@@ -181,7 +136,7 @@ const sidebar = [
         role: ["admin", "manager"],
       },
       {
-        id: `4-11`,
+        id: `4-6`,
         title: "Galleriya",
         path: "/home/galleriya",
         isPrivate: true,
@@ -189,7 +144,7 @@ const sidebar = [
         role: ["admin", "manager"],
       },
       {
-        id: `4-12`,
+        id: `4-7`,
         title: "Hamkorlar",
         path: "/home/hamkorlar",
         isPrivate: true,
@@ -197,7 +152,7 @@ const sidebar = [
         role: ["admin", "manager"],
       },
       {
-        id: `4-13`,
+        id: `4-8`,
         title: "Bog'lanish",
         path: "/home/boglanish",
         isPrivate: true,

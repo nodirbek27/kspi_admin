@@ -11,6 +11,7 @@ const getById = (id) => {
 };
 
 const del = (id) => axiosInstance.delete(`${ep}${id}/`)
+const delN = (id) => axiosInstance.delete(`${epN}${id}/`)
 
 const post = (item) => {
     return axiosInstance.post(`${ep}`, item);
@@ -24,14 +25,20 @@ const patch = (id, item) => {
     return axiosInstance.patch(`${ep}${id}/`, item);
 };
 
+const patchN = (id, item) => {
+    return axiosInstance.patch(`${epN}${id}/`, item);
+};
+
 const APITuzilmaRectorat = {
     get,
     getN,
     getById,
     del,
+    delN,
     post,
     postN,
     patch,
+    patchN,
 };
 
 export default APITuzilmaRectorat;

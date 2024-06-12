@@ -10,6 +10,7 @@ const Container = styled.div`
   padding: 0 16px 0 24px;
   position: sticky;
   top: 0;
+  z-index: 1000;
 `;
 
 

@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import APIStatistika from "../../services/statistics";
 import { CiEdit } from "react-icons/ci";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import { RxArrowTopRight } from "react-icons/rx";
 
 const Statistics = () => {
   const [data, setData] = useState(null);
@@ -518,13 +519,13 @@ const Statistics = () => {
             />
           </div>
         </div>
-
         <button
-          type="submit"
-          className="btn bg-gray-800 hover:bg-gray-700 text-white"
-        >
-          Qo'shish
-        </button>
+            className="bg-blue-400 hover:bg-blue-600 flex justify-center items-center gap-1 w-[100%] h-[48px] text-white mt-[18px] font-bold rounded-lg active:scale-95"
+            type="submit"
+          >
+            SUBMIT
+            <RxArrowTopRight className="font-bold text-[20px] mt-[2px]" />
+          </button>
       </form>
     </div>
   );

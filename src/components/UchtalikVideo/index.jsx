@@ -4,6 +4,7 @@ import APIFikr from "../../services/fikr";
 import { Link } from "react-router-dom";
 import { CiEdit } from "react-icons/ci";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import { RxArrowTopRight } from "react-icons/rx";
 
 const UchtalikVideo = () => {
   const [fikr, setFikr] = useState(null);
@@ -92,7 +93,7 @@ const UchtalikVideo = () => {
                 type="file"
                 id="rasm"
                 name="rasm"
-                className="file-input file-input-bordered w-full"
+                className="file-input text-red-600 file-input-info w-full file-input-bordered"
                 onChange={formik.handleChange}
                 value={formik.values.rasm}
               />
@@ -104,7 +105,7 @@ const UchtalikVideo = () => {
                 type="file"
                 id="video"
                 name="video"
-                className="file-input file-input-bordered w-full"
+                className="file-input text-red-600 file-input-info file-input-bordered w-full"
                 onChange={formik.handleChange}
                 value={formik.values.video}
               />
@@ -202,10 +203,11 @@ const UchtalikVideo = () => {
 
           {/* BUTTON QOSHISH */}
           <button
-            className="btn bg-gray-800 hover:bg-gray-700 text-white"
+            className="bg-blue-400 hover:bg-blue-600 flex justify-center items-center gap-1 w-[100%] h-[48px] text-white mt-[18px] font-bold rounded-lg active:scale-95"
             type="submit"
           >
-            Qo'shish
+            SUBMIT
+            <RxArrowTopRight className="font-bold text-[20px] mt-[2px]" />
           </button>
         </form>
       </div>

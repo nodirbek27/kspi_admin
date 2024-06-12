@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { CiEdit } from "react-icons/ci";
 import { RiDeleteBin5Line } from "react-icons/ri";
-import { MdOutlineCreateNewFolder } from "react-icons/md";
 import { useFormik } from "formik";
 import APIGallery from "../../services/gallery";
+import { TextWarn } from "./styled";
+import { BiBlock } from "react-icons/bi";
+import { RxArrowTopRight } from "react-icons/rx";
 
 const Gallery = () => {
-  const [open, setOpen] = useState(false);
   const [tur, setTur] = useState(null);
   const [data, setData] = useState(null);
   const [selectedTurId, setSelectedTurId] = useState(null);
-
-  const hide = () => {
-    setOpen(!open);
-  };
+  const [errTxt, setErrTxt] = useState(false);
 
   // Turni POST qilish
   const formik = useFormik({
@@ -22,13 +20,24 @@ const Gallery = () => {
       tur_ru: "",
       tur_en: "",
     },
-    onSubmit: async (values, { resetForm }) => {
-      await APIGallery.postTur(values);
-      resetForm();
-      loadTur();
+    onSubmit: (values) => {
+      if (
+        values.tur_uz === "" ||
+        values.tur_ru === "" ||
+        values.tur_en === ""
+      ) {
+        setErrTxt(true);
+        setTimeout(() => {
+          setErrTxt(false);
+        }, 5000);
+      } else {
+        APIGallery.postTur(values)
+          .then(() => loadTur())
+          .catch((err) => console.log(err));
+        formik.resetForm();
+      }
     },
   });
-
   // Turni GET qilish
   const loadTur = async () => {
     await APIGallery.getTur().then((res) => setTur(res.data));
@@ -85,71 +94,67 @@ const Gallery = () => {
     <div className="mx-3 lg:mx-5 lg:max-w-7xl xl:mx-auto">
       <h2 className="text-3xl font-bold text-center mb-5 pt-3">Galleriya</h2>
 
-      {/* Tur qo'shish */}
-      <div className="flex items-center justify-between mb-5">
-        <h2 className="text-2xl font-bold mb-2 pt-3">
-          Galleriyaga tur yaratish
-        </h2>
-        <button onClick={() => hide()} className="btn text-xl bold">
-          <MdOutlineCreateNewFolder />
-        </button>
-      </div>
       {/* Galleriyaga tur yaratish */}
-      <div className={`mb-5 ${open ? "" : "hidden"}`}>
+      <div>
+        <h1 className="text-[1.4rem] font-medium">Galleriyaga tur yaratish</h1>
         <form
+          className="flex items-center gap-2"
           onSubmit={formik.handleSubmit}
-          className="border-2 border-[#555] p-3 rounded"
         >
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-3 p-3">
-            <div className="max-w-xs mx-auto w-full">
-              <label className="mb-2" htmlFor="tur_uz">
-                Tur Uz:
-              </label>
-              <input
-                id="tur_uz"
-                name="tur_uz"
-                type="text"
-                className="input input-bordered w-full"
-                placeholder="Type here"
-                onChange={formik.handleChange}
-                value={formik.values.tur_uz}
-              />
-            </div>
-            <div className="max-w-xs mx-auto w-full">
-              <label className="mb-2" htmlFor="tur_ru">
-                Tur Ru:
-              </label>
-              <input
-                id="tur_ru"
-                name="tur_ru"
-                type="text"
-                className="input input-bordered w-full"
-                placeholder="Type here"
-                onChange={formik.handleChange}
-                value={formik.values.tur_ru}
-              />
-            </div>
-            <div className="max-w-xs mx-auto w-full">
-              <label className="mb-2" htmlFor="tur_en">
-                Tur En:
-              </label>
-              <input
-                id="tur_en"
-                name="tur_en"
-                type="text"
-                className="input input-bordered w-full"
-                placeholder="Type here"
-                onChange={formik.handleChange}
-                value={formik.values.tur_en}
-              />
-            </div>
-            <button type="submit" className="btn max-w-xs mx-auto w-full">
-              Qo'shish
-            </button>
-          </div>
+          <label className="w-[25%]" htmlFor="tur_uz">
+            <h3>Tur uz</h3>
+            <textarea
+              className="w-full input input-bordered px-[7px]"
+              type="text"
+              id="tur_uz"
+              value={formik.values.tur_uz}
+              onChange={formik.handleChange}
+            />
+          </label>
+          <label className="w-[25%]" htmlFor="tur_ru">
+            <h3>Tur ru</h3>
+            <textarea
+              className="w-full input input-bordered px-[7px]"
+              type="text"
+              id="tur_ru"
+              value={formik.values.tur_ru}
+              onChange={formik.handleChange}
+            />
+          </label>
+          <label className="w-[25%]" htmlFor="tur_en">
+            <h3>Tur en</h3>
+            <textarea
+              className="w-full input input-bordered px-[7px]"
+              type="text"
+              id="tur_en"
+              value={formik.values.tur_en}
+              onChange={formik.handleChange}
+            />
+          </label>
+          <button
+            className={`${
+              errTxt
+                ? "bg-red-500 hover:bg-red-600"
+                : "bg-blue-400 hover:bg-blue-600"
+            } flex justify-center items-center gap-1 w-[25%] h-[48px] text-white mt-[18px] font-bold rounded-lg active:scale-95`}
+            type="submit"
+          >
+            SUBMIT
+            {errTxt ? (
+              <BiBlock />
+            ) : (
+              <RxArrowTopRight className="font-bold text-[20px] mt-[2px]" />
+            )}
+          </button>
         </form>
+        <TextWarn
+          className={`${
+            errTxt ? "inline-block" : "hidden"
+          } w-full font-medium text-center`}
+        >
+          Hamma kiritish bo'limlari kiritilishi shart!
+        </TextWarn>
       </div>
-
       {/* Table */}
       <div className="overflow-x-auto mb-5">
         <h2 className="text-2xl font-bold mb-2 pt-3">
@@ -227,13 +232,17 @@ const Gallery = () => {
               id="rasm"
               name="rasm"
               type="file"
-              className="file-input file-input-bordered w-full"
+              className="file-input file-input-bordered file-input-info w-full"
               onChange={formik2.handleChange}
               value={formik2.values.rasm}
             />
           </div>
-          <button type="submit" className="btn max-w-xs mx-auto w-full">
-            Qo'shish
+          <button
+            className="bg-blue-400 hover:bg-blue-600 flex justify-center items-center gap-1 w-[100%] h-[48px] text-white mt-[18px] font-bold rounded-lg active:scale-95"
+            type="submit"
+          >
+            SUBMIT
+            <RxArrowTopRight className="font-bold text-[20px] mt-[2px]" />
           </button>
         </form>
         <div className="max-w-[340px] md:max-w-[500px] xl:max-w-[800px] mx-auto grid grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-7 gap-3 overflow-y-scroll max-h-[500px] md:max-h-[240px]">
@@ -241,18 +250,20 @@ const Gallery = () => {
             <div key={idx}>
               <div className="mb-1">
                 <img
-                  className="w-[100px] h-[60px] object-cover rounded-md"
+                  className="w-[110px] h-[65px] object-cover rounded-md"
                   src={item.rasm}
                   alt="rasm"
                 />
               </div>
+              <div>{item.tur_uz}</div>
               <div className="text-center">
-              <button
-                onClick={() => handleDelete(item.id)}
-                className="btn-sm rounded bg-slate-200 border-2 border-red-600 hover:bg-red-600 hover:text-white font-semibold transition duration-200"
-              >
-                O'chirish
-              </button>
+                <button
+                  onClick={() => handleDelete(item.id)}
+                  className="flex items-center gap-2 bg-red-500 rounded-md py-1 px-4 text-white font-medium hover:bg-red-600 active:scale-95"
+                >
+                  <span>Delete</span>
+                  <RiDeleteBin5Line />
+                </button>
               </div>
             </div>
           ))}

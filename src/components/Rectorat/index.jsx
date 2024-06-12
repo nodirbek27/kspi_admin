@@ -6,6 +6,7 @@ import { TextWarn } from "./styled";
 import { BiBlock } from "react-icons/bi";
 import APITuzilmaRectorat from "../../services/tuzilmaRectorat";
 import * as Yup from "yup";
+import Loader from "../Loader";
 
 const Rektorat = () => {
     const [dataLavozim, setDataLavozim] = useState([]);
@@ -15,11 +16,11 @@ const Rektorat = () => {
 
     const [isEdit, setIsEdit] = useState(null);
     const [isEditN, setIsEditN] = useState(null);
-
     // Rasm
     const [file, setFile] = useState(null);
-
     const rasm = useRef(null);
+    // load
+    const [load, setLoad] = useState(false);
 
     const getDataLavozim = () =>
         APITuzilmaRectorat.get()
@@ -256,7 +257,12 @@ const Rektorat = () => {
 
     return (
         <div className="relative">
-            <div className="w-full p-[10px]">
+            <div className="fixed top-[76px] right-[15px] w-[calc(100%-310px)] h-[90vh] bg-[#0000002d] border boredr-[red] z-50 rounded-xl">
+                <div className="w-full h-full flex justify-center items-center relative">
+                    <Loader />
+                </div>
+            </div>
+            <div className="w-full p-[10px] -z-10">
                 <h1 className="text-center text-[1.8rem] font-medium mt-4">
                     Rektorat
                 </h1>

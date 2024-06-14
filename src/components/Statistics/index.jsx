@@ -86,7 +86,7 @@ const Statistics = () => {
     }
   };
   return (
-    <div>
+    <div className="p-4">
       <h2 className="text-2xl font-bold text-center mb-5 p-3">Statistika</h2>
 
       {/* Card get */}

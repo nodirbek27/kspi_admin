@@ -79,7 +79,7 @@ const UchtalikVideo = () => {
   };
 
   return (
-    <div>
+    <div className="p-4">
       <h2 className="text-center my-5 font-bold md:text-lg lg:text-xl xl:text-2xl">
         Talabalar qanday fikrda?
       </h2>

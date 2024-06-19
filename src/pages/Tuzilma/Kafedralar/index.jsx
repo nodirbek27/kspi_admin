@@ -1,11 +1,12 @@
 import React from "react";
+import Kafedra from "../../../components/Kafedra";
 
-const Kafedralar = () => {
+const KafedralarPage = () => {
     return (
         <div>
-            Kafedralar
+            <Kafedra />
         </div>
     );
 };
 
-export default Kafedralar;
+export default KafedralarPage;

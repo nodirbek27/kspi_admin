@@ -1,9 +1,10 @@
 import React from 'react'
+import AbiturientBakalavr from '../../../components/AbiturientBakalavr'
 
 const Bakalavriat = () => {
   return (
     <div>
-      Bakalavriat
+      <AbiturientBakalavr />
     </div>
   )
 }

@@ -147,7 +147,7 @@ const Rektorat = () => {
 
     const formik_2 = useFormik({
         initialValues: {
-            rektorat_id: "",
+            fakultet_id: "",
             lavozim_uz: "",
             lavozim_ru: "",
             lavozim_en: "",
@@ -168,7 +168,7 @@ const Rektorat = () => {
         },
         validationSchema,
         onSubmit: (values) => {
-            if (values.rektorat_id === "0" || values.rektorat_id === "") {
+            if (values.fakultet_id === "0" || values.fakultet_id === "") {
                 setWarn(true);
             } else {
                 if (file) {
@@ -284,8 +284,8 @@ const Rektorat = () => {
     };
 
     useEffect(() => {
-        formik_2.values.rektorat_id === "0" ? setWarn(true) : setWarn(false);
-    }, [formik_2.values.rektorat_id]);
+        formik_2.values.fakultet_id === "0" ? setWarn(true) : setWarn(false);
+    }, [formik_2.values.fakultet_id]);
 
     useEffect(() => {
         setLoad(true);
@@ -297,8 +297,8 @@ const Rektorat = () => {
         <div className="relative">
             <div
                 className={`${
-                    !load && "hidden z-50"
-                } fixed top-[60px] right-[15px] w-[calc(100%-310px)] h-[100vh] bg-[#0000002d] border boredr-[red] `}
+                    !load && "hidden"
+                } z-50 fixed top-[60px] right-[15px] w-[calc(100%-310px)] h-[100vh] bg-[#0000002d] border boredr-[red] `}
             >
                 <div className="w-full h-full flex justify-center items-center relative">
                     <Loader />
@@ -306,12 +306,12 @@ const Rektorat = () => {
             </div>
             <div className="w-full p-[10px] -z-10">
                 <h1 className="text-center text-[1.8rem] font-medium mt-4">
-                    Rektorat
+                    Fakultetlar
                 </h1>
                 <div className="w-full my-12">
                     <div>
                         <h1 className="text-[1.4rem] font-medium">
-                            Rektarat lavozim yaratish
+                            Fakultet lavozim yaratish
                         </h1>
                         <form
                             className="flex items-center gap-2"
@@ -371,119 +371,133 @@ const Rektorat = () => {
                             Hamma kiritish bo'limlari kiritilishi shart!
                         </TextWarn>
                     </div>
+
                     <div className="mt-5">
                         <h1 className="text-[1.2rem] font-medium mb-2">
-                            Rektarat lavozimlari:
+                            Fakultet lavozimlari:
                         </h1>
-                        <table className="table">
-                            <thead>
-                                <tr className="font-medium text-black">
-                                    <th></th>
-                                    <th>Uz</th>
-                                    <th>Ru</th>
-                                    <th>En</th>
-                                    <th></th>
-                                    {/* <th></th> */}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {dataLavozim?.length !== 0 &&
-                                    dataLavozim.map((item, idx) => (
-                                        <tr key={item.id}>
-                                            <th>{idx + 1}</th>
-                                            <td>
-                                                {isEdit?.id === item.id ? (
-                                                    <textarea
-                                                        type="text"
-                                                        name="name_uz"
-                                                        id="name_uz"
-                                                        className="w-full input input-bordered px-[7px]"
-                                                        onChange={
-                                                            handleChangeEdit
-                                                        }
-                                                        value={isEdit.name_uz}
-                                                    />
-                                                ) : (
-                                                    item.name_uz
-                                                )}
-                                            </td>
-                                            <td>
-                                                {isEdit?.id === item.id ? (
-                                                    <textarea
-                                                        type="text"
-                                                        name="name_ru"
-                                                        id="name_ru"
-                                                        className="w-full input input-bordered px-[7px]"
-                                                        onChange={
-                                                            handleChangeEdit
-                                                        }
-                                                        value={isEdit.name_ru}
-                                                    />
-                                                ) : (
-                                                    item.name_ru
-                                                )}
-                                            </td>
-                                            <td>
-                                                {isEdit?.id === item.id ? (
-                                                    <textarea
-                                                        type="text"
-                                                        name="name_en"
-                                                        id="name_en"
-                                                        className="w-full input input-bordered px-[7px]"
-                                                        onChange={
-                                                            handleChangeEdit
-                                                        }
-                                                        value={isEdit.name_en}
-                                                    />
-                                                ) : (
-                                                    item.name_en
-                                                )}
-                                            </td>
-                                            <td className="flex gap-2">
-                                                <button
-                                                    onClick={() =>
-                                                        onEdit(
-                                                            item,
-                                                            isEdit?.id ===
-                                                                item.id
-                                                        )
-                                                    }
-                                                    className={` ${
-                                                        isEdit?.id === item.id
-                                                            ? "bg-blue-400 hover:bg-blue-600"
-                                                            : "bg-gray-400 hover:bg-gray-600"
-                                                    } flex items-center gap-2  rounded-md py-1 px-4 text-white font-medium active:scale-95`}
-                                                >
+                        {dataLavozim?.length !== 0 ? (
+                            <table className="table">
+                                <thead>
+                                    <tr className="font-medium text-black">
+                                        <th></th>
+                                        <th>Uz</th>
+                                        <th>Ru</th>
+                                        <th>En</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {dataLavozim?.length !== 0 &&
+                                        dataLavozim.map((item, idx) => (
+                                            <tr key={item.id}>
+                                                <th>{idx + 1}</th>
+                                                <td>
                                                     {isEdit?.id === item.id ? (
-                                                        <>
-                                                            <span>
-                                                                Jo'natish
-                                                            </span>
-                                                            <RxArrowTopRight />
-                                                        </>
+                                                        <textarea
+                                                            type="text"
+                                                            name="name_uz"
+                                                            id="name_uz"
+                                                            className="w-full input input-bordered px-[7px]"
+                                                            onChange={
+                                                                handleChangeEdit
+                                                            }
+                                                            value={
+                                                                isEdit.name_uz
+                                                            }
+                                                        />
                                                     ) : (
-                                                        <>
-                                                            <span>
-                                                                Tahrirlash
-                                                            </span>
-                                                            <MdEdit />
-                                                        </>
+                                                        item.name_uz
                                                     )}
-                                                </button>
-                                                <button
-                                                    onClick={() =>
-                                                        onDel(item.id)
-                                                    }
-                                                    className="flex items-center gap-2 bg-red-500 rounded-md py-1 px-4 text-white font-medium hover:bg-red-600 active:scale-95"
-                                                >
-                                                    <span>Delete</span>
-                                                    <MdDelete />
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ))}
-                            </tbody>
-                        </table>
+                                                </td>
+                                                <td>
+                                                    {isEdit?.id === item.id ? (
+                                                        <textarea
+                                                            type="text"
+                                                            name="name_ru"
+                                                            id="name_ru"
+                                                            className="w-full input input-bordered px-[7px]"
+                                                            onChange={
+                                                                handleChangeEdit
+                                                            }
+                                                            value={
+                                                                isEdit.name_ru
+                                                            }
+                                                        />
+                                                    ) : (
+                                                        item.name_ru
+                                                    )}
+                                                </td>
+                                                <td>
+                                                    {isEdit?.id === item.id ? (
+                                                        <textarea
+                                                            type="text"
+                                                            name="name_en"
+                                                            id="name_en"
+                                                            className="w-full input input-bordered px-[7px]"
+                                                            onChange={
+                                                                handleChangeEdit
+                                                            }
+                                                            value={
+                                                                isEdit.name_en
+                                                            }
+                                                        />
+                                                    ) : (
+                                                        item.name_en
+                                                    )}
+                                                </td>
+                                                <td className="flex gap-2">
+                                                    <button
+                                                        onClick={() =>
+                                                            onEdit(
+                                                                item,
+                                                                isEdit?.id ===
+                                                                    item.id
+                                                            )
+                                                        }
+                                                        className={` ${
+                                                            isEdit?.id ===
+                                                            item.id
+                                                                ? "bg-blue-400 hover:bg-blue-600"
+                                                                : "bg-gray-400 hover:bg-gray-600"
+                                                        } flex items-center gap-2  rounded-md py-1 px-4 text-white font-medium active:scale-95`}
+                                                    >
+                                                        {isEdit?.id ===
+                                                        item.id ? (
+                                                            <>
+                                                                <span>
+                                                                    Jo'natish
+                                                                </span>
+                                                                <RxArrowTopRight />
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                <span>
+                                                                    Tahrirlash
+                                                                </span>
+                                                                <MdEdit />
+                                                            </>
+                                                        )}
+                                                    </button>
+                                                    <button
+                                                        onClick={() =>
+                                                            onDel(item.id)
+                                                        }
+                                                        className="flex items-center gap-2 bg-red-500 rounded-md py-1 px-4 text-white font-medium hover:bg-red-600 active:scale-95"
+                                                    >
+                                                        <span>Delete</span>
+                                                        <MdDelete />
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                </tbody>
+                            </table>
+                        ) : (
+                            <div className="ms-4 text-red-600">
+                                Ma'lumot mavjud emas!
+                            </div>
+                        )}
                     </div>
                 </div>
 
@@ -491,7 +505,7 @@ const Rektorat = () => {
 
                 <div className="my-10">
                     <h1 className="text-[1.4rem] font-medium mb-2">
-                        Rektarat lavozim nomzodini yaratish
+                        Fakultet lavozim nomzodini yaratish
                     </h1>
                     <div className="flex flex-col gap-4">
                         <form
@@ -500,12 +514,12 @@ const Rektorat = () => {
                         >
                             <div className="flex items-center gap-4">
                                 <select
-                                    name="rektorat_id"
-                                    id="rektorat_id"
+                                    name="fakultet_id"
+                                    id="fakultet_id"
                                     className={`${
                                         warn && "select-error"
                                     } select select-bordered w-full max-w-xs`}
-                                    value={formik_2.values.rektorat_id}
+                                    value={formik_2.values.fakultet_id}
                                     onChange={formik_2.handleChange}
                                 >
                                     <option value="0">Birini tanlang!</option>
@@ -843,7 +857,7 @@ const Rektorat = () => {
 
                         <div className="my-10">
                             <h1 className="text-[1.2rem] font-medium mb-2">
-                                Rektarat lavozimlari:
+                                Fakultet lavozimlari:
                             </h1>
                             <ol className="list-decimal flex flex-col gap-3 ps-4">
                                 {dataNomzod?.length !== 0 && dataNomzod ? (

@@ -1,7 +1,7 @@
 import axiosInstance from ".";
 
 const ep = "tuzilma/fakultet/";
-const epH = "tuzilma/fakultet_hodim/";
+const epH = "tuzilma/fakultet_rahbar/";
 
 const get = () => axiosInstance.get(ep);
 const getH = () => axiosInstance.get(epH);

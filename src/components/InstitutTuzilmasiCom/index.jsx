@@ -26,8 +26,6 @@ function InstitutTuzilmasiCom() {
     }
   };
 
-  console.log(datas);
-
   const formik = useFormik({
     initialValues: {
       name_uz: "",
@@ -46,18 +44,18 @@ function InstitutTuzilmasiCom() {
         data.append(key, values[key]);
       }
       try {
+        // POST
         if (!edit && datas.length === 0) {
           await APIinstitutTuzilmasi.postInstitutTuzilmasi(data);
-        } else {
-          const mem = {
-            name_uz: values.name_uz,
-            name_ru: values.name_ru,
-            name_en: values.name_en,
-          };
-          await APIinstitutTuzilmasi.putInstitutTuzilmasi(id, mem);
+        }
+        // PATCH
+        else {
+          await APIinstitutTuzilmasi.patchInstitutTuzilmasi(id, data);
+          console.log(data);
           setEdit(false);
           setId(null);
         }
+        // Resets file input
         Object.values(fileInputRefs).forEach((ref) => {
           if (ref.current) {
             ref.current.value = "";
@@ -77,26 +75,15 @@ function InstitutTuzilmasiCom() {
     },
   });
 
-  // const faceData = {link: "sdakdokaosd", name: "Orifxon", f: "Toychiyev"}
-  // const {link, ...res} = faceData
-  // console.log(res); 
-
   const handleEdit = (id) => {
     setEdit(true);
     setId(id);
     const data = datas.find((item) => item.id === id);
-    console.log(data);
     if (data) {
       formik.setValues({
         name_uz: data.name_uz,
         name_ru: data.name_ru,
         name_en: data.name_en,
-        rasm_1: data.rasm_1,
-        rasm_2: data.rasm_2,
-        rasm_3: data.rasm_3,
-        rasm_4: data.rasm_4,
-        rasm_5: data.rasm_5,
-        pdf_fayl: data.pdf_fayl,
       });
     }
     fechtData();
@@ -295,20 +282,22 @@ function InstitutTuzilmasiCom() {
                       PDF variantini yuklab oling
                     </a>
                   </div>
-                  <button
-                    type="submit"
-                    className="btn btn-accent"
-                    onClick={() => handleEdit(data.id)}
-                  >
-                    O'zgartirish
-                  </button>
-                  <button
-                    type="submit"
-                    className="btn btn-error ml-5"
-                    onClick={() => handleDelete(data.id)}
-                  >
-                    O'zgartirish
-                  </button>
+                  <div className="flex justify-between">
+                    <button
+                      type="submit"
+                      className="btn btn-accent"
+                      onClick={() => handleEdit(data.id)}
+                    >
+                      Taxrirlash
+                    </button>
+                    <button
+                      type="submit"
+                      className="btn btn-error ml-5"
+                      onClick={() => handleDelete(data.id)}
+                    >
+                      O'chirish
+                    </button>
+                  </div>
                 </div>
               );
             })}

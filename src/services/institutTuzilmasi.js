@@ -8,7 +8,7 @@ const postInstitutTuzilmasi = (item) => {
     return axiosInstance.post(`${endPoint}`, item)
 }
 
-const putInstitutTuzilmasi = (id, item) => {
+const patchInstitutTuzilmasi = (id, item) => {
     return axiosInstance.patch(`${endPoint}${id}/`, item);
 }
 
@@ -16,6 +16,6 @@ const delInstitutTuzilmasi = (id) => {
     return axiosInstance.delete(`${endPoint}${id}/`);
   };
 
-const APIinstitutTuzilmasi = {getInstitutTuzilmasi, postInstitutTuzilmasi, putInstitutTuzilmasi, delInstitutTuzilmasi};
+const APIinstitutTuzilmasi = {getInstitutTuzilmasi, postInstitutTuzilmasi, patchInstitutTuzilmasi, delInstitutTuzilmasi};
 
 export default APIinstitutTuzilmasi;

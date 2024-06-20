@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import APIAbiturientBakalavr from "../../services/abiturientBakalavr";
+import APIAbiturientMagistr from "../../services/abiturientMagistr";
 import { RiDeleteBin5Line, RiEditLine } from "react-icons/ri";
 import Loader from "../Loader";
 
-const AbiturientBakalavr = () => {
+const AbiturientMagistr = () => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editItemId, setEditItemId] = useState(null);
@@ -19,7 +19,7 @@ const AbiturientBakalavr = () => {
   const fetchItems = async () => {
     setLoading(true);
     try {
-      const response = await APIAbiturientBakalavr.get();
+      const response = await APIAbiturientMagistr.get();
       setItems(response.data);
     } catch (error) {
       console.error("Failed to fetch items", error);
@@ -34,7 +34,7 @@ const AbiturientBakalavr = () => {
 
   const handleDelete = async (id) => {
     try {
-      await APIAbiturientBakalavr.del(id);
+      await APIAbiturientMagistr.del(id);
       fetchItems();
     } catch (error) {
       console.error("Failed to delete item", error);
@@ -86,9 +86,9 @@ const AbiturientBakalavr = () => {
         }
 
         if (editItemId) {
-          await APIAbiturientBakalavr.put(editItemId, formData);
+          await APIAbiturientMagistr.put(editItemId, formData);
         } else {
-          await APIAbiturientBakalavr.post(formData);
+          await APIAbiturientMagistr.post(formData);
         }
         fetchItems();
         resetForm();
@@ -109,7 +109,7 @@ const AbiturientBakalavr = () => {
       ) : (
         <div>
           <h2 className="text-2xl font-semibold text-center my-5 p-3">
-            Bakalavr
+            Magistratura
           </h2>
 
           <form onSubmit={formik.handleSubmit} className="mb-5">
@@ -287,4 +287,4 @@ const AbiturientBakalavr = () => {
   );
 };
 
-export default AbiturientBakalavr;
+export default AbiturientMagistr;

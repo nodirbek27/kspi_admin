@@ -114,7 +114,6 @@ const Kafedra = () => {
             .required("To'ldirilishi shart!"),
         telefon_nomer: Yup.number()
             .min(3, "Juda kam!")
-            // .max(300, "Juda ko'p!")
             .required("To'ldirilishi shart!"),
         tg_username: Yup.string()
             .min(3, "Juda kam!")
@@ -171,38 +170,9 @@ const Kafedra = () => {
             .min(3, "Juda kam!")
             .max(300, "Juda ko'p!")
             .required("To'ldirilishi shart!"),
-        // qabul_soati_uz: Yup.string()
-        //     .min(3, "Juda kam!")
-        //     .max(300, "Juda ko'p!")
-        //     .required("To'ldirilishi shart!"),
-        // qabul_soati_ru: Yup.string()
-        //     .min(3, "Juda kam!")
-        //     .max(300, "Juda ko'p!")
-        //     .required("To'ldirilishi shart!"),
-        // qabul_soati_en: Yup.string()
-        //     .min(3, "Juda kam!")
-        //     .max(300, "Juda ko'p!")
-        //     .required("To'ldirilishi shart!"),
         telefon_nomer: Yup.number()
             .min(3, "Juda kam!")
-            // .max(300, "Juda ko'p!")
             .required("To'ldirilishi shart!"),
-        tg_username: Yup.string()
-            .min(3, "Juda kam!")
-            .max(300, "Juda ko'p!")
-            .required("To'ldirilishi shart!"),
-        // biografiya_uz: Yup.string()
-        //     .min(3, "Juda kam!")
-        //     .max(300, "Juda ko'p!")
-        //     .required("To'ldirilishi shart!"),
-        // biografiya_ru: Yup.string()
-        //     .min(3, "Juda kam!")
-        //     .max(300, "Juda ko'p!")
-        //     .required("To'ldirilishi shart!"),
-        // biografiya_en: Yup.string()
-        //     .min(3, "Juda kam!")
-        //     .max(300, "Juda ko'p!")
-        //     .required("To'ldirilishi shart!"),
     });
 
     const formik = useFormik({
@@ -292,9 +262,9 @@ const Kafedra = () => {
         },
         validationSchema: validationSchemaH,
         onSubmit: (values) => {
-            console.log(values);
             if (values.kafedra_id === "0" || values.kafedra_id === "") {
                 setWarnH(true);
+                console.log("ishlamoqdaman");
             } else {
                 if (fileH) {
                     setLoad(true);
@@ -554,131 +524,143 @@ const Kafedra = () => {
                         </TextWarn>
                     </div>
                     <div className="mt-5">
-                        <h1 className="text-[1.2rem] font-medium mb-2">
-                            Kafedralar:
-                        </h1>
-                        {dataKafedra?.length !== 0 ? (
-                            <table className="table -z-0">
-                                <thead>
-                                    <tr className="font-medium text-black">
-                                        <th></th>
-                                        <th>Uz</th>
-                                        <th>Ru</th>
-                                        <th>En</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {dataKafedra?.length !== 0 &&
-                                        dataKafedra.map((item, idx) => (
-                                            <tr key={item.id}>
-                                                <th>{idx + 1}</th>
-                                                <td>
-                                                    {isEdit?.id === item.id ? (
-                                                        <textarea
-                                                            type="text"
-                                                            name="name_uz"
-                                                            id="name_uz"
-                                                            className="w-full input input-bordered px-[7px]"
-                                                            onChange={
-                                                                handleChangeEdit
-                                                            }
-                                                            value={
-                                                                isEdit.name_uz
-                                                            }
-                                                        />
-                                                    ) : (
-                                                        item.name_uz
-                                                    )}
-                                                </td>
-                                                <td>
-                                                    {isEdit?.id === item.id ? (
-                                                        <textarea
-                                                            type="text"
-                                                            name="name_ru"
-                                                            id="name_ru"
-                                                            className="w-full input input-bordered px-[7px]"
-                                                            onChange={
-                                                                handleChangeEdit
-                                                            }
-                                                            value={
-                                                                isEdit.name_ru
-                                                            }
-                                                        />
-                                                    ) : (
-                                                        item.name_ru
-                                                    )}
-                                                </td>
-                                                <td>
-                                                    {isEdit?.id === item.id ? (
-                                                        <textarea
-                                                            type="text"
-                                                            name="name_en"
-                                                            id="name_en"
-                                                            className="w-full input input-bordered px-[7px]"
-                                                            onChange={
-                                                                handleChangeEdit
-                                                            }
-                                                            value={
-                                                                isEdit.name_en
-                                                            }
-                                                        />
-                                                    ) : (
-                                                        item.name_en
-                                                    )}
-                                                </td>
-                                                <td className="flex gap-2">
-                                                    <button
-                                                        onClick={() =>
-                                                            onEdit(
-                                                                item,
-                                                                isEdit?.id ===
-                                                                    item.id
-                                                            )
-                                                        }
-                                                        className={` ${
-                                                            isEdit?.id ===
-                                                            item.id
-                                                                ? "bg-blue-400 hover:bg-blue-600"
-                                                                : "bg-gray-400 hover:bg-gray-600"
-                                                        } flex items-center gap-2  rounded-md py-1 px-4 text-white font-medium active:scale-95`}
-                                                    >
-                                                        {isEdit?.id ===
-                                                        item.id ? (
-                                                            <>
-                                                                <span>
-                                                                    Jo'natish
-                                                                </span>
-                                                                <RxArrowTopRight />
-                                                            </>
-                                                        ) : (
-                                                            <>
-                                                                <span>
-                                                                    Tahrirlash
-                                                                </span>
-                                                                <MdEdit />
-                                                            </>
-                                                        )}
-                                                    </button>
-                                                    <button
-                                                        onClick={() =>
-                                                            onDel(item.id)
-                                                        }
-                                                        className="flex items-center gap-2 bg-red-500 rounded-md py-1 px-4 text-white font-medium hover:bg-red-600 active:scale-95"
-                                                    >
-                                                        <span>O'CHIRISH</span>
-                                                        <MdDelete />
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        ))}
-                                </tbody>
-                            </table>
-                        ) : (
-                            <div className="ms-4 text-red-600">
-                                Ma'lumot mavjud emas!
+                        <div className="collapse collapse-arrow">
+                            <input type="checkbox" name="my-accordion-2" />
+                            <div className="collapse-title text-xl font-medium bg-gray-200">
+                                Kafedralar
                             </div>
-                        )}
+                            <div className="collapse-content">
+                                {dataKafedra?.length !== 0 ? (
+                                    <table className="table -z-0">
+                                        <thead>
+                                            <tr className="font-medium text-black">
+                                                <th></th>
+                                                <th>Uz</th>
+                                                <th>Ru</th>
+                                                <th>En</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {dataKafedra?.length !== 0 &&
+                                                dataKafedra.map((item, idx) => (
+                                                    <tr key={item.id}>
+                                                        <th>{idx + 1}</th>
+                                                        <td>
+                                                            {isEdit?.id ===
+                                                            item.id ? (
+                                                                <textarea
+                                                                    type="text"
+                                                                    name="name_uz"
+                                                                    id="name_uz"
+                                                                    className="w-full input input-bordered px-[7px]"
+                                                                    onChange={
+                                                                        handleChangeEdit
+                                                                    }
+                                                                    value={
+                                                                        isEdit.name_uz
+                                                                    }
+                                                                />
+                                                            ) : (
+                                                                item.name_uz
+                                                            )}
+                                                        </td>
+                                                        <td>
+                                                            {isEdit?.id ===
+                                                            item.id ? (
+                                                                <textarea
+                                                                    type="text"
+                                                                    name="name_ru"
+                                                                    id="name_ru"
+                                                                    className="w-full input input-bordered px-[7px]"
+                                                                    onChange={
+                                                                        handleChangeEdit
+                                                                    }
+                                                                    value={
+                                                                        isEdit.name_ru
+                                                                    }
+                                                                />
+                                                            ) : (
+                                                                item.name_ru
+                                                            )}
+                                                        </td>
+                                                        <td>
+                                                            {isEdit?.id ===
+                                                            item.id ? (
+                                                                <textarea
+                                                                    type="text"
+                                                                    name="name_en"
+                                                                    id="name_en"
+                                                                    className="w-full input input-bordered px-[7px]"
+                                                                    onChange={
+                                                                        handleChangeEdit
+                                                                    }
+                                                                    value={
+                                                                        isEdit.name_en
+                                                                    }
+                                                                />
+                                                            ) : (
+                                                                item.name_en
+                                                            )}
+                                                        </td>
+                                                        <td className="flex gap-2">
+                                                            <button
+                                                                onClick={() =>
+                                                                    onEdit(
+                                                                        item,
+                                                                        isEdit?.id ===
+                                                                            item.id
+                                                                    )
+                                                                }
+                                                                className={` ${
+                                                                    isEdit?.id ===
+                                                                    item.id
+                                                                        ? "bg-blue-400 hover:bg-blue-600"
+                                                                        : "bg-gray-400 hover:bg-gray-600"
+                                                                } flex items-center gap-2  rounded-md py-1 px-4 text-white font-medium active:scale-95`}
+                                                            >
+                                                                {isEdit?.id ===
+                                                                item.id ? (
+                                                                    <>
+                                                                        <span>
+                                                                            Jo'natish
+                                                                        </span>
+                                                                        <RxArrowTopRight />
+                                                                    </>
+                                                                ) : (
+                                                                    <>
+                                                                        <span>
+                                                                            Tahrirlash
+                                                                        </span>
+                                                                        <MdEdit />
+                                                                    </>
+                                                                )}
+                                                            </button>
+                                                            <button
+                                                                onClick={() =>
+                                                                    onDel(
+                                                                        item.id
+                                                                    )
+                                                                }
+                                                                className="flex items-center gap-2 bg-red-500 rounded-md py-1 px-4 text-white font-medium hover:bg-red-600 active:scale-95"
+                                                            >
+                                                                <span>
+                                                                    O'CHIRISH
+                                                                </span>
+                                                                <MdDelete />
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                ))}
+                                        </tbody>
+                                    </table>
+                                ) : (
+                                    <div className="ms-4 text-red-600">
+                                        Ma'lumot mavjud emas!
+                                    </div>
+                                )}
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -1037,486 +1019,521 @@ const Kafedra = () => {
                         </form>
 
                         <div className="my-10">
-                            <h1 className="text-[1.2rem] font-medium mb-2">
-                                Kafedra mudirlari:
-                            </h1>
-                            <ol className="list-decimal flex flex-col gap-3 ps-4">
-                                {dataRahbar?.length !== 0 && dataRahbar ? (
-                                    dataRahbar?.map((item) => (
-                                        <li
-                                            className="w-full border bg-gray-50 shadow-md p-2"
-                                            key={item.id}
-                                        >
-                                            <div className="flex flex-col items-start gap-4">
-                                                <div className="flex flex-col gap-y-4 w-full">
-                                                    <div className="w-[200px] h-auto">
-                                                        <img
-                                                            src={item.rasm}
-                                                            alt="Lavozim rasmi"
-                                                        />
-                                                    </div>
-                                                    {isEditR?.id ===
-                                                        item.id && (
-                                                        <label htmlFor="rasm">
-                                                            <div className="text-red-600 font-medium">
-                                                                Agar rasim
-                                                                jo'natilmasa o'z
-                                                                holida qoladi!
+                            {/* <div className="collapse collapse-arrow">
+                                <input
+                                    type="checkbox"
+                                    name="my-accordion-2"
+                                />
+                                <div className="collapse-title text-xl font-medium bg-gray-200">
+                                    Kafedra mudirlari
+                                </div>
+                                <div className="collapse-content">Hello</div>
+                            </div> */}
+
+                            {/* Accardion */}
+                            <div className="collapse collapse-arrow">
+                                <input type="checkbox" name="my-accordion-2" />
+                                <div className="collapse-title text-xl font-medium bg-gray-200">
+                                    Kafedra mudirlari
+                                </div>
+                                <div className="collapse-content">
+                                    <ol className="list-decimal flex flex-col gap-3 ps-4 my-4">
+                                        {dataRahbar?.length !== 0 &&
+                                        dataRahbar ? (
+                                            dataRahbar?.map((item) => (
+                                                <li
+                                                    className="w-full border bg-gray-50 shadow-md p-2"
+                                                    key={item.id}
+                                                >
+                                                    <div className="flex flex-col items-start gap-4">
+                                                        <div className="flex flex-col gap-y-4 w-full">
+                                                            <div className="w-[200px] h-auto">
+                                                                <img
+                                                                    src={
+                                                                        item.rasm
+                                                                    }
+                                                                    alt="Lavozim rasmi"
+                                                                />
                                                             </div>
-                                                            <input
-                                                                ref={rasmR}
-                                                                onChange={
-                                                                    handleChange
-                                                                }
-                                                                type="file"
-                                                                id="rasm"
-                                                                name="rasm"
-                                                                className="w-[400px] file-input file-input-bordered mt-2"
-                                                            />
-                                                        </label>
-                                                    )}
-                                                </div>
-                                                <div>
-                                                    <div className="overflow-x-auto">
-                                                        <table className="table">
-                                                            {/* head */}
-                                                            <thead>
-                                                                <tr>
-                                                                    <th></th>
-                                                                    <th>Uz</th>
-                                                                    <th>Ru</th>
-                                                                    <th>En</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                {/* Lavozim */}
-                                                                <tr>
-                                                                    <th>
-                                                                        Lavozim
-                                                                    </th>
-                                                                    <td>
-                                                                        {isEditR?.id ===
-                                                                        item.id ? (
-                                                                            <textarea
-                                                                                type="text"
-                                                                                name="lavozim_uz"
-                                                                                id="lavozim_uz"
-                                                                                className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
-                                                                                onChange={
-                                                                                    handleChangeEditR
-                                                                                }
-                                                                                value={
-                                                                                    isEditR.lavozim_uz
-                                                                                }
-                                                                            />
-                                                                        ) : (
-                                                                            item.lavozim_uz
-                                                                        )}
-                                                                    </td>
-                                                                    <td>
-                                                                        {isEditR?.id ===
-                                                                        item.id ? (
-                                                                            <textarea
-                                                                                type="text"
-                                                                                name="lavozim_ru"
-                                                                                id="lavozim_ru"
-                                                                                className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
-                                                                                onChange={
-                                                                                    handleChangeEditR
-                                                                                }
-                                                                                value={
-                                                                                    isEditR.lavozim_ru
-                                                                                }
-                                                                            />
-                                                                        ) : (
-                                                                            item.lavozim_ru
-                                                                        )}
-                                                                    </td>
-                                                                    <td>
-                                                                        {isEditR?.id ===
-                                                                        item.id ? (
-                                                                            <textarea
-                                                                                type="text"
-                                                                                name="lavozim_en"
-                                                                                id="lavozim_en"
-                                                                                className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
-                                                                                onChange={
-                                                                                    handleChangeEditR
-                                                                                }
-                                                                                value={
-                                                                                    isEditR.lavozim_en
-                                                                                }
-                                                                            />
-                                                                        ) : (
-                                                                            item.lavozim_en
-                                                                        )}
-                                                                    </td>
-                                                                </tr>
-                                                                {/* FISH */}
-                                                                <tr>
-                                                                    <th>
-                                                                        F.I.SH
-                                                                    </th>
-                                                                    <td>
-                                                                        {isEditR?.id ===
-                                                                        item.id ? (
-                                                                            <textarea
-                                                                                type="text"
-                                                                                name="fish_uz"
-                                                                                id="fish_uz"
-                                                                                className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
-                                                                                onChange={
-                                                                                    handleChangeEditR
-                                                                                }
-                                                                                value={
-                                                                                    isEditR.fish_uz
-                                                                                }
-                                                                            />
-                                                                        ) : (
-                                                                            item.fish_uz
-                                                                        )}
-                                                                    </td>
-                                                                    <td>
-                                                                        {isEditR?.id ===
-                                                                        item.id ? (
-                                                                            <textarea
-                                                                                type="text"
-                                                                                name="fish_ru"
-                                                                                id="fish_ru"
-                                                                                className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
-                                                                                onChange={
-                                                                                    handleChangeEditR
-                                                                                }
-                                                                                value={
-                                                                                    isEditR.fish_ru
-                                                                                }
-                                                                            />
-                                                                        ) : (
-                                                                            item.fish_ru
-                                                                        )}
-                                                                    </td>
-                                                                    <td>
-                                                                        {isEditR?.id ===
-                                                                        item.id ? (
-                                                                            <textarea
-                                                                                type="text"
-                                                                                name="fish_en"
-                                                                                id="fish_en"
-                                                                                className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
-                                                                                onChange={
-                                                                                    handleChangeEditR
-                                                                                }
-                                                                                value={
-                                                                                    isEditR.fish_en
-                                                                                }
-                                                                            />
-                                                                        ) : (
-                                                                            item.fish_en
-                                                                        )}
-                                                                    </td>
-                                                                </tr>
-                                                                {/* Unvon */}
-                                                                <tr>
-                                                                    <th>
-                                                                        Unvon
-                                                                    </th>
-                                                                    <td>
-                                                                        {isEditR?.id ===
-                                                                        item.id ? (
-                                                                            <textarea
-                                                                                type="text"
-                                                                                name="unvon_uz"
-                                                                                id="unvon_uz"
-                                                                                className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
-                                                                                onChange={
-                                                                                    handleChangeEditR
-                                                                                }
-                                                                                value={
-                                                                                    isEditR.unvon_uz
-                                                                                }
-                                                                            />
-                                                                        ) : (
-                                                                            item.unvon_uz
-                                                                        )}
-                                                                    </td>
-                                                                    <td>
-                                                                        {isEditR?.id ===
-                                                                        item.id ? (
-                                                                            <textarea
-                                                                                type="text"
-                                                                                name="unvon_ru"
-                                                                                id="unvon_ru"
-                                                                                className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
-                                                                                onChange={
-                                                                                    handleChangeEditR
-                                                                                }
-                                                                                value={
-                                                                                    isEditR.unvon_ru
-                                                                                }
-                                                                            />
-                                                                        ) : (
-                                                                            item.unvon_ru
-                                                                        )}
-                                                                    </td>
-                                                                    <td>
-                                                                        {isEditR?.id ===
-                                                                        item.id ? (
-                                                                            <textarea
-                                                                                type="text"
-                                                                                name="unvon_en"
-                                                                                id="unvon_en"
-                                                                                className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
-                                                                                onChange={
-                                                                                    handleChangeEditR
-                                                                                }
-                                                                                value={
-                                                                                    isEditR.unvon_en
-                                                                                }
-                                                                            />
-                                                                        ) : (
-                                                                            item.unvon_en
-                                                                        )}
-                                                                    </td>
-                                                                </tr>
-                                                                {/* Qabul s */}
-                                                                <tr>
-                                                                    <th>
-                                                                        Qabul
-                                                                        soatlari
-                                                                    </th>
-                                                                    <td>
-                                                                        {isEditR?.id ===
-                                                                        item.id ? (
-                                                                            <textarea
-                                                                                type="text"
-                                                                                name="qabul_soati_uz"
-                                                                                id="qabul_soati_uz"
-                                                                                className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
-                                                                                onChange={
-                                                                                    handleChangeEditR
-                                                                                }
-                                                                                value={
-                                                                                    isEditR.qabul_soati_uz
-                                                                                }
-                                                                            />
-                                                                        ) : (
-                                                                            item.qabul_soati_uz
-                                                                        )}
-                                                                    </td>
-                                                                    <td>
-                                                                        {isEditR?.id ===
-                                                                        item.id ? (
-                                                                            <textarea
-                                                                                type="text"
-                                                                                name="qabul_soati_ru"
-                                                                                id="qabul_soati_ru"
-                                                                                className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
-                                                                                onChange={
-                                                                                    handleChangeEditR
-                                                                                }
-                                                                                value={
-                                                                                    isEditR.qabul_soati_ru
-                                                                                }
-                                                                            />
-                                                                        ) : (
-                                                                            item.qabul_soati_ru
-                                                                        )}
-                                                                    </td>
-                                                                    <td>
-                                                                        {isEditR?.id ===
-                                                                        item.id ? (
-                                                                            <textarea
-                                                                                type="text"
-                                                                                name="qabul_soati_en"
-                                                                                id="qabul_soati_en"
-                                                                                className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
-                                                                                onChange={
-                                                                                    handleChangeEditR
-                                                                                }
-                                                                                value={
-                                                                                    isEditR.qabul_soati_en
-                                                                                }
-                                                                            />
-                                                                        ) : (
-                                                                            item.qabul_soati_en
-                                                                        )}
-                                                                    </td>
-                                                                </tr>
-                                                                {/* Biografyasi */}
-                                                                <tr>
-                                                                    <th>
-                                                                        Biografyasi
-                                                                    </th>
-                                                                    <td>
-                                                                        {isEditR?.id ===
-                                                                        item.id ? (
-                                                                            <textarea
-                                                                                type="text"
-                                                                                name="biografiya_uz"
-                                                                                id="biografiya_uz"
-                                                                                className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
-                                                                                onChange={
-                                                                                    handleChangeEditR
-                                                                                }
-                                                                                value={
-                                                                                    isEditR.biografiya_uz
-                                                                                }
-                                                                            />
-                                                                        ) : (
-                                                                            item.biografiya_uz
-                                                                        )}
-                                                                    </td>
-                                                                    <td>
-                                                                        {isEditR?.id ===
-                                                                        item.id ? (
-                                                                            <textarea
-                                                                                type="text"
-                                                                                name="biografiya_ru"
-                                                                                id="biografiya_ru"
-                                                                                className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
-                                                                                onChange={
-                                                                                    handleChangeEditR
-                                                                                }
-                                                                                value={
-                                                                                    isEditR.biografiya_ru
-                                                                                }
-                                                                            />
-                                                                        ) : (
-                                                                            item.biografiya_ru
-                                                                        )}
-                                                                    </td>
-                                                                    <td>
-                                                                        {isEditR?.id ===
-                                                                        item.id ? (
-                                                                            <textarea
-                                                                                type="text"
-                                                                                name="biografiya_en"
-                                                                                id="biografiya_en"
-                                                                                className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
-                                                                                onChange={
-                                                                                    handleChangeEditR
-                                                                                }
-                                                                                value={
-                                                                                    isEditR.biografiya_en
-                                                                                }
-                                                                            />
-                                                                        ) : (
-                                                                            item.biografiya_en
-                                                                        )}
-                                                                    </td>
-                                                                </tr>
-                                                                {/* Telegram l */}
-                                                                <tr>
-                                                                    <th>
-                                                                        Telegram
-                                                                        linki
-                                                                    </th>
-                                                                    <td>
-                                                                        {isEditR?.id ===
-                                                                        item.id ? (
-                                                                            <textarea
-                                                                                type="text"
-                                                                                name="tg_username"
-                                                                                id="tg_username"
-                                                                                className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
-                                                                                onChange={
-                                                                                    handleChangeEditR
-                                                                                }
-                                                                                value={
-                                                                                    isEditR.tg_username
-                                                                                }
-                                                                            />
-                                                                        ) : (
-                                                                            item.tg_username
-                                                                        )}
-                                                                    </td>
-                                                                </tr>
-                                                                {/* Telefon  */}
-                                                                <tr>
-                                                                    <th>
-                                                                        Telefon
-                                                                        No'meri
-                                                                    </th>
-                                                                    <td>
-                                                                        {isEditR?.id ===
-                                                                        item.id ? (
-                                                                            <textarea
-                                                                                type="text"
-                                                                                name="telefon_nomer"
-                                                                                id="telefon_nomer"
-                                                                                className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
-                                                                                onChange={
-                                                                                    handleChangeEditR
-                                                                                }
-                                                                                value={
-                                                                                    isEditR.telefon_nomer
-                                                                                }
-                                                                            />
-                                                                        ) : (
-                                                                            item.telefon_nomer
-                                                                        )}
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                                <div className="w-full flex justify-end">
-                                                    <div className="flex gap-2">
-                                                        <button
-                                                            onClick={() =>
-                                                                onEditR(
-                                                                    item,
-                                                                    isEditR?.id ===
-                                                                        item.id
-                                                                )
-                                                            }
-                                                            className={` ${
-                                                                isEditR?.id ===
-                                                                item.id
-                                                                    ? "bg-blue-400 hover:bg-blue-600"
-                                                                    : "bg-gray-400 hover:bg-gray-600"
-                                                            } flex items-center gap-2  rounded-md py-1 px-4 text-white font-medium active:scale-95`}
-                                                        >
                                                             {isEditR?.id ===
-                                                            item.id ? (
-                                                                <>
-                                                                    <span>
-                                                                        Jo'natish
-                                                                    </span>
-                                                                    <RxArrowTopRight />
-                                                                </>
-                                                            ) : (
-                                                                <>
-                                                                    <span>
-                                                                        Tahrirlash
-                                                                    </span>
-                                                                    <MdEdit />
-                                                                </>
+                                                                item.id && (
+                                                                <label htmlFor="rasm">
+                                                                    <div className="text-red-600 font-medium">
+                                                                        Agar
+                                                                        rasim
+                                                                        jo'natilmasa
+                                                                        o'z
+                                                                        holida
+                                                                        qoladi!
+                                                                    </div>
+                                                                    <input
+                                                                        ref={
+                                                                            rasmR
+                                                                        }
+                                                                        onChange={
+                                                                            handleChange
+                                                                        }
+                                                                        type="file"
+                                                                        id="rasm"
+                                                                        name="rasm"
+                                                                        className="w-[400px] file-input file-input-bordered mt-2"
+                                                                    />
+                                                                </label>
                                                             )}
-                                                        </button>
-                                                        <button
-                                                            onClick={() =>
-                                                                onDelR(item.id)
-                                                            }
-                                                            className="flex items-center gap-2 bg-red-500 rounded-md py-1 px-4 text-white font-medium hover:bg-red-600 active:scale-95"
-                                                        >
-                                                            <span>
-                                                                O'CHIRISH
-                                                            </span>
-                                                            <MdDelete />
-                                                        </button>
+                                                        </div>
+                                                        <div>
+                                                            <div className="overflow-x-auto">
+                                                                <table className="table">
+                                                                    {/* head */}
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th></th>
+                                                                            <th>
+                                                                                Uz
+                                                                            </th>
+                                                                            <th>
+                                                                                Ru
+                                                                            </th>
+                                                                            <th>
+                                                                                En
+                                                                            </th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        {/* Lavozim */}
+                                                                        <tr>
+                                                                            <th>
+                                                                                Lavozim
+                                                                            </th>
+                                                                            <td>
+                                                                                {isEditR?.id ===
+                                                                                item.id ? (
+                                                                                    <textarea
+                                                                                        type="text"
+                                                                                        name="lavozim_uz"
+                                                                                        id="lavozim_uz"
+                                                                                        className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
+                                                                                        onChange={
+                                                                                            handleChangeEditR
+                                                                                        }
+                                                                                        value={
+                                                                                            isEditR.lavozim_uz
+                                                                                        }
+                                                                                    />
+                                                                                ) : (
+                                                                                    item.lavozim_uz
+                                                                                )}
+                                                                            </td>
+                                                                            <td>
+                                                                                {isEditR?.id ===
+                                                                                item.id ? (
+                                                                                    <textarea
+                                                                                        type="text"
+                                                                                        name="lavozim_ru"
+                                                                                        id="lavozim_ru"
+                                                                                        className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
+                                                                                        onChange={
+                                                                                            handleChangeEditR
+                                                                                        }
+                                                                                        value={
+                                                                                            isEditR.lavozim_ru
+                                                                                        }
+                                                                                    />
+                                                                                ) : (
+                                                                                    item.lavozim_ru
+                                                                                )}
+                                                                            </td>
+                                                                            <td>
+                                                                                {isEditR?.id ===
+                                                                                item.id ? (
+                                                                                    <textarea
+                                                                                        type="text"
+                                                                                        name="lavozim_en"
+                                                                                        id="lavozim_en"
+                                                                                        className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
+                                                                                        onChange={
+                                                                                            handleChangeEditR
+                                                                                        }
+                                                                                        value={
+                                                                                            isEditR.lavozim_en
+                                                                                        }
+                                                                                    />
+                                                                                ) : (
+                                                                                    item.lavozim_en
+                                                                                )}
+                                                                            </td>
+                                                                        </tr>
+                                                                        {/* FISH */}
+                                                                        <tr>
+                                                                            <th>
+                                                                                F.I.SH
+                                                                            </th>
+                                                                            <td>
+                                                                                {isEditR?.id ===
+                                                                                item.id ? (
+                                                                                    <textarea
+                                                                                        type="text"
+                                                                                        name="fish_uz"
+                                                                                        id="fish_uz"
+                                                                                        className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
+                                                                                        onChange={
+                                                                                            handleChangeEditR
+                                                                                        }
+                                                                                        value={
+                                                                                            isEditR.fish_uz
+                                                                                        }
+                                                                                    />
+                                                                                ) : (
+                                                                                    item.fish_uz
+                                                                                )}
+                                                                            </td>
+                                                                            <td>
+                                                                                {isEditR?.id ===
+                                                                                item.id ? (
+                                                                                    <textarea
+                                                                                        type="text"
+                                                                                        name="fish_ru"
+                                                                                        id="fish_ru"
+                                                                                        className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
+                                                                                        onChange={
+                                                                                            handleChangeEditR
+                                                                                        }
+                                                                                        value={
+                                                                                            isEditR.fish_ru
+                                                                                        }
+                                                                                    />
+                                                                                ) : (
+                                                                                    item.fish_ru
+                                                                                )}
+                                                                            </td>
+                                                                            <td>
+                                                                                {isEditR?.id ===
+                                                                                item.id ? (
+                                                                                    <textarea
+                                                                                        type="text"
+                                                                                        name="fish_en"
+                                                                                        id="fish_en"
+                                                                                        className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
+                                                                                        onChange={
+                                                                                            handleChangeEditR
+                                                                                        }
+                                                                                        value={
+                                                                                            isEditR.fish_en
+                                                                                        }
+                                                                                    />
+                                                                                ) : (
+                                                                                    item.fish_en
+                                                                                )}
+                                                                            </td>
+                                                                        </tr>
+                                                                        {/* Unvon */}
+                                                                        <tr>
+                                                                            <th>
+                                                                                Unvon
+                                                                            </th>
+                                                                            <td>
+                                                                                {isEditR?.id ===
+                                                                                item.id ? (
+                                                                                    <textarea
+                                                                                        type="text"
+                                                                                        name="unvon_uz"
+                                                                                        id="unvon_uz"
+                                                                                        className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
+                                                                                        onChange={
+                                                                                            handleChangeEditR
+                                                                                        }
+                                                                                        value={
+                                                                                            isEditR.unvon_uz
+                                                                                        }
+                                                                                    />
+                                                                                ) : (
+                                                                                    item.unvon_uz
+                                                                                )}
+                                                                            </td>
+                                                                            <td>
+                                                                                {isEditR?.id ===
+                                                                                item.id ? (
+                                                                                    <textarea
+                                                                                        type="text"
+                                                                                        name="unvon_ru"
+                                                                                        id="unvon_ru"
+                                                                                        className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
+                                                                                        onChange={
+                                                                                            handleChangeEditR
+                                                                                        }
+                                                                                        value={
+                                                                                            isEditR.unvon_ru
+                                                                                        }
+                                                                                    />
+                                                                                ) : (
+                                                                                    item.unvon_ru
+                                                                                )}
+                                                                            </td>
+                                                                            <td>
+                                                                                {isEditR?.id ===
+                                                                                item.id ? (
+                                                                                    <textarea
+                                                                                        type="text"
+                                                                                        name="unvon_en"
+                                                                                        id="unvon_en"
+                                                                                        className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
+                                                                                        onChange={
+                                                                                            handleChangeEditR
+                                                                                        }
+                                                                                        value={
+                                                                                            isEditR.unvon_en
+                                                                                        }
+                                                                                    />
+                                                                                ) : (
+                                                                                    item.unvon_en
+                                                                                )}
+                                                                            </td>
+                                                                        </tr>
+                                                                        {/* Qabul s */}
+                                                                        <tr>
+                                                                            <th>
+                                                                                Qabul
+                                                                                soatlari
+                                                                            </th>
+                                                                            <td>
+                                                                                {isEditR?.id ===
+                                                                                item.id ? (
+                                                                                    <textarea
+                                                                                        type="text"
+                                                                                        name="qabul_soati_uz"
+                                                                                        id="qabul_soati_uz"
+                                                                                        className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
+                                                                                        onChange={
+                                                                                            handleChangeEditR
+                                                                                        }
+                                                                                        value={
+                                                                                            isEditR.qabul_soati_uz
+                                                                                        }
+                                                                                    />
+                                                                                ) : (
+                                                                                    item.qabul_soati_uz
+                                                                                )}
+                                                                            </td>
+                                                                            <td>
+                                                                                {isEditR?.id ===
+                                                                                item.id ? (
+                                                                                    <textarea
+                                                                                        type="text"
+                                                                                        name="qabul_soati_ru"
+                                                                                        id="qabul_soati_ru"
+                                                                                        className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
+                                                                                        onChange={
+                                                                                            handleChangeEditR
+                                                                                        }
+                                                                                        value={
+                                                                                            isEditR.qabul_soati_ru
+                                                                                        }
+                                                                                    />
+                                                                                ) : (
+                                                                                    item.qabul_soati_ru
+                                                                                )}
+                                                                            </td>
+                                                                            <td>
+                                                                                {isEditR?.id ===
+                                                                                item.id ? (
+                                                                                    <textarea
+                                                                                        type="text"
+                                                                                        name="qabul_soati_en"
+                                                                                        id="qabul_soati_en"
+                                                                                        className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
+                                                                                        onChange={
+                                                                                            handleChangeEditR
+                                                                                        }
+                                                                                        value={
+                                                                                            isEditR.qabul_soati_en
+                                                                                        }
+                                                                                    />
+                                                                                ) : (
+                                                                                    item.qabul_soati_en
+                                                                                )}
+                                                                            </td>
+                                                                        </tr>
+                                                                        {/* Biografyasi */}
+                                                                        <tr>
+                                                                            <th>
+                                                                                Biografyasi
+                                                                            </th>
+                                                                            <td>
+                                                                                {isEditR?.id ===
+                                                                                item.id ? (
+                                                                                    <textarea
+                                                                                        type="text"
+                                                                                        name="biografiya_uz"
+                                                                                        id="biografiya_uz"
+                                                                                        className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
+                                                                                        onChange={
+                                                                                            handleChangeEditR
+                                                                                        }
+                                                                                        value={
+                                                                                            isEditR.biografiya_uz
+                                                                                        }
+                                                                                    />
+                                                                                ) : (
+                                                                                    item.biografiya_uz
+                                                                                )}
+                                                                            </td>
+                                                                            <td>
+                                                                                {isEditR?.id ===
+                                                                                item.id ? (
+                                                                                    <textarea
+                                                                                        type="text"
+                                                                                        name="biografiya_ru"
+                                                                                        id="biografiya_ru"
+                                                                                        className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
+                                                                                        onChange={
+                                                                                            handleChangeEditR
+                                                                                        }
+                                                                                        value={
+                                                                                            isEditR.biografiya_ru
+                                                                                        }
+                                                                                    />
+                                                                                ) : (
+                                                                                    item.biografiya_ru
+                                                                                )}
+                                                                            </td>
+                                                                            <td>
+                                                                                {isEditR?.id ===
+                                                                                item.id ? (
+                                                                                    <textarea
+                                                                                        type="text"
+                                                                                        name="biografiya_en"
+                                                                                        id="biografiya_en"
+                                                                                        className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
+                                                                                        onChange={
+                                                                                            handleChangeEditR
+                                                                                        }
+                                                                                        value={
+                                                                                            isEditR.biografiya_en
+                                                                                        }
+                                                                                    />
+                                                                                ) : (
+                                                                                    item.biografiya_en
+                                                                                )}
+                                                                            </td>
+                                                                        </tr>
+                                                                        {/* Telegram l */}
+                                                                        <tr>
+                                                                            <th>
+                                                                                Telegram
+                                                                                linki
+                                                                            </th>
+                                                                            <td>
+                                                                                {isEditR?.id ===
+                                                                                item.id ? (
+                                                                                    <textarea
+                                                                                        type="text"
+                                                                                        name="tg_username"
+                                                                                        id="tg_username"
+                                                                                        className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
+                                                                                        onChange={
+                                                                                            handleChangeEditR
+                                                                                        }
+                                                                                        value={
+                                                                                            isEditR.tg_username
+                                                                                        }
+                                                                                    />
+                                                                                ) : (
+                                                                                    item.tg_username
+                                                                                )}
+                                                                            </td>
+                                                                        </tr>
+                                                                        {/* Telefon  */}
+                                                                        <tr>
+                                                                            <th>
+                                                                                Telefon
+                                                                                No'meri
+                                                                            </th>
+                                                                            <td>
+                                                                                {isEditR?.id ===
+                                                                                item.id ? (
+                                                                                    <textarea
+                                                                                        type="text"
+                                                                                        name="telefon_nomer"
+                                                                                        id="telefon_nomer"
+                                                                                        className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
+                                                                                        onChange={
+                                                                                            handleChangeEditR
+                                                                                        }
+                                                                                        value={
+                                                                                            isEditR.telefon_nomer
+                                                                                        }
+                                                                                    />
+                                                                                ) : (
+                                                                                    item.telefon_nomer
+                                                                                )}
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                        <div className="w-full flex justify-end">
+                                                            <div className="flex gap-2">
+                                                                <button
+                                                                    onClick={() =>
+                                                                        onEditR(
+                                                                            item,
+                                                                            isEditR?.id ===
+                                                                                item.id
+                                                                        )
+                                                                    }
+                                                                    className={` ${
+                                                                        isEditR?.id ===
+                                                                        item.id
+                                                                            ? "bg-blue-400 hover:bg-blue-600"
+                                                                            : "bg-gray-400 hover:bg-gray-600"
+                                                                    } flex items-center gap-2  rounded-md py-1 px-4 text-white font-medium active:scale-95`}
+                                                                >
+                                                                    {isEditR?.id ===
+                                                                    item.id ? (
+                                                                        <>
+                                                                            <span>
+                                                                                Jo'natish
+                                                                            </span>
+                                                                            <RxArrowTopRight />
+                                                                        </>
+                                                                    ) : (
+                                                                        <>
+                                                                            <span>
+                                                                                Tahrirlash
+                                                                            </span>
+                                                                            <MdEdit />
+                                                                        </>
+                                                                    )}
+                                                                </button>
+                                                                <button
+                                                                    onClick={() =>
+                                                                        onDelR(
+                                                                            item.id
+                                                                        )
+                                                                    }
+                                                                    className="flex items-center gap-2 bg-red-500 rounded-md py-1 px-4 text-white font-medium hover:bg-red-600 active:scale-95"
+                                                                >
+                                                                    <span>
+                                                                        O'CHIRISH
+                                                                    </span>
+                                                                    <MdDelete />
+                                                                </button>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                </li>
+                                            ))
+                                        ) : (
+                                            <div className="text-red-600">
+                                                Ma'lumot mavjud emas!
                                             </div>
-                                        </li>
-                                    ))
-                                ) : (
-                                    <div className="text-red-600">
-                                        Ma'lumot mavjud emas!
-                                    </div>
-                                )}
-                            </ol>
+                                        )}
+                                    </ol>
+                                </div>
+                            </div>
+
+                            {/* /Accardion */}
                         </div>
                     </div>
                 </div>
@@ -1560,10 +1577,7 @@ const Kafedra = () => {
                             </div>
                             {/* Lavozim */}
                             <div className="w-full flex gap-2">
-                                <label
-                                    className="w-[33.33%]"
-                                    htmlFor="lavozim_uz"
-                                >
+                                <div className="w-[33.33%]">
                                     Lavozim uz
                                     <textarea
                                         type="text"
@@ -1575,12 +1589,9 @@ const Kafedra = () => {
                                         value={formik_3.values.lavozim_uz}
                                         onChange={formik_3.handleChange}
                                     />
-                                </label>
+                                </div>
 
-                                <label
-                                    className="w-[33.33%]"
-                                    htmlFor="lavozim_ru"
-                                >
+                                <div className="w-[33.33%]">
                                     Lavozim ru
                                     <textarea
                                         type="text"
@@ -1592,12 +1603,8 @@ const Kafedra = () => {
                                         value={formik_3.values.lavozim_ru}
                                         onChange={formik_3.handleChange}
                                     />
-                                </label>
-
-                                <label
-                                    className="w-[33.33%]"
-                                    htmlFor="lavozim_en"
-                                >
+                                </div>
+                                <div className="w-[33.33%]">
                                     Lavozim en
                                     <textarea
                                         type="text"
@@ -1609,11 +1616,11 @@ const Kafedra = () => {
                                         value={formik_3.values.lavozim_en}
                                         onChange={formik_3.handleChange}
                                     />
-                                </label>
+                                </div>
                             </div>
                             {/* FIO */}
                             <div className="w-full flex gap-2">
-                                <label className="w-[33.33%]" htmlFor="fish_uz">
+                                <div className="w-[33.33%]">
                                     FISH uz
                                     <textarea
                                         type="text"
@@ -1625,9 +1632,9 @@ const Kafedra = () => {
                                         value={formik_3.values.fish_uz}
                                         onChange={formik_3.handleChange}
                                     />
-                                </label>
+                                </div>
 
-                                <label className="w-[33.33%]" htmlFor="fish_ru">
+                                <div className="w-[33.33%]">
                                     FISH ru
                                     <textarea
                                         type="text"
@@ -1639,9 +1646,9 @@ const Kafedra = () => {
                                         value={formik_3.values.fish_ru}
                                         onChange={formik_3.handleChange}
                                     />
-                                </label>
+                                </div>
 
-                                <label className="w-[33.33%]" htmlFor="fish_en">
+                                <div className="w-[33.33%]">
                                     FISH en
                                     <textarea
                                         type="text"
@@ -1653,14 +1660,11 @@ const Kafedra = () => {
                                         value={formik_3.values.fish_en}
                                         onChange={formik_3.handleChange}
                                     />
-                                </label>
+                                </div>
                             </div>
                             {/* Unvoni */}
                             <div className="w-full flex gap-2">
-                                <label
-                                    className="w-[33.33%]"
-                                    htmlFor="unvon_uz"
-                                >
+                                <div className="w-[33.33%]">
                                     Unvon uz
                                     <textarea
                                         type="text"
@@ -1672,12 +1676,9 @@ const Kafedra = () => {
                                         value={formik_3.values.unvon_uz}
                                         onChange={formik_3.handleChange}
                                     />
-                                </label>
+                                </div>
 
-                                <label
-                                    className="w-[33.33%]"
-                                    htmlFor="unvon_ru"
-                                >
+                                <div className="w-[33.33%]">
                                     Unvon ru
                                     <textarea
                                         type="text"
@@ -1689,12 +1690,9 @@ const Kafedra = () => {
                                         value={formik_3.values.unvon_ru}
                                         onChange={formik_3.handleChange}
                                     />
-                                </label>
+                                </div>
 
-                                <label
-                                    className="w-[33.33%]"
-                                    htmlFor="unvon_en"
-                                >
+                                <div className="w-[33.33%]">
                                     Unvon en
                                     <textarea
                                         type="text"
@@ -1706,120 +1704,11 @@ const Kafedra = () => {
                                         value={formik_3.values.unvon_en}
                                         onChange={formik_3.handleChange}
                                     />
-                                </label>
+                                </div>
                             </div>
-                            {/* Qabul soati */}
-                            {/* <div className="w-full flex gap-2">
-                                <label
-                                    className="w-[33.33%]"
-                                    htmlFor="qabul_soati_uz"
-                                >
-                                    Qabul soati uz
-                                    <textarea
-                                        type="text"
-                                        id="qabul_soati_uz"
-                                        className={`${
-                                            formik_3.errors.qabul_soati_uz &&
-                                            "input-error"
-                                        } w-full input input-bordered px-[7px]`}
-                                        value={formik_3.values.qabul_soati_uz}
-                                        onChange={formik_3.handleChange}
-                                    />
-                                </label>
-
-                                <label
-                                    className="w-[33.33%]"
-                                    htmlFor="qabul_soati_ru"
-                                >
-                                    Qabul soati ru
-                                    <textarea
-                                        type="text"
-                                        id="qabul_soati_ru"
-                                        className={`${
-                                            formik_3.errors.qabul_soati_ru &&
-                                            "input-error"
-                                        } w-full input input-bordered px-[7px]`}
-                                        value={formik_3.values.qabul_soati_ru}
-                                        onChange={formik_3.handleChange}
-                                    />
-                                </label>
-
-                                <label
-                                    className="w-[33.33%]"
-                                    htmlFor="qabul_soati_en"
-                                >
-                                    Qabul soati en
-                                    <textarea
-                                        type="text"
-                                        id="qabul_soati_en"
-                                        className={`${
-                                            formik_3.errors.qabul_soati_en &&
-                                            "input-error"
-                                        } w-full input input-bordered px-[7px]`}
-                                        value={formik_3.values.qabul_soati_en}
-                                        onChange={formik_3.handleChange}
-                                    />
-                                </label>
-                            </div> */}
-                            {/* biografiya_uz */}
-                            {/* <div className="w-full flex gap-2">
-                                <label
-                                    className="w-[33.33%]"
-                                    htmlFor="biografiya_uz"
-                                >
-                                    Biografiya uz
-                                    <textarea
-                                        type="text"
-                                        id="biografiya_uz"
-                                        className={`${
-                                            formik_3.errors.biografiya_uz &&
-                                            "input-error"
-                                        } w-full input input-bordered px-[7px]`}
-                                        value={formik_3.values.biografiya_uz}
-                                        onChange={formik_3.handleChange}
-                                    />
-                                </label>
-
-                                <label
-                                    className="w-[33.33%]"
-                                    htmlFor="biografiya_ru"
-                                >
-                                    Biografiya ru
-                                    <textarea
-                                        type="text"
-                                        id="biografiya_ru"
-                                        className={`${
-                                            formik_3.errors.biografiya_ru &&
-                                            "input-error"
-                                        } w-full input input-bordered px-[7px]`}
-                                        value={formik_3.values.biografiya_ru}
-                                        onChange={formik_3.handleChange}
-                                    />
-                                </label>
-
-                                <label
-                                    className="w-[33.33%]"
-                                    htmlFor="biografiya_en"
-                                >
-                                    Biografiya en
-                                    <textarea
-                                        type="text"
-                                        id="biografiya_en"
-                                        className={`${
-                                            formik_3.errors.biografiya_en &&
-                                            "input-error"
-                                        } w-full input input-bordered px-[7px]`}
-                                        value={formik_3.values.biografiya_en}
-                                        onChange={formik_3.handleChange}
-                                    />
-                                </label>
-                            </div> */}
                             {/* telefon_nomer */}
                             <div className="w-full flex gap-2">
-                                <label
-                                    className="w-[33.33%]"
-                                    htmlFor="telefon_nomer"
-                                >
+                                <div className="w-[33.33%]">
                                     Telefon No'mer
                                     <input
                                         type="number"
@@ -1831,28 +1720,9 @@ const Kafedra = () => {
                                         value={formik_3.values.telefon_nomer}
                                         onChange={formik_3.handleChange}
                                     />
-                                </label>
-
-                                {/* tg_username */}
-                                {/* <label
-                                    className="w-[33.33%]"
-                                    htmlFor="tg_username"
-                                >
-                                    Telegram link
-                                    <input
-                                        type="text"
-                                        id="tg_username"
-                                        className={`${
-                                            formik_3.errors.tg_username &&
-                                            "input-error"
-                                        } w-full input input-bordered px-[7px]`}
-                                        value={formik_3.values.tg_username}
-                                        onChange={formik_3.handleChange}
-                                    />
-                                </label> */}
-
+                                </div>
                                 {/* Rasm */}
-                                <label className="w-[33.33%]" htmlFor="rasm">
+                                <div className="w-[33.33%]">
                                     Rasmi
                                     <input
                                         ref={rasmH}
@@ -1865,7 +1735,7 @@ const Kafedra = () => {
                                             "file-input-error text-red-600"
                                         } w-full file-input file-input-bordered`}
                                     />
-                                </label>
+                                </div>
                             </div>
 
                             <button
@@ -1877,333 +1747,354 @@ const Kafedra = () => {
                         </form>
 
                         <div className="my-10">
-                            <h1 className="text-[1.2rem] font-medium mb-2">
-                                Kafedra hodimlari:
-                            </h1>
-                            <ol className="list-decimal flex flex-col gap-3 ps-4">
-                                {dataHodim?.length !== 0 && dataHodim ? (
-                                    dataHodim?.map((item) => (
-                                        <li
-                                            className="w-full border bg-gray-50 shadow-md p-2"
-                                            key={item.id}
-                                        >
-                                            <div className="flex flex-col items-start gap-4">
-                                                <div className="flex flex-col gap-y-4 w-full">
-                                                    <div className="w-[200px] h-auto">
-                                                        <img
-                                                            src={item.rasm}
-                                                            alt="Lavozim rasmi"
-                                                        />
-                                                    </div>
-                                                    {isEditH?.id ===
-                                                        item.id && (
-                                                        <label htmlFor="rasm">
-                                                            <div className="text-red-600 font-medium">
-                                                                Agar rasim
-                                                                jo'natilmasa o'z
-                                                                holida qoladi!
+                            <div className="collapse collapse-arrow">
+                                <input type="checkbox" name="my-accordion-2" />
+                                <div className="collapse-title text-xl font-medium bg-gray-200">
+                                    Kafedra hodimlari:
+                                </div>
+                                <div className="collapse-content">
+                                    <ol className="list-decimal flex flex-col gap-3 ps-4 my-4">
+                                        {dataHodim?.length !== 0 &&
+                                        dataHodim ? (
+                                            dataHodim?.map((item) => (
+                                                <li
+                                                    className="w-full border bg-gray-50 shadow-md p-2"
+                                                    key={item.id}
+                                                >
+                                                    <div className="flex flex-col items-start gap-4">
+                                                        <div className="flex flex-col gap-y-4 w-full">
+                                                            <div className="w-[200px] h-auto">
+                                                                <img
+                                                                    src={
+                                                                        item.rasm
+                                                                    }
+                                                                    alt="Lavozim rasmi"
+                                                                />
                                                             </div>
-                                                            <input
-                                                                ref={rasmH}
-                                                                onChange={
-                                                                    handleChangeH
-                                                                }
-                                                                type="file"
-                                                                id="rasm"
-                                                                name="rasm"
-                                                                className="w-[400px] file-input file-input-bordered mt-2"
-                                                            />
-                                                        </label>
-                                                    )}
-                                                </div>
-                                                <div>
-                                                    <div className="overflow-x-auto">
-                                                        <table className="table">
-                                                            {/* head */}
-                                                            <thead>
-                                                                <tr>
-                                                                    <th></th>
-                                                                    <th>Uz</th>
-                                                                    <th>Ru</th>
-                                                                    <th>En</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                {/* Lavozim */}
-                                                                <tr>
-                                                                    <th>
-                                                                        Lavozim
-                                                                    </th>
-                                                                    <td>
-                                                                        {isEditH?.id ===
-                                                                        item.id ? (
-                                                                            <textarea
-                                                                                type="text"
-                                                                                name="lavozim_uz"
-                                                                                id="lavozim_uz"
-                                                                                className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
-                                                                                onChange={
-                                                                                    handleChangeEditH
-                                                                                }
-                                                                                value={
-                                                                                    isEditH.lavozim_uz
-                                                                                }
-                                                                            />
-                                                                        ) : (
-                                                                            item.lavozim_uz
-                                                                        )}
-                                                                    </td>
-                                                                    <td>
-                                                                        {isEditH?.id ===
-                                                                        item.id ? (
-                                                                            <textarea
-                                                                                type="text"
-                                                                                name="lavozim_ru"
-                                                                                id="lavozim_ru"
-                                                                                className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
-                                                                                onChange={
-                                                                                    handleChangeEditH
-                                                                                }
-                                                                                value={
-                                                                                    isEditH.lavozim_ru
-                                                                                }
-                                                                            />
-                                                                        ) : (
-                                                                            item.lavozim_ru
-                                                                        )}
-                                                                    </td>
-                                                                    <td>
-                                                                        {isEditH?.id ===
-                                                                        item.id ? (
-                                                                            <textarea
-                                                                                type="text"
-                                                                                name="lavozim_en"
-                                                                                id="lavozim_en"
-                                                                                className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
-                                                                                onChange={
-                                                                                    handleChangeEditH
-                                                                                }
-                                                                                value={
-                                                                                    isEditH.lavozim_en
-                                                                                }
-                                                                            />
-                                                                        ) : (
-                                                                            item.lavozim_en
-                                                                        )}
-                                                                    </td>
-                                                                </tr>
-                                                                {/* FISH */}
-                                                                <tr>
-                                                                    <th>
-                                                                        F.I.SH
-                                                                    </th>
-                                                                    <td>
-                                                                        {isEditH?.id ===
-                                                                        item.id ? (
-                                                                            <textarea
-                                                                                type="text"
-                                                                                name="fish_uz"
-                                                                                id="fish_uz"
-                                                                                className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
-                                                                                onChange={
-                                                                                    handleChangeEditH
-                                                                                }
-                                                                                value={
-                                                                                    isEditH.fish_uz
-                                                                                }
-                                                                            />
-                                                                        ) : (
-                                                                            item.fish_uz
-                                                                        )}
-                                                                    </td>
-                                                                    <td>
-                                                                        {isEditH?.id ===
-                                                                        item.id ? (
-                                                                            <textarea
-                                                                                type="text"
-                                                                                name="fish_ru"
-                                                                                id="fish_ru"
-                                                                                className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
-                                                                                onChange={
-                                                                                    handleChangeEditH
-                                                                                }
-                                                                                value={
-                                                                                    isEditH.fish_ru
-                                                                                }
-                                                                            />
-                                                                        ) : (
-                                                                            item.fish_ru
-                                                                        )}
-                                                                    </td>
-                                                                    <td>
-                                                                        {isEditH?.id ===
-                                                                        item.id ? (
-                                                                            <textarea
-                                                                                type="text"
-                                                                                name="fish_en"
-                                                                                id="fish_en"
-                                                                                className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
-                                                                                onChange={
-                                                                                    handleChangeEditH
-                                                                                }
-                                                                                value={
-                                                                                    isEditH.fish_en
-                                                                                }
-                                                                            />
-                                                                        ) : (
-                                                                            item.fish_en
-                                                                        )}
-                                                                    </td>
-                                                                </tr>
-                                                                {/* Unvon */}
-                                                                <tr>
-                                                                    <th>
-                                                                        Unvon
-                                                                    </th>
-                                                                    <td>
-                                                                        {isEditH?.id ===
-                                                                        item.id ? (
-                                                                            <textarea
-                                                                                type="text"
-                                                                                name="unvon_uz"
-                                                                                id="unvon_uz"
-                                                                                className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
-                                                                                onChange={
-                                                                                    handleChangeEditH
-                                                                                }
-                                                                                value={
-                                                                                    isEditH.unvon_uz
-                                                                                }
-                                                                            />
-                                                                        ) : (
-                                                                            item.unvon_uz
-                                                                        )}
-                                                                    </td>
-                                                                    <td>
-                                                                        {isEditH?.id ===
-                                                                        item.id ? (
-                                                                            <textarea
-                                                                                type="text"
-                                                                                name="unvon_ru"
-                                                                                id="unvon_ru"
-                                                                                className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
-                                                                                onChange={
-                                                                                    handleChangeEditH
-                                                                                }
-                                                                                value={
-                                                                                    isEditH.unvon_ru
-                                                                                }
-                                                                            />
-                                                                        ) : (
-                                                                            item.unvon_ru
-                                                                        )}
-                                                                    </td>
-                                                                    <td>
-                                                                        {isEditH?.id ===
-                                                                        item.id ? (
-                                                                            <textarea
-                                                                                type="text"
-                                                                                name="unvon_en"
-                                                                                id="unvon_en"
-                                                                                className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
-                                                                                onChange={
-                                                                                    handleChangeEditH
-                                                                                }
-                                                                                value={
-                                                                                    isEditH.unvon_en
-                                                                                }
-                                                                            />
-                                                                        ) : (
-                                                                            item.unvon_en
-                                                                        )}
-                                                                    </td>
-                                                                </tr>
-                                                                {/* Telefon  */}
-                                                                <tr>
-                                                                    <th>
-                                                                        Telefon
-                                                                        No'meri
-                                                                    </th>
-                                                                    <td>
-                                                                        {isEditH?.id ===
-                                                                        item.id ? (
-                                                                            <textarea
-                                                                                type="text"
-                                                                                name="telefon_nomer"
-                                                                                id="telefon_nomer"
-                                                                                className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
-                                                                                onChange={
-                                                                                    handleChangeEditH
-                                                                                }
-                                                                                value={
-                                                                                    isEditH.telefon_nomer
-                                                                                }
-                                                                            />
-                                                                        ) : (
-                                                                            item.telefon_nomer
-                                                                        )}
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                                <div className="w-full flex justify-end">
-                                                    <div className="flex gap-2">
-                                                        <button
-                                                            onClick={() =>
-                                                                onEditH(
-                                                                    item,
-                                                                    isEditH?.id ===
-                                                                        item.id
-                                                                )
-                                                            }
-                                                            className={` ${
-                                                                isEditH?.id ===
-                                                                item.id
-                                                                    ? "bg-blue-400 hover:bg-blue-600"
-                                                                    : "bg-gray-400 hover:bg-gray-600"
-                                                            } flex items-center gap-2  rounded-md py-1 px-4 text-white font-medium active:scale-95`}
-                                                        >
                                                             {isEditH?.id ===
-                                                            item.id ? (
-                                                                <>
-                                                                    <span>
-                                                                        Jo'natish
-                                                                    </span>
-                                                                    <RxArrowTopRight />
-                                                                </>
-                                                            ) : (
-                                                                <>
-                                                                    <span>
-                                                                        Tahrirlash
-                                                                    </span>
-                                                                    <MdEdit />
-                                                                </>
+                                                                item.id && (
+                                                                <label htmlFor="rasm">
+                                                                    <div className="text-red-600 font-medium">
+                                                                        Agar
+                                                                        rasim
+                                                                        jo'natilmasa
+                                                                        o'z
+                                                                        holida
+                                                                        qoladi!
+                                                                    </div>
+                                                                    <input
+                                                                        ref={
+                                                                            rasmH
+                                                                        }
+                                                                        onChange={
+                                                                            handleChangeH
+                                                                        }
+                                                                        type="file"
+                                                                        id="rasm"
+                                                                        name="rasm"
+                                                                        className="w-[400px] file-input file-input-bordered mt-2"
+                                                                    />
+                                                                </label>
                                                             )}
-                                                        </button>
-                                                        <button
-                                                            onClick={() =>
-                                                                onDelH(item.id)
-                                                            }
-                                                            className="flex items-center gap-2 bg-red-500 rounded-md py-1 px-4 text-white font-medium hover:bg-red-600 active:scale-95"
-                                                        >
-                                                            <span>
-                                                                O'CHIRISH
-                                                            </span>
-                                                            <MdDelete />
-                                                        </button>
+                                                        </div>
+                                                        <div>
+                                                            <div className="overflow-x-auto">
+                                                                <table className="table">
+                                                                    {/* head */}
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th></th>
+                                                                            <th>
+                                                                                Uz
+                                                                            </th>
+                                                                            <th>
+                                                                                Ru
+                                                                            </th>
+                                                                            <th>
+                                                                                En
+                                                                            </th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        {/* Lavozim */}
+                                                                        <tr>
+                                                                            <th>
+                                                                                Lavozim
+                                                                            </th>
+                                                                            <td>
+                                                                                {isEditH?.id ===
+                                                                                item.id ? (
+                                                                                    <textarea
+                                                                                        type="text"
+                                                                                        name="lavozim_uz"
+                                                                                        id="lavozim_uz"
+                                                                                        className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
+                                                                                        onChange={
+                                                                                            handleChangeEditH
+                                                                                        }
+                                                                                        value={
+                                                                                            isEditH.lavozim_uz
+                                                                                        }
+                                                                                    />
+                                                                                ) : (
+                                                                                    item.lavozim_uz
+                                                                                )}
+                                                                            </td>
+                                                                            <td>
+                                                                                {isEditH?.id ===
+                                                                                item.id ? (
+                                                                                    <textarea
+                                                                                        type="text"
+                                                                                        name="lavozim_ru"
+                                                                                        id="lavozim_ru"
+                                                                                        className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
+                                                                                        onChange={
+                                                                                            handleChangeEditH
+                                                                                        }
+                                                                                        value={
+                                                                                            isEditH.lavozim_ru
+                                                                                        }
+                                                                                    />
+                                                                                ) : (
+                                                                                    item.lavozim_ru
+                                                                                )}
+                                                                            </td>
+                                                                            <td>
+                                                                                {isEditH?.id ===
+                                                                                item.id ? (
+                                                                                    <textarea
+                                                                                        type="text"
+                                                                                        name="lavozim_en"
+                                                                                        id="lavozim_en"
+                                                                                        className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
+                                                                                        onChange={
+                                                                                            handleChangeEditH
+                                                                                        }
+                                                                                        value={
+                                                                                            isEditH.lavozim_en
+                                                                                        }
+                                                                                    />
+                                                                                ) : (
+                                                                                    item.lavozim_en
+                                                                                )}
+                                                                            </td>
+                                                                        </tr>
+                                                                        {/* FISH */}
+                                                                        <tr>
+                                                                            <th>
+                                                                                F.I.SH
+                                                                            </th>
+                                                                            <td>
+                                                                                {isEditH?.id ===
+                                                                                item.id ? (
+                                                                                    <textarea
+                                                                                        type="text"
+                                                                                        name="fish_uz"
+                                                                                        id="fish_uz"
+                                                                                        className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
+                                                                                        onChange={
+                                                                                            handleChangeEditH
+                                                                                        }
+                                                                                        value={
+                                                                                            isEditH.fish_uz
+                                                                                        }
+                                                                                    />
+                                                                                ) : (
+                                                                                    item.fish_uz
+                                                                                )}
+                                                                            </td>
+                                                                            <td>
+                                                                                {isEditH?.id ===
+                                                                                item.id ? (
+                                                                                    <textarea
+                                                                                        type="text"
+                                                                                        name="fish_ru"
+                                                                                        id="fish_ru"
+                                                                                        className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
+                                                                                        onChange={
+                                                                                            handleChangeEditH
+                                                                                        }
+                                                                                        value={
+                                                                                            isEditH.fish_ru
+                                                                                        }
+                                                                                    />
+                                                                                ) : (
+                                                                                    item.fish_ru
+                                                                                )}
+                                                                            </td>
+                                                                            <td>
+                                                                                {isEditH?.id ===
+                                                                                item.id ? (
+                                                                                    <textarea
+                                                                                        type="text"
+                                                                                        name="fish_en"
+                                                                                        id="fish_en"
+                                                                                        className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
+                                                                                        onChange={
+                                                                                            handleChangeEditH
+                                                                                        }
+                                                                                        value={
+                                                                                            isEditH.fish_en
+                                                                                        }
+                                                                                    />
+                                                                                ) : (
+                                                                                    item.fish_en
+                                                                                )}
+                                                                            </td>
+                                                                        </tr>
+                                                                        {/* Unvon */}
+                                                                        <tr>
+                                                                            <th>
+                                                                                Unvon
+                                                                            </th>
+                                                                            <td>
+                                                                                {isEditH?.id ===
+                                                                                item.id ? (
+                                                                                    <textarea
+                                                                                        type="text"
+                                                                                        name="unvon_uz"
+                                                                                        id="unvon_uz"
+                                                                                        className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
+                                                                                        onChange={
+                                                                                            handleChangeEditH
+                                                                                        }
+                                                                                        value={
+                                                                                            isEditH.unvon_uz
+                                                                                        }
+                                                                                    />
+                                                                                ) : (
+                                                                                    item.unvon_uz
+                                                                                )}
+                                                                            </td>
+                                                                            <td>
+                                                                                {isEditH?.id ===
+                                                                                item.id ? (
+                                                                                    <textarea
+                                                                                        type="text"
+                                                                                        name="unvon_ru"
+                                                                                        id="unvon_ru"
+                                                                                        className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
+                                                                                        onChange={
+                                                                                            handleChangeEditH
+                                                                                        }
+                                                                                        value={
+                                                                                            isEditH.unvon_ru
+                                                                                        }
+                                                                                    />
+                                                                                ) : (
+                                                                                    item.unvon_ru
+                                                                                )}
+                                                                            </td>
+                                                                            <td>
+                                                                                {isEditH?.id ===
+                                                                                item.id ? (
+                                                                                    <textarea
+                                                                                        type="text"
+                                                                                        name="unvon_en"
+                                                                                        id="unvon_en"
+                                                                                        className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
+                                                                                        onChange={
+                                                                                            handleChangeEditH
+                                                                                        }
+                                                                                        value={
+                                                                                            isEditH.unvon_en
+                                                                                        }
+                                                                                    />
+                                                                                ) : (
+                                                                                    item.unvon_en
+                                                                                )}
+                                                                            </td>
+                                                                        </tr>
+                                                                        {/* Telefon  */}
+                                                                        <tr>
+                                                                            <th>
+                                                                                Telefon
+                                                                                No'meri
+                                                                            </th>
+                                                                            <td>
+                                                                                {isEditH?.id ===
+                                                                                item.id ? (
+                                                                                    <textarea
+                                                                                        type="text"
+                                                                                        name="telefon_nomer"
+                                                                                        id="telefon_nomer"
+                                                                                        className="w-[300px] border border-black rounded-sm py-[2px] px-[5px]"
+                                                                                        onChange={
+                                                                                            handleChangeEditH
+                                                                                        }
+                                                                                        value={
+                                                                                            isEditH.telefon_nomer
+                                                                                        }
+                                                                                    />
+                                                                                ) : (
+                                                                                    item.telefon_nomer
+                                                                                )}
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                        <div className="w-full flex justify-end">
+                                                            <div className="flex gap-2">
+                                                                <button
+                                                                    onClick={() =>
+                                                                        onEditH(
+                                                                            item,
+                                                                            isEditH?.id ===
+                                                                                item.id
+                                                                        )
+                                                                    }
+                                                                    className={` ${
+                                                                        isEditH?.id ===
+                                                                        item.id
+                                                                            ? "bg-blue-400 hover:bg-blue-600"
+                                                                            : "bg-gray-400 hover:bg-gray-600"
+                                                                    } flex items-center gap-2  rounded-md py-1 px-4 text-white font-medium active:scale-95`}
+                                                                >
+                                                                    {isEditH?.id ===
+                                                                    item.id ? (
+                                                                        <>
+                                                                            <span>
+                                                                                Jo'natish
+                                                                            </span>
+                                                                            <RxArrowTopRight />
+                                                                        </>
+                                                                    ) : (
+                                                                        <>
+                                                                            <span>
+                                                                                Tahrirlash
+                                                                            </span>
+                                                                            <MdEdit />
+                                                                        </>
+                                                                    )}
+                                                                </button>
+                                                                <button
+                                                                    onClick={() =>
+                                                                        onDelH(
+                                                                            item.id
+                                                                        )
+                                                                    }
+                                                                    className="flex items-center gap-2 bg-red-500 rounded-md py-1 px-4 text-white font-medium hover:bg-red-600 active:scale-95"
+                                                                >
+                                                                    <span>
+                                                                        O'CHIRISH
+                                                                    </span>
+                                                                    <MdDelete />
+                                                                </button>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                </li>
+                                            ))
+                                        ) : (
+                                            <div className="text-red-600">
+                                                Ma'lumot mavjud emas!
                                             </div>
-                                        </li>
-                                    ))
-                                ) : (
-                                    <div className="text-red-600">
-                                        Ma'lumot mavjud emas!
-                                    </div>
-                                )}
-                            </ol>
+                                        )}
+                                    </ol>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

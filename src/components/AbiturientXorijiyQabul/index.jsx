@@ -2,11 +2,12 @@ import React, { useState, useRef, useEffect } from "react";
 import { useFormik } from "formik";
 import { RxArrowTopRight } from "react-icons/rx";
 import { BiBlock } from "react-icons/bi";
-import APIHamkor from "../../services/hamkor";
+import APIAbiturientXorijiy from "../../services/abiturientXorijiyQabul";
 import { TextWarn } from "./styled";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import { FaRegEye } from "react-icons/fa6";
 
-const HamkorlarComponent = () => {
+const AbiturientXorijiyQabul = () => {
   const [errTxt, setErrTxt] = useState(false);
   const [data, setData] = useState(null);
   const [file, setFile] = useState(null);
@@ -17,7 +18,7 @@ const HamkorlarComponent = () => {
   }, []);
 
   const getData = () => {
-    APIHamkor.get()
+    APIAbiturientXorijiy.get()
       .then((res) => setData(res.data))
       .catch((err) => console.log(err));
   };
@@ -25,10 +26,10 @@ const HamkorlarComponent = () => {
 
   const formik = useFormik({
     initialValues: {
-      hamkor_url: "",
+      title: "",
     },
     onSubmit: (values) => {
-      if (values.hamkor_url === "") {
+      if (values.title === "") {
         setErrTxt(true);
         setTimeout(() => {
           setErrTxt(false);
@@ -36,9 +37,9 @@ const HamkorlarComponent = () => {
       } else {
         if (file) {
           const data = new FormData();
-          data.append("hamkor_url", values.hamkor_url);
-          data.append("hamkor_rasm", file);
-          APIHamkor.post(data)
+          data.append("title", values.title);
+          data.append("fayl", file);
+          APIAbiturientXorijiy.post(data)
             .then(() => {
               getData();
               formik.resetForm();
@@ -59,7 +60,7 @@ const HamkorlarComponent = () => {
 
   // DELETE qilish
   const handleDelete = async (id) => {
-    await APIHamkor.del(id);
+    await APIAbiturientXorijiy.del(id);
     getData();
   };
 
@@ -67,31 +68,29 @@ const HamkorlarComponent = () => {
     <div className="w-full p-4">
       <div>
         <h1 className="text-[1.4rem] font-bold text-center my-5">
-          Hamkorlar
+          Xorijiy talabalarni qabul qilish hujjatlari
         </h1>
-        <h2 className="text-[1.4rem] font-semibold my-5">
-          Hamkor qo'shish
-        </h2>
+        <h2 className="text-[1.4rem] font-semibold my-5">Hujjat qo'shish</h2>
         <form
           className="flex items-center gap-2 p-4"
           onSubmit={formik.handleSubmit}
         >
-          <label className="w-[25%]" htmlFor="hamkor_rasm">
-            <h3>Hamkor emblemasi</h3>
+          <label className="w-[25%]" htmlFor="fayl">
+            <h3>Hujjat doc/pdf</h3>
             <input
               ref={rasm}
               onChange={handleChange}
               className="w-full file-input file-input-bordered file-input-info"
               type="file"
-              id="hamkor_rasm"
+              id="fayl"
             />
           </label>
-          <label className="w-[25%]" htmlFor="hamkor_url">
-            <h3>Hamkor sayt manzili</h3>
+          <label className="w-[25%]" htmlFor="title">
+            <h3>Hujjat nomi</h3>
             <input
               className="w-full input input-bordered px-[7px]"
-              id="hamkor_url"
-              value={formik.values.hamkor_url}
+              id="title"
+              value={formik.values.title}
               onChange={formik.handleChange}
             />
           </label>
@@ -123,15 +122,15 @@ const HamkorlarComponent = () => {
       {/* Table */}
       <div className="overflow-x-auto mb-5">
         <h2 className="text-[1.4rem] font-semibold mb-2 pt-3">
-          Mavjud hamkorlar
+          Mavjud hujjatlar
         </h2>
         <table className="table table-zebra">
           {/* head */}
           <thead>
             <tr>
               <th>№</th>
-              <th>Hamkor rasm</th>
-              <th>Hamkor url</th>
+              <th>Hujjat nomi</th>
+              <th>Hujjat</th>
               <th>O'chirish</th>
             </tr>
           </thead>
@@ -141,17 +140,18 @@ const HamkorlarComponent = () => {
               data.map((item, idx) => (
                 <tr key={idx}>
                   <th>{item.id}</th>
+                  <td>{item.title}</td>
                   <td>
                     {" "}
-                    <img
-                      src={item.hamkor_rasm}
-                      alt="Hamkor rasmi"
-                      className="rounded h-[50px] object-cover"
-                      width={100}
-                    />
+                    <a
+                      href={item.fayl}
+                      className="border-2 rounded p-2 border-blue-400 flex items-center w-[100px] font-semibold"
+                      target="blank"
+                    >
+                      <FaRegEye className="mr-1" /> Ko'rish
+                    </a>
                   </td>
-                  <td>{item.hamkor_url}</td>
-                  <td>
+                  <td className="">
                     <RiDeleteBin5Line
                       onClick={() => handleDelete(item.id)}
                       className="text-red-600 cursor-pointer h-5 w-5"
@@ -166,4 +166,4 @@ const HamkorlarComponent = () => {
   );
 };
 
-export default HamkorlarComponent;
+export default AbiturientXorijiyQabul;

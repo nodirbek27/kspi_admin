@@ -1,11 +1,12 @@
 import React from "react";
+import Bolimlar from "../../../components/Bolimlar"
 
-const Bolimlar = () => {
+const BolimlarPage = () => {
     return (
         <div>
-            Bolimlar
+            <Bolimlar />
         </div>
     );
 };
 
-export default Bolimlar;
+export default BolimlarPage;

@@ -1,9 +1,11 @@
 import React from "react";
-
+import InstitutRekvizitiCom from "../../../components/InstitutRekvizitiCom";
+import BankRekvizitiCom from "../../../components/BankRekvizitiCom";
 const Rekvizitlar = () => {
     return (
         <div>
-            Rekvizitlar
+            <InstitutRekvizitiCom/>
+            <BankRekvizitiCom/>
         </div>
     );
 };

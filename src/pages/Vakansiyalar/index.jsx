@@ -1,7 +1,10 @@
-import React, { memo } from "react";
+import React from "react";
+import Vakansiya from "../../components/VakansiyalarComponent";
 
 const Vakansiyalar = () => {
-  return <div>Vakansiyalar</div>;
+  return <div>
+    <Vakansiya />
+  </div>;
 };
 
-export default memo(Vakansiyalar);
+export default Vakansiyalar;

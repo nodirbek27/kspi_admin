@@ -1,9 +1,10 @@
 import React from "react";
+import AbiturientMeyoriy from "../../../components/AbiturientMeyoriy";
 
 const MeyoriyHuquqiyHujjatlar = () => {
     return (
         <div>
-            MeyoriyHuquqiyHujjatlar
+            <AbiturientMeyoriy />
         </div>
     );
 };

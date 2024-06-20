@@ -1,9 +1,10 @@
 import React from "react";
+import AbiturientMagistr from "../../../components/AbiturientMagistr";
 
 const Magistratura = () => {
     return (
         <div>
-            Magistratura
+            <AbiturientMagistr />
         </div>
     );
 };

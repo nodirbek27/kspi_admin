@@ -1,11 +1,12 @@
 import React from "react";
+import Markazlar from "../../../components/Markazlar";
 
-const Markazlar = () => {
+const MarkazlarPage = () => {
     return (
         <div>
-            Markazlar
+            <Markazlar />
         </div>
     );
 };
 
-export default Markazlar;
+export default MarkazlarPage;

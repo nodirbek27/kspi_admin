@@ -1,9 +1,10 @@
 import React from "react";
+import VirtualQabulxonaCom from "../../../components/VirtualQabulxonaCom";
 
 const VirtualQabulxona = () => {
     return (
         <div>
-            VirtualQabulxona
+            <VirtualQabulxonaCom/>
         </div>
     );
 };

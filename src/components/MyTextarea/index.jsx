@@ -10,7 +10,7 @@ const MyTextarea = ({ label, tab, ...props }) => {
         className="block mb-2 font-medium text-gray-700"
       >
         {label}
-        <span className="text-red-500">{tab}</span>
+        <span className="text-red-500"> {tab}</span>
       </label>
       <textarea
         className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"

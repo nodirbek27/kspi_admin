@@ -45,7 +45,6 @@ function VirtualQabulxonaCom() {
                   <p className="text-base text-slate-500">
                     <span className="text-red-500 font-semibold">Mavzu: </span>
                     {data.mavzu}
-                    {/* Palonchini uylash */}
                   </p>
                 </div>
                 <div className="collapse-content">
@@ -56,7 +55,6 @@ function VirtualQabulxonaCom() {
                         Telefon:{" "}
                       </span>
                       {data.telefon_nomer}
-                      {/* Palonchini uylash */}
                     </p>
                     <p className="text-base inline-block text-slate-500">
                       <span className="text-red-500 font-semibold">

@@ -100,7 +100,7 @@ function InstitutKengashiCom() {
                     name="fish"
                     label="F.I.SH"
                     tab="(Familiya, Ism, Sharif)"
-                    value={formik.values.name_uz}
+                    value={formik.values.fish}
                     onChange={formik.handleChange}
                   />
                   <MyTextInput
@@ -109,7 +109,7 @@ function InstitutKengashiCom() {
                     name="telefon"
                     label="Telefon"
                     tab="raqami"
-                    value={formik.values.name_ru}
+                    value={formik.values.telefon}
                     onChange={formik.handleChange}
                   />
                   <MyTextInput
@@ -118,7 +118,7 @@ function InstitutKengashiCom() {
                     name="email"
                     label="Email"
                     tab="(Elektron pochta manzili)"
-                    value={formik.values.name_en}
+                    value={formik.values.email}
                     onChange={formik.handleChange}
                   />
                 </div>
@@ -165,7 +165,12 @@ function InstitutKengashiCom() {
                       >
                         <input type="checkbox" name="my-accordion-2" />
                         <div className="collapse-title text-xl font-medium">
-                          <h2>{data.fish}</h2>
+                          <h2>
+                            <span className="text-red-500 font-semibold">
+                              F.I.SH:{" "}
+                            </span>
+                            {data.fish}
+                          </h2>
                           <div className="mt-5">
                             <p className="text-base inline-block text-slate-500 mr-5">
                               <span className="text-red-500 font-semibold">
@@ -182,19 +187,21 @@ function InstitutKengashiCom() {
                           </div>
                         </div>
                         <div className="collapse-content">
-                          <p>{data.kengash_vazifasi}</p>
-                          <p>{data.kengash_haqida}</p>
+                          <div className="grid gap-5">
+                            <p>{data.kengash_vazifasi}</p>
+                            <p>{data.kengash_haqida}</p>
+                          </div>
                           <div className="text-right">
                             <button
                               type="submit"
-                              className="px-3 py-0.5 mt-5 text-xs rounded-lg border border-red-500 bg-red-500 active:bg-white active:text-red-500 text-gray-800 font-semibold"
+                              className="px-3 py-0.5 mt-5 text-xs rounded-lg border border-teal-500 bg-teal-500 active:bg-white active:text-red-500 text-gray-800 font-semibold"
                               onClick={() => handleEdit(data.id)}
                             >
-                              O'chirish
+                              Taxrirlash
                             </button>
                             <button
                               type="submit"
-                              className="px-3 py-0.5 mt-5 text-xs rounded-lg border border-red-500 bg-red-500 active:bg-white active:text-red-500 text-gray-800 font-semibold"
+                              className="px-3 py-0.5 mt-5 ml-5 text-xs rounded-lg border border-red-500 bg-red-500 active:bg-white active:text-red-500 text-gray-800 font-semibold"
                               onClick={() => handleDelete(data.id)}
                             >
                               O'chirish

@@ -4,12 +4,12 @@ import { RxArrowTopRight } from "react-icons/rx";
 import { MdEdit, MdDelete } from "react-icons/md";
 import { TextWarn } from "../Rectorat/styled";
 import { BiBlock } from "react-icons/bi";
-import APITuzilmaKafedra from "../../services/tuzilmaKafedra";
+import APITuzilmaBolim from "../../services/tuzilmaBolim";
 import * as Yup from "yup";
 import Loader from "../Loader";
 
-const Kafedra = () => {
-    const [dataKafedra, setDataKafedra] = useState([]);
+const Bolimlar = () => {
+    const [dataBolim, setDataBolim] = useState([]);
     const [dataRahbar, setDataRahbar] = useState([]);
     const [dataHodim, setDataHodim] = useState([]);
     const [warn, setWarn] = useState(false);
@@ -27,10 +27,10 @@ const Kafedra = () => {
     // load file
     const [load, setLoad] = useState(true);
 
-    const getDataKafedra = () => {
-        APITuzilmaKafedra.get()
+    const getDataBolim = () => {
+        APITuzilmaBolim.get()
             .then((res) => {
-                setDataKafedra(res.data);
+                setDataBolim(res.data);
                 setLoad(false);
             })
             .catch((err) => {
@@ -40,7 +40,7 @@ const Kafedra = () => {
     };
 
     const getDataRahbar = () => {
-        APITuzilmaKafedra.getR()
+        APITuzilmaBolim.getR()
             .then((res) => {
                 setDataRahbar(res.data);
                 setLoad(false);
@@ -52,7 +52,7 @@ const Kafedra = () => {
     };
 
     const getDataHodim = () => {
-        APITuzilmaKafedra.getH()
+        APITuzilmaBolim.getH()
             .then((res) => {
                 setDataHodim(res.data);
                 setLoad(false);
@@ -193,9 +193,9 @@ const Kafedra = () => {
                 }, 5000);
             } else {
                 setLoad(true);
-                APITuzilmaKafedra.post(values)
+                APITuzilmaBolim.post(values)
                     .then(() => {
-                        getDataKafedra();
+                        getDataBolim();
                     })
                     .catch((err) => console.log(err));
                 formik.resetForm();
@@ -205,7 +205,7 @@ const Kafedra = () => {
 
     const formik_2 = useFormik({
         initialValues: {
-            kafedra_id: "",
+            bolim_id: "",
             lavozim_uz: "",
             lavozim_ru: "",
             lavozim_en: "",
@@ -226,13 +226,13 @@ const Kafedra = () => {
         },
         validationSchema: validationSchemaR,
         onSubmit: (values) => {
-            if (values.kafedra_id === "0" || values.kafedra_id === "") {
+            if (values.bolim_id === "0" || values.bolim_id === "") {
                 setWarn(true);
             } else {
                 if (fileR) {
                     setLoad(true);
                     const data = { ...values, rasm: fileR };
-                    APITuzilmaKafedra.postR(data)
+                    APITuzilmaBolim.postR(data)
                         .then(() => getDataRahbar())
                         .catch((err) => console.log(err));
                     formik_2.resetForm();
@@ -248,7 +248,7 @@ const Kafedra = () => {
 
     const formik_3 = useFormik({
         initialValues: {
-            kafedra_id: "",
+            bolim_id: "",
             lavozim_uz: "",
             lavozim_ru: "",
             lavozim_en: "",
@@ -259,17 +259,18 @@ const Kafedra = () => {
             unvon_ru: "",
             unvon_en: "",
             telefon_nomer: "",
+            bolim_boshligi: false,
         },
         validationSchema: validationSchemaH,
         onSubmit: (values) => {
-            if (values.kafedra_id === "0" || values.kafedra_id === "") {
+            if (values.bolim_id === "0" || values.bolim_id === "") {
                 setWarnH(true);
                 console.log("ishlamoqdaman");
             } else {
                 if (fileH) {
                     setLoad(true);
                     const data = { ...values, rasm: fileH };
-                    APITuzilmaKafedra.postH(data)
+                    APITuzilmaBolim.postH(data)
                         .then(() => getDataHodim())
                         .catch((err) => console.log(err));
                     formik_3.resetForm();
@@ -299,9 +300,9 @@ const Kafedra = () => {
             const res = window.confirm("Ishonchingiz komilmi?");
             if (res) {
                 setLoad(true);
-                APITuzilmaKafedra.del(id)
+                APITuzilmaBolim.del(id)
                     .then(() => {
-                        getDataKafedra();
+                        getDataBolim();
                         setIsEdit(null);
                     })
                     .catch((err) => console.log(err));
@@ -316,7 +317,7 @@ const Kafedra = () => {
             const res = window.confirm("Ishonchingiz komilmi?");
             if (res) {
                 setLoad(true);
-                APITuzilmaKafedra.delR(id)
+                APITuzilmaBolim.delR(id)
                     .then(() => {
                         getDataRahbar();
                         setIsEditR(null);
@@ -333,7 +334,7 @@ const Kafedra = () => {
             const res = window.confirm("Ishonchingiz komilmi?");
             if (res) {
                 setLoad(true);
-                APITuzilmaKafedra.delH(id)
+                APITuzilmaBolim.delH(id)
                     .then(() => {
                         getDataHodim();
                         setIsEditH(null);
@@ -351,9 +352,9 @@ const Kafedra = () => {
             setLoad(true);
             const { id, ...res } = isEdit;
             const data = res;
-            APITuzilmaKafedra.patch(id, data)
+            APITuzilmaBolim.patch(id, data)
                 .then(() => {
-                    getDataKafedra();
+                    getDataBolim();
                 })
                 .catch((err) => console.log(err));
             setIsEdit(null);
@@ -373,7 +374,7 @@ const Kafedra = () => {
             if (fileR) {
                 data = { ...res, rasm: fileR };
             }
-            APITuzilmaKafedra.patchR(item.id, data)
+            APITuzilmaBolim.patchR(item.id, data)
                 .then(() => {
                     getDataRahbar();
                 })
@@ -395,7 +396,7 @@ const Kafedra = () => {
             if (fileR) {
                 data = { ...res, rasm: fileR };
             }
-            APITuzilmaKafedra.patchR(item.id, data)
+            APITuzilmaBolim.patchR(item.id, data)
                 .then(() => {
                     getDataRahbar();
                 })
@@ -424,23 +425,30 @@ const Kafedra = () => {
     };
 
     const handleChangeEditH = (e) => {
-        setIsEditH({
-            ...isEditH,
-            [e.target.name]: e.target.value,
-        });
+        if (e.target.type === "checkbox") {
+            setIsEditH({
+                ...isEditH,
+                [e.target.name]: e.target.checked,
+            });
+        } else {
+            setIsEditH({
+                ...isEditH,
+                [e.target.name]: e.target.value,
+            });
+        }
     };
 
     useEffect(() => {
-        formik_2.values.kafedra_id === "0" ? setWarn(true) : setWarn(false);
-    }, [formik_2.values.kafedra_id]);
+        formik_2.values.bolim_id === "0" ? setWarn(true) : setWarn(false);
+    }, [formik_2.values.bolim_id]);
 
     useEffect(() => {
-        formik_3.values.kafedra_id === "0" ? setWarnH(true) : setWarnH(false);
-    }, [formik_3.values.kafedra_id]);
+        formik_3.values.bolim_id === "0" ? setWarnH(true) : setWarnH(false);
+    }, [formik_3.values.bolim_id]);
 
     useEffect(() => {
         setLoad(true);
-        getDataKafedra();
+        getDataBolim();
         getDataRahbar();
         getDataHodim();
     }, []);
@@ -458,12 +466,12 @@ const Kafedra = () => {
             </div>
             <div className="w-full p-[10px] -z-10">
                 <h1 className="text-center text-[1.8rem] font-medium mt-4">
-                    Kafedralar
+                    Bo'limlar
                 </h1>
                 <div className="w-full my-12">
                     <div>
                         <h1 className="text-[1.4rem] font-medium">
-                            Kafedra yaratish
+                            Bo'lim yaratish
                         </h1>
                         <form
                             className="flex items-center gap-2"
@@ -527,10 +535,10 @@ const Kafedra = () => {
                         <div className="collapse collapse-arrow">
                             <input type="checkbox" name="my-accordion-2" />
                             <div className="collapse-title text-xl font-medium bg-gray-200">
-                                Kafedralar
+                                Bo'limlar
                             </div>
                             <div className="collapse-content">
-                                {dataKafedra?.length !== 0 ? (
+                                {dataBolim?.length !== 0 ? (
                                     <table className="table -z-0">
                                         <thead>
                                             <tr className="font-medium text-black">
@@ -542,8 +550,8 @@ const Kafedra = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {dataKafedra?.length !== 0 &&
-                                                dataKafedra.map((item, idx) => (
+                                            {dataBolim?.length !== 0 &&
+                                                dataBolim.map((item, idx) => (
                                                     <tr key={item.id}>
                                                         <th>{idx + 1}</th>
                                                         <td>
@@ -668,7 +676,7 @@ const Kafedra = () => {
 
                 <div className="my-10">
                     <h1 className="text-[1.4rem] font-medium mb-2">
-                        Kafedra mudirini yaratish
+                        Bo'lim mudirini yaratish
                     </h1>
                     <div className="flex flex-col gap-4">
                         <form
@@ -677,16 +685,16 @@ const Kafedra = () => {
                         >
                             <div className="flex items-center gap-4">
                                 <select
-                                    name="kafedra_id"
-                                    id="kafedra_id"
+                                    name="bolim_id"
+                                    id="bolim_id"
                                     className={`${
                                         warn && "select-error"
                                     } select select-bordered w-full max-w-xs`}
-                                    value={formik_2.values.kafedra_id}
+                                    value={formik_2.values.bolim_id}
                                     onChange={formik_2.handleChange}
                                 >
                                     <option value="0">Birini tanlang!</option>
-                                    {dataKafedra?.map((item) => (
+                                    {dataBolim?.map((item) => (
                                         <option key={item.id} value={item.id}>
                                             {item.name_uz}
                                         </option>
@@ -1023,7 +1031,7 @@ const Kafedra = () => {
                             <div className="collapse collapse-arrow">
                                 <input type="checkbox" name="my-accordion-2" />
                                 <div className="collapse-title text-xl font-medium bg-gray-200">
-                                    Kafedra mudirlari
+                                    Bo'lim mudirlari
                                 </div>
                                 <div className="collapse-content">
                                     <ol className="list-decimal flex flex-col gap-3 ps-4 my-4">
@@ -1529,10 +1537,10 @@ const Kafedra = () => {
 
                 <div className="w-full border border-red-600" />
 
-                {/* Kafedra Hodim */}
+                {/*  Hodim */}
                 <div className="my-10">
                     <h1 className="text-[1.4rem] font-medium mb-2">
-                        Kafedra hodim yaratish
+                        Bo'lim hodim yaratish
                     </h1>
                     <div className="flex flex-col gap-4">
                         <form
@@ -1541,16 +1549,16 @@ const Kafedra = () => {
                         >
                             <div className="flex items-center gap-4">
                                 <select
-                                    name="kafedra_id"
-                                    id="kafedra_id"
+                                    name="bolim_id"
+                                    id="bolim_id"
                                     className={`${
                                         warnH && "select-error"
                                     } select select-bordered w-full max-w-xs`}
-                                    value={formik_3.values.kafedra_id}
+                                    value={formik_3.values.bolim_id}
                                     onChange={formik_3.handleChange}
                                 >
                                     <option value="0">Birini tanlang!</option>
-                                    {dataKafedra?.map((item) => (
+                                    {dataBolim?.map((item) => (
                                         <option key={item.id} value={item.id}>
                                             {item.name_uz}
                                         </option>
@@ -1725,6 +1733,22 @@ const Kafedra = () => {
                                         } w-full file-input file-input-bordered`}
                                     />
                                 </div>
+                                {/* Bo'lim boshlig'i */}
+                            </div>
+                            <div className="flex justify-start items-center">
+                                <div className="form-control">
+                                    <label className="cursor-pointer label mt-6">
+                                        <input
+                                            name="bolim_boshligi"
+                                            type="checkbox"
+                                            className="checkbox checkbox-accent"
+                                            onChange={formik_3.handleChange}
+                                        />
+                                        <span className="label-text ms-2">
+                                            Bo'lim boshlig'imi?
+                                        </span>
+                                    </label>
+                                </div>
                             </div>
 
                             <button
@@ -1739,7 +1763,7 @@ const Kafedra = () => {
                             <div className="collapse collapse-arrow">
                                 <input type="checkbox" name="my-accordion-2" />
                                 <div className="collapse-title text-xl font-medium bg-gray-200">
-                                    Kafedra hodimlari:
+                                    Bo'lim hodimlari:
                                 </div>
                                 <div className="collapse-content">
                                     <ol className="list-decimal flex flex-col gap-3 ps-4 my-4">
@@ -2020,6 +2044,37 @@ const Kafedra = () => {
                                                                                 )}
                                                                             </td>
                                                                         </tr>
+                                                                        {/* Bo'lim boshlig'i  */}
+                                                                        <tr>
+                                                                            <th>
+                                                                                Bo'lim
+                                                                                boshlig'imi?
+                                                                            </th>
+                                                                            <td>
+                                                                                {isEditH?.id ===
+                                                                                item.id ? (
+                                                                                    <div className="form-control">
+                                                                                        <input
+                                                                                            name="bolim_boshligi"
+                                                                                            type="checkbox"
+                                                                                            className="checkbox checkbox-accent"
+                                                                                            onChange={
+                                                                                                handleChangeEditH
+                                                                                            }
+                                                                                            defaultChecked={
+                                                                                                item.bolim_boshligi
+                                                                                                    ? true
+                                                                                                    : false
+                                                                                            }
+                                                                                        />
+                                                                                    </div>
+                                                                                ) : item.bolim_boshligi ? (
+                                                                                    "Ha"
+                                                                                ) : (
+                                                                                    "Yo'q"
+                                                                                )}
+                                                                            </td>
+                                                                        </tr>
                                                                     </tbody>
                                                                 </table>
                                                             </div>
@@ -2092,4 +2147,4 @@ const Kafedra = () => {
     );
 };
 
-export default Kafedra;
+export default Bolimlar;

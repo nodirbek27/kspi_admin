@@ -1,9 +1,10 @@
 import React from "react";
+import TalabaBakalavr from "../../../components/TalabaBakalavr";
 
 const Bakalavriat = () => {
     return (
         <div>
-            Bakalavriat
+            <TalabaBakalavr />
         </div>
     );
 };

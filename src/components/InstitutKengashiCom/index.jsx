@@ -33,7 +33,7 @@ function InstitutKengashiCom() {
       }
       try {
         // POST
-        if (!edit) {
+        if (!edit && datas.length === 0 ) {
           await APIinstitutKengashi.postInstitutKengashi(data);
         }
         // PATCH
@@ -188,7 +188,9 @@ function InstitutKengashiCom() {
                         </div>
                         <div className="collapse-content">
                           <div className="grid gap-5">
+                            <p className="text-red-500 font-semibold text-center">Kengash vazifalari</p>
                             <p>{data.kengash_vazifasi}</p>
+                            <p className="text-red-500 font-semibold text-center">Kengash haqida batafsil</p>
                             <p>{data.kengash_haqida}</p>
                           </div>
                           <div className="text-right">

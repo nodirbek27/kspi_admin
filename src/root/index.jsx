@@ -47,7 +47,7 @@ export const Root = () => {
           );
         })}
 
-        <Route path="/" element={<Navigate to={"/analitika"} />} />
+        <Route path="/" element={<Navigate to={"/login"} />} />
         <Route path="*" element={<h1>404 not found</h1>} />
       </Routes>
     </Container>

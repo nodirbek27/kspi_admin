@@ -22,8 +22,6 @@ const InstitutHaqidaCom = () => {
     }
   };
 
-  console.log(datas);
-
   const formik = useFormik({
     initialValues: {
       title_uz: "",

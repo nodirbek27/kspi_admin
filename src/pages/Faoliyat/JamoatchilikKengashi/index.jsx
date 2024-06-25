@@ -1,9 +1,10 @@
 import React from "react";
+import JamoatchilikFaoliyat from "../../../components/JamoatchilikFaoliyat";
 
 const JamoatchilikKengashi = () => {
     return (
         <div>
-            JamoatchilikKengashi
+            <JamoatchilikFaoliyat />
         </div>
     );
 };

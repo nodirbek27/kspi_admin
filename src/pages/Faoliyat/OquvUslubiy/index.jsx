@@ -1,9 +1,10 @@
 import React from "react";
+import OquvFaoliyat from "../../../components/OquvFaoliyat";
 
 const OquvUslubiy = () => {
     return (
         <div>
-            OquvUslubiy
+            <OquvFaoliyat />
         </div>
     );
 };

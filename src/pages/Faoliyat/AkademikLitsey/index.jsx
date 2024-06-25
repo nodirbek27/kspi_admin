@@ -1,9 +1,10 @@
 import React from "react";
+import AkademikFaoliyat from "../../../components/AkademikFaoliyat";
 
 const AkademikLitsey = () => {
     return (
         <div>
-            AkademikLitsey
+            <AkademikFaoliyat />
         </div>
     );
 };

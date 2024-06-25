@@ -1,27 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useMultiRootEditor } from "@ckeditor/ckeditor5-react";
 import MultiRootEditor from "@ckeditor/ckeditor5-build-multi-root";
-import APIYangilik from "../../services/yangilik";
+import APIAkademik from "../../services/faoliyatAkademik";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import "./style.css";
 
-const News = () => {
+const AkademikFaoliyat = () => {
   const [formData, setFormData] = useState({
     title_uz: "",
     title_ru: "",
     title_en: "",
-    subtitle_uz: "",
-    subtitle_ru: "",
-    subtitle_en: "",
-    body_uz: "",
-    body_ru: "",
-    body_en: "",
-    sana: "",
+    tel_nomer_1: "",
   });
   const [content, setContent] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [showImageInputs, setShowImageInputs] = useState([true, false, false, false, false]);
 
   const editorProps = {
     editor: MultiRootEditor,
@@ -39,7 +32,6 @@ const News = () => {
         "italic",
         "|",
         "link",
-        "blockQuote",
         "|",
         "numberedList",
         "bulletedList",
@@ -64,27 +56,19 @@ const News = () => {
       title_uz: formData.title_uz,
       title_ru: formData.title_ru,
       title_en: formData.title_en,
-      subtitle_uz: formData.subtitle_uz,
-      subtitle_ru: formData.subtitle_ru,
-      subtitle_en: formData.subtitle_en,
-      sana: formData.sana,
       body_uz: data.contentUz,
       body_ru: data.contentRu,
       body_en: data.contentEn,
     };
 
     try {
-      await APIYangilik.post(postData);
+      await APIAkademik.post(postData);
       alert("Data successfully posted!");
       getData();
       setFormData({
         title_uz: "",
         title_ru: "",
         title_en: "",
-        subtitle_uz: "",
-        subtitle_ru: "",
-        subtitle_en: "",
-        sana: "",
       });
     } catch (error) {
       console.error("Error posting data:", error);
@@ -94,7 +78,7 @@ const News = () => {
   const getData = async () => {
     setLoading(true);
     try {
-      const res = await APIYangilik.get();
+      const res = await APIAkademik.get();
       setContent(res.data);
     } catch (error) {
       setError(error);
@@ -105,17 +89,11 @@ const News = () => {
 
   const handleDelete = async (id) => {
     try {
-      await APIYangilik.del(id);
+      await APIAkademik.del(id);
       getData();
     } catch (error) {
       console.error("Error deleting content:", error);
     }
-  };
-
-  const handleImageInputChange = (index) => {
-    setShowImageInputs((prev) =>
-      prev.map((show, i) => (i <= index ? true : show))
-    );
   };
 
   useEffect(() => {
@@ -124,10 +102,16 @@ const News = () => {
 
   return (
     <div className="App p-4">
-      <h1 className="text-2xl font-bold mb-5 p-3 text-center">Yangiliklar</h1>
+      <h1 className="text-2xl font-bold mb-5 p-3 text-center">
+        Akademik litsey
+      </h1>
 
-      <form onSubmit={handleSubmit} id="form">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-5">
+      <form
+        onSubmit={handleSubmit}
+        id="form"
+        className={`${content.length >= 1 ? "hidden" : ""}`}
+      >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
           <label className="w-full" htmlFor="title_uz">
             <h3>Sarlavha Uz</h3>
             <textarea
@@ -161,52 +145,6 @@ const News = () => {
               required
             ></textarea>
           </label>
-          <label className="w-full" htmlFor="subtitle_uz">
-            <h3>Qo'shimcha sarlavha Uz</h3>
-            <textarea
-              id="subtitle_uz"
-              name="subtitle_uz"
-              value={formData.subtitle_uz}
-              onChange={handleChange}
-              className="input input-bordered w-full px-2"
-              required
-            ></textarea>
-          </label>
-          <label className="w-full" htmlFor="subtitle_ru">
-            <h3>Qo'shimcha sarlavha Ru</h3>
-            <textarea
-              id="subtitle_ru"
-              name="subtitle_ru"
-              value={formData.subtitle_ru}
-              onChange={handleChange}
-              className="input input-bordered w-full"
-              required
-            ></textarea>
-          </label>
-          <label className="w-full" htmlFor="subtitle_en">
-            <h3>Qo'shimcha sarlavha En</h3>
-            <textarea
-              id="subtitle_en"
-              name="subtitle_en"
-              value={formData.subtitle_en}
-              onChange={handleChange}
-              className="input input-bordered w-full"
-              required
-            ></textarea>
-          </label>
-              
-          <label className="w-full" htmlFor="sana">
-            <h3>Sana</h3>
-            <input
-              id="sana"
-              type="date"
-              name="sana"
-              value={formData.sana}
-              onChange={handleChange}
-              className="input input-bordered w-full"
-              required
-            />
-          </label>
         </div>
 
         {toolbarElement}
@@ -220,7 +158,6 @@ const News = () => {
         </button>
       </form>
 
-      <h2 className="text-lg lg:text-xl xl:text-2xl font-semibold my-5">Mavjud yangiliklar</h2>
       {loading ? (
         <p>Loading...</p>
       ) : error ? (
@@ -229,38 +166,31 @@ const News = () => {
         content?.map((item) => (
           <div key={item.id} className="content-items">
             <div className="mb-5">
+              <h2 className="text-xl">{item.title_uz}</h2>
               <p
                 className="mb-5 content-item"
                 dangerouslySetInnerHTML={{ __html: item.body_uz }}
               ></p>
-              <div className="flex justify-between items-center border p-2 rounded">
-                <h2 className="text-xl">{item.title_uz}</h2>
-                <div className="text-xl">{item.tel_nomer_1}</div>
-              </div>
             </div>
             <div className="mb-5">
+              <h2 className="text-xl">{item.title_ru}</h2>
               <p
                 className="mb-5 content-item"
                 dangerouslySetInnerHTML={{ __html: item.body_ru }}
               ></p>
-              <div className="flex justify-between items-center border p-2 rounded">
-                <h2 className="text-xl">{item.title_ru}</h2>
-                <div className="text-xl">{item.tel_nomer_1}</div>
-              </div>
             </div>
             <div className="mb-5">
+              <h2 className="text-xl">{item.title_en}</h2>
               <p
                 className="mb-5 content-item"
                 dangerouslySetInnerHTML={{ __html: item.body_en }}
               ></p>
-              <div className="flex justify-between items-center border p-2 rounded">
-                <h2 className="text-xl">{item.title_en}</h2>
-                <div className="text-xl">{item.tel_nomer_1}</div>
-              </div>
             </div>
-            <button className="btn" onClick={() => handleDelete(item.id)}>
-              <RiDeleteBin5Line className="text-red-600 cursor-pointer h-5 w-5" />
-            </button>
+            <div className="flex justify-end">
+              <button className="btn" onClick={() => handleDelete(item.id)}>
+                <RiDeleteBin5Line className="text-red-600 cursor-pointer h-5 w-5" />
+              </button>
+            </div>
           </div>
         ))
       )}
@@ -268,4 +198,4 @@ const News = () => {
   );
 };
 
-export default News;
+export default AkademikFaoliyat;

@@ -13,16 +13,27 @@ const News = () => {
     subtitle_uz: "",
     subtitle_ru: "",
     subtitle_en: "",
-    body_uz: "",
-    body_ru: "",
-    body_en: "",
     sana: "",
   });
+
+  const [files, setFiles] = useState({
+    rasm_1: null,
+    rasm_2: null,
+    rasm_3: null,
+    rasm_4: null,
+    rasm_5: null,
+    fayl_1: null,
+    fayl_2: null,
+    fayl_3: null,
+    fayl_4: null,
+    fayl_5: null,
+  });
+
   const [content, setContent] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [showImageInputs, setShowImageInputs] = useState([true, false, false, false, false]);
 
+  // Create refs for each editable element
   const editorProps = {
     editor: MultiRootEditor,
     data: {
@@ -39,7 +50,6 @@ const News = () => {
         "italic",
         "|",
         "link",
-        "blockQuote",
         "|",
         "numberedList",
         "bulletedList",
@@ -51,27 +61,41 @@ const News = () => {
     useMultiRootEditor(editorProps);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    const { name, value, files: inputFiles } = e.target;
+
+    if (inputFiles) {
+      setFiles((prevFiles) => ({
+        ...prevFiles,
+        [name]: inputFiles[0],
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const postData = {
-      title_uz: formData.title_uz,
-      title_ru: formData.title_ru,
-      title_en: formData.title_en,
-      subtitle_uz: formData.subtitle_uz,
-      subtitle_ru: formData.subtitle_ru,
-      subtitle_en: formData.subtitle_en,
-      sana: formData.sana,
-      body_uz: data.contentUz,
-      body_ru: data.contentRu,
-      body_en: data.contentEn,
-    };
+
+    const postData = new FormData();
+    postData.append("title_uz", formData.title_uz);
+    postData.append("title_ru", formData.title_ru);
+    postData.append("title_en", formData.title_en);
+    postData.append("subtitle_uz", formData.subtitle_uz);
+    postData.append("subtitle_ru", formData.subtitle_ru);
+    postData.append("subtitle_en", formData.subtitle_en);
+    postData.append("sana", formData.sana);
+    postData.append("body_uz", data.contentUz);
+    postData.append("body_ru", data.contentRu);
+    postData.append("body_en", data.contentEn);
+
+    Object.keys(files).forEach((key) => {
+      if (files[key]) {
+        postData.append(key, files[key]);
+      }
+    });
 
     try {
       await APIYangilik.post(postData);
@@ -86,6 +110,18 @@ const News = () => {
         subtitle_en: "",
         sana: "",
       });
+      setFiles({
+        rasm_1: null,
+        rasm_2: null,
+        rasm_3: null,
+        rasm_4: null,
+        rasm_5: null,
+        fayl_1: null,
+        fayl_2: null,
+        fayl_3: null,
+        fayl_4: null,
+        fayl_5: null,
+      });
     } catch (error) {
       console.error("Error posting data:", error);
     }
@@ -95,7 +131,7 @@ const News = () => {
     setLoading(true);
     try {
       const res = await APIYangilik.get();
-      setContent(res.data);
+      setContent(res.data.reverse());
     } catch (error) {
       setError(error);
     } finally {
@@ -110,12 +146,6 @@ const News = () => {
     } catch (error) {
       console.error("Error deleting content:", error);
     }
-  };
-
-  const handleImageInputChange = (index) => {
-    setShowImageInputs((prev) =>
-      prev.map((show, i) => (i <= index ? true : show))
-    );
   };
 
   useEffect(() => {
@@ -161,6 +191,7 @@ const News = () => {
               required
             ></textarea>
           </label>
+          {/* Qo'shimcha sarlavha */}
           <label className="w-full" htmlFor="subtitle_uz">
             <h3>Qo'shimcha sarlavha Uz</h3>
             <textarea
@@ -169,7 +200,6 @@ const News = () => {
               value={formData.subtitle_uz}
               onChange={handleChange}
               className="input input-bordered w-full px-2"
-              required
             ></textarea>
           </label>
           <label className="w-full" htmlFor="subtitle_ru">
@@ -180,7 +210,6 @@ const News = () => {
               value={formData.subtitle_ru}
               onChange={handleChange}
               className="input input-bordered w-full"
-              required
             ></textarea>
           </label>
           <label className="w-full" htmlFor="subtitle_en">
@@ -191,18 +220,122 @@ const News = () => {
               value={formData.subtitle_en}
               onChange={handleChange}
               className="input input-bordered w-full"
-              required
             ></textarea>
           </label>
-              
-          <label className="w-full" htmlFor="sana">
-            <h3>Sana</h3>
+
+          {/* Rasm */}
+          <label className="w-full" htmlFor="rasm_1">
+            Asosiy rasm
             <input
-              id="sana"
+              onChange={handleChange}
+              type="file"
+              id="rasm_1"
+              name="rasm_1"
+              className="w-full file-input file-input-bordered"
+              required
+            />
+          </label>
+          <label className="w-full" htmlFor="rasm_2">
+            Rasm 2
+            <input
+              onChange={handleChange}
+              type="file"
+              id="rasm_2"
+              name="rasm_2"
+              className="w-full file-input file-input-bordered"
+            />
+          </label>
+          <label className="w-full" htmlFor="rasm_3">
+            Rasm 3
+            <input
+              onChange={handleChange}
+              type="file"
+              id="rasm_3"
+              name="rasm_3"
+              className="w-full file-input file-input-bordered"
+            />
+          </label>
+          <label className="w-full" htmlFor="rasm_4">
+            Rasm 4
+            <input
+              onChange={handleChange}
+              type="file"
+              id="rasm_4"
+              name="rasm_4"
+              className="w-full file-input file-input-bordered"
+            />
+          </label>
+          <label className="w-full" htmlFor="rasm_5">
+            Rasm 5
+            <input
+              onChange={handleChange}
+              type="file"
+              id="rasm_5"
+              name="rasm_5"
+              className="w-full file-input file-input-bordered"
+            />
+          </label>
+          {/* Fayl */}
+          <label className="w-full" htmlFor="fayl_1">
+            Asosiy fayl
+            <input
+              onChange={handleChange}
+              type="file"
+              id="fayl_1"
+              name="fayl_1"
+              className="w-full file-input file-input-bordered"
+            /> 
+          </label>
+          <label className="w-full" htmlFor="fayl_2">
+            Fayl 2
+            <input
+              onChange={handleChange}
+              type="file"
+              id="fayl_2"
+              name="fayl_2"
+              className="w-full file-input file-input-bordered"
+            />
+          </label>
+          <label className="w-full" htmlFor="fayl_3">
+            Fayl 3
+            <input
+              onChange={handleChange}
+              type="file"
+              id="fayl_3"
+              name="fayl_3"
+              className="w-full file-input file-input-bordered"
+            />
+          </label>
+          <label className="w-full" htmlFor="fayl_4">
+            Fayl 4
+            <input
+              onChange={handleChange}
+              type="file"
+              id="fayl_4"
+              name="fayl_4"
+              className="w-full file-input file-input-bordered"
+            />
+          </label>
+          <label className="w-full" htmlFor="fayl_5">
+            Fayl 5
+            <input
+              onChange={handleChange}
+              type="file"
+              id="fayl_5"
+              name="fayl_5"
+              className="w-full file-input file-input-bordered"
+            />
+          </label>
+
+          {/* Sana */}
+          <label className="w-full" htmlFor="sana">
+            Sana
+            <input
+              onChange={handleChange}
               type="date"
+              id="sana"
               name="sana"
               value={formData.sana}
-              onChange={handleChange}
               className="input input-bordered w-full"
               required
             />
@@ -212,58 +345,37 @@ const News = () => {
         {toolbarElement}
         {editableElements}
 
-        <button
-          type="submit"
-          className="w-full bg-blue-400 hover:bg-blue-600 flex justify-center items-center gap-1 h-[48px] text-white mt-[18px] font-bold rounded-lg active:scale-95 "
-        >
-          Submit
+        <button type="submit" className="btn btn-primary w-full mt-3">
+          SUBMIT
         </button>
       </form>
 
-      <h2 className="text-lg lg:text-xl xl:text-2xl font-semibold my-5">Mavjud yangiliklar</h2>
-      {loading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p>Error loading content: {error.message}</p>
-      ) : (
-        content?.map((item) => (
-          <div key={item.id} className="content-items">
-            <div className="mb-5">
-              <p
-                className="mb-5 content-item"
-                dangerouslySetInnerHTML={{ __html: item.body_uz }}
-              ></p>
-              <div className="flex justify-between items-center border p-2 rounded">
-                <h2 className="text-xl">{item.title_uz}</h2>
-                <div className="text-xl">{item.tel_nomer_1}</div>
+      <h2 className="my-5 text-lg lg:text-xl xl:text-2xl font-semibold">Mavjud yangiliklar</h2>
+      <div className="mt-8">
+        {loading && <p>Yuklanyapti...</p>}
+        {error && <p>Xatolik yuz berdi: {error.message}</p>}
+        <div className="grid grid-cols-2 gap-3">
+          {content?.map((item) => (
+            <div key={item.id} className="p-4 bg-gray-100 rounded-lg flex">
+              <img src={item?.rasm_1} alt="news pic" className="mr-3 object-cover w-[100px] h-[100px] rounded" />
+              <div className="flex flex-col justify-between w-full">
+                <div>
+                  <h2 className="text-lg font-bold mb-2">{item?.title_uz}</h2>
+                  <p className="mb-2">{item?.subtitle_uz}</p>
+                </div>
+                <div className="ml-auto">
+                  <button
+                    onClick={() => handleDelete(item.id)}
+                    className="btn btn-outline btn-danger"
+                  >
+                    <RiDeleteBin5Line className="inline-block" />
+                  </button>
+                </div>
               </div>
             </div>
-            <div className="mb-5">
-              <p
-                className="mb-5 content-item"
-                dangerouslySetInnerHTML={{ __html: item.body_ru }}
-              ></p>
-              <div className="flex justify-between items-center border p-2 rounded">
-                <h2 className="text-xl">{item.title_ru}</h2>
-                <div className="text-xl">{item.tel_nomer_1}</div>
-              </div>
-            </div>
-            <div className="mb-5">
-              <p
-                className="mb-5 content-item"
-                dangerouslySetInnerHTML={{ __html: item.body_en }}
-              ></p>
-              <div className="flex justify-between items-center border p-2 rounded">
-                <h2 className="text-xl">{item.title_en}</h2>
-                <div className="text-xl">{item.tel_nomer_1}</div>
-              </div>
-            </div>
-            <button className="btn" onClick={() => handleDelete(item.id)}>
-              <RiDeleteBin5Line className="text-red-600 cursor-pointer h-5 w-5" />
-            </button>
-          </div>
-        ))
-      )}
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

@@ -29,6 +29,7 @@ const News = () => {
       adress_ru: "",
       adress_en: "",
       sana: "",
+      fayl_1: "",
     },
     onSubmit: async (values, {resetForm}) => {
       const rasm = document.getElementById("rasm").files[0];
@@ -49,6 +50,7 @@ const News = () => {
       data.append("adress_ru", values.adress_ru);
       data.append("adress_en", values.adress_en);
       data.append("sana", values.sana);
+      data.append('fayl_1', values.fayl_1);
       await APIElon.post(data);
       loadPost();
       resetForm();
@@ -376,6 +378,22 @@ const displayedNews = news && news.slice(pagesVisited, pagesVisited + itemsPerPa
               ></textarea>
             </div>
           </div>
+          <div>
+              <label
+                htmlFor="fayl_1"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                File yuklash
+              </label>
+              <input
+                id="fayl_1"
+                name="fayl_1"
+                type="file"
+                className="file-input file-input-bordered w-full md:col-span-1"
+                onChange={formik.handleChange}
+                value={formik.values.fayl_1}
+              />
+            </div>
 
           {/* BUTTON QOSHISH */}
           <button

@@ -32,7 +32,7 @@ const InstitutMalumotlariCom = () => {
       body_ru: "",
       body_en: "",
       rasm: null,
-      fayl: null
+      fayl: "",
     }, // Initial values for formik
     onSubmit: async (values, onSubmitProps) => {
       const data = new FormData();

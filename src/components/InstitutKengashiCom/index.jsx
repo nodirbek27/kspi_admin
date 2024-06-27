@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Formik, useFormik } from "formik";
 import MyTextInput from "../MyTextInput";
 import MyTextarea from "../MyTextarea";
@@ -8,6 +8,10 @@ function InstitutKengashiCom() {
   const [edit, setEdit] = useState(false);
   const [id, setId] = useState(null);
   const [datas, setDatas] = useState([]);
+
+  const fileInputRefs = {
+    rasm: useRef(null),
+  };
 
   const fechtData = async () => {
     try {
@@ -25,6 +29,7 @@ function InstitutKengashiCom() {
       email: "",
       kengash_vazifasi: "",
       kengash_haqida: "",
+      rasm: null,
     }, // Initial values for formik
     onSubmit: async (values, onSubmitProps) => {
       const data = new FormData();
@@ -33,7 +38,7 @@ function InstitutKengashiCom() {
       }
       try {
         // POST
-        if (!edit && datas.length === 0 ) {
+        if (!edit && datas.length === 0) {
           await APIinstitutKengashi.postInstitutKengashi(data);
         }
         // PATCH
@@ -123,6 +128,20 @@ function InstitutKengashiCom() {
                   />
                 </div>
                 <div className="grid gap-2 my-5">
+                  <MyTextInput
+                    type="file"
+                    id="rasm"
+                    name="rasm"
+                    label="Rasm"
+                    tab="1"
+                    innerRef={fileInputRefs.rasm}
+                    onChange={(event) =>
+                      formik.setFieldValue(
+                        "rasm",
+                        event.currentTarget.files[0]
+                      )
+                    }
+                  />
                   <MyTextarea
                     type="text"
                     id="kengash_vazifasi"
@@ -188,9 +207,13 @@ function InstitutKengashiCom() {
                         </div>
                         <div className="collapse-content">
                           <div className="grid gap-5">
-                            <p className="text-red-500 font-semibold text-center">Kengash vazifalari</p>
+                            <p className="text-red-500 font-semibold text-center">
+                              Kengash vazifalari
+                            </p>
                             <p>{data.kengash_vazifasi}</p>
-                            <p className="text-red-500 font-semibold text-center">Kengash haqida batafsil</p>
+                            <p className="text-red-500 font-semibold text-center">
+                              Kengash haqida batafsil
+                            </p>
                             <p>{data.kengash_haqida}</p>
                           </div>
                           <div className="text-right">

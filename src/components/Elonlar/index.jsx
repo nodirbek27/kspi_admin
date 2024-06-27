@@ -9,7 +9,6 @@ import ReactPaginate from "react-paginate";
 const News = () => {
   const [news, setNews] = useState(null);
   const [pageNumber, setPageNumber] = useState(0);
-
   // POST
   const formik = useFormik({
     initialValues: {
@@ -29,9 +28,11 @@ const News = () => {
       adress_ru: "",
       adress_en: "",
       sana: "",
+      fayl_1: "",
     },
     onSubmit: async (values, {resetForm}) => {
       const rasm = document.getElementById("rasm").files[0];
+      const fayl_1 = document.getElementById("fayl_1").files[0];
       const data = new FormData();
       data.append("rasm", rasm);
       data.append("title_uz", values.title_uz);
@@ -49,28 +50,29 @@ const News = () => {
       data.append("adress_ru", values.adress_ru);
       data.append("adress_en", values.adress_en);
       data.append("sana", values.sana);
+      data.append('fayl_1', fayl_1);
       await APIElon.post(data);
       loadPost();
       resetForm();
     },
   });
-
- // GET
-const loadPost = async () => {
-  try {
-    const res = await APIElon.get();
-    setNews(res.data.reverse());
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-// GET and PAGINATION
-const itemsPerPage = 4;
-const pagesVisited = pageNumber * itemsPerPage;
-
-useEffect(() => {
-  loadPost();
+  
+  // GET
+  const loadPost = async () => {
+    try {
+      const res = await APIElon.get();
+      setNews(res.data.reverse());
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
+  // GET and PAGINATION
+  const itemsPerPage = 4;
+  const pagesVisited = pageNumber * itemsPerPage;
+  
+  useEffect(() => {
+    loadPost();
 }, []);
 
 const pageCount = Math.ceil((news && news.length) / itemsPerPage);
@@ -80,16 +82,17 @@ const changePage = ({ selected }) => {
 
 const displayedNews = news && news.slice(pagesVisited, pagesVisited + itemsPerPage);
 
-  // DELETE
-  const handleDelete = async (id) => {
-    try {
-      await APIElon.del(id);
-      loadPost()
-    } catch (error) {
-      console.error("Error deleting news:", error);
-    }
+// DELETE
+const handleDelete = async (id) => {
+  try {
+    await APIElon.del(id);
+    loadPost()
+  } catch (error) {
+    console.error("Error deleting news:", error);
+  }
   };
-
+  
+  console.log(displayedNews);
   return (
     <div className="mx-2 lg:mx-5 xl:mx-10">
       <h1 className="text-3xl font-bold text-center mb-5 pt-3">E'lonlar</h1>
@@ -376,10 +379,26 @@ const displayedNews = news && news.slice(pagesVisited, pagesVisited + itemsPerPa
               ></textarea>
             </div>
           </div>
+          <div>
+              <label
+                htmlFor="fayl_1"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                File yuklash
+              </label>
+              <input
+                id="fayl_1"
+                name="fayl_1"
+                type="file"
+                className="file-input file-input-bordered w-full md:col-span-1"
+                onChange={formik.handleChange}
+                value={formik.values.fayl_1}
+              />
+            </div>
 
           {/* BUTTON QOSHISH */}
           <button
-            className="btn bg-gray-800 hover:bg-gray-700 text-white"
+            className="btn bg-gray-800 hover:bg-gray-700 text-white mt-5"
             type="submit"
           >
             Qo'shish

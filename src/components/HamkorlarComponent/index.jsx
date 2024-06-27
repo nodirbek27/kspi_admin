@@ -21,7 +21,6 @@ const HamkorlarComponent = () => {
       .then((res) => setData(res.data))
       .catch((err) => console.log(err));
   };
-  console.log(data);
 
   const formik = useFormik({
     initialValues: {

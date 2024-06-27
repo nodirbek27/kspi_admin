@@ -101,7 +101,7 @@ const Statistics = () => {
               <h3 className="card-subtitle text-xl mb-3">{item.statistika_text_uz}</h3>
               <div className="card-actions justify-evenly border-2 p-5 rounded mb-3">
                 <div className="flex flex-col text-center">
-                  <h3 className="text-xl">{item.talaba_nomer} { console.log(item.talaba_nomer)}</h3>
+                  <h3 className="text-xl">{item.talaba_nomer}</h3>
                   <div>{item.talaba_title_uz}</div>
                 </div>
                 <div className="flex flex-col text-center">

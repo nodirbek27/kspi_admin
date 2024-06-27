@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import APIFikr from "../../services/fikr";
-import { Link } from "react-router-dom";
-import { CiEdit } from "react-icons/ci";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { RxArrowTopRight } from "react-icons/rx";
 
@@ -203,7 +201,7 @@ const UchtalikVideo = () => {
 
           {/* BUTTON QOSHISH */}
           <button
-            className="bg-blue-400 hover:bg-blue-600 flex justify-center items-center gap-1 w-[100%] h-[48px] text-white mt-[18px] font-bold rounded-lg active:scale-95"
+            className="bg-blue-400 hover:bg-blue-600 flex justify-center items-center gap-1 w-[100%] h-[48px] text-white mt-[18px] font-bold rounded-lg active:scale-95 mb-3"
             type="submit"
           >
             SUBMIT
@@ -213,7 +211,7 @@ const UchtalikVideo = () => {
       </div>
 
       {/* Get */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto mt-3">
         {fikr &&
           fikr.map((item, idx) => (
             <div key={idx} className="max-w-[250px]">
@@ -227,9 +225,6 @@ const UchtalikVideo = () => {
                 {item.talaba_uz}
               </p>
               <div className="card-actions justify-end p-2">
-                <Link className="btn" to={`/yangiliklar/${item.id}`}>
-                  <CiEdit className="text-green-600 cursor-pointer h-5 w-5" />
-                </Link>
                 <button className="btn" onClick={() => handleDelete(item.id)}>
                   <RiDeleteBin5Line className="text-red-600 cursor-pointer h-5 w-5" />
                 </button>

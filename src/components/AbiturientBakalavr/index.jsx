@@ -93,7 +93,7 @@ const AbiturientBakalavr = () => {
         fetchItems();
         resetForm();
         setEditItemId(null);
-        setFile(null); // Clear the file input
+        setFile(null);
       } catch (error) {
         console.error("Failed to submit form", error);
       }

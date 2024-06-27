@@ -101,7 +101,7 @@ const sidebar = [
         path: "/home/asosiy-video",
         isPrivate: true,
         element: AsosiyVideo,
-        role: ["admin", "manager"],
+        role: ["admin"],
       },
       {
         id: `4-2`,
@@ -109,7 +109,7 @@ const sidebar = [
         path: "/home/interaktiv-xizmatlar",
         isPrivate: true,
         element: InteraktivXizmatlar,
-        role: ["admin", "manager"],
+        role: ["admin"],
       },
       {
         id: `4-3`,
@@ -117,7 +117,7 @@ const sidebar = [
         path: "/home/statistika",
         isPrivate: true,
         element: Statistika,
-        role: ["admin", "manager"],
+        role: ["admin"],
       },
       {
         id: `4-4`,
@@ -125,7 +125,7 @@ const sidebar = [
         path: "/home/talaba-fikri",
         isPrivate: true,
         element: TalabaFikri,
-        role: ["admin", "manager"],
+        role: ["admin"],
       },
       {
         id: `4-5`,
@@ -133,7 +133,7 @@ const sidebar = [
         path: "/home/uchtalik-video",
         isPrivate: true,
         element: UchtalikVideoPage,
-        role: ["admin", "manager"],
+        role: ["admin"],
       },
       {
         id: `4-6`,
@@ -141,7 +141,7 @@ const sidebar = [
         path: "/home/galleriya",
         isPrivate: true,
         element: Galleriya,
-        role: ["admin", "manager"],
+        role: ["admin"],
       },
       {
         id: `4-7`,
@@ -149,7 +149,7 @@ const sidebar = [
         path: "/home/hamkorlar",
         isPrivate: true,
         element: Hamkorlar,
-        role: ["admin", "manager"],
+        role: ["admin"],
       },
       {
         id: `4-8`,
@@ -157,7 +157,7 @@ const sidebar = [
         path: "/home/boglanish",
         isPrivate: true,
         element: Boglanish,
-        role: ["admin", "manager"],
+        role: ["admin"],
       },
     ],
   },
@@ -176,7 +176,7 @@ const sidebar = [
         path: "/institut/institut-kengashi",
         isPrivate: true,
         element: InstitutKengashi,
-        role: ["admin", "manager"],
+        role: ["admin"],
       },
       {
         id: `5-2`,
@@ -184,7 +184,7 @@ const sidebar = [
         path: "/institut/institut-haqida",
         isPrivate: true,
         element: InstitutHaqida,
-        role: ["admin", "manager"],
+        role: ["admin"],
       },
       {
         id: `5-3`,
@@ -192,7 +192,7 @@ const sidebar = [
         path: "/institut/institut-tuzilmasi",
         isPrivate: true,
         element: InstitutTuzilmasi,
-        role: ["admin", "manager"],
+        role: ["admin"],
       },
       {
         id: `5-4`,
@@ -200,7 +200,7 @@ const sidebar = [
         path: "/institut/rekvizitlar",
         isPrivate: true,
         element: Rekvizitlar,
-        role: ["admin", "manager"],
+        role: ["admin"],
       },
       {
         id: `5-5`,
@@ -208,7 +208,7 @@ const sidebar = [
         path: "/institut/virtual-qabulxona",
         isPrivate: true,
         element: VirtualQabulxona,
-        role: ["admin", "manager"],
+        role: ["admin"],
       },
     ],
   },
@@ -219,7 +219,7 @@ const sidebar = [
     icon: Analitika,
     isPrivate: true,
     element: Generics,
-    role: ["admin", "mentor", "manager"],
+    role: ["admin"],
     children: [
       {
         id: `6-1`,
@@ -227,7 +227,7 @@ const sidebar = [
         path: "/faoliyat/jamoatchilik-kengashi",
         isPrivate: true,
         element: JamoatchilikKengashi,
-        role: ["admin", "manager"],
+        role: ["admin"],
       },
       {
         id: `6-2`,
@@ -235,7 +235,7 @@ const sidebar = [
         path: "/faoliyat/madaniy-marifiy-faoliyat",
         isPrivate: true,
         element: MadaniyMarifiy,
-        role: ["admin", "manager"],
+        role: ["admin"],
       },
       {
         id: `6-3`,
@@ -243,7 +243,7 @@ const sidebar = [
         path: "/faoliyat/oquv-uslubiy-faoliyat",
         isPrivate: true,
         element: OquvUslubiy,
-        role: ["admin", "manager"],
+        role: ["admin"],
       },
       {
         id: `6-4`,
@@ -251,7 +251,7 @@ const sidebar = [
         path: "/faoliyat/akademik-litsey",
         isPrivate: true,
         element: AkademikLitsey,
-        role: ["admin", "manager"],
+        role: ["admin"],
       },
       {
         id: `6-5`,
@@ -259,7 +259,7 @@ const sidebar = [
         path: "/faoliyat/ilmiy-faoliyat",
         isPrivate: true,
         element: Ilmiy,
-        role: ["admin", "manager"],
+        role: ["admin"],
       },
     ],
   },
@@ -270,7 +270,7 @@ const sidebar = [
     icon: Analitika,
     isPrivate: true,
     element: Generics,
-    role: ["admin", "mentor", "manager"],
+    role: ["admin"],
     children: [
       {
         id: `7-1`,
@@ -278,7 +278,7 @@ const sidebar = [
         path: "/tuzilma/rektorat",
         isPrivate: true,
         element: Rektorat,
-        role: ["admin", "manager"],
+        role: ["admin"],
       },
       {
         id: `7-2`,
@@ -286,7 +286,7 @@ const sidebar = [
         path: "/tuzilma/fakultetlar",
         isPrivate: true,
         element: Fakultetlar,
-        role: ["admin", "manager"],
+        role: ["admin"],
       },
       {
         id: `7-3`,
@@ -294,7 +294,7 @@ const sidebar = [
         path: "/tuzilma/kafedralar",
         isPrivate: true,
         element: Kafedralar,
-        role: ["admin", "manager"],
+        role: ["admin"],
       },
       {
         id: `7-4`,
@@ -302,7 +302,7 @@ const sidebar = [
         path: "/tuzilma/bolimlar",
         isPrivate: true,
         element: Bolimlar,
-        role: ["admin", "manager"],
+        role: ["admin"],
       },
       {
         id: `7-5`,
@@ -310,7 +310,7 @@ const sidebar = [
         path: "/tuzilma/markazlar",
         isPrivate: true,
         element: Markazlar,
-        role: ["admin", "manager"],
+        role: ["admin"],
       },
     ],
   },
@@ -321,7 +321,7 @@ const sidebar = [
     icon: Analitika,
     isPrivate: true,
     element: Generics,
-    role: ["admin", "mentor", "manager"],
+    role: ["admin"],
     children: [
       {
         id: `8-1`,
@@ -329,7 +329,7 @@ const sidebar = [
         path: "/talabalar/bakalavriat",
         isPrivate: true,
         element: Bakalavriat,
-        role: ["admin", "manager"],
+        role: ["admin"],
       },
       {
         id: `8-2`,
@@ -337,7 +337,7 @@ const sidebar = [
         path: "/talabalar/magistratura",
         isPrivate: true,
         element: Magistratura,
-        role: ["admin", "manager"],
+        role: ["admin"],
       },
       {
         id: `8-3`,
@@ -345,7 +345,7 @@ const sidebar = [
         path: "/talabalar/talabalar-turar-joyi",
         isPrivate: true,
         element: TalabalarTurarJoyi,
-        role: ["admin", "manager"],
+        role: ["admin"],
       },
     ],
   },
@@ -356,7 +356,7 @@ const sidebar = [
     icon: Analitika,
     isPrivate: true,
     element: Generics,
-    role: ["admin", "manager"],
+    role: ["admin"],
     children: [
       {
         id: `9-1`,
@@ -364,7 +364,7 @@ const sidebar = [
         path: "/abiturient/abiturient-bakalavriat",
         isPrivate: true,
         element: AbiturientBakalavriat,
-        role: ["admin", "manager"],
+        role: ["admin"],
       },
       {
         id: `9-2`,
@@ -372,7 +372,7 @@ const sidebar = [
         path: "/abiturient/abiturient-magistratura",
         isPrivate: true,
         element: AbiturientMagistratura,
-        role: ["admin", "manager"],
+        role: ["admin"],
       },
       {
         id: `9-3`,
@@ -380,7 +380,7 @@ const sidebar = [
         path: "/abiturient/xorijiy-talabalar-qabul",
         isPrivate: true,
         element: XorijiyTalabalarQabul,
-        role: ["admin", "manager"],
+        role: ["admin"],
       },
       {
         id: `9-4`,
@@ -388,7 +388,7 @@ const sidebar = [
         path: "/abiturient/call-markaz",
         isPrivate: true,
         element: CallMarkaz,
-        role: ["admin", "manager"],
+        role: ["admin"],
       },
       {
         id: `9-5`,
@@ -396,7 +396,7 @@ const sidebar = [
         path: "/abiturient/meyoriy-huquqiy-hujjatlar",
         isPrivate: true,
         element: MeyoriyHuquqiyHujjatlar,
-        role: ["admin", "manager"],
+        role: ["admin"],
       },
     ],
   },
@@ -407,7 +407,7 @@ const sidebar = [
     icon: Analitika,
     isPrivate: true,
     element: Vakansiyalar,
-    role: ["admin", "manager"],
+    role: ["admin"],
   },
   
   {

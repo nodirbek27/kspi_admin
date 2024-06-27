@@ -30,7 +30,7 @@ export const Sidebar = () => {
   useEffect(() => {}, [location]);
 
   const onClickLogo = () => {
-    navigate("/");
+    navigate("/analitika");
   };
   const onLogOut = () => {
     navigate("/login");

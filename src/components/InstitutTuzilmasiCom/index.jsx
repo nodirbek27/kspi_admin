@@ -31,12 +31,12 @@ function InstitutTuzilmasiCom() {
       name_uz: "",
       name_ru: "",
       name_en: "",
-      rasm_1: null,
-      rasm_2: null,
-      rasm_3: null,
-      rasm_4: null,
-      rasm_5: null,
-      pdf_fayl: null,
+      rasm_1: "",
+      rasm_2: "",
+      rasm_3: "",
+      rasm_4: "",
+      rasm_5: "",
+      pdf_fayl: "",
     }, // Initial values for formik
     onSubmit: async (values, onSubmitProps) => {
       const data = new FormData();

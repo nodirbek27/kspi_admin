@@ -9,54 +9,54 @@ import Generics from "../pages/NewsEditPage";
 import Elonlar from "../pages/ElonlarPage";
 
 // LOGIN
-import Login from "../components/Login"
+import Login from "../components/Login";
 
 // HOME
-import AsosiyVideo from '../pages/Home/AsosiyVideo'
-import InteraktivXizmatlar from '../pages/Home/InteraktivXizmatlar'
-import Statistika from '../pages/Home/Statistika'
-import TalabaFikri from '../pages/Home/TalabaFikri'
-import UchtalikVideoPage from '../pages/Home/UchtalikVideoPage'
-import Galleriya from '../pages/Home/Galleriya'
-import Hamkorlar from '../pages/Home/Hamkorlar'
-import Boglanish from '../pages/Home/Boglanish'
+import AsosiyVideo from "../pages/Home/AsosiyVideo";
+import InteraktivXizmatlar from "../pages/Home/InteraktivXizmatlar";
+import Statistika from "../pages/Home/Statistika";
+import TalabaFikri from "../pages/Home/TalabaFikri";
+import UchtalikVideoPage from "../pages/Home/UchtalikVideoPage";
+import Galleriya from "../pages/Home/Galleriya";
+import Hamkorlar from "../pages/Home/Hamkorlar";
+import Boglanish from "../pages/Home/Boglanish";
 
 // INSTITUT
-import InstitutKengashi from '../pages/Institut/InstitutKengashi'
-import InstitutHaqida from '../pages/Institut/InstitutHaqida'
-import InstitutTuzilmasi from '../pages/Institut/InstitutTuzilmasi'
-import Rekvizitlar from '../pages/Institut/Rekvizitlar'
-import VirtualQabulxona from '../pages/Institut/VirtualQabulxona'
+import InstitutKengashi from "../pages/Institut/InstitutKengashi";
+import InstitutHaqida from "../pages/Institut/InstitutHaqida";
+import InstitutTuzilmasi from "../pages/Institut/InstitutTuzilmasi";
+import Rekvizitlar from "../pages/Institut/Rekvizitlar";
+import VirtualQabulxona from "../pages/Institut/VirtualQabulxona";
 
 // FAOLIYAT
-import JamoatchilikKengashi from '../pages/Faoliyat/JamoatchilikKengashi'
-import MadaniyMarifiy from '../pages/Faoliyat/MadaniyMarifiy'
-import OquvUslubiy from '../pages/Faoliyat/OquvUslubiy'
-import AkademikLitsey from '../pages/Faoliyat/AkademikLitsey'
-import Ilmiy from '../pages/Faoliyat/Ilmiy'
+import JamoatchilikKengashi from "../pages/Faoliyat/JamoatchilikKengashi";
+import MadaniyMarifiy from "../pages/Faoliyat/MadaniyMarifiy";
+import OquvUslubiy from "../pages/Faoliyat/OquvUslubiy";
+import AkademikLitsey from "../pages/Faoliyat/AkademikLitsey";
+import Ilmiy from "../pages/Faoliyat/Ilmiy";
 
 // TUZILMA
-import Rektorat from '../pages/Tuzilma/Rektorat'
-import Fakultetlar from '../pages/Tuzilma/Fakultetlar'
-import Kafedralar from '../pages/Tuzilma/Kafedralar'
-import Bolimlar from '../pages/Tuzilma/Bolimlar'
-import Markazlar from '../pages/Tuzilma/Markazlar'
+import Rektorat from "../pages/Tuzilma/Rektorat";
+import Fakultetlar from "../pages/Tuzilma/Fakultetlar";
+import Kafedralar from "../pages/Tuzilma/Kafedralar";
+import Bolimlar from "../pages/Tuzilma/Bolimlar";
+import Markazlar from "../pages/Tuzilma/Markazlar";
 
 // TALABALAR
-import Bakalavriat from '../pages/Talabalar/Bakalavriat'
-import Magistratura from '../pages/Talabalar/Magistratura'
-import TalabalarTurarJoyi from '../pages/Talabalar/TalabalarTurarJoyi'
+import Bakalavriat from "../pages/Talabalar/Bakalavriat";
+import Magistratura from "../pages/Talabalar/Magistratura";
+import TalabalarTurarJoyi from "../pages/Talabalar/TalabalarTurarJoyi";
 
 // ABITURIENT
-import AbiturientBakalavriat from '../pages/Abiturient/Bakalavriat'
-import AbiturientMagistratura from '../pages/Abiturient/Magistratura'
-import MeyoriyHuquqiyHujjatlar from '../pages/Abiturient/MeyoriyHuquqiyHujjatlar'
-import XorijiyTalabalarQabul from '../pages/Abiturient/XorijiyTalabalarQabul'
-import CallMarkaz from '../pages/Abiturient/CallMarkaz'
+import AbiturientBakalavriat from "../pages/Abiturient/Bakalavriat";
+import AbiturientMagistratura from "../pages/Abiturient/Magistratura";
+import MeyoriyHuquqiyHujjatlar from "../pages/Abiturient/MeyoriyHuquqiyHujjatlar";
+import XorijiyTalabalarQabul from "../pages/Abiturient/XorijiyTalabalarQabul";
+import CallMarkaz from "../pages/Abiturient/CallMarkaz";
+import Qabul from "../pages/Abiturient/Qabul";
 
 // BO'SH ISH O'RINLARI
-import Vakansiyalar from '../pages/Vakansiyalar'
-
+import Vakansiyalar from "../pages/Vakansiyalar";
 
 const sidebar = [
   {
@@ -398,6 +398,14 @@ const sidebar = [
         element: MeyoriyHuquqiyHujjatlar,
         role: ["admin"],
       },
+      {
+        id: `9-6`,
+        title: "Qabul",
+        path: "/abiturient/qabul",
+        isPrivate: true,
+        element: Qabul,
+        role: ["admin"],
+      },
     ],
   },
   {
@@ -409,7 +417,7 @@ const sidebar = [
     element: Vakansiyalar,
     role: ["admin"],
   },
-  
+
   {
     id: 11,
     title: "Log In",

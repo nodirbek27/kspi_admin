@@ -24,11 +24,17 @@ function InstitutKengashiCom() {
   // formik for requisite institute
   const formik = useFormik({
     initialValues: {
-      fish: "",
+      fish_uz: "",
+      fish_ru: "",
+      fish_en: "",
       telefon: "",
       email: "",
-      kengash_vazifasi: "",
-      kengash_haqida: "",
+      kengash_vazifasi_uz: "",
+      kengash_vazifasi_ru: "",
+      kengash_vazifasi_en: "",
+      kengash_haqida_uz: "",
+      kengash_haqida_ru: "",
+      kengash_haqida_en: "",
       rasm: null,
     }, // Initial values for formik
     onSubmit: async (values, onSubmitProps) => {
@@ -44,6 +50,11 @@ function InstitutKengashiCom() {
         // PATCH
         else {
           await APIinstitutKengashi.patchInstitutKengashi(id, data);
+          Object.values(fileInputRefs).forEach((ref) => {
+            if (ref.current) {
+              ref.current.value = "";
+            }
+          });
           setEdit(false);
           setId(null);
         }
@@ -51,6 +62,11 @@ function InstitutKengashiCom() {
         fechtData();
       } catch (error) {
         console.error("Xatolik sodir bo'ldi!", error);
+        Object.values(fileInputRefs).forEach((ref) => {
+          if (ref.current) {
+            ref.current.value = "";
+          }
+        });
         onSubmitProps.resetForm();
       }
     },
@@ -62,11 +78,17 @@ function InstitutKengashiCom() {
     const data = datas.find((item) => item.id === id);
     if (data) {
       formik.setValues({
-        fish: data.fish,
+        fish_uz: data.fish_uz,
+        fish_ru: data.fish_ru,
+        fish_en: data.fish_en,
         telefon: data.telefon,
         email: data.email,
-        kengash_vazifasi: data.kengash_vazifasi,
-        kengash_haqida: data.kengash_haqida,
+        kengash_vazifasi_uz: data.kengash_vazifasi_uz,
+        kengash_vazifasi_ru: data.kengash_vazifasi_ru,
+        kengash_vazifasi_en: data.kengash_vazifasi_en,
+        kengash_haqida_uz: data.kengash_haqida_uz,
+        kengash_haqida_ru: data.kengash_haqida_ru,
+        kengash_haqida_en: data.kengash_haqida_en,
       });
     }
     fechtData();
@@ -101,13 +123,33 @@ function InstitutKengashiCom() {
                 <div className="grid grid-cols-3 gap-2 my-5">
                   <MyTextInput
                     type="text"
-                    id="fish"
-                    name="fish"
+                    id="fish_uz"
+                    name="fish_uz"
                     label="F.I.SH"
-                    tab="(Familiya, Ism, Sharif)"
-                    value={formik.values.fish}
+                    tab="uz"
+                    value={formik.values.fish_uz}
                     onChange={formik.handleChange}
                   />
+                  <MyTextInput
+                    type="text"
+                    id="fish_ru"
+                    name="fish_ru"
+                    label="F.I.SH"
+                    tab="ru"
+                    value={formik.values.fish_ru}
+                    onChange={formik.handleChange}
+                  />
+                  <MyTextInput
+                    type="text"
+                    id="fish_en"
+                    name="fish_en"
+                    label="F.I.SH"
+                    tab="eng"
+                    value={formik.values.fish_en}
+                    onChange={formik.handleChange}
+                  />
+                </div>
+                <div className="grid grid-cols-3 gap-2 my-5">
                   <MyTextInput
                     type="text"
                     id="telefon"
@@ -126,38 +168,73 @@ function InstitutKengashiCom() {
                     value={formik.values.email}
                     onChange={formik.handleChange}
                   />
-                </div>
-                <div className="grid gap-2 my-5">
                   <MyTextInput
                     type="file"
                     id="rasm"
                     name="rasm"
                     label="Rasm"
-                    tab="1"
+                    tab="(Kotib)"
                     innerRef={fileInputRefs.rasm}
                     onChange={(event) =>
-                      formik.setFieldValue(
-                        "rasm",
-                        event.currentTarget.files[0]
-                      )
+                      formik.setFieldValue("rasm", event.currentTarget.files[0])
                     }
                   />
+                </div>
+                <div className="grid grid-cols-3 gap-2 my-5">
                   <MyTextarea
                     type="text"
-                    id="kengash_vazifasi"
-                    name="kengash_vazifasi"
-                    label="Kengash"
-                    tab="vazifasi"
-                    value={formik.values.kengash_vazifasi}
+                    id="kengash_vazifasi_uz"
+                    name="kengash_vazifasi_uz"
+                    label="Kengash vazifasi"
+                    tab="uz"
+                    value={formik.values.kengash_vazifasi_uz}
                     onChange={formik.handleChange}
                   />
                   <MyTextarea
                     type="text"
-                    id="kengash_haqida"
-                    name="kengash_haqida"
-                    label="Kengash haqida"
-                    tab="batafsil"
-                    value={formik.values.kengash_haqida}
+                    id="kengash_vazifasi_ru"
+                    name="kengash_vazifasi_ru"
+                    label="Kengash"
+                    tab="ru"
+                    value={formik.values.kengash_vazifasi_ru}
+                    onChange={formik.handleChange}
+                  />
+                  <MyTextarea
+                    type="text"
+                    id="kengash_vazifasi_en"
+                    name="kengash_vazifasi_en"
+                    label="Kengash"
+                    tab="eng"
+                    value={formik.values.kengash_vazifasi_en}
+                    onChange={formik.handleChange}
+                  />
+                </div>
+                <div className="grid grid-cols-3 gap-2 my-5">
+                  <MyTextarea
+                    type="text"
+                    id="kengash_haqida_uz"
+                    name="kengash_haqida_uz"
+                    label="Kengash batafsil"
+                    tab="uz"
+                    value={formik.values.kengash_haqida_uz}
+                    onChange={formik.handleChange}
+                  />
+                  <MyTextarea
+                    type="text"
+                    id="kengash_haqida_ru"
+                    name="kengash_haqida_ru"
+                    label="Kengash batafsil"
+                    tab="ru"
+                    value={formik.values.kengash_haqida_ru}
+                    onChange={formik.handleChange}
+                  />
+                  <MyTextarea
+                    type="text"
+                    id="kengash_haqida_en"
+                    name="kengash_haqida_en"
+                    label="Kengash batafsil"
+                    tab="eng"
+                    value={formik.values.kengash_haqida_en}
                     onChange={formik.handleChange}
                   />
                 </div>
@@ -188,7 +265,7 @@ function InstitutKengashiCom() {
                             <span className="text-red-500 font-semibold">
                               F.I.SH:{" "}
                             </span>
-                            {data.fish}
+                            {data.fish_uz}
                           </h2>
                           <div className="mt-5">
                             <p className="text-base inline-block text-slate-500 mr-5">
@@ -210,11 +287,11 @@ function InstitutKengashiCom() {
                             <p className="text-red-500 font-semibold text-center">
                               Kengash vazifalari
                             </p>
-                            <p>{data.kengash_vazifasi}</p>
+                            <p>{data.kengash_vazifasi_uz}</p>
                             <p className="text-red-500 font-semibold text-center">
                               Kengash haqida batafsil
                             </p>
-                            <p>{data.kengash_haqida}</p>
+                            <p>{data.kengash_haqida_uz}</p>
                           </div>
                           <div className="text-right">
                             <button

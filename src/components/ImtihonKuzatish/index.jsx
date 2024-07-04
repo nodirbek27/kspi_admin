@@ -41,6 +41,21 @@ const ImtihonKuzatish = () => {
             });
     };
 
+    const validationSchemaOne = Yup.object().shape({
+        name_uz: Yup.string()
+            .min(3, "Juda kam!")
+            .max(300, "Juda ko'p!")
+            .required("To'ldirilishi shart!"),
+        name_ru: Yup.string()
+            .min(3, "Juda kam!")
+            .max(300, "Juda ko'p!")
+            .required("To'ldirilishi shart!"),
+        name_en: Yup.string()
+            .min(3, "Juda kam!")
+            .max(300, "Juda ko'p!")
+            .required("To'ldirilishi shart!"),
+    });
+
     const validationSchema = Yup.object().shape({
         name_uz: Yup.string()
             .min(3, "Juda kam!")
@@ -66,7 +81,7 @@ const ImtihonKuzatish = () => {
             name_ru: "",
             name_en: "",
         },
-        validationSchema,
+        validationSchemaOne,
         onSubmit: (values) => {
             setErrTxt(false);
             setLoad(true);

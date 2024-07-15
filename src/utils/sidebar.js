@@ -56,7 +56,7 @@ import XorijiyTalabalarQabul from "../pages/Abiturient/XorijiyTalabalarQabul";
 import CallMarkaz from "../pages/Abiturient/CallMarkaz";
 import Qabul from "../pages/Abiturient/Qabul";
 
-// BO'SH ISH O'RINLARI
+// BO'SH ISH O'RINLARI hidden
 import Vakansiyalar from "../pages/Vakansiyalar";
 
 const sidebar = [

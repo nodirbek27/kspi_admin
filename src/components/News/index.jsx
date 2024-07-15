@@ -129,9 +129,13 @@ const News = () => {
 
   const getData = async () => {
     setLoading(true);
+    // sana
     try {
       const res = await APIYangilik.get();
-      setContent(res.data.reverse());
+      const sortedData = res.data.sort((a, b) => {
+        return new Date(b.sana) - new Date(a.sana);
+    });
+      setContent(sortedData);
     } catch (error) {
       setError(error);
     } finally {

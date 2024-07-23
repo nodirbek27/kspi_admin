@@ -103,18 +103,6 @@ const Rektorat = () => {
             .min(3, "Juda kam!")
             .max(300, "Juda ko'p!")
             .required("To'ldirilishi shart!"),
-        biografiya_uz: Yup.string()
-            .min(3, "Juda kam!")
-            .max(300, "Juda ko'p!")
-            .required("To'ldirilishi shart!"),
-        biografiya_ru: Yup.string()
-            .min(3, "Juda kam!")
-            .max(300, "Juda ko'p!")
-            .required("To'ldirilishi shart!"),
-        biografiya_en: Yup.string()
-            .min(3, "Juda kam!")
-            .max(300, "Juda ko'p!")
-            .required("To'ldirilishi shart!"),
     });
 
     const formik = useFormik({

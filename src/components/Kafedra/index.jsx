@@ -257,7 +257,6 @@ const Kafedra = () => {
         onSubmit: (values) => {
             if (values.kafedra_id === "0" || values.kafedra_id === "") {
                 setWarnH(true);
-                console.log("ishlamoqdaman");
             } else {
                 if (fileH) {
                     setLoad(true);

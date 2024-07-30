@@ -15,6 +15,7 @@ const Kafedra = () => {
     const [warn, setWarn] = useState(false);
     const [warnH, setWarnH] = useState(false);
     const [errTxt, setErrTxt] = useState(false);
+    const [errLog, setErrLog] = useState(null);
 
     const [isEdit, setIsEdit] = useState(null);
     const [isEditR, setIsEditR] = useState(null);
@@ -116,18 +117,6 @@ const Kafedra = () => {
             .min(3, "Juda kam!")
             .required("To'ldirilishi shart!"),
         tg_username: Yup.string()
-            .min(3, "Juda kam!")
-            .max(300, "Juda ko'p!")
-            .required("To'ldirilishi shart!"),
-        biografiya_uz: Yup.string()
-            .min(3, "Juda kam!")
-            .max(300, "Juda ko'p!")
-            .required("To'ldirilishi shart!"),
-        biografiya_ru: Yup.string()
-            .min(3, "Juda kam!")
-            .max(300, "Juda ko'p!")
-            .required("To'ldirilishi shart!"),
-        biografiya_en: Yup.string()
             .min(3, "Juda kam!")
             .max(300, "Juda ko'p!")
             .required("To'ldirilishi shart!"),
@@ -234,7 +223,11 @@ const Kafedra = () => {
                     const data = { ...values, rasm: fileR };
                     APITuzilmaKafedra.postR(data)
                         .then(() => getDataRahbar())
-                        .catch((err) => console.log(err));
+                        .catch((err) =>
+                            setErrLog(
+                                JSON.parse(err?.request?.response)?.rasm[0]
+                            )
+                        );
                     formik_2.resetForm();
                     setFileR(null);
                     if (rasmR.current) {
@@ -271,7 +264,11 @@ const Kafedra = () => {
                     const data = { ...values, rasm: fileH };
                     APITuzilmaKafedra.postH(data)
                         .then(() => getDataHodim())
-                        .catch((err) => console.log(err));
+                        .catch((err) =>
+                            setErrLog(
+                                JSON.parse(err?.request?.response)?.rasm[0]
+                            )
+                        );
                     formik_3.resetForm();
                     setFileH(null);
                     if (rasmH.current) {
@@ -392,12 +389,12 @@ const Kafedra = () => {
             setLoad(true);
             const { id, rasm, ...res } = isEditH;
             let data = res;
-            if (fileR) {
-                data = { ...res, rasm: fileR };
+            if (fileH) {
+                data = { ...res, rasm: fileH };
             }
-            APITuzilmaKafedra.patchR(item.id, data)
+            APITuzilmaKafedra.patchH(item.id, data)
                 .then(() => {
-                    getDataRahbar();
+                    getDataHodim();
                 })
                 .catch((err) => console.log(err));
             setIsEditH(null);
@@ -453,6 +450,11 @@ const Kafedra = () => {
                 } z-50 fixed top-[60px] right-[15px] w-[calc(100%-310px)] h-[100vh] bg-[#0000002d] border boredr-[red] `}
             >
                 <div className="w-full h-full flex justify-center items-center relative">
+                    {errLog && (
+                        <p className="translate-y-[-200px] text-[red]">
+                            {errLog}
+                        </p>
+                    )}
                     <Loader />
                 </div>
             </div>
@@ -1722,7 +1724,7 @@ const Kafedra = () => {
                                         className={`${
                                             !fileH &&
                                             "file-input-error text-red-600"
-                                        } w-full file-input file-input-bordered`}
+                                        } w-full file-input file-input-bordered `}
                                     />
                                 </div>
                             </div>
@@ -1762,7 +1764,7 @@ const Kafedra = () => {
                                                             </div>
                                                             {isEditH?.id ===
                                                                 item.id && (
-                                                                <label htmlFor="rasm">
+                                                                <div>
                                                                     <div className="text-red-600 font-medium">
                                                                         Agar
                                                                         rasim
@@ -1783,7 +1785,7 @@ const Kafedra = () => {
                                                                         name="rasm"
                                                                         className="w-[400px] file-input file-input-bordered mt-2"
                                                                     />
-                                                                </label>
+                                                                </div>
                                                             )}
                                                         </div>
                                                         <div>

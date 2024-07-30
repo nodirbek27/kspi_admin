@@ -20,6 +20,7 @@ import UchtalikVideoPage from "../pages/Home/UchtalikVideoPage";
 import Galleriya from "../pages/Home/Galleriya";
 import Hamkorlar from "../pages/Home/Hamkorlar";
 import Boglanish from "../pages/Home/Boglanish";
+import ImtihonlarniKuzatish from "../pages/Home/ImtihonlarniKuzatish";
 
 // INSTITUT
 import InstitutKengashi from "../pages/Institut/InstitutKengashi";
@@ -56,7 +57,7 @@ import XorijiyTalabalarQabul from "../pages/Abiturient/XorijiyTalabalarQabul";
 import CallMarkaz from "../pages/Abiturient/CallMarkaz";
 import Qabul from "../pages/Abiturient/Qabul";
 
-// BO'SH ISH O'RINLARI
+// BO'SH ISH O'RINLARI hidden
 import Vakansiyalar from "../pages/Vakansiyalar";
 
 const sidebar = [
@@ -158,6 +159,14 @@ const sidebar = [
         path: "/home/boglanish",
         isPrivate: true,
         element: Boglanish,
+        role: ["admin"],
+      },
+      {
+        id: `4-9`,
+        title: "Imtihonlarni kuzatish",
+        path: "/home/imtihonlarni-kuzatish",
+        isPrivate: true,
+        element: ImtihonlarniKuzatish,
         role: ["admin"],
       },
     ],

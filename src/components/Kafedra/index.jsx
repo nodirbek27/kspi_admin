@@ -119,18 +119,6 @@ const Kafedra = () => {
             .min(3, "Juda kam!")
             .max(300, "Juda ko'p!")
             .required("To'ldirilishi shart!"),
-        biografiya_uz: Yup.string()
-            .min(3, "Juda kam!")
-            .max(300, "Juda ko'p!")
-            .required("To'ldirilishi shart!"),
-        biografiya_ru: Yup.string()
-            .min(3, "Juda kam!")
-            .max(300, "Juda ko'p!")
-            .required("To'ldirilishi shart!"),
-        biografiya_en: Yup.string()
-            .min(3, "Juda kam!")
-            .max(300, "Juda ko'p!")
-            .required("To'ldirilishi shart!"),
     });
 
     const validationSchemaH = Yup.object().shape({
@@ -264,7 +252,6 @@ const Kafedra = () => {
         onSubmit: (values) => {
             if (values.kafedra_id === "0" || values.kafedra_id === "") {
                 setWarnH(true);
-                console.log("ishlamoqdaman");
             } else {
                 if (fileH) {
                     setLoad(true);
@@ -397,7 +384,7 @@ const Kafedra = () => {
             }
             APITuzilmaKafedra.patchR(item.id, data)
                 .then(() => {
-                    getDataRahbar();
+                    getDataHodim();
                 })
                 .catch((err) => console.log(err));
             setIsEditH(null);

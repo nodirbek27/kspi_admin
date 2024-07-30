@@ -2,9 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { Formik, useFormik } from "formik";
 import MyTextInput from "../MyTextInput";
 import MyTextarea from "../MyTextarea";
-import APIinstitutKengashi from "../../services/institutKengashi";
+import APITTJRaxbar from "../../services/ttjRaxbar";
 
-function InstitutKengashiCom() {
+function TTJRaxbarCom() {
   const [edit, setEdit] = useState(false);
   const [id, setId] = useState(null);
   const [datas, setDatas] = useState([]);
@@ -15,7 +15,7 @@ function InstitutKengashiCom() {
 
   const fechtData = async () => {
     try {
-      const response = await APIinstitutKengashi.getInstitutKengashi();
+      const response = await APITTJRaxbar.get();
       setDatas(response.data);
     } catch (error) {
       console.error("Xatolik yuz berdi!", error);
@@ -24,17 +24,13 @@ function InstitutKengashiCom() {
   // formik for requisite institute
   const formik = useFormik({
     initialValues: {
-      fish_uz: "",
-      fish_ru: "",
-      fish_en: "",
-      telefon: "",
-      email: "",
-      kengash_vazifasi_uz: "",
-      kengash_vazifasi_ru: "",
-      kengash_vazifasi_en: "",
-      kengash_haqida_uz: "",
-      kengash_haqida_ru: "",
-      kengash_haqida_en: "",
+      title_uz: "",
+      title_ru: "",
+      title_en: "",
+      body_uz: "",
+      body_ru: "",
+      body_en: "",
+      rahbar_fish: "",
       rasm: null,
     }, // Initial values for formik
     onSubmit: async (values, onSubmitProps) => {
@@ -45,19 +41,19 @@ function InstitutKengashiCom() {
       try {
         // POST
         if (!edit && datas.length === 0) {
-          await APIinstitutKengashi.postInstitutKengashi(data);
+          await APITTJRaxbar.post(data);
         }
         // PATCH
         else {
-          await APIinstitutKengashi.patchInstitutKengashi(id, data);
-          Object.values(fileInputRefs).forEach((ref) => {
+          await APITTJRaxbar.patch(id, data);
+          setEdit(false);
+          setId(null);
+        }
+        Object.values(fileInputRefs).forEach((ref) => {
             if (ref.current) {
               ref.current.value = "";
             }
           });
-          setEdit(false);
-          setId(null);
-        }
         onSubmitProps.resetForm();
         fechtData();
       } catch (error) {
@@ -78,17 +74,13 @@ function InstitutKengashiCom() {
     const data = datas.find((item) => item.id === id);
     if (data) {
       formik.setValues({
-        fish_uz: data.fish_uz,
-        fish_ru: data.fish_ru,
-        fish_en: data.fish_en,
-        telefon: data.telefon,
-        email: data.email,
-        kengash_vazifasi_uz: data.kengash_vazifasi_uz,
-        kengash_vazifasi_ru: data.kengash_vazifasi_ru,
-        kengash_vazifasi_en: data.kengash_vazifasi_en,
-        kengash_haqida_uz: data.kengash_haqida_uz,
-        kengash_haqida_ru: data.kengash_haqida_ru,
-        kengash_haqida_en: data.kengash_haqida_en,
+        title_uz: data.title_uz,
+        title_ru: data.title_ru,
+        title_en: data.title_en,
+        body_uz: data.body_uz,
+        body_ru: data.body_ru,
+        body_en: data.body_en,
+        rahbar_fish: data.rahbar_fish,
       });
     }
     fechtData();
@@ -96,7 +88,7 @@ function InstitutKengashiCom() {
 
   const handleDelete = async (id) => {
     try {
-      await APIinstitutKengashi.delInstitutKengashi(id);
+      await APITTJRaxbar.del(id);
       fechtData();
     } catch (error) {
       console.error("Xatolik yuz berdi!", error);
@@ -110,7 +102,7 @@ function InstitutKengashiCom() {
   return (
     <div className="max-w-[1600px] mx-auto">
       <h1 className="text-xl font-medium text-gray-700 text-center my-5">
-        Institut Kengashi
+        TTJ Raxbar
       </h1>
       <div>
         <div className="border p-5">
@@ -123,119 +115,81 @@ function InstitutKengashiCom() {
                 <div className="grid grid-cols-3 gap-2 my-5">
                   <MyTextInput
                     type="text"
-                    id="fish_uz"
-                    name="fish_uz"
-                    label="F.I.SH"
+                    id="title_uz"
+                    name="title_uz"
+                    label="Raxbar sarlavhasi"
                     tab="uz"
-                    value={formik.values.fish_uz}
+                    value={formik.values.title_uz}
                     onChange={formik.handleChange}
                   />
                   <MyTextInput
                     type="text"
-                    id="fish_ru"
-                    name="fish_ru"
-                    label="F.I.SH"
+                    id="title_ru"
+                    name="title_ru"
+                    label="Raxbar sarlavhasi"
                     tab="ru"
-                    value={formik.values.fish_ru}
+                    value={formik.values.title_ru}
                     onChange={formik.handleChange}
                   />
                   <MyTextInput
                     type="text"
-                    id="fish_en"
-                    name="fish_en"
-                    label="F.I.SH"
+                    id="title_en"
+                    name="title_en"
+                    label="Raxbar sarlavhasi"
                     tab="eng"
-                    value={formik.values.fish_en}
+                    value={formik.values.title_en}
                     onChange={formik.handleChange}
                   />
                 </div>
                 <div className="grid grid-cols-3 gap-2 my-5">
-                  <MyTextInput
+                  <MyTextarea
                     type="text"
-                    id="telefon"
-                    name="telefon"
-                    label="Telefon"
-                    tab="raqami"
-                    value={formik.values.telefon}
+                    id="body_uz"
+                    name="body_uz"
+                    label="Raxbar fikri"
+                    tab="uz"
+                    value={formik.values.body_uz}
                     onChange={formik.handleChange}
                   />
+                  <MyTextarea
+                    type="text"
+                    id="body_ru"
+                    name="body_ru"
+                    label="Raxbar fikri"
+                    tab="ru"
+                    value={formik.values.body_ru}
+                    onChange={formik.handleChange}
+                  />
+                  <MyTextarea
+                    type="text"
+                    id="body_en"
+                    name="body_en"
+                    label="Raxbar fikri"
+                    tab="eng"
+                    value={formik.values.body_en}
+                    onChange={formik.handleChange}
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-2 my-5">
                   <MyTextInput
-                    type="email"
-                    id="email"
-                    name="email"
-                    label="Email"
-                    tab="(Elektron pochta manzili)"
-                    value={formik.values.email}
+                    type="text"
+                    id="rahbar_fish"
+                    name="rahbar_fish"
+                    label="F.I.Sh"
+                    tab="Raxbar ismi"
+                    value={formik.values.rahbar_fish}
                     onChange={formik.handleChange}
                   />
                   <MyTextInput
                     type="file"
                     id="rasm"
                     name="rasm"
-                    label="Rasm"
-                    tab="(Kotib)"
+                    label="Raxbar"
+                    tab="rasmi"
                     innerRef={fileInputRefs.rasm}
                     onChange={(event) =>
                       formik.setFieldValue("rasm", event.currentTarget.files[0])
                     }
-                  />
-                </div>
-                <div className="grid grid-cols-3 gap-2 my-5">
-                  <MyTextarea
-                    type="text"
-                    id="kengash_vazifasi_uz"
-                    name="kengash_vazifasi_uz"
-                    label="Kengash vazifasi"
-                    tab="uz"
-                    value={formik.values.kengash_vazifasi_uz}
-                    onChange={formik.handleChange}
-                  />
-                  <MyTextarea
-                    type="text"
-                    id="kengash_vazifasi_ru"
-                    name="kengash_vazifasi_ru"
-                    label="Kengash"
-                    tab="ru"
-                    value={formik.values.kengash_vazifasi_ru}
-                    onChange={formik.handleChange}
-                  />
-                  <MyTextarea
-                    type="text"
-                    id="kengash_vazifasi_en"
-                    name="kengash_vazifasi_en"
-                    label="Kengash"
-                    tab="eng"
-                    value={formik.values.kengash_vazifasi_en}
-                    onChange={formik.handleChange}
-                  />
-                </div>
-                <div className="grid grid-cols-3 gap-2 my-5">
-                  <MyTextarea
-                    type="text"
-                    id="kengash_haqida_uz"
-                    name="kengash_haqida_uz"
-                    label="Kengash batafsil"
-                    tab="uz"
-                    value={formik.values.kengash_haqida_uz}
-                    onChange={formik.handleChange}
-                  />
-                  <MyTextarea
-                    type="text"
-                    id="kengash_haqida_ru"
-                    name="kengash_haqida_ru"
-                    label="Kengash batafsil"
-                    tab="ru"
-                    value={formik.values.kengash_haqida_ru}
-                    onChange={formik.handleChange}
-                  />
-                  <MyTextarea
-                    type="text"
-                    id="kengash_haqida_en"
-                    name="kengash_haqida_en"
-                    label="Kengash batafsil"
-                    tab="eng"
-                    value={formik.values.kengash_haqida_en}
-                    onChange={formik.handleChange}
                   />
                 </div>
               </fieldset>
@@ -248,7 +202,7 @@ function InstitutKengashiCom() {
         <div className="col-span-1 border p-2">
           <div>
             <h4 className="text-md font-bold font-source text-center text-red-500">
-              Institut Kengashi
+              TTJ Raxbar
             </h4>
             <div>
               <div className="grid gap-2">
@@ -263,35 +217,25 @@ function InstitutKengashiCom() {
                         <div className="collapse-title text-xl font-medium">
                           <h2>
                             <span className="text-red-500 font-semibold">
-                              F.I.SH:{" "}
+                              Title:{" "}
                             </span>
-                            {data.fish_uz}
+                            {data.title_uz}
                           </h2>
                           <div className="mt-5">
                             <p className="text-base inline-block text-slate-500 mr-5">
                               <span className="text-red-500 font-semibold">
-                                Telefon:{" "}
+                                F.I.SH:{" "}
                               </span>
-                              {data.telefon}
-                            </p>
-                            <p className="text-base inline-block text-slate-500">
-                              <span className="text-red-500 font-semibold">
-                                Email:{" "}
-                              </span>
-                              {data.email}
+                              {data.rahbar_fish}
                             </p>
                           </div>
                         </div>
                         <div className="collapse-content">
                           <div className="grid gap-5">
                             <p className="text-red-500 font-semibold text-center">
-                              Kengash vazifalari
+                              TTJ Raxbar fikri
                             </p>
-                            <p>{data.kengash_vazifasi_uz}</p>
-                            <p className="text-red-500 font-semibold text-center">
-                              Kengash haqida batafsil
-                            </p>
-                            <p>{data.kengash_haqida_uz}</p>
+                            <p>{data.body_uz}</p>
                           </div>
                           <div className="text-right">
                             <button
@@ -322,4 +266,4 @@ function InstitutKengashiCom() {
   );
 }
 
-export default InstitutKengashiCom;
+export default TTJRaxbarCom;

@@ -41,6 +41,21 @@ const ImtihonKuzatish = () => {
             });
     };
 
+    const validationSchemaOne = Yup.object().shape({
+        name_uz: Yup.string()
+            .min(3, "Juda kam!")
+            .max(300, "Juda ko'p!")
+            .required("To'ldirilishi shart!"),
+        name_ru: Yup.string()
+            .min(3, "Juda kam!")
+            .max(300, "Juda ko'p!")
+            .required("To'ldirilishi shart!"),
+        name_en: Yup.string()
+            .min(3, "Juda kam!")
+            .max(300, "Juda ko'p!")
+            .required("To'ldirilishi shart!"),
+    });
+
     const validationSchema = Yup.object().shape({
         name_uz: Yup.string()
             .min(3, "Juda kam!")
@@ -66,7 +81,7 @@ const ImtihonKuzatish = () => {
             name_ru: "",
             name_en: "",
         },
-        validationSchema,
+        validationSchemaOne,
         onSubmit: (values) => {
             setErrTxt(false);
             setLoad(true);
@@ -99,9 +114,15 @@ const ImtihonKuzatish = () => {
                 formik_2.resetForm();
             }
             setWarn(false);
+
         },
     });
 
+    useEffect(() => {
+
+        
+        console.log(warn);
+    }, [warn])
     const onDel = (id) => {
         const res = window.confirm("Ishonchingiz komilmi?");
         if (res) {
@@ -211,9 +232,7 @@ const ImtihonKuzatish = () => {
                         </TextWarn>
                     </div>
                     <div className="mt-5">
-                        <div className="text-xl font-medium">
-                            Yo'nalishlar:
-                        </div>
+                        <div className="text-xl font-medium">Yo'nalishlar:</div>
                         <div>
                             {dataYonalish?.length !== 0 ? (
                                 <table className="table -z-0">
@@ -277,56 +296,61 @@ const ImtihonKuzatish = () => {
                                     value={formik_2.values.efirname_id}
                                     onChange={formik_2.handleChange}
                                 >
-                                    <option value={0}>Yo'nalish tanlanmagan</option>
+                                    <option value={0}>
+                                        Yo'nalish tanlanmagan
+                                    </option>
                                     {dataYonalish?.length !== 0 &&
                                         dataYonalish.map((item) => (
-                                            <option key={item.id} value={item.id}>
+                                            <option
+                                                key={item.id}
+                                                value={item.id}
+                                            >
                                                 {item.name_uz}
                                             </option>
                                         ))}
                                 </select>
                             </label>
                             <div className="flex gap-2 items-center">
-                            <label className="w-[25%]" htmlFor="name_uz">
-                                <h3>Nomi uz</h3>
-                                <textarea
-                                    className="w-full input input-bordered px-[7px]"
-                                    type="text"
-                                    id="name_uz"
-                                    value={formik_2.values.name_uz}
-                                    onChange={formik_2.handleChange}
-                                />
-                            </label>
-                            <label className="w-[25%]" htmlFor="name_ru">
-                                <h3>Nomi ru</h3>
-                                <textarea
-                                    className="w-full input input-bordered px-[7px]"
-                                    type="text"
-                                    id="name_ru"
-                                    value={formik_2.values.name_ru}
-                                    onChange={formik_2.handleChange}
-                                />
-                            </label>
-                            <label className="w-[25%]" htmlFor="name_en">
-                                <h3>Nomi en</h3>
-                                <textarea
-                                    className="w-full input input-bordered px-[7px]"
-                                    type="text"
-                                    id="name_en"
-                                    value={formik_2.values.name_en}
-                                    onChange={formik_2.handleChange}
-                                />
-                            </label>
-                            <label className="w-[25%]" htmlFor="link">
-                                <h3>Havola</h3>
-                                <textarea
-                                    className="w-full input input-bordered px-[7px]"
-                                    type="text"
-                                    id="link"
-                                    value={formik_2.values.link}
-                                    onChange={formik_2.handleChange}
-                                />
-                            </label>
+                                <label className="w-[25%]" htmlFor="name_uz">
+                                    <h3>Nomi uz</h3>
+                                    <textarea
+                                        className="w-full input input-bordered px-[7px]"
+                                        type="text"
+                                        id="name_uz"
+                                        value={formik_2.values.name_uz}
+                                        onChange={formik_2.handleChange}
+                                    />
+                                </label>
+                                <label className="w-[25%]" htmlFor="name_ru">
+                                    <h3>Nomi ru</h3>
+                                    <textarea
+                                        className="w-full input input-bordered px-[7px]"
+                                        type="text"
+                                        id="name_ru"
+                                        value={formik_2.values.name_ru}
+                                        onChange={formik_2.handleChange}
+                                    />
+                                </label>
+                                <label className="w-[25%]" htmlFor="name_en">
+                                    <h3>Nomi en</h3>
+                                    <textarea
+                                        className="w-full input input-bordered px-[7px]"
+                                        type="text"
+                                        id="name_en"
+                                        value={formik_2.values.name_en}
+                                        onChange={formik_2.handleChange}
+                                    />
+                                </label>
+                                <label className="w-[25%]" htmlFor="link">
+                                    <h3>Havola</h3>
+                                    <textarea
+                                        className="w-full input input-bordered px-[7px]"
+                                        type="text"
+                                        id="link"
+                                        value={formik_2.values.link}
+                                        onChange={formik_2.handleChange}
+                                    />
+                                </label>
                             </div>
                             <button
                                 className={`${
@@ -353,9 +377,7 @@ const ImtihonKuzatish = () => {
                         </TextWarn>
                     </div>
                     <div className="mt-5">
-                        <div className="text-xl font-medium">
-                            Havolalar:
-                        </div>
+                        <div className="text-xl font-medium">Havolalar:</div>
                         <div>
                             {havolalar?.length !== 0 ? (
                                 <table className="table">

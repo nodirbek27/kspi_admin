@@ -35,6 +35,7 @@ import MadaniyMarifiy from "../pages/Faoliyat/MadaniyMarifiy";
 import OquvUslubiy from "../pages/Faoliyat/OquvUslubiy";
 import AkademikLitsey from "../pages/Faoliyat/AkademikLitsey";
 import Ilmiy from "../pages/Faoliyat/Ilmiy";
+import Yoshlar from "../pages/Faoliyat/YoshlarFaoliyat";
 
 // TUZILMA
 import Rektorat from "../pages/Tuzilma/Rektorat";
@@ -56,7 +57,7 @@ import XorijiyTalabalarQabul from "../pages/Abiturient/XorijiyTalabalarQabul";
 import CallMarkaz from "../pages/Abiturient/CallMarkaz";
 import Qabul from "../pages/Abiturient/Qabul";
 
-// BO'SH ISH O'RINLARI
+// BO'SH ISH O'RINLARI hidden
 import Vakansiyalar from "../pages/Vakansiyalar";
 
 const sidebar = [
@@ -268,6 +269,14 @@ const sidebar = [
         path: "/faoliyat/ilmiy-faoliyat",
         isPrivate: true,
         element: Ilmiy,
+        role: ["admin"],
+      },
+      {
+        id: `6-6`,
+        title: "Yoshlar bilan ishlash, ma'naviy va marifiy yo'nalishdagi ishlar",
+        path: "/faoliyat/yoshlar-bilan-ishlash",
+        isPrivate: true,
+        element: Yoshlar,
         role: ["admin"],
       },
     ],

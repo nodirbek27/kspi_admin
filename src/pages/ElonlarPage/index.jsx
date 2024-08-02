@@ -1,10 +1,10 @@
-import React from "react";
-import Elonlar from "../../components/Elonlar";
+import React from "react";  
+import ElonlarCom from "../../components/ElonlarCom";
 
 const ElonlarPage = () => {
   return (
     <div>
-      <Elonlar />
+      <ElonlarCom/>
     </div>
   );
 };

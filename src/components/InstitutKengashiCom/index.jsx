@@ -225,7 +225,7 @@ const InstitutKengashiCom = () => {
               type="file"
               id="rasm"
               name="rasm"
-              onChange={handleChange} // Remove value attribute
+              onChange={handleChange}
               className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"
               required
             />

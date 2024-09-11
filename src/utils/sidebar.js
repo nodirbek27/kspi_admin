@@ -62,6 +62,7 @@ import Qabul from "../pages/Abiturient/Qabul";
 
 // BO'SH ISH O'RINLARI hidden
 import Vakansiyalar from "../pages/Vakansiyalar";
+import OtishBallari from "../components/OtishBallari";
 
 const sidebar = [
   {
@@ -449,6 +450,14 @@ const sidebar = [
         path: "/abiturient/qabul",
         isPrivate: true,
         element: Qabul,
+        role: ["admin"],
+      },
+      {
+        id: `9-7`,
+        title: "O'tish ballari",
+        path: "/abiturient/o'tish-ballari",
+        isPrivate: true,
+        element: OtishBallari,
         role: ["admin"],
       },
     ],

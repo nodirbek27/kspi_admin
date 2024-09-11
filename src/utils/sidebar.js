@@ -48,6 +48,9 @@ import Markazlar from "../pages/Tuzilma/Markazlar";
 import Bakalavriat from "../pages/Talabalar/Bakalavriat";
 import Magistratura from "../pages/Talabalar/Magistratura";
 import TalabalarTurarJoyi from "../pages/Talabalar/TalabalarTurarJoyi";
+import BMalakaTalab from "../pages/Talabalar/BMalakaTalab"
+import MMalakaTalab from "../pages/Talabalar/MMalakaTalab"
+import BOquvReja from "../pages/Talabalar/BOquvReja"
 
 // ABITURIENT
 import AbiturientBakalavriat from "../pages/Abiturient/Bakalavriat";
@@ -363,6 +366,30 @@ const sidebar = [
         path: "/talabalar/talabalar-turar-joyi",
         isPrivate: true,
         element: TalabalarTurarJoyi,
+        role: ["admin"],
+      },
+      {
+        id: `8-4`,
+        title: "Bakalavr malaka talablari",
+        path: "/talabalar/bakalavr-malaka-talab",
+        isPrivate: true,
+        element: BMalakaTalab,
+        role: ["admin"],
+      },
+      {
+        id: `8-5`,
+        title: "Magist malaka talablari",
+        path: "/talabalar/magist-malaka-talab",
+        isPrivate: true,
+        element: MMalakaTalab,
+        role: ["admin"],
+      },
+      {
+        id: `8-6`,
+        title: "Bakalavr o'quv rejasi",
+        path: "/talabalar/bakalavr-oquv-rejasi",
+        isPrivate: true,
+        element: BOquvReja,
         role: ["admin"],
       },
     ],

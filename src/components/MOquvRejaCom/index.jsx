@@ -2,10 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { Formik, useFormik } from "formik";
 import MyTextInput from "../MyTextInput";
 import MySelect from "../MySelect";
-import APIBOquvReja from "../../services/bOquvReja";
-import APIBOquvRejaTur from "../../services/bOquvRejaTur";
+import APIMOquvReja from "../../services/mOquvReja";
+import APIMOquvRejaTur from "../../services/mOquvRejaTur";
 
-function BakalavrOquvRejaCom() {
+function MagistrOquvRejaCom() {
   const [edit, setEdit] = useState(false);
   const [id, setId] = useState(null);
   const [datas, setDatas] = useState([]);
@@ -17,7 +17,7 @@ function BakalavrOquvRejaCom() {
 
   const fechtData = async () => {
     try {
-      const [responseTur, response] = await Promise.all([APIBOquvRejaTur.get(), APIBOquvReja.get()]) 
+      const [responseTur, response] = await Promise.all([APIMOquvRejaTur.get(), APIMOquvReja.get()]) 
       setDataTur(responseTur.data);
       setDatas(response.data);
     } catch (error) {
@@ -43,11 +43,11 @@ function BakalavrOquvRejaCom() {
       try {
         // POST
         if (!edit) {
-          await APIBOquvReja.post(data);
+          await APIMOquvReja.post(data);
         }
         // PATCH
         else {
-          await APIBOquvReja.patch(id, data);
+          await APIMOquvReja.patch(id, data);
           setEdit(false);
           setId(null);
         }
@@ -87,7 +87,7 @@ function BakalavrOquvRejaCom() {
 
   const handleDelete = async (id) => {
     try {
-      await APIBOquvReja.del(id);
+      await APIMOquvReja.del(id);
       fechtData();
     } catch (error) {
       console.error("Xatolik yuz berdi!", error);
@@ -268,4 +268,4 @@ function BakalavrOquvRejaCom() {
   );
 }
 
-export default BakalavrOquvRejaCom;
+export default MagistrOquvRejaCom;

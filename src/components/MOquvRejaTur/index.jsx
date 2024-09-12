@@ -1,39 +1,27 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, useFormik } from "formik";
 import MyTextInput from "../MyTextInput";
-import MySelect from "../MySelect";
-import APIBOquvReja from "../../services/bOquvReja";
-import APIBOquvRejaTur from "../../services/bOquvRejaTur";
+import APIMOquvRejaTur from "../../services/mOquvRejaTur";
 
-function BakalavrOquvRejaCom() {
+function MagistrOquvRejaTurCom() {
   const [edit, setEdit] = useState(false);
   const [id, setId] = useState(null);
   const [datas, setDatas] = useState([]);
-  const [dataTur, setDataTur] = useState([]);
-
-  const fileInputRefs = {
-    fayl: useRef(null),
-  };
 
   const fechtData = async () => {
     try {
-      const [responseTur, response] = await Promise.all([APIBOquvRejaTur.get(), APIBOquvReja.get()]) 
-      setDataTur(responseTur.data);
+      const response = await APIMOquvRejaTur.get();
       setDatas(response.data);
     } catch (error) {
       console.error("Xatolik yuz berdi!", error);
     }
   };
-  
   // formik for requisite institute
   const formik = useFormik({
     initialValues: {
       name_uz: "",
       name_ru: "",
       name_en: "",
-      sana: "",
-      oquv_reja_turi_id: "",
-      fayl: null,
     }, // Initial values for formik
     onSubmit: async (values, onSubmitProps) => {
       const data = new FormData();
@@ -43,28 +31,18 @@ function BakalavrOquvRejaCom() {
       try {
         // POST
         if (!edit) {
-          await APIBOquvReja.post(data);
+          await APIMOquvRejaTur.post(data);
         }
         // PATCH
         else {
-          await APIBOquvReja.patch(id, data);
+          await APIMOquvRejaTur.patch(id, data);
           setEdit(false);
           setId(null);
         }
-        Object.values(fileInputRefs).forEach((ref) => {
-          if (ref.current) {
-            ref.current.value = "";
-          }
-        });
         onSubmitProps.resetForm();
         fechtData();
       } catch (error) {
         console.error("Xatolik sodir bo'ldi!", error);
-        Object.values(fileInputRefs).forEach((ref) => {
-          if (ref.current) {
-            ref.current.value = "";
-          }
-        });
         onSubmitProps.resetForm();
       }
     },
@@ -79,7 +57,6 @@ function BakalavrOquvRejaCom() {
         name_uz: data.name_uz,
         name_ru: data.name_ru,
         name_en: data.name_en,
-        oquv_reja_turi_id: data.oquv_reja_turi_id,
       });
     }
     fechtData();
@@ -87,7 +64,7 @@ function BakalavrOquvRejaCom() {
 
   const handleDelete = async (id) => {
     try {
-      await APIBOquvReja.del(id);
+      await APIMOquvRejaTur.del(id);
       fechtData();
     } catch (error) {
       console.error("Xatolik yuz berdi!", error);
@@ -101,7 +78,7 @@ function BakalavrOquvRejaCom() {
   return (
     <div className="max-w-[1600px] mx-auto">
       <h1 className="text-xl font-medium text-gray-700 text-center my-5">
-        PDF fayl yuklash
+        Magistr kurs turlari
       </h1>
       <div>
         <div className="border p-5">
@@ -109,14 +86,14 @@ function BakalavrOquvRejaCom() {
             <form onSubmit={formik.handleSubmit}>
               <fieldset className="border px-5 mb-5">
                 <legend className="text-red-500 font-medium">
-                  PDF fayl yuklash
+                  Magistr kurs turlari
                 </legend>
                 <div className="grid grid-cols-3 gap-2 my-5">
                   <MyTextInput
                     type="text"
                     id="name_uz"
                     name="name_uz"
-                    label="PDF nomi"
+                    label="Nomi"
                     tab="uz"
                     value={formik.values.name_uz}
                     onChange={formik.handleChange}
@@ -125,7 +102,7 @@ function BakalavrOquvRejaCom() {
                     type="text"
                     id="name_ru"
                     name="name_ru"
-                    label="PDF nomi"
+                    label="Nomi"
                     tab="ru"
                     value={formik.values.name_ru}
                     onChange={formik.handleChange}
@@ -134,46 +111,10 @@ function BakalavrOquvRejaCom() {
                     type="text"
                     id="name_en"
                     name="name_en"
-                    label="PDF nomi"
+                    label="Nomi"
                     tab="eng"
                     value={formik.values.name_en}
                     onChange={formik.handleChange}
-                  />
-                </div>
-                <div className="grid grid-cols-3 gap-2 my-5">
-                  <MySelect
-                    id="oquv_reja_turi_id"
-                    name="oquv_reja_turi_id"
-                    label="Kurs turini"
-                    tab="tanlang"
-                    options={
-                      dataTur &&
-                      dataTur.map((item) => {
-                        return { value: item.id, label: item.name_uz };
-                      })
-                    }
-                    value={formik.values.rahbar_fish}
-                    onChange={formik.handleChange}
-                  />
-                  <MyTextInput
-                    type="date"
-                    id="sana"
-                    name="sana"
-                    label="PDF yuklsh"
-                    tab="sanasi"
-                    value={formik.values.sana}
-                    onChange={formik.handleChange}
-                  />
-                  <MyTextInput
-                    type="file"
-                    id="fayl"
-                    name="fayl"
-                    label="PDF"
-                    tab="yuklash"
-                    innerRef={fileInputRefs.fayl}
-                    onChange={(event) =>
-                      formik.setFieldValue("fayl", event.currentTarget.files[0])
-                    }
                   />
                 </div>
               </fieldset>
@@ -186,7 +127,7 @@ function BakalavrOquvRejaCom() {
         <div className="col-span-1 border p-2">
           <div>
             <h4 className="text-md font-bold font-source text-center text-red-500">
-              Yuklangan fayllar
+              Magistr kurs turlari
             </h4>
             <div>
               <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -194,13 +135,13 @@ function BakalavrOquvRejaCom() {
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                       <th scope="col" className="px-6 py-3">
-                        Kurs turi
+                        Kurs nomi uz
                       </th>
                       <th scope="col" className="px-6 py-3">
-                        PDF fayl nomi
+                        Kurs nomi ru
                       </th>
                       <th scope="col" className="px-6 py-3">
-                        Yuklangan sanasi
+                        Kurs nomi eng
                       </th>
                       <th scope="col" className="px-6 py-3 text-right">
                         Rekvizitni taxrirlash
@@ -219,24 +160,19 @@ function BakalavrOquvRejaCom() {
                               scope="row"
                               className="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                             >
-                              {dataTur && dataTur.map((item) => {
-                                if(data.oquv_reja_turi_id === item.id){
-                                    return item.name_uz
-                                }
-                                return null
-                              })}
-                            </th>
-                            <th
-                              scope="row"
-                              className="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                            >
                               {data.name_uz}
                             </th>
                             <th
                               scope="row"
                               className="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                             >
-                              {data.sana}
+                              {data.name_ru}
+                            </th>
+                            <th
+                              scope="row"
+                              className="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                            >
+                              {data.name_en}
                             </th>
                             <td className="px-6 py-2 text-right">
                               <button
@@ -268,4 +204,4 @@ function BakalavrOquvRejaCom() {
   );
 }
 
-export default BakalavrOquvRejaCom;
+export default MagistrOquvRejaTurCom;

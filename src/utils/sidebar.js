@@ -51,6 +51,7 @@ import TalabalarTurarJoyi from "../pages/Talabalar/TalabalarTurarJoyi";
 import BMalakaTalab from "../pages/Talabalar/BMalakaTalab"
 import MMalakaTalab from "../pages/Talabalar/MMalakaTalab"
 import BOquvReja from "../pages/Talabalar/BOquvReja"
+import MOquvReja from "../pages/Talabalar/MOquvReja"
 
 // ABITURIENT
 import AbiturientBakalavriat from "../pages/Abiturient/Bakalavriat";
@@ -391,6 +392,14 @@ const sidebar = [
         path: "/talabalar/bakalavr-oquv-rejasi",
         isPrivate: true,
         element: BOquvReja,
+        role: ["admin"],
+      },
+      {
+        id: `8-7`,
+        title: "Magistr o'quv rejasi",
+        path: "/talabalar/magistr-oquv-rejasi",
+        isPrivate: true,
+        element: MOquvReja,
         role: ["admin"],
       },
     ],

@@ -10,6 +10,11 @@ const getbyId = (id) => {
 const post = (item) => {
   return axiosInstance.post(`${ep}`, item);
 };
+
+const patch = (id, item) => {
+    return axiosInstance.patch(`${ep}${id}/`, item);
+  }
+
 const put = (id, item) => {
   return axiosInstance.put(`${ep}${id}/`, item);
 };
@@ -17,6 +22,6 @@ const del = (id) => {
   return axiosInstance.delete(`${ep}${id}/`);
 };
 
-const APIMOquvReja = { get, getbyId, post, put, del };
+const APIMOquvReja = { get, getbyId, post, patch, put, del };
 
 export default APIMOquvReja;

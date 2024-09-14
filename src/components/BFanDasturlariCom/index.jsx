@@ -32,7 +32,7 @@ function BakalavrFanDasturlariCom() {
       name_ru: "",
       name_en: "",
       sana: "",
-      oquv_reja_turi_id: "",
+      fan_dastur_turi_id: "",
       fayl: null,
     }, // Initial values for formik
     onSubmit: async (values, onSubmitProps) => {
@@ -79,7 +79,7 @@ function BakalavrFanDasturlariCom() {
         name_uz: data.name_uz,
         name_ru: data.name_ru,
         name_en: data.name_en,
-        oquv_reja_turi_id: data.oquv_reja_turi_id,
+        fan_dastur_turi_id: data.fan_dastur_turi_id,
       });
     }
     fechtData();
@@ -142,8 +142,8 @@ function BakalavrFanDasturlariCom() {
                 </div>
                 <div className="grid grid-cols-3 gap-2 my-5">
                   <MySelect
-                    id="oquv_reja_turi_id"
-                    name="oquv_reja_turi_id"
+                    id="fan_dastur_turi_id"
+                    name="fan_dastur_turi_id"
                     label="Kurs turini"
                     tab="tanlang"
                     options={
@@ -220,7 +220,7 @@ function BakalavrFanDasturlariCom() {
                               className="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                             >
                               {dataTur && dataTur.map((item) => {
-                                if(data.oquv_reja_turi_id === item.id){
+                                if(data.fan_dastur_turi_id === item.id){
                                     return item.name_uz
                                 }
                                 return null

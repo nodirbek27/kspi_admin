@@ -52,6 +52,7 @@ import BMalakaTalab from "../pages/Talabalar/BMalakaTalab"
 import MMalakaTalab from "../pages/Talabalar/MMalakaTalab"
 import BOquvReja from "../pages/Talabalar/BOquvReja"
 import MOquvReja from "../pages/Talabalar/MOquvReja"
+import BFanDasturlari from "../pages/Talabalar/BFanDasturlari"
 
 // ABITURIENT
 import AbiturientBakalavriat from "../pages/Abiturient/Bakalavriat";
@@ -400,6 +401,14 @@ const sidebar = [
         path: "/talabalar/magistr-oquv-rejasi",
         isPrivate: true,
         element: MOquvReja,
+        role: ["admin"],
+      },
+      {
+        id: `8-8`,
+        title: "Bakalavr fan dasturlari",
+        path: "/talabalar/bakalavr-fan-dasturlari",
+        isPrivate: true,
+        element: BFanDasturlari,
         role: ["admin"],
       },
     ],

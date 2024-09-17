@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { Formik, useFormik } from "formik";
 import MyTextInput from "../MyTextInput";
+import MySelect from "../MySelect";
 import APIBFanDasturlariTur from "../../services/bFanDasturlariTur";
+import APIBFanDasturlariYonalish from "../../services/bFanDasturlariYonalish";
 
 function BakalavrFanDasturlariTurCom() {
   const [edit, setEdit] = useState(false);
   const [id, setId] = useState(null);
   const [datas, setDatas] = useState([]);
+  const [dataYonalish, setDataYonalish] = useState([]);
 
   const fechtData = async () => {
     try {
-      const response = await APIBFanDasturlariTur.get();
-      setDatas(response.data);
+      const [resTur, resYonalish] = await Promise.all([APIBFanDasturlariTur.get(), APIBFanDasturlariYonalish.get()]);
+      setDataYonalish(resYonalish.data);
+      setDatas(resTur.data);
     } catch (error) {
       console.error("Xatolik yuz berdi!", error);
     }
@@ -22,6 +26,7 @@ function BakalavrFanDasturlariTurCom() {
       name_uz: "",
       name_ru: "",
       name_en: "",
+      fan_dastur_yonalish_id: "",
     }, // Initial values for formik
     onSubmit: async (values, onSubmitProps) => {
       const data = new FormData();
@@ -57,6 +62,7 @@ function BakalavrFanDasturlariTurCom() {
         name_uz: data.name_uz,
         name_ru: data.name_ru,
         name_en: data.name_en,
+        fan_dastur_yonalish_id: data.fan_dastur_yonalish_id,
       });
     }
     fechtData();
@@ -78,7 +84,7 @@ function BakalavrFanDasturlariTurCom() {
   return (
     <div className="max-w-[1600px] mx-auto">
       <h1 className="text-xl font-medium text-gray-700 text-center my-5">
-        Bakalavr kurs turlari
+        Bakalavr turini kiriting
       </h1>
       <div>
         <div className="border p-5">
@@ -86,8 +92,24 @@ function BakalavrFanDasturlariTurCom() {
             <form onSubmit={formik.handleSubmit}>
               <fieldset className="border px-5 mb-5">
                 <legend className="text-red-500 font-medium">
-                  Bakalavr kurs turlari
+                  Bakalavr turini kiriting
                 </legend>
+                <div className="grid grid-cols-3 gap-2 my-5">
+                <MySelect
+                    id="fan_dastur_yonalish_id"
+                    name="fan_dastur_yonalish_id"
+                    label="Yo'nalishni"
+                    tab="tanlang"
+                    options={
+                      dataYonalish &&
+                      dataYonalish.map((item) => {
+                        return { value: item.id, label: item.name_uz };
+                      })
+                    }
+                    value={formik.values.fan_dastur_yonalish_id}
+                    onChange={formik.handleChange}
+                  />
+                </div>
                 <div className="grid grid-cols-3 gap-2 my-5">
                   <MyTextInput
                     type="text"

@@ -65,6 +65,11 @@ import Qabul from "../pages/Abiturient/Qabul";
 import Vakansiyalar from "../pages/Vakansiyalar";
 import OtishBallari from "../components/OtishBallari";
 
+// Korrupsya
+import KorHaqHabBer from "../pages/KorHaqHabBer";
+import NormativHuj from "../pages/NormativHuj";
+import IchkiIdorHuj from "../pages/IchkiIdorHuj";
+
 const sidebar = [
   {
     id: 1,
@@ -497,6 +502,40 @@ const sidebar = [
     element: Generics,
     hidden: true,
   },
+  {
+    id: 13,
+    title: "Korrupsyaga qarshi kurash",
+    path: "/korrupsyaga-qarshi-kurash",
+    icon: Analitika,
+    isPrivate: true,
+    element: Generics,
+    role: ["admin"],
+    children: [
+      {
+        id: `13-1`,
+        title: "Normativ hujjatlar",
+        path: "/korrupsyaga-qarshi-kurash/normativ-hujjatlar",
+        isPrivate: true,
+        element: NormativHuj,
+        role: ["admin"],
+      },
+      {
+        id: `13-2`,
+        title: "Ichki idoraviy hujjatlar",
+        path: "/korrupsyaga-qarshi-kurash/ichki-idoraviy-hujjatlar",
+        isPrivate: true,
+        element: IchkiIdorHuj,
+        role: ["admin"],
+      },
+      {
+        id: `13-3`,
+        title: "Korrupsya haqida habar berish",
+        path: "/korrupsyaga-qarshi-kurash/korrupsya-haqida-habar-berish",
+        isPrivate: true,
+        element: KorHaqHabBer,
+        role: ["admin"],
+      },
+    ],
+  },
 ];
-
 export default sidebar;

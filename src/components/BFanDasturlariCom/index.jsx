@@ -1,30 +1,53 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Formik, useFormik } from "formik";
 import MyTextInput from "../MyTextInput";
 import MySelect from "../MySelect";
 import APIBFanDasturlari from "../../services/bFanDasturlari";
 import APIBFanDasturlariTur from "../../services/bFanDasturlariTur";
+import APIBFanDasturlariKurs from "../../services/bFanDasturlariKurs";
+import APIBFanDasturlariTalimTur from "../../services/bFanDasturlariTalimTur";
+import APIBFanDasturlariYonalish from "../../services/bFanDasturlariYonalish";
 
 function BakalavrFanDasturlariCom() {
   const [edit, setEdit] = useState(false);
   const [id, setId] = useState(null);
   const [datas, setDatas] = useState([]);
   const [dataTur, setDataTur] = useState([]);
+  const [dataKurs, setDataKurs] = useState([]);
+  const [dataTalimTur, setDataTalimTur] = useState([]);
+  const [dataYonalish, setDataYonalish] = useState([]);
+
+  const [selectedKurs, setSelectedKurs] = useState([]);
+  const [selectedTalimTur, setSelectedTalimTur] = useState([]);
+  const [selectedYonalish, setSelectedYonalish] = useState([]);
+
+  const [talimTur, setTalimTur] = useState([])
+  const [yonalish, setYonalish] = useState([])
+  const [tur, setTur] = useState([])
 
   const fileInputRefs = {
     fayl: useRef(null),
   };
 
-  const fechtData = async () => {
+  const fetchData = useCallback( async () => {
     try {
-      const [responseTur, response] = await Promise.all([APIBFanDasturlariTur.get(), APIBFanDasturlari.get()]) 
-      setDataTur(responseTur.data);
-      setDatas(response.data);
+      const [resTur, res, resKusr, resTalimTur, resYonalish] = await Promise.all([
+        APIBFanDasturlariTur.get(),
+        APIBFanDasturlari.get(),
+        APIBFanDasturlariKurs.get(),
+        APIBFanDasturlariTalimTur.get(),
+        APIBFanDasturlariYonalish.get(),
+      ]);
+      setDataKurs(resKusr.data);
+      setDataTalimTur(resTalimTur.data);
+      setDataYonalish(resYonalish.data);
+      setDataTur(resTur.data);
+      setDatas(res.data);
     } catch (error) {
       console.error("Xatolik yuz berdi!", error);
     }
-  };
-  
+  }, []);
+
   // formik for requisite institute
   const formik = useFormik({
     initialValues: {
@@ -57,7 +80,7 @@ function BakalavrFanDasturlariCom() {
           }
         });
         onSubmitProps.resetForm();
-        fechtData();
+        fetchData();
       } catch (error) {
         console.error("Xatolik sodir bo'ldi!", error);
         Object.values(fileInputRefs).forEach((ref) => {
@@ -82,21 +105,42 @@ function BakalavrFanDasturlariCom() {
         fan_dastur_turi_id: data.fan_dastur_turi_id,
       });
     }
-    fechtData();
+    fetchData();
   };
 
   const handleDelete = async (id) => {
     try {
       await APIBFanDasturlari.del(id);
-      fechtData();
+      fetchData();
     } catch (error) {
       console.error("Xatolik yuz berdi!", error);
     }
   };
 
   useEffect(() => {
-    fechtData();
-  }, []);
+    fetchData();
+  }, [fetchData]);
+
+  useEffect(() => {
+    if (selectedKurs) {
+      const filteredTalimTur = dataTalimTur.filter(item => item.fan_dastur_kurs_id === parseInt(selectedKurs));
+      setTalimTur(filteredTalimTur);
+    }
+  }, [selectedKurs, dataTalimTur]);
+  
+  useEffect(() => {
+    if (selectedTalimTur) {
+      const filteredYonalish = dataYonalish.filter(item => item.fan_dastur_talim_turi_id === parseInt(selectedTalimTur));
+      setYonalish(filteredYonalish);
+    }
+  }, [selectedTalimTur, dataYonalish]);
+
+  useEffect(() => {
+    if (selectedTalimTur) {
+      const filteredTur = dataTur.filter(item => item.fan_dastur_yonalish_id === parseInt(selectedTalimTur));
+      setTur(filteredTur);
+    }
+  }, [selectedTalimTur, dataTur]);
 
   return (
     <div className="max-w-[1600px] mx-auto">
@@ -111,6 +155,64 @@ function BakalavrFanDasturlariCom() {
                 <legend className="text-red-500 font-medium">
                   PDF fayl yuklash
                 </legend>
+                <div className="grid grid-cols-4 gap-2 my-5">
+                <MySelect
+                    id="fan_dastur_kurs_id"
+                    name="fan_dastur_kurs_id"
+                    label="Kursni"
+                    tab="tanlang"
+                    options={
+                      dataKurs &&
+                      dataKurs.map((item) => {
+                        return { value: item.id, label: item.name_uz };
+                      })
+                    }
+                    value={selectedKurs}
+                    onChange={(e) => setSelectedKurs(e.target.value)}
+                  />
+                  <MySelect
+                    id="fan_dastur_talim_turi_id"
+                    name="fan_dastur_talim_turi_id"
+                    label="Kursni"
+                    tab="tanlang"
+                    options={
+                      talimTur &&
+                      talimTur.map((item) => {
+                        return { value: item.id, label: item.name_uz };
+                      })
+                    }
+                    value={selectedTalimTur}
+                    onChange={(e) => setSelectedTalimTur(e.target.value)}
+                  />
+                  <MySelect
+                    id="fan_dastur_yonalish_id"
+                    name="fan_dastur_yonalish_id"
+                    label="Kursni"
+                    tab="tanlang"
+                    options={
+                      yonalish &&
+                      yonalish.map((item) => {
+                        return { value: item.id, label: item.name_uz };
+                      })
+                    }
+                    value={selectedYonalish}
+                    onChange={(e) => setSelectedYonalish(e.target.value)}
+                  />
+                  <MySelect
+                    id="fan_dastur_turi_id"
+                    name="fan_dastur_turi_id"
+                    label="Kurs turini"
+                    tab="tanlang"
+                    options={
+                      tur &&
+                      tur.map((item) => {
+                        return { value: item.id, label: item.name_uz };
+                      })
+                    }
+                    value={formik.values.fan_dastur_turi_id}
+                    onChange={formik.handleChange}
+                  />
+                </div>
                 <div className="grid grid-cols-3 gap-2 my-5">
                   <MyTextInput
                     type="text"
@@ -141,20 +243,6 @@ function BakalavrFanDasturlariCom() {
                   />
                 </div>
                 <div className="grid grid-cols-3 gap-2 my-5">
-                  <MySelect
-                    id="fan_dastur_turi_id"
-                    name="fan_dastur_turi_id"
-                    label="Kurs turini"
-                    tab="tanlang"
-                    options={
-                      dataTur &&
-                      dataTur.map((item) => {
-                        return { value: item.id, label: item.name_uz };
-                      })
-                    }
-                    value={formik.values.fan_dastur_turi_id}
-                    onChange={formik.handleChange}
-                  />
                   <MyTextInput
                     type="date"
                     id="sana"
@@ -219,12 +307,13 @@ function BakalavrFanDasturlariCom() {
                               scope="row"
                               className="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                             >
-                              {dataTur && dataTur.map((item) => {
-                                if(data.fan_dastur_turi_id === item.id){
-                                    return item.name_uz
-                                }
-                                return null
-                              })}
+                              {dataTur &&
+                                dataTur.map((item) => {
+                                  if (data.fan_dastur_turi_id === item.id) {
+                                    return item.name_uz;
+                                  }
+                                  return null;
+                                })}
                             </th>
                             <th
                               scope="row"

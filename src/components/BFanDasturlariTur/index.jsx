@@ -1,25 +1,44 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Formik, useFormik } from "formik";
 import MyTextInput from "../MyTextInput";
 import MySelect from "../MySelect";
 import APIBFanDasturlariTur from "../../services/bFanDasturlariTur";
+import APIBFanDasturlariKurs from "../../services/bFanDasturlariKurs";
+import APIBFanDasturlariTalimTur from "../../services/bFanDasturlariTalimTur";
 import APIBFanDasturlariYonalish from "../../services/bFanDasturlariYonalish";
 
 function BakalavrFanDasturlariTurCom() {
   const [edit, setEdit] = useState(false);
   const [id, setId] = useState(null);
   const [datas, setDatas] = useState([]);
+  const [dataKurs, setDataKurdataKurs] = useState([]);
+  const [dataTalimTur, setDataTalimTur] = useState([]);
   const [dataYonalish, setDataYonalish] = useState([]);
 
-  const fechtData = async () => {
+  const [selectedKurs, setSelectedKurs] = useState([]);
+  const [selectedTalimTur, setSelectedTalimTur] = useState([]);
+
+  const [talimTur, setTalimTur] = useState([])
+  const [yonalish, setYonalish] = useState([])
+
+  
+  const fetchData = useCallback(async () => {
     try {
-      const [resTur, resYonalish] = await Promise.all([APIBFanDasturlariTur.get(), APIBFanDasturlariYonalish.get()]);
+      const [resTur, resKurs, resTalimTur, resYonalish,] = await Promise.all([
+        APIBFanDasturlariTur.get(),
+        APIBFanDasturlariKurs.get(),
+        APIBFanDasturlariTalimTur.get(),
+        APIBFanDasturlariYonalish.get(),
+
+      ]);
+      setDataKurdataKurs(resKurs.data);
+      setDataTalimTur(resTalimTur.data)
       setDataYonalish(resYonalish.data);
       setDatas(resTur.data);
     } catch (error) {
       console.error("Xatolik yuz berdi!", error);
     }
-  };
+  }, []);
   // formik for requisite institute
   const formik = useFormik({
     initialValues: {
@@ -45,7 +64,7 @@ function BakalavrFanDasturlariTurCom() {
           setId(null);
         }
         onSubmitProps.resetForm();
-        fechtData();
+        fetchData();
       } catch (error) {
         console.error("Xatolik sodir bo'ldi!", error);
         onSubmitProps.resetForm();
@@ -65,21 +84,34 @@ function BakalavrFanDasturlariTurCom() {
         fan_dastur_yonalish_id: data.fan_dastur_yonalish_id,
       });
     }
-    fechtData();
   };
 
   const handleDelete = async (id) => {
     try {
       await APIBFanDasturlariTur.del(id);
-      fechtData();
+      fetchData();
     } catch (error) {
       console.error("Xatolik yuz berdi!", error);
     }
   };
 
   useEffect(() => {
-    fechtData();
-  }, []);
+    fetchData();
+  }, [fetchData]);
+
+  useEffect(() => {
+    if (selectedKurs) {
+      const filteredTalimTur = dataTalimTur.filter(item => item.fan_dastur_kurs_id === parseInt(selectedKurs));
+      setTalimTur(filteredTalimTur);
+    }
+  }, [selectedKurs, dataTalimTur]);
+  
+  useEffect(() => {
+    if (selectedTalimTur) {
+      const filteredYonalish = dataYonalish.filter(item => item.fan_dastur_talim_turi_id === parseInt(selectedTalimTur));
+      setYonalish(filteredYonalish);
+    }
+  }, [selectedTalimTur, dataYonalish]);  
 
   return (
     <div className="max-w-[1600px] mx-auto">
@@ -95,14 +127,42 @@ function BakalavrFanDasturlariTurCom() {
                   Bakalavr turini kiriting
                 </legend>
                 <div className="grid grid-cols-3 gap-2 my-5">
-                <MySelect
+                  <MySelect
+                    id="fan_dastur_kurs_id"
+                    name="fan_dastur_kurs_id"
+                    label="Kursni"
+                    tab="tanlang"
+                    options={
+                      dataKurs &&
+                      dataKurs.map((item) => {
+                        return { value: item.id, label: item.name_uz };
+                      })
+                    }
+                    value={selectedKurs}
+                    onChange={(e) => setSelectedKurs(e.target.value)}
+                  />
+                  <MySelect
+                    id="fan_dastur_talim_turi_id"
+                    name="fan_dastur_talim_turi_id"
+                    label="Kursni"
+                    tab="tanlang"
+                    options={
+                      talimTur &&
+                      talimTur.map((item) => {
+                        return { value: item.id, label: item.name_uz };
+                      })
+                    }
+                    value={selectedTalimTur}
+                    onChange={(e) => setSelectedTalimTur(e.target.value)}
+                  />
+                  <MySelect
                     id="fan_dastur_yonalish_id"
                     name="fan_dastur_yonalish_id"
                     label="Yo'nalishni"
                     tab="tanlang"
                     options={
-                      dataYonalish &&
-                      dataYonalish.map((item) => {
+                      yonalish &&
+                      yonalish.map((item) => {
                         return { value: item.id, label: item.name_uz };
                       })
                     }
@@ -160,10 +220,10 @@ function BakalavrFanDasturlariTurCom() {
                         Kurs nomi uz
                       </th>
                       <th scope="col" className="px-6 py-3">
-                      Kurs nomi ru
+                        Kurs nomi ru
                       </th>
                       <th scope="col" className="px-6 py-3">
-                      Kurs nomi eng
+                        Kurs nomi eng
                       </th>
                       <th scope="col" className="px-6 py-3 text-right">
                         Rekvizitni taxrirlash

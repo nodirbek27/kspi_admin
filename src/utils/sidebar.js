@@ -53,6 +53,7 @@ import MMalakaTalab from "../pages/Talabalar/MMalakaTalab"
 import BOquvReja from "../pages/Talabalar/BOquvReja"
 import MOquvReja from "../pages/Talabalar/MOquvReja"
 import BFanDasturlari from "../pages/Talabalar/BFanDasturlari"
+import MFanDasturlari from "../pages/Talabalar/MFanDasturlari";
 
 // ABITURIENT
 import AbiturientBakalavriat from "../pages/Abiturient/Bakalavriat";
@@ -414,6 +415,14 @@ const sidebar = [
         path: "/talabalar/bakalavr-fan-dasturlari",
         isPrivate: true,
         element: BFanDasturlari,
+        role: ["admin"],
+      },
+      {
+        id: `8-9`,
+        title: "Magistr fan dasturlari",
+        path: "/talabalar/magistr-fan-dasturlari",
+        isPrivate: true,
+        element: MFanDasturlari,
         role: ["admin"],
       },
     ],

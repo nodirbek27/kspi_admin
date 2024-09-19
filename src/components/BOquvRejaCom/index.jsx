@@ -152,7 +152,7 @@ function BakalavrOquvRejaCom() {
                         return { value: item.id, label: item.name_uz };
                       })
                     }
-                    value={formik.values.rahbar_fish}
+                    value={formik.values.oquv_reja_turi_id}
                     onChange={formik.handleChange}
                   />
                   <MyTextInput

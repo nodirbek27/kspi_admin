@@ -142,6 +142,38 @@ function BakalavrFanDasturlariCom() {
     }
   }, [selectedTalimTur, dataTur]);
 
+  const getKursName = (kursId) => {
+    const kurs = dataKurs.find((k) => k.id === kursId);
+    return kurs ? kurs.name_uz : "Noma'lum kurs"; // Kursni topib, name_uz ni qaytaramiz
+  };
+  
+  const getTalimTurName = (talimTurId) => {
+    const talimTur = dataTalimTur.find((k) => k.id === talimTurId);
+    if (talimTur) {
+      const kursName = getKursName(talimTur.fan_dastur_kurs_id); // Kurs nomini olamiz
+      return `${kursName} - ${talimTur.name_uz}`; // Talim tur va kurs nomini birlashtirib qaytaramiz
+    }
+    return "Noma'lum ta'lim tur"; // Agar talim tur topilmasa
+  };
+  
+  const getYonalishName = (yonalishId) => {
+    const yonalish = dataYonalish.find((t) => t.id === yonalishId); // fan_dastur_talim_turi_id orqali talim turini topamiz
+    if (yonalish) {
+      const talimTur = getTalimTurName(yonalish.fan_dastur_talim_turi_id); // Kursni topamiz
+      return `${talimTur} - ${yonalish.name_uz}`; // Kurs va talim tur nomini qaytaramiz
+    }
+    return "Noma'lum ta'lim tur"; // Agar talim tur topilmasa
+  };
+
+  const getTurName = (turId) => {
+    const tur = dataTur.find((t) => t.id === turId); // fan_dastur_talim_turi_id orqali talim turini topamiz
+    if (tur) {
+      const yonalish = getYonalishName(tur.fan_dastur_yonalish_id); // Kursni topamiz
+      return `${yonalish} - ${tur.name_uz}`; // Kurs va talim tur nomini qaytaramiz
+    }
+    return "Noma'lum ta'lim tur"; // Agar talim tur topilmasa
+  };
+
   return (
     <div className="max-w-[1600px] mx-auto">
       <h1 className="text-xl font-medium text-gray-700 text-center my-5">
@@ -307,13 +339,8 @@ function BakalavrFanDasturlariCom() {
                               scope="row"
                               className="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                             >
-                              {dataTur &&
-                                dataTur.map((item) => {
-                                  if (data.fan_dastur_turi_id === item.id) {
-                                    return item.name_uz;
-                                  }
-                                  return null;
-                                })}
+                              {getTurName(data.fan_dastur_yonalish_id)}
+                              {data.fan_dastur_yonalish_id}
                             </th>
                             <th
                               scope="row"

@@ -13,7 +13,7 @@ function BakalavrFanDasturlariYonalishCom() {
   const [dataTalimTur, setDataTalimTur] = useState([]);
   const [dataKurs, setDataKurs] = useState([]);
   const [selectedKurs, setselectedKurs] = useState([]);
-  const [yonalish, setYonalish] = useState([])
+  const [yonalish, setYonalish] = useState([]);
 
   const fetchData = useCallback(async () => {
     try {
@@ -90,11 +90,27 @@ function BakalavrFanDasturlariYonalishCom() {
   }, [fetchData]);
 
   useEffect(() => {
-    if(selectedKurs){
-      const filteredTalimTur = dataTalimTur.filter(item => item.fan_dastur_kurs_id === parseInt(selectedKurs))
-      setYonalish(filteredTalimTur)
+    if (selectedKurs) {
+      const filteredTalimTur = dataTalimTur.filter(
+        (item) => item.fan_dastur_kurs_id === parseInt(selectedKurs)
+      );
+      setYonalish(filteredTalimTur);
     }
-  }, [selectedKurs, dataTalimTur])
+  }, [selectedKurs, dataTalimTur]);
+
+  const getKursName = (kursId) => {
+    const kurs = dataKurs.find((k) => k.id === kursId);
+    return kurs ? kurs.name_uz : "Noma'lum kurs"; // Kursni topib, name_uz ni qaytaramiz
+  };
+  
+  const getTalimTurName = (talimTurId) => {
+    const talimTur = dataTalimTur.find((k) => k.id === talimTurId);
+    if (talimTur) {
+      const kursName = getKursName(talimTur.fan_dastur_kurs_id); // Kurs nomini olamiz
+      return `${kursName} - ${talimTur.name_uz}`; // Talim tur va kurs nomini birlashtirib qaytaramiz
+    }
+    return "Noma'lum ta'lim tur"; // Agar talim tur topilmasa
+  };
 
   return (
     <div className="max-w-[1600px] mx-auto">
@@ -110,7 +126,7 @@ function BakalavrFanDasturlariYonalishCom() {
                   Bakalavr kurs turlari
                 </legend>
                 <div className="grid grid-cols-3 gap-2 my-5">
-                <MySelect
+                  <MySelect
                     id="fan_dastur_kurs_id"
                     name="fan_dastur_kurs_id"
                     label="Kursni"
@@ -122,7 +138,7 @@ function BakalavrFanDasturlariYonalishCom() {
                       })
                     }
                     value={selectedKurs}
-                    onChange={e => setselectedKurs(e.target.value)}
+                    onChange={(e) => setselectedKurs(e.target.value)}
                   />
                   <MySelect
                     id="fan_dastur_talim_turi_id"
@@ -186,13 +202,16 @@ function BakalavrFanDasturlariYonalishCom() {
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                       <th scope="col" className="px-6 py-3">
-                        Kurs nomi uz
+                        Kurs va tur nomi
                       </th>
                       <th scope="col" className="px-6 py-3">
-                        Kurs nomi ru
+                        Yo'nalish nomi uz
                       </th>
                       <th scope="col" className="px-6 py-3">
-                        Kurs nomi eng
+                        Yo'nalish nomi ru
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Yo'nalish nomi eng
                       </th>
                       <th scope="col" className="px-6 py-3 text-right">
                         Taxrirlash
@@ -207,6 +226,12 @@ function BakalavrFanDasturlariYonalishCom() {
                             key={data.id}
                             className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
                           >
+                            <th
+                              scope="row"
+                              className="px-6 py-2 font-medium text-red-500 whitespace-nowrap dark:text-white"
+                            >
+                              {getTalimTurName(data.fan_dastur_talim_turi_id)}
+                            </th>
                             <th
                               scope="row"
                               className="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"

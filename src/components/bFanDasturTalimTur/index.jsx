@@ -1,41 +1,35 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, useFormik } from "formik";
 import MyTextInput from "../MyTextInput";
 import MySelect from "../MySelect";
-import APIBFanDasturlariYonalish from "../../services/bFanDasturlariYonalish";
 import APIBFanDasturlariTalimTur from "../../services/bFanDasturlariTalimTur";
 import APIBFanDasturlariKurs from "../../services/bFanDasturlariKurs";
 
-function BakalavrFanDasturlariYonalishCom() {
+function BakalavrFanDasturlariTalimTurCom() {
   const [edit, setEdit] = useState(false);
   const [id, setId] = useState(null);
   const [datas, setDatas] = useState([]);
-  const [dataTalimTur, setDataTalimTur] = useState([]);
   const [dataKurs, setDataKurs] = useState([]);
-  const [selectedKurs, setselectedKurs] = useState([]);
-  const [yonalish, setYonalish] = useState([])
 
-  const fetchData = useCallback(async () => {
+  const fechtData = async () => {
     try {
-      const [resYonalish, resTalimTur, resKurs] = await Promise.all([
-        APIBFanDasturlariYonalish.get(),
+      const [resYonalish, resKurs] = await Promise.all([
         APIBFanDasturlariTalimTur.get(),
         APIBFanDasturlariKurs.get(),
       ]);
       setDatas(resYonalish.data);
-      setDataTalimTur(resTalimTur.data);
       setDataKurs(resKurs.data);
     } catch (error) {
       console.error("Xatolik yuz berdi!", error);
     }
-  }, []);
+  };
   // formik for requisite institute
   const formik = useFormik({
     initialValues: {
       name_uz: "",
       name_ru: "",
       name_en: "",
-      fan_dastur_talim_turi_id: "",
+      fan_dastur_kurs_id: "",
     }, // Initial values for formik
     onSubmit: async (values, onSubmitProps) => {
       const data = new FormData();
@@ -45,16 +39,16 @@ function BakalavrFanDasturlariYonalishCom() {
       try {
         // POST
         if (!edit) {
-          await APIBFanDasturlariYonalish.post(data);
+          await APIBFanDasturlariTalimTur.post(data);
         }
         // PATCH
         else {
-          await APIBFanDasturlariYonalish.patch(id, data);
+          await APIBFanDasturlariTalimTur.patch(id, data);
           setEdit(false);
           setId(null);
         }
         onSubmitProps.resetForm();
-        fetchData();
+        fechtData();
       } catch (error) {
         console.error("Xatolik sodir bo'ldi!", error);
         onSubmitProps.resetForm();
@@ -71,35 +65,29 @@ function BakalavrFanDasturlariYonalishCom() {
         name_uz: data.name_uz,
         name_ru: data.name_ru,
         name_en: data.name_en,
-        fan_dastur_talim_turi_id: data.fan_dastur_talim_turi_id,
+        fan_dastur_kurs_id: data.fan_dastur_kurs_id,
       });
     }
+    fechtData();
   };
 
   const handleDelete = async (id) => {
     try {
-      await APIBFanDasturlariYonalish.del(id);
-      fetchData();
+      await APIBFanDasturlariTalimTur.del(id);
+      fechtData();
     } catch (error) {
       console.error("Xatolik yuz berdi!", error);
     }
   };
 
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
-
-  useEffect(() => {
-    if(selectedKurs){
-      const filteredTalimTur = dataTalimTur.filter(item => item.fan_dastur_kurs_id === parseInt(selectedKurs))
-      setYonalish(filteredTalimTur)
-    }
-  }, [selectedKurs, dataTalimTur])
+    fechtData();
+  }, []);
 
   return (
     <div className="max-w-[1600px] mx-auto">
       <h1 className="text-xl font-medium text-gray-700 text-center my-5">
-        Bakalavr yo'nalishlarni kiritish
+        Bakalavr ta'lim turini kiritish
       </h1>
       <div>
         <div className="border p-5">
@@ -107,10 +95,10 @@ function BakalavrFanDasturlariYonalishCom() {
             <form onSubmit={formik.handleSubmit}>
               <fieldset className="border px-5 mb-5">
                 <legend className="text-red-500 font-medium">
-                  Bakalavr kurs turlari
+                  Bakalavr ta'lim turi
                 </legend>
                 <div className="grid grid-cols-3 gap-2 my-5">
-                <MySelect
+                  <MySelect
                     id="fan_dastur_kurs_id"
                     name="fan_dastur_kurs_id"
                     label="Kursni"
@@ -121,21 +109,7 @@ function BakalavrFanDasturlariYonalishCom() {
                         return { value: item.id, label: item.name_uz };
                       })
                     }
-                    value={selectedKurs}
-                    onChange={e => setselectedKurs(e.target.value)}
-                  />
-                  <MySelect
-                    id="fan_dastur_talim_turi_id"
-                    name="fan_dastur_talim_turi_id"
-                    label="Ta'lim turini"
-                    tab="tanlang"
-                    options={
-                      yonalish &&
-                      yonalish.map((item) => {
-                        return { value: item.id, label: item.name_uz };
-                      })
-                    }
-                    value={formik.values.fan_dastur_talim_turi_id}
+                    value={formik.values.fan_dastur_kurs_id}
                     onChange={formik.handleChange}
                   />
                 </div>
@@ -178,7 +152,7 @@ function BakalavrFanDasturlariYonalishCom() {
         <div className="col-span-1 border p-2">
           <div>
             <h4 className="text-md font-bold font-source text-center text-red-500">
-              Bakalavr kurs turlari
+              Bakalavr ta'lim turlari
             </h4>
             <div>
               <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -227,14 +201,14 @@ function BakalavrFanDasturlariYonalishCom() {
                             </th>
                             <td className="px-6 py-2 text-right">
                               <button
-                                type="button"
+                                type="submit"
                                 className="px-3 py-0.5 text-xs rounded-lg border border-teal-500 bg-teal-500 active:bg-white active:text-teal-500 text-gray-800 font-semibold"
                                 onClick={() => handleEdit(data.id)}
                               >
                                 Taxrirlash
                               </button>
                               <button
-                                type="button"
+                                type="submit"
                                 className="px-3 py-0.5 text-xs rounded-lg border border-red-500 bg-red-500 active:bg-white active:text-red-500 text-gray-800 font-semibold ml-2"
                                 onClick={() => handleDelete(data.id)}
                               >
@@ -255,4 +229,4 @@ function BakalavrFanDasturlariYonalishCom() {
   );
 }
 
-export default BakalavrFanDasturlariYonalishCom;
+export default BakalavrFanDasturlariTalimTurCom;

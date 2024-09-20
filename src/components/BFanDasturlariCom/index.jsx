@@ -314,7 +314,7 @@ function BakalavrFanDasturlariCom() {
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                       <th scope="col" className="px-6 py-3">
-                        Kurs turi
+                        Kurs - Talim tur - Yonalish - Turi
                       </th>
                       <th scope="col" className="px-6 py-3">
                         PDF fayl nomi
@@ -323,7 +323,7 @@ function BakalavrFanDasturlariCom() {
                         Yuklangan sanasi
                       </th>
                       <th scope="col" className="px-6 py-3 text-right">
-                        Rekvizitni taxrirlash
+                        Taxrirlash
                       </th>
                     </tr>
                   </thead>
@@ -337,10 +337,9 @@ function BakalavrFanDasturlariCom() {
                           >
                             <th
                               scope="row"
-                              className="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                              className="px-6 py-2 font-medium text-red-500 whitespace-nowrap dark:text-white"
                             >
-                              {getTurName(data.fan_dastur_yonalish_id)}
-                              {data.fan_dastur_yonalish_id}
+                              {getTurName(data.fan_dastur_turi_id)}
                             </th>
                             <th
                               scope="row"

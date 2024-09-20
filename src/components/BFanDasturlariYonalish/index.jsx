@@ -194,10 +194,10 @@ function BakalavrFanDasturlariYonalishCom() {
         <div className="col-span-1 border p-2">
           <div>
             <h4 className="text-md font-bold font-source text-center text-red-500">
-              Bakalavr kurs turlari
+              Bakalavr yo'nalishlari
             </h4>
             <div>
-              <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+              <div className="max-h-96 relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -207,18 +207,12 @@ function BakalavrFanDasturlariYonalishCom() {
                       <th scope="col" className="px-6 py-3">
                         Yo'nalish nomi uz
                       </th>
-                      <th scope="col" className="px-6 py-3">
-                        Yo'nalish nomi ru
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                        Yo'nalish nomi eng
-                      </th>
                       <th scope="col" className="px-6 py-3 text-right">
                         Taxrirlash
                       </th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody className="">
                     {datas &&
                       datas.map((data) => {
                         return (
@@ -237,18 +231,6 @@ function BakalavrFanDasturlariYonalishCom() {
                               className="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                             >
                               {data.name_uz}
-                            </th>
-                            <th
-                              scope="row"
-                              className="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                            >
-                              {data.name_ru}
-                            </th>
-                            <th
-                              scope="row"
-                              className="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                            >
-                              {data.name_en}
                             </th>
                             <td className="px-6 py-2 text-right">
                               <button

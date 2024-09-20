@@ -205,7 +205,7 @@ function BakalavrFanDasturlariCom() {
                   <MySelect
                     id="fan_dastur_talim_turi_id"
                     name="fan_dastur_talim_turi_id"
-                    label="Kursni"
+                    label="Ta'lim turini"
                     tab="tanlang"
                     options={
                       talimTur &&
@@ -219,7 +219,7 @@ function BakalavrFanDasturlariCom() {
                   <MySelect
                     id="fan_dastur_yonalish_id"
                     name="fan_dastur_yonalish_id"
-                    label="Kursni"
+                    label="Yo'nalishni"
                     tab="tanlang"
                     options={
                       yonalish &&
@@ -233,7 +233,7 @@ function BakalavrFanDasturlariCom() {
                   <MySelect
                     id="fan_dastur_turi_id"
                     name="fan_dastur_turi_id"
-                    label="Kurs turini"
+                    label="Turni"
                     tab="tanlang"
                     options={
                       tur &&

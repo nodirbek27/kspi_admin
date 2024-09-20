@@ -171,7 +171,7 @@ function BakalavrFanDasturlariTurCom() {
                   <MySelect
                     id="fan_dastur_talim_turi_id"
                     name="fan_dastur_talim_turi_id"
-                    label="Kursni"
+                    label="Ta'lim turini"
                     tab="tanlang"
                     options={
                       talimTur &&

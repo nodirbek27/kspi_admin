@@ -12,7 +12,8 @@ function BakalavrFanDasturlariYonalishCom() {
   const [datas, setDatas] = useState([]);
   const [dataTalimTur, setDataTalimTur] = useState([]);
   const [dataKurs, setDataKurs] = useState([]);
-  const [selectedKurs, setselectedKurs] = useState([]);
+  
+  const [selectedKurs, setselectedKurs] = useState("");
   const [yonalish, setYonalish] = useState([]);
 
   const fetchData = useCallback(async () => {

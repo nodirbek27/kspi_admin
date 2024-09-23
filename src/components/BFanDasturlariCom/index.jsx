@@ -17,9 +17,9 @@ function BakalavrFanDasturlariCom() {
   const [dataTalimTur, setDataTalimTur] = useState([]);
   const [dataYonalish, setDataYonalish] = useState([]);
 
-  const [selectedKurs, setSelectedKurs] = useState([]);
-  const [selectedTalimTur, setSelectedTalimTur] = useState([]);
-  const [selectedYonalish, setSelectedYonalish] = useState([]);
+  const [selectedKurs, setSelectedKurs] = useState("");
+  const [selectedTalimTur, setSelectedTalimTur] = useState("");
+  const [selectedYonalish, setSelectedYonalish] = useState("");
 
   const [talimTur, setTalimTur] = useState([])
   const [yonalish, setYonalish] = useState([])

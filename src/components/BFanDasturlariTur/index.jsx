@@ -18,21 +18,19 @@ function BakalavrFanDasturlariTurCom() {
   const [selectedKurs, setSelectedKurs] = useState([]);
   const [selectedTalimTur, setSelectedTalimTur] = useState([]);
 
-  const [talimTur, setTalimTur] = useState([])
-  const [yonalish, setYonalish] = useState([])
+  const [talimTur, setTalimTur] = useState([]);
+  const [yonalish, setYonalish] = useState([]);
 
-  
   const fetchData = useCallback(async () => {
     try {
-      const [resTur, resKurs, resTalimTur, resYonalish,] = await Promise.all([
+      const [resTur, resKurs, resTalimTur, resYonalish] = await Promise.all([
         APIBFanDasturlariTur.get(),
         APIBFanDasturlariKurs.get(),
         APIBFanDasturlariTalimTur.get(),
         APIBFanDasturlariYonalish.get(),
-
       ]);
       setDataKurdataKurs(resKurs.data);
-      setDataTalimTur(resTalimTur.data)
+      setDataTalimTur(resTalimTur.data);
       setDataYonalish(resYonalish.data);
       setDatas(resTur.data);
     } catch (error) {
@@ -101,17 +99,46 @@ function BakalavrFanDasturlariTurCom() {
 
   useEffect(() => {
     if (selectedKurs) {
-      const filteredTalimTur = dataTalimTur.filter(item => item.fan_dastur_kurs_id === parseInt(selectedKurs));
+      const filteredTalimTur = dataTalimTur.filter(
+        (item) => item.fan_dastur_kurs_id === parseInt(selectedKurs)
+      );
       setTalimTur(filteredTalimTur);
     }
   }, [selectedKurs, dataTalimTur]);
-  
+
   useEffect(() => {
     if (selectedTalimTur) {
-      const filteredYonalish = dataYonalish.filter(item => item.fan_dastur_talim_turi_id === parseInt(selectedTalimTur));
+      const filteredYonalish = dataYonalish.filter(
+        (item) => item.fan_dastur_talim_turi_id === parseInt(selectedTalimTur)
+      );
       setYonalish(filteredYonalish);
     }
-  }, [selectedTalimTur, dataYonalish]);  
+  }, [selectedTalimTur, dataYonalish]);
+
+  const getKursName = (kursId) => {
+    const kurs = dataKurs.find((k) => k.id === kursId);
+    return kurs ? kurs.name_uz : "Noma'lum kurs"; // Kursni topib, name_uz ni qaytaramiz
+  };
+  
+  const getTalimTurName = (talimTurId) => {
+    const talimTur = dataTalimTur.find((k) => k.id === talimTurId);
+    if (talimTur) {
+      const kursName = getKursName(talimTur.fan_dastur_kurs_id); // Kurs nomini olamiz
+      return `${kursName} - ${talimTur.name_uz}`; // Talim tur va kurs nomini birlashtirib qaytaramiz
+    }
+    return "Noma'lum ta'lim tur"; // Agar talim tur topilmasa
+  };
+  
+  const getYonalishName = (yonalishId) => {
+    const yonalish = dataYonalish.find((t) => t.id === yonalishId); // fan_dastur_talim_turi_id orqali talim turini topamiz
+    if (yonalish) {
+      const talimTur = getTalimTurName(yonalish.fan_dastur_talim_turi_id); // Kursni topamiz
+      return `${talimTur} - ${yonalish.name_uz}`; // Kurs va talim tur nomini qaytaramiz
+    }
+    return "Noma'lum ta'lim tur"; // Agar talim tur topilmasa
+  };
+  
+  
 
   return (
     <div className="max-w-[1600px] mx-auto">
@@ -144,7 +171,7 @@ function BakalavrFanDasturlariTurCom() {
                   <MySelect
                     id="fan_dastur_talim_turi_id"
                     name="fan_dastur_talim_turi_id"
-                    label="Kursni"
+                    label="Ta'lim turini"
                     tab="tanlang"
                     options={
                       talimTur &&
@@ -217,6 +244,9 @@ function BakalavrFanDasturlariTurCom() {
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                       <th scope="col" className="px-6 py-3">
+                        Kurs - Talim Tur - Yo'nalish nomi
+                      </th>
+                      <th scope="col" className="px-6 py-3">
                         Kurs nomi uz
                       </th>
                       <th scope="col" className="px-6 py-3">
@@ -226,7 +256,7 @@ function BakalavrFanDasturlariTurCom() {
                         Kurs nomi eng
                       </th>
                       <th scope="col" className="px-6 py-3 text-right">
-                        Rekvizitni taxrirlash
+                        Taxrirlash
                       </th>
                     </tr>
                   </thead>
@@ -238,6 +268,12 @@ function BakalavrFanDasturlariTurCom() {
                             key={data.id}
                             className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
                           >
+                            <th
+                              scope="row"
+                              className="px-6 py-2 font-medium text-red-500 whitespace-nowrap dark:text-white"
+                            >
+                              {getYonalishName(data.fan_dastur_yonalish_id)}
+                            </th>
                             <th
                               scope="row"
                               className="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"

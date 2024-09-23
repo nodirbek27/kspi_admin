@@ -23,26 +23,23 @@ function BakalavrFanDasturlariTalimTurCom() {
       console.error("Xatolik yuz berdi!", error);
     }
   };
-  // formik for requisite institute
+
   const formik = useFormik({
     initialValues: {
       name_uz: "",
       name_ru: "",
       name_en: "",
       fan_dastur_kurs_id: "",
-    }, // Initial values for formik
+    },
     onSubmit: async (values, onSubmitProps) => {
       const data = new FormData();
       for (let key in values) {
         data.append(key, values[key]);
       }
       try {
-        // POST
         if (!edit) {
           await APIBFanDasturlariTalimTur.post(data);
-        }
-        // PATCH
-        else {
+        } else {
           await APIBFanDasturlariTalimTur.patch(id, data);
           setEdit(false);
           setId(null);
@@ -83,6 +80,11 @@ function BakalavrFanDasturlariTalimTurCom() {
   useEffect(() => {
     fechtData();
   }, []);
+
+  const getKursName = (kursId) => {
+    const kurs = dataKurs.find((k) => k.id === kursId);
+    return kurs ? kurs.name_uz : "Noma'lum kurs";
+  };
 
   return (
     <div className="max-w-[1600px] mx-auto">
@@ -160,13 +162,16 @@ function BakalavrFanDasturlariTalimTurCom() {
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                       <th scope="col" className="px-6 py-3">
-                        Kurs nomi uz
+                        Kurs nomi
                       </th>
                       <th scope="col" className="px-6 py-3">
-                        Kurs nomi ru
+                        Ta'lim tur nomi uz
                       </th>
                       <th scope="col" className="px-6 py-3">
-                        Kurs nomi eng
+                        Ta'lim tur nomi ru
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Ta'lim tur nomi eng
                       </th>
                       <th scope="col" className="px-6 py-3 text-right">
                         Taxrirlash
@@ -181,6 +186,12 @@ function BakalavrFanDasturlariTalimTurCom() {
                             key={data.id}
                             className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
                           >
+                            <th
+                              scope="row"
+                              className="px-6 py-2 font-medium text-red-500 whitespace-nowrap dark:text-white"
+                            >
+                              {getKursName(data.fan_dastur_kurs_id)}
+                            </th>
                             <th
                               scope="row"
                               className="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
@@ -199,7 +210,7 @@ function BakalavrFanDasturlariTalimTurCom() {
                             >
                               {data.name_en}
                             </th>
-                            <td className="px-6 py-2 text-right">
+                            <th className="px-6 py-2 text-right">
                               <button
                                 type="submit"
                                 className="px-3 py-0.5 text-xs rounded-lg border border-teal-500 bg-teal-500 active:bg-white active:text-teal-500 text-gray-800 font-semibold"
@@ -214,7 +225,7 @@ function BakalavrFanDasturlariTalimTurCom() {
                               >
                                 O'chirish
                               </button>
-                            </td>
+                            </th>
                           </tr>
                         );
                       })}

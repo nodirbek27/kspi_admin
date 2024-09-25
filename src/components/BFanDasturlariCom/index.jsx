@@ -127,11 +127,6 @@ function BakalavrFanDasturlariCom() {
       setTalimTur(filteredTalimTur);
     }
   }, [selectedKurs, dataTalimTur]);
-  console.log(selectedKurs);
-  console.log(selectedTalimTur);
-  console.log(selectedYonalish);
-  console.log(selectedYonalish);
-  
   
   useEffect(() => {
     if (selectedTalimTur) {

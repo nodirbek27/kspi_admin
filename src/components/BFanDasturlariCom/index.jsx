@@ -127,6 +127,11 @@ function BakalavrFanDasturlariCom() {
       setTalimTur(filteredTalimTur);
     }
   }, [selectedKurs, dataTalimTur]);
+  console.log(selectedKurs);
+  console.log(selectedTalimTur);
+  console.log(selectedYonalish);
+  console.log(selectedYonalish);
+  
   
   useEffect(() => {
     if (selectedTalimTur) {
@@ -136,11 +141,11 @@ function BakalavrFanDasturlariCom() {
   }, [selectedTalimTur, dataYonalish]);
 
   useEffect(() => {
-    if (selectedTalimTur) {
-      const filteredTur = dataTur.filter(item => item.fan_dastur_yonalish_id === parseInt(selectedTalimTur));
+    if (selectedYonalish) {
+      const filteredTur = dataTur.filter(item => item.fan_dastur_yonalish_id === parseInt(selectedYonalish));
       setTur(filteredTur);
     }
-  }, [selectedTalimTur, dataTur]);
+  }, [selectedYonalish, dataTur]);
 
   const getKursName = (kursId) => {
     const kurs = dataKurs.find((k) => k.id === kursId);
@@ -188,7 +193,7 @@ function BakalavrFanDasturlariCom() {
                   PDF fayl yuklash
                 </legend>
                 <div className="grid grid-cols-4 gap-2 my-5">
-                <MySelect
+                  <MySelect
                     id="fan_dastur_kurs_id"
                     name="fan_dastur_kurs_id"
                     label="Kursni"
@@ -202,6 +207,7 @@ function BakalavrFanDasturlariCom() {
                     value={selectedKurs}
                     onChange={(e) => setSelectedKurs(e.target.value)}
                   />
+
                   <MySelect
                     id="fan_dastur_talim_turi_id"
                     name="fan_dastur_talim_turi_id"

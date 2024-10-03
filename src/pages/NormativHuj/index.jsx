@@ -59,13 +59,12 @@ const NormativHuj = () => {
                 APINormativHuj.post(data)
                     .then(() => getData())
                     .catch((err) => console.log(err));
-                console.log(data);
                 if (fileRaf.current) {
                     fileRaf.current.value = "";
                 }
-                formik.resetForm();
-                setFile(null);
                 setLoad(false);
+                setFile(null);
+                formik.resetForm();
             }
         },
     });
@@ -225,7 +224,7 @@ const NormativHuj = () => {
                             <div className="collapse collapse-arrow">
                                 <input type="checkbox" name="my-accordion-2" />
                                 <div className="collapse-title text-xl font-medium bg-gray-200">
-                                    Rektorat rahbarlari:
+                                    Joylangan hujjatlar:
                                 </div>
                                 <div className="collapse-content">
                                     <ol className="list-decimal flex flex-col gap-3 ps-4 my-4">
@@ -237,20 +236,15 @@ const NormativHuj = () => {
                                                 >
                                                     <div className="flex flex-col items-start gap-4">
                                                         <div className="flex flex-col gap-y-4 w-full">
-                                                            <div className="w-[200px] h-auto">
-                                                                <img
-                                                                    src={
-                                                                        item.fayl
-                                                                    }
-                                                                    alt="Lavozim rasmi"
-                                                                />
+                                                            <div className="w-[200px] h-auto flex gap-2 mt-4 ms-4">
+                                                                <b>Fayl: </b><a className="text-[blue]" href={item.fayl} target="_blank"  rel="noreferrer" >{item.fayl}</a>
                                                             </div>
                                                             {isEdit?.id ===
                                                                 item.id && (
                                                                 <label htmlFor="rasm">
                                                                     <div className="text-red-600 font-medium">
                                                                         Agar
-                                                                        rasim
+                                                                        fayl
                                                                         jo'natilmasa
                                                                         o'z
                                                                         holida

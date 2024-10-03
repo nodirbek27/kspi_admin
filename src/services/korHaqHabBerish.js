@@ -1,6 +1,6 @@
 import axiosInstance from "./index";
 
-const ep = "faoliyat/ichki_idoraviy_hujatlar/";
+const ep = "faoliyat/xabar_berish/";
 
 const get = () => axiosInstance.get(ep);
 
@@ -14,6 +14,6 @@ const del = (id) => {
     return axiosInstance.delete(`${ep}${id}/`);
 };
 
-const APIIchkiIdorHuj = { get, post, patch, del };
+const APIKorHaqHabBerish = { get, post, patch, del };
 
-export default APIIchkiIdorHuj;
+export default APIKorHaqHabBerish;

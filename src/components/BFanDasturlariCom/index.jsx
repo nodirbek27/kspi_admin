@@ -17,9 +17,9 @@ function BakalavrFanDasturlariCom() {
   const [dataTalimTur, setDataTalimTur] = useState([]);
   const [dataYonalish, setDataYonalish] = useState([]);
 
-  const [selectedKurs, setSelectedKurs] = useState([]);
-  const [selectedTalimTur, setSelectedTalimTur] = useState([]);
-  const [selectedYonalish, setSelectedYonalish] = useState([]);
+  const [selectedKurs, setSelectedKurs] = useState("");
+  const [selectedTalimTur, setSelectedTalimTur] = useState("");
+  const [selectedYonalish, setSelectedYonalish] = useState("");
 
   const [talimTur, setTalimTur] = useState([])
   const [yonalish, setYonalish] = useState([])
@@ -136,11 +136,11 @@ function BakalavrFanDasturlariCom() {
   }, [selectedTalimTur, dataYonalish]);
 
   useEffect(() => {
-    if (selectedTalimTur) {
-      const filteredTur = dataTur.filter(item => item.fan_dastur_yonalish_id === parseInt(selectedTalimTur));
+    if (selectedYonalish) {
+      const filteredTur = dataTur.filter(item => item.fan_dastur_yonalish_id === parseInt(selectedYonalish));
       setTur(filteredTur);
     }
-  }, [selectedTalimTur, dataTur]);
+  }, [selectedYonalish, dataTur]);
 
   const getKursName = (kursId) => {
     const kurs = dataKurs.find((k) => k.id === kursId);
@@ -188,7 +188,7 @@ function BakalavrFanDasturlariCom() {
                   PDF fayl yuklash
                 </legend>
                 <div className="grid grid-cols-4 gap-2 my-5">
-                <MySelect
+                  <MySelect
                     id="fan_dastur_kurs_id"
                     name="fan_dastur_kurs_id"
                     label="Kursni"
@@ -202,6 +202,7 @@ function BakalavrFanDasturlariCom() {
                     value={selectedKurs}
                     onChange={(e) => setSelectedKurs(e.target.value)}
                   />
+
                   <MySelect
                     id="fan_dastur_talim_turi_id"
                     name="fan_dastur_talim_turi_id"
@@ -309,7 +310,7 @@ function BakalavrFanDasturlariCom() {
               Yuklangan fayllar
             </h4>
             <div>
-              <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+              <div className="max-h-96 relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>

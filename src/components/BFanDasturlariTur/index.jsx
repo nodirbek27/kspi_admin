@@ -15,8 +15,8 @@ function BakalavrFanDasturlariTurCom() {
   const [dataTalimTur, setDataTalimTur] = useState([]);
   const [dataYonalish, setDataYonalish] = useState([]);
 
-  const [selectedKurs, setSelectedKurs] = useState([]);
-  const [selectedTalimTur, setSelectedTalimTur] = useState([]);
+  const [selectedKurs, setSelectedKurs] = useState("");
+  const [selectedTalimTur, setSelectedTalimTur] = useState("");
 
   const [talimTur, setTalimTur] = useState([]);
   const [yonalish, setYonalish] = useState([]);
@@ -239,7 +239,7 @@ function BakalavrFanDasturlariTurCom() {
               Bakalavr kurs turlari
             </h4>
             <div>
-              <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+              <div className="max-h-96 relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>

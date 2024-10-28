@@ -14,6 +14,7 @@ const News = () => {
     subtitle_ru: "",
     subtitle_en: "",
     sana: "",
+    xalqaro: false,
   });
 
   const [files, setFiles] = useState({
@@ -33,7 +34,6 @@ const News = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Create refs for each editable element
   const editorProps = {
     editor: MultiRootEditor,
     data: {
@@ -57,13 +57,17 @@ const News = () => {
     },
   };
 
-  const { toolbarElement, editableElements, data } =
-    useMultiRootEditor(editorProps);
+  const { toolbarElement, editableElements, data } = useMultiRootEditor(editorProps);
 
   const handleChange = (e) => {
-    const { name, value, files: inputFiles } = e.target;
+    const { name, value, type, checked, files: inputFiles } = e.target;
 
-    if (inputFiles) {
+    if (type === "checkbox") {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: checked,
+      }));
+    } else if (inputFiles) {
       setFiles((prevFiles) => ({
         ...prevFiles,
         [name]: inputFiles[0],
@@ -87,6 +91,7 @@ const News = () => {
     postData.append("subtitle_ru", formData.subtitle_ru);
     postData.append("subtitle_en", formData.subtitle_en);
     postData.append("sana", formData.sana);
+    postData.append("xalqaro", formData.xalqaro);
     postData.append("body_uz", data.contentUz);
     postData.append("body_ru", data.contentRu);
     postData.append("body_en", data.contentEn);
@@ -108,6 +113,7 @@ const News = () => {
         subtitle_uz: "",
         subtitle_ru: "",
         subtitle_en: "",
+        xalqaro: false,
         sana: "",
       });
       setFiles({
@@ -129,12 +135,9 @@ const News = () => {
 
   const getData = async () => {
     setLoading(true);
-    // sana
     try {
       const res = await APIYangilik.get();
-      const sortedData = res.data.sort((a, b) => {
-        return new Date(b.sana) - new Date(a.sana);
-    });
+      const sortedData = res.data.sort((a, b) => new Date(b.sana) - new Date(a.sana));
       setContent(sortedData);
     } catch (error) {
       setError(error);
@@ -288,7 +291,7 @@ const News = () => {
               id="fayl_1"
               name="fayl_1"
               className="w-full file-input file-input-bordered"
-            /> 
+            />
           </label>
           <label className="w-full" htmlFor="fayl_2">
             Fayl 2
@@ -349,19 +352,38 @@ const News = () => {
         {toolbarElement}
         {editableElements}
 
+        <div className="max-w-xs">
+          <label className="cursor-pointer label flex items-center gap-3">
+            <input
+              type="checkbox"
+              className="checkbox checkbox-success"
+              id="xalqaro"
+              name="xalqaro"
+              checked={formData.xalqaro}
+              onChange={handleChange}
+            />
+            Xalqaro bo'limga tegishli yangilikmi?
+          </label>
+        </div>
         <button type="submit" className="btn btn-primary w-full mt-3">
           SUBMIT
         </button>
       </form>
 
-      <h2 className="my-5 text-lg lg:text-xl xl:text-2xl font-semibold">Mavjud yangiliklar</h2>
+      <h2 className="my-5 text-lg lg:text-xl xl:text-2xl font-semibold">
+        Mavjud yangiliklar
+      </h2>
       <div className="mt-8">
         {loading && <p>Yuklanyapti...</p>}
         {error && <p>Xatolik yuz berdi: {error.message}</p>}
         <div className="grid grid-cols-2 gap-3">
           {content?.map((item) => (
             <div key={item.id} className="p-4 bg-gray-100 rounded-lg flex">
-              <img src={item?.rasm_1} alt="news pic" className="mr-3 object-cover w-[100px] h-[100px] rounded" />
+              <img
+                src={item?.rasm_1}
+                alt="news pic"
+                className="mr-3 object-cover w-[100px] h-[100px] rounded"
+              />
               <div className="flex flex-col justify-between w-full">
                 <div>
                   <h2 className="text-lg font-bold mb-2">{item?.title_uz}</h2>

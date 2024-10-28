@@ -5,7 +5,6 @@ import { ReactComponent as Analitika } from "../assets/icons/analytics.svg";
 
 import AnalitikaView from "../pages/Main";
 import NewsPage from "../pages/NewsPage";
-import Generics from "../pages/NewsEditPage";
 import Elonlar from "../pages/ElonlarPage";
 
 // LOGIN
@@ -36,6 +35,8 @@ import OquvUslubiy from "../pages/Faoliyat/OquvUslubiy";
 import AkademikLitsey from "../pages/Faoliyat/AkademikLitsey";
 import Ilmiy from "../pages/Faoliyat/Ilmiy";
 import Yoshlar from "../pages/Faoliyat/YoshlarFaoliyat";
+import XalqaroProfessorlarFikri from "../pages/Faoliyat/XalqaroFaoliyat/XorijiyProfessorlarFikri";
+import XalqaroHamkorlar from "../pages/Faoliyat/XalqaroFaoliyat/XalqaroHamkorlarPage";
 
 // TUZILMA
 import Rektorat from "../pages/Tuzilma/Rektorat";
@@ -189,7 +190,7 @@ const sidebar = [
     path: "/institut",
     icon: Analitika,
     isPrivate: true,
-    element: Generics,
+    element: "",
     role: ["admin"],
     children: [
       {
@@ -240,7 +241,7 @@ const sidebar = [
     path: "/faoliyat",
     icon: Analitika,
     isPrivate: true,
-    element: Generics,
+    element: "",
     role: ["admin"],
     children: [
       {
@@ -291,6 +292,22 @@ const sidebar = [
         element: Yoshlar,
         role: ["admin"],
       },
+      {
+        id: `6-6`,
+        title: "Xorijlik professorlar fikri",
+        path: "/faoliyat/xorijlik-professorlar-fikri",
+        isPrivate: true,
+        element: XalqaroProfessorlarFikri,
+        role: ["admin"],
+      },
+      {
+        id: `6-6`,
+        title: "Xalqaro hamkor tashkilotlar",
+        path: "/faoliyat/xalqaro-hamkorlar",
+        isPrivate: true,
+        element: XalqaroHamkorlar,
+        role: ["admin"],
+      },
     ],
   },
   {
@@ -299,7 +316,7 @@ const sidebar = [
     path: "/tuzilma",
     icon: Analitika,
     isPrivate: true,
-    element: Generics,
+    element: "",
     role: ["admin"],
     children: [
       {
@@ -350,7 +367,7 @@ const sidebar = [
     path: "/talabalar",
     icon: Analitika,
     isPrivate: true,
-    element: Generics,
+    element: "",
     role: ["admin"],
     children: [
       {
@@ -433,7 +450,7 @@ const sidebar = [
     path: "/abiturient",
     icon: Analitika,
     isPrivate: true,
-    element: Generics,
+    element: "",
     role: ["admin"],
     children: [
       {
@@ -517,7 +534,7 @@ const sidebar = [
     title: "Reset",
     path: "/reset",
     isPrivate: true,
-    element: Generics,
+    element: "",
     hidden: true,
   },
   {
@@ -526,7 +543,7 @@ const sidebar = [
     path: "/korrupsyaga-qarshi-kurash",
     icon: Analitika,
     isPrivate: true,
-    element: Generics,
+    element: "",
     role: ["admin"],
     children: [
       {

@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useFormik } from "formik";
 import { RxArrowTopRight } from "react-icons/rx";
 import { BiBlock } from "react-icons/bi";
+import { CiEdit } from "react-icons/ci";
 import APIProfessorlarFikri from "../../services/xalqaroProfessorFikri";
 import { TextWarn } from "./styled";
 import { RiDeleteBin5Line } from "react-icons/ri";
@@ -10,6 +11,8 @@ const XalqaroProfessorlarFikri = () => {
   const [errTxt, setErrTxt] = useState(false);
   const [data, setData] = useState(null);
   const [file, setFile] = useState(null);
+  const [editMode, setEditMode] = useState(false);
+  const [editId, setEditId] = useState(null);
   const rasm = useRef(null);
 
   useEffect(() => {
@@ -45,16 +48,19 @@ const XalqaroProfessorlarFikri = () => {
           setErrTxt(false);
         }, 5000);
       } else {
-        const data = new FormData();
-        // FormData obyektiga barcha formik qiymatlarini qo'shish
+        const formData = new FormData();
         Object.keys(values).forEach((key) => {
-          data.append(key, values[key]);
+          formData.append(key, values[key]);
         });
         if (file) {
-          data.append("rasm", file);
+          formData.append("rasm", file);
         }
 
-        APIProfessorlarFikri.post(data)
+        const apiCall = editMode
+          ? APIProfessorlarFikri.put(editId, formData)
+          : APIProfessorlarFikri.post(formData);
+
+        apiCall
           .then(() => {
             getData();
             formik.resetForm();
@@ -62,6 +68,8 @@ const XalqaroProfessorlarFikri = () => {
             if (rasm.current) {
               rasm.current.value = "";
             }
+            setEditMode(false);
+            setEditId(null);
           })
           .catch((err) => console.log(err));
       }
@@ -72,11 +80,30 @@ const XalqaroProfessorlarFikri = () => {
     setFile(e.target.files[0]);
   };
 
+  const handleEdit = (item) => {
+    formik.setValues({
+      title_uz: item.title_uz,
+      title_ru: item.title_ru,
+      title_en: item.title_en,
+      fikr_uz: item.fikr_uz,
+      fikr_ru: item.fikr_ru,
+      fikr_en: item.fikr_en,
+      fish_uz: item.fish_uz,
+      fish_ru: item.fish_ru,
+      fish_en: item.fish_en,
+      lavozim_uz: item.lavozim_uz,
+      lavozim_ru: item.lavozim_ru,
+      lavozim_en: item.lavozim_en,
+      link: item.link,
+    });
+    setEditMode(true);
+    setEditId(item.id);
+  };
+
   const handleDelete = async (id) => {
     await APIProfessorlarFikri.del(id);
     getData();
   };
-
 
   return (
     <div className="w-full p-4">
@@ -303,27 +330,54 @@ const XalqaroProfessorlarFikri = () => {
           <thead>
             <tr>
               <th>№</th>
-              <th>Professor rasm</th>
-              <th>YouTube link</th>
-              <th>Title Uz</th>
-              <th>O'chirish</th>
+              <th>Rasm/Link</th>
+              <th>Title</th>
+              <th>Fikr</th>
+              <th>F.I.Sh</th>
+              <th>Lavozim</th>
+              <th>O'chirish/Tahrirlash</th>
             </tr>
           </thead>
-          <tbody>
-            {data &&
-              data.map((item, idx) => (
-                <tr key={idx}>
-                  <th>{item.id}</th>
+          {data &&
+            data.map((item, index) => (
+              <tbody key={index}>
+                <tr>
+                  <th>{index + 1}</th>
                   <td>
                     <img
                       src={item.rasm}
-                      alt="Hamkor rasmi"
+                      alt="professor rasmi"
                       className="rounded h-[50px] object-cover"
                       width={100}
                     />
                   </td>
-                  <td>{item.link}</td>
                   <td>{item.title_uz}</td>
+                  <td>{item.fikr_uz}</td>
+                  <td>{item.fish_uz}</td>
+                  <td>{item.lavozim_uz}</td>
+                  <td>
+                  <CiEdit className="text-green-600 cursor-pointer h-5 w-5" onClick={() => handleEdit(item)} />
+                  </td>
+                </tr>
+                <tr>
+                  <th></th>
+                  <td>
+                  </td>
+                  <td>{item.title_ru}</td>
+                  <td>{item.fikr_ru}</td>
+                  <td>{item.fish_ru}</td>
+                  <td>{item.lavozim_ru}</td>
+                  <td>
+                  </td>
+                </tr>
+                <tr>
+                  <th></th>
+                  <td>{item.link}
+                  </td>
+                  <td>{item.title_en}</td>
+                  <td>{item.fikr_en}</td>
+                  <td>{item.fish_en}</td>
+                  <td>{item.lavozim_en}</td>
                   <td>
                     <RiDeleteBin5Line
                       onClick={() => handleDelete(item.id)}
@@ -331,8 +385,8 @@ const XalqaroProfessorlarFikri = () => {
                     />
                   </td>
                 </tr>
-              ))}
-          </tbody>
+              </tbody>
+            ))}
         </table>
       </div>
     </div>

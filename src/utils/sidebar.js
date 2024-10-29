@@ -293,7 +293,7 @@ const sidebar = [
         role: ["admin"],
       },
       {
-        id: `6-6`,
+        id: `6-7`,
         title: "Xorijlik professorlar fikri",
         path: "/faoliyat/xorijlik-professorlar-fikri",
         isPrivate: true,
@@ -301,7 +301,7 @@ const sidebar = [
         role: ["admin"],
       },
       {
-        id: `6-6`,
+        id: `6-8`,
         title: "Xalqaro hamkor tashkilotlar",
         path: "/faoliyat/xalqaro-hamkorlar",
         isPrivate: true,

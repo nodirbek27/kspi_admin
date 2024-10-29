@@ -5,7 +5,6 @@ import APIElon from "../../services/elon";
 
 const ElonlarCom = () => {
   const [formData, setFormData] = useState({
-    rasm: null,
     title_uz: "",
     title_ru: "",
     title_en: "",
@@ -21,8 +20,18 @@ const ElonlarCom = () => {
     adress_ru: "",
     adress_en: "",
     sana: "",
-    fayl_1: null,
+    xalqaro: false, // Checkbox state
   });
+
+  const [files, setFiles] = useState({
+    rasm: null,
+    fayl_1: null,
+    fayl_2: null,
+    fayl_3: null,
+    fayl_4: null,
+    fayl_5: null,
+  });
+
   const [content, setContent] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -50,16 +59,19 @@ const ElonlarCom = () => {
     },
   };
 
-  const { toolbarElement, editableElements, data } =
-    useMultiRootEditor(editorProps);
+  const { toolbarElement, editableElements, data } = useMultiRootEditor(editorProps);
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    if (e.target.type === "file") {
+    const { name, value, type, checked, files: inputFiles } = e.target;
+    if (inputFiles) {
+        setFiles((prevFiles) => ({
+          ...prevFiles,
+          [name]: inputFiles[0],
+      }));
+    } else if (type === "checkbox") {
       setFormData((prevData) => ({
         ...prevData,
-        rasm: files[0],
-        fayl_1: files[0],
+        [name]: checked, // Update checkbox state
       }));
     } else {
       setFormData((prevData) => ({
@@ -82,26 +94,27 @@ const ElonlarCom = () => {
     formDataToSend.append("adress_uz", formData.adress_uz);
     formDataToSend.append("adress_ru", formData.adress_ru);
     formDataToSend.append("adress_en", formData.adress_en);
-    formDataToSend.append("detail_en", formData.sana);
-    formDataToSend.append("detail_en", formData.boshlanish_vaqti);
-    formDataToSend.append("detail_en", formData.tugash_vaqti);
     formDataToSend.append("detail_uz", data.detail_uz);
     formDataToSend.append("detail_ru", data.detail_ru);
     formDataToSend.append("detail_en", data.detail_en);
-    if (formData.rasm) {
-      formDataToSend.append("rasm", formData.rasm);
-    }
-    if (formData.fayl_1) {
-      formDataToSend.append("fayl_1", formData.fayl_1);
-    }
+    formDataToSend.append("boshlanish_vaqti", formData.boshlanish_vaqti);
+    formDataToSend.append("tugash_vaqti", formData.tugash_vaqti);
+    formDataToSend.append("sana", formData.sana);
+    
+    // Add checkbox value to formData
+    formDataToSend.append("xalqaro", formData.xalqaro);
+
+    Object.keys(files).forEach((key) => {
+      if (files[key]) {
+        formDataToSend.append(key, files[key]);
+      }
+    });
 
     try {
-      // POST
       await APIElon.post(formDataToSend);
       alert("Data successfully posted!");
       getData();
       setFormData({
-        rasm: null,
         title_uz: "",
         title_ru: "",
         title_en: "",
@@ -117,7 +130,15 @@ const ElonlarCom = () => {
         adress_ru: "",
         adress_en: "",
         sana: "",
+        xalqaro: false, // Reset checkbox state
+      });
+      setFiles({
+        rasm: null,
         fayl_1: null,
+        fayl_2: null,
+        fayl_3: null,
+        fayl_4: null,
+        fayl_5: null,
       });
     } catch (error) {
       console.error("Error posting data:", error);
@@ -128,7 +149,8 @@ const ElonlarCom = () => {
     setLoading(true);
     try {
       const res = await APIElon.get();
-      setContent(res.data);
+      const sortedData = res.data.sort((a, b) => new Date(b.sana) - new Date(a.sana));
+      setContent(sortedData);
     } catch (error) {
       setError(error);
     } finally {
@@ -268,7 +290,7 @@ const ElonlarCom = () => {
         <div className="grid grid-cols-3 gap-2 my-5">
           <label
             className="block mb-2 font-medium text-gray-700"
-            htmlFor="telefon"
+            htmlFor="boshlanish_vaqti"
           >
             <h3>
               E'lon boshlanish <span className="text-red-500">vaqti</span>
@@ -285,7 +307,7 @@ const ElonlarCom = () => {
           </label>
           <label
             className="block mb-2 font-medium text-gray-700"
-            htmlFor="telefon"
+            htmlFor="tugash_vaqti"
           >
             <h3>
               E'lon tugash <span className="text-red-500">vaqti</span>
@@ -302,7 +324,7 @@ const ElonlarCom = () => {
           </label>
           <label
             className="block mb-2 font-medium text-gray-700"
-            htmlFor="telefon"
+            htmlFor="sana"
           >
             <h3>
               E'lon yuklash <span className="text-red-500">vaqti</span>
@@ -323,7 +345,7 @@ const ElonlarCom = () => {
         <div className="grid gap-2 my-5">
           <label
             className="block mb-2 font-medium text-gray-700"
-            htmlFor="telefon"
+            htmlFor="rasm"
           >
             <h3>
               E'lon <span className="text-red-500">rasmi</span>
@@ -343,7 +365,7 @@ const ElonlarCom = () => {
         <div className="grid grid-cols-3 gap-2 my-5">
           <label
             className="block mb-2 font-medium text-gray-700"
-            htmlFor="title_uz"
+            htmlFor="adress_uz"
           >
             <h3>
               Manzil <span className="text-red-500">uz</span>
@@ -398,15 +420,15 @@ const ElonlarCom = () => {
         <div className="grid gap-2 my-5">
           <label
             className="block mb-2 font-medium text-gray-700"
-            htmlFor="telefon"
+            htmlFor="fayl_1"
           >
             <h3>
               Fayl yuklash <span className="text-red-500">(PDF)</span>
             </h3>
             <input
               type="file"
-              id="rasm"
-              name="rasm"
+              id="fayl_1"
+              name="fayl_1"
               onChange={handleChange}
               className="w-full block text-gray-700 outline-none bg-gray-50 border border-gray-300  p-3 rounded-lg focus:shadow-md focus:border-blue-300"
               required
@@ -416,6 +438,20 @@ const ElonlarCom = () => {
 
         {toolbarElement}
         {editableElements}
+
+        <div className="max-w-xs">
+          <label className="cursor-pointer label flex items-center gap-3">
+            <input
+              type="checkbox"
+              className="checkbox checkbox-success"
+              id="xalqaro"
+              name="xalqaro"
+              checked={formData.xalqaro}
+              onChange={handleChange}
+            />
+            Xalqaro bo'limga tegishli yangilikmi?
+          </label>
+        </div>
 
         <button
           type="submit"

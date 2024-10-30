@@ -27,6 +27,10 @@ import InstitutHaqida from "../pages/Institut/InstitutHaqida";
 import InstitutTuzilmasi from "../pages/Institut/InstitutTuzilmasi";
 import Rekvizitlar from "../pages/Institut/Rekvizitlar";
 import VirtualQabulxona from "../pages/Institut/VirtualQabulxona";
+import InstitutQarorlar from "../pages/Institut/Hujjatlar/ORVMq";
+import InstitutFarmonlar from "../pages/Institut/Hujjatlar/ORpf";
+import InstitutQonunlar from "../pages/Institut/Hujjatlar/ORQ";
+import InstitutHujjatlar from "../pages/Institut/Hujjatlar/IIm-hh";
 
 // FAOLIYAT
 import JamoatchilikKengashi from "../pages/Faoliyat/JamoatchilikKengashi";
@@ -238,7 +242,7 @@ const sidebar = [
         title: "O'zbekiston Respublikasi prezidentining farmonlari",
         path: "/institut/farmonlar",
         isPrivate: true,
-        element: VirtualQabulxona,
+        element: InstitutFarmonlar,
         role: ["admin"],
       },
       {
@@ -246,7 +250,7 @@ const sidebar = [
         title: "O'zbekiston Respublikasi Qonunlari",
         path: "/institut/qounular",
         isPrivate: true,
-        element: VirtualQabulxona,
+        element: InstitutQonunlar,
         role: ["admin"],
       },
       {
@@ -254,7 +258,7 @@ const sidebar = [
         title: "O'zbekiston Respublikasi Vazirlar Mahkamasining qarorlari",
         path: "/institut/qarorlar",
         isPrivate: true,
-        element: VirtualQabulxona,
+        element: InstitutQarorlar,
         role: ["admin"],
       },
       {
@@ -262,7 +266,7 @@ const sidebar = [
         title: "Institut ichki me'yoriy-huquqiy hujjatlari",
         path: "/institut/ichki-me'yoriy-huquqiy-hujjatlar",
         isPrivate: true,
-        element: VirtualQabulxona,
+        element: InstitutHujjatlar,
         role: ["admin"],
       },
     ],

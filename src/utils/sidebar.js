@@ -12,6 +12,7 @@ import Login from "../components/Login";
 
 // HOME
 import AsosiyVideo from "../pages/Home/AsosiyVideo";
+import OchiqMalumot from "../pages/Home/OchiqMalumot";
 import InteraktivXizmatlar from "../pages/Home/InteraktivXizmatlar";
 import Statistika from "../pages/Home/Statistika";
 import TalabaFikri from "../pages/Home/TalabaFikri";
@@ -114,6 +115,14 @@ const sidebar = [
     element: Analitika,
     role: ["admin"],
     children: [
+      {
+        id: `4-0`,
+        title: "Ochiq ma'lumotlar",
+        path: "/home/ochiq-malumotlar",
+        isPrivate: true,
+        element: OchiqMalumot,
+        role: ["admin"],
+      },
       {
         id: `4-1`,
         title: "Asosiy video",

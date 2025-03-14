@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useMultiRootEditor } from "@ckeditor/ckeditor5-react";
 import MultiRootEditor from "@ckeditor/ckeditor5-build-multi-root";
 import APIYangilik from "../../services/yangilik";
@@ -15,6 +15,7 @@ const News = () => {
     subtitle_en: "",
     sana: "",
     xalqaro: false,
+    yashil: false,
   });
 
   const [files, setFiles] = useState({
@@ -33,6 +34,13 @@ const News = () => {
   const [content, setContent] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    return () => {
+      setContent([]); // eski contentni tozalash
+    };
+  }, []);
+  
 
   const editorProps = {
     editor: MultiRootEditor,
@@ -57,7 +65,8 @@ const News = () => {
     },
   };
 
-  const { toolbarElement, editableElements, data } = useMultiRootEditor(editorProps);
+  const { toolbarElement, editableElements, data } =
+    useMultiRootEditor(editorProps) || {};
 
   const handleChange = (e) => {
     const { name, value, type, checked, files: inputFiles } = e.target;
@@ -92,6 +101,7 @@ const News = () => {
     postData.append("subtitle_en", formData.subtitle_en);
     postData.append("sana", formData.sana);
     postData.append("xalqaro", formData.xalqaro);
+    postData.append("yashil", formData.yashil);
     postData.append("body_uz", data.contentUz);
     postData.append("body_ru", data.contentRu);
     postData.append("body_en", data.contentEn);
@@ -114,6 +124,7 @@ const News = () => {
         subtitle_ru: "",
         subtitle_en: "",
         xalqaro: false,
+        yashil: false,
         sana: "",
       });
       setFiles({
@@ -133,18 +144,21 @@ const News = () => {
     }
   };
 
-  const getData = async () => {
+  const getData = useCallback(async () => {
     setLoading(true);
     try {
       const res = await APIYangilik.get();
-      const sortedData = res.data.sort((a, b) => new Date(b.sana) - new Date(a.sana));
-      setContent(sortedData);
+      setContent(res.data.sort((a, b) => new Date(b.sana) - new Date(a.sana)));
     } catch (error) {
       setError(error);
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+  
+  useEffect(() => {
+    getData();
+  }, [getData]);  
 
   const handleDelete = async (id) => {
     try {
@@ -154,10 +168,6 @@ const News = () => {
       console.error("Error deleting content:", error);
     }
   };
-
-  useEffect(() => {
-    getData();
-  }, []);
 
   return (
     <div className="App p-4">
@@ -352,8 +362,8 @@ const News = () => {
         {toolbarElement}
         {editableElements}
 
-        <div className="max-w-xs">
-          <label className="cursor-pointer label flex items-center gap-3">
+        <div className="max-w-xs mb-3">
+          <label className="cursor-pointer flex items-center gap-3">
             <input
               type="checkbox"
               className="checkbox checkbox-success"
@@ -362,7 +372,20 @@ const News = () => {
               checked={formData.xalqaro}
               onChange={handleChange}
             />
-            Xalqaro bo'limga tegishli yangilikmi?
+            Xalqaro bo'limga tegishli 
+          </label>
+        </div>
+        <div className="max-w-xs">
+          <label className="cursor-pointer flex items-center gap-3">
+            <input
+              type="checkbox"
+              className="checkbox checkbox-success"
+              id="yashil"
+              name="yashil"
+              checked={formData.yashil}
+              onChange={handleChange}
+            />
+            Yashil Universitetga tegishli 
           </label>
         </div>
         <button type="submit" className="btn btn-primary w-full mt-3">
